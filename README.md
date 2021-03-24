@@ -27,5 +27,4 @@ BLACKPINK検定
   - そのままの画像や写真は著作権上扱えないため、イラストや引用のルールの確認（Youtubeの埋め込み、インスタグラムのAPI等）
 
 ## 画面遷移図
-https://xd.adobe.com/view/4e350354-8cab-4f60-a6b5-66b241dff1b7-1b66/
-
+https://xd.adobe.com/view/f9c40cc9-fcad-4578-865f-479c58e3eeed-ac97/
