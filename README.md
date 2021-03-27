@@ -29,5 +29,5 @@ BLACKPINK検定
 ## 画面遷移図
 https://xd.adobe.com/view/f9c40cc9-fcad-4578-865f-479c58e3eeed-ac97/
 
-## 使用技術
-
+## ER図
+https://app.diagrams.net/#G1e1asawkrM5lH54t2S3pzwCEHZxEg3Yrn
