@@ -30,4 +30,5 @@ BLACKPINK検定
 https://xd.adobe.com/view/f9c40cc9-fcad-4578-865f-479c58e3eeed-ac97/
 
 ## ER図
-https://app.diagrams.net/#G1e1asawkrM5lH54t2S3pzwCEHZxEg3Yrn
+https://drive.google.com/file/d/1e1asawkrM5lH54t2S3pzwCEHZxEg3Yrn/view
+
