@@ -1,89 +1,105 @@
 <template>
   <v-row justify="center" align="center">
     <v-col cols="12" sm="8" md="6">
+      <!-- スウィッチ領域 -->
+      <div class="text-right">
+        <v-switch
+          v-model="colorThema"
+          inset
+          right
+          color="#f4a6b8"
+          dark
+        ></v-switch>
+      </div>
+      <!-- タイトルロゴ -->
       <div class="text-center">
         <logo />
-        <vuetify-logo />
       </div>
-      <v-card>
-        <v-card-title class="headline">
-          Welcome to the Vuetify + Nuxt.js template
-        </v-card-title>
-        <v-card-text>
-          <p>Vuetify is a progressive Material Design component framework for Vue.js. It was designed to empower developers to create amazing applications.</p>
-          <p>
-            For more information on Vuetify, check out the <a
-              href="https://vuetifyjs.com"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              documentation
-            </a>.
-          </p>
-          <p>
-            If you have questions, please join the official <a
-              href="https://chat.vuetifyjs.com/"
-              target="_blank"
-              rel="noopener noreferrer"
-              title="chat"
-            >
-              discord
-            </a>.
-          </p>
-          <p>
-            Find a bug? Report it on the github <a
-              href="https://github.com/vuetifyjs/vuetify/issues"
-              target="_blank"
-              rel="noopener noreferrer"
-              title="contribute"
-            >
-              issue board
-            </a>.
-          </p>
-          <p>Thank you for developing with Vuetify and I look forward to bringing more exciting features in the future.</p>
-          <div class="text-xs-right">
-            <em><small>&mdash; John Leider</small></em>
-          </div>
-          <hr class="my-3">
-          <a
-            href="https://nuxtjs.org/"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Nuxt Documentation
-          </a>
-          <br>
-          <a
-            href="https://github.com/nuxt/nuxt.js"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Nuxt GitHub
-          </a>
-        </v-card-text>
-        <v-card-actions>
-          <v-spacer />
+      <!-- 初期登録領域 -->
+      <div class="text-center">
+        <div>
+          <v-text-field
+            class="username-text"
+            label="USERNANE"
+            v-model="username"
+            :rules="rules"
+            maxlength="50"
+            hide-details="auto"
+            color="#f4a6b8"
+          ></v-text-field>
           <v-btn
-            color="primary"
-            nuxt
-            to="/inspire"
-          >
-            Continue
-          </v-btn>
-        </v-card-actions>
-      </v-card>
+            elevation="2"
+            icon
+            color="#f4a6b8"
+          ><i class="mdi mdi-twitter"/></v-btn>
+        </div>
+        <br>
+        <v-btn
+          outlined
+          class="area-button"
+          @click="userNameCheck"
+          :disabled="username === ''"
+          to="/mode"
+        >PLAY</v-btn>
+        <br><br>
+        <span class="base-text-color">or</span>
+        <br><br>
+        <router-link
+          to="/mode"
+          active-class="link--active"
+          exact
+          class="link"
+        >GUEST PLAY</router-link>
+      </div>
     </v-col>
   </v-row>
 </template>
 
 <script>
 import Logo from '~/components/Logo.vue'
-import VuetifyLogo from '~/components/VuetifyLogo.vue'
 
 export default {
+  data: function() {
+    return {
+      username: "",
+      rules: [
+        value => !!value || 'USERNAME is Required.',
+        //value => (value && value.length >= 3) || 'Min 3 characters',
+      ],
+      colorThema: false,
+    }
+  },
+  methods: {
+    userNameCheck() {
+      if (this.username) {
+
+      }
+    }
+  },
   components: {
     Logo,
-    VuetifyLogo
   }
 }
 </script>
+
+<style scoped lang="scss">
+.username-text {
+  display: inline-block;
+  margin: auto;
+  width: 53%;
+}
+
+.base-text-color {
+  display: inline-block;
+  margin: auto;
+  width: 60%;
+  color: $base-text-color;
+}
+
+.link {
+  font-weight: bold;
+  color: $base-text-color;
+  width: 60%;
+}
+
+</style>

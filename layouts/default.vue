@@ -30,24 +30,9 @@
       app
     >
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-      <v-btn
-        icon
-        @click.stop="miniVariant = !miniVariant"
-      >
-        <v-icon>mdi-{{ `chevron-${miniVariant ? 'right' : 'left'}` }}</v-icon>
-      </v-btn>
-      <v-btn
-        icon
-        @click.stop="clipped = !clipped"
-      >
-        <v-icon>mdi-application</v-icon>
-      </v-btn>
-      <v-btn
-        icon
-        @click.stop="fixed = !fixed"
-      >
-        <v-icon>mdi-minus</v-icon>
-      </v-btn>
+      
+      
+      
       <v-toolbar-title v-text="title" />
       <v-spacer />
       <v-btn
@@ -83,7 +68,7 @@
       :absolute="!fixed"
       app
     >
-      <span>&copy; {{ new Date().getFullYear() }}</span>
+      <span class="copyright">&copy; {{ new Date().getFullYear() + ' ' + title }}</span>
     </v-footer>
   </v-app>
 </template>
@@ -110,8 +95,14 @@ export default {
       miniVariant: false,
       right: true,
       rightDrawer: false,
-      title: 'Vuetify.js'
+      title: 'BLAↃKPINK TEST'
     }
   }
 }
 </script>
+
+<style scoped>
+.copyright {
+  opacity: 0.4;
+}
+</style>

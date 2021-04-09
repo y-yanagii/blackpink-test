@@ -1,7 +1,35 @@
 body {
-  background: $base-bg-pink;
-}
+  background: $base-bg-color !important;
+  font-family: "Hiragino Kaku Gothic ProN" !important;
+  font-weight: bold;
+  .BlackPinkTestLogo {
+    display: inline-block;
+    margin: 5rem auto;
+    position: relative;
+    overflow: hidden;
+    border: solid 3px $base-text-color;
+    border-radius: 11px;
+    height: 52px;
+    width: 75%;
+    .title-logo {
+      text-align: center;
+      font-size: 30px;
+      font-weight: bold;
+      color: $base-text-color;
+      height: 10rem;
+    }
+  }
 
-div {
-  background: $base-bg-pink;
+  .area-button {
+    text-align: center;
+    font-weight: bold;
+    border: solid 2px $base-text-color;
+    border-radius: 7px;
+    color: $base-text-color;
+    width: 20%;
+    span {
+      font-size: 15px;
+      color: $base-text-color;
+    }
+  }
 }
