@@ -1,6 +1,16 @@
 <template>
   <v-row justify="center" align="center">
     <v-col cols="12" sm="8" md="6">
+      <!-- スウィッチ領域 -->
+      <div class="text-right">
+        <v-switch
+          v-model="colorThema"
+          inset
+          right
+          color="#f4a6b8"
+          dark
+        ></v-switch>
+      </div>
       <!-- タイトルロゴ -->
       <div class="text-center">
         <logo />
@@ -11,11 +21,11 @@
           <v-text-field
             class="username-text"
             label="USERNANE"
+            v-model="username"
             :rules="rules"
+            maxlength="50"
             hide-details="auto"
             color="#f4a6b8"
-            
-            maxlength="50"
           ></v-text-field>
           <v-btn
             elevation="2"
@@ -28,6 +38,8 @@
           outlined
           class="area-button"
           @click="userNameCheck"
+          :disabled="username === ''"
+          to="/mode"
         >PLAY</v-btn>
         <br><br>
         <span class="base-text-color">or</span>
@@ -49,15 +61,19 @@ import Logo from '~/components/Logo.vue'
 export default {
   data: function() {
     return {
+      username: "",
       rules: [
-        //value => !!value || 'Required.',
+        value => !!value || 'USERNAME is Required.',
         //value => (value && value.length >= 3) || 'Min 3 characters',
-      ]
+      ],
+      colorThema: false,
     }
   },
   methods: {
     userNameCheck() {
-      
+      if (this.username) {
+
+      }
     }
   },
   components: {
