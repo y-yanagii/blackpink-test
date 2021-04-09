@@ -1,7 +1,25 @@
 body {
-  background: $base-bg-pink;
-}
+  background: $base-bg-color;
+  font-family: "Hiragino Kaku Gothic ProN";
+  .BlackPinkTestLogo {
+    display: inline-block;
+    margin: 4rem auto;
+    position: relative;
+    overflow: hidden;
+    border: solid 3px $base-bg-pink;
+    border-radius: 11px;
+    height: 52px;
+    width: 300px;
+    .title-logo {
+      text-align: center;
+      font-size: 30px;
+      font-weight: bold;
+      color: $base-bg-pink;
+      height: 10rem;
+    }
+  }
 
-div {
-  background: $base-bg-pink;
+  .button-area {
+    border: solid 1px $base-bg-pink;
+  }
 }
