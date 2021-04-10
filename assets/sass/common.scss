@@ -20,6 +20,23 @@ body {
     }
   }
 
+  .OtherLogo {
+    display: inline-block;
+    margin: 5rem auto 3rem auto;
+    position: relative;
+    overflow: hidden;
+    height: 52px;
+    width: 75%;
+    .title-logo {
+      text-align: center;
+      font-size: 30px;
+      font-weight: bold;
+      color: $base-text-color;
+      height: 10rem;
+    }
+  }
+
+  // STARTボタン
   .area-button {
     text-align: center;
     font-weight: bold;
@@ -30,6 +47,50 @@ body {
     span {
       font-size: 15px;
       color: $base-text-color;
+    }
+  }
+
+  // 難易度選択ボタン共通
+  .common-mode-button {
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 10%;
+    width: 60%;
+    span {
+      font-size: 20px;
+    }
+  }
+
+  // EASY, NORMAL, HARDボタン
+  .mode-button {
+    border: solid 1px $base-text-color;
+    border-radius: 7px;
+    color: $base-text-color;
+    span {
+      font-size: 20px;
+      color: $base-text-color;
+    }
+  }
+
+  // MASTERボタン
+  .master-mode-button {
+    border: solid 1px $master-color;
+    border-radius: 7px;
+    color: $master-color;
+    span {
+      font-size: 20px;
+      color: $master-color;
+    }
+  }
+
+  // SUDDEN DEATHボタン
+  .suddendeath-mode-button {
+    border: solid 1px $suddendeath-color;
+    border-radius: 7px;
+    color: $suddendeath-color;
+    span {
+      font-size: 20px;
+      color: $suddendeath-color;
     }
   }
 }
