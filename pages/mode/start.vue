@@ -15,7 +15,7 @@
           <v-btn
             outlined
             class="common-mode-button mode-button"
-            :style="{'border': getTitleColor.border}"
+            :style="{'border': getStyleColor.border}"
           >TEST START!</v-btn>
         </div>
       </v-col>
