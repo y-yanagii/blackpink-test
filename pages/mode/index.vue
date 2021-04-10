@@ -15,31 +15,27 @@
           <v-btn
             outlined
             class="common-mode-button mode-button"
-            to="/start"
+            @click="selectMode($event.target.textContent)"
           >E A S Y</v-btn>
 
           <v-btn
             outlined
             class="common-mode-button mode-button"
-            to="/start"
           >N O R M A L</v-btn>
 
           <v-btn
             outlined
             class="common-mode-button mode-button"
-            to="/start"
           >H A R D</v-btn>
 
           <v-btn
             outlined
             class="common-mode-button master-mode-button"
-            to="/start"
           >M A S T E R</v-btn>
 
           <v-btn
             outlined
             class="common-mode-button suddendeath-mode-button"
-            to="/start"
           >SUDDEN DEATH</v-btn>
         </div>
       </v-col>
@@ -55,7 +51,14 @@ export default {
     }
   },
   methods: {
-    
+    // 難易度選択を保持
+    selectMode(choiceMode) {
+      // dispatchでVuexのactionsを呼ぶ
+      // replaceで文字列中の空白除去
+      this.$store.dispatch('mode/selectMode', choiceMode.replace(/\s+/g, ""));
+      this.$router.push({ path: "/mode/start" });
+      console.log(this.$store.getters['mode/choiceMode']);
+    }
   }
 }
 </script>
