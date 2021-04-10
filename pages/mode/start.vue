@@ -6,8 +6,8 @@
         <!-- タイトルロゴ -->
         <div class="text-center">
           <div class="OtherLogo">
-            <span class="title-logo">
-              {{ showSelectedMode() + " MODE"}}
+            <span class="title-logo" :style="{'color': getStyleColor.color}">
+              {{ selectedMode + " MODE"}}
             </span>
           </div>
         </div>
@@ -15,6 +15,7 @@
           <v-btn
             outlined
             class="common-mode-button mode-button"
+            :style="{'border': getTitleColor.border}"
           >TEST START!</v-btn>
         </div>
       </v-col>
@@ -26,12 +27,26 @@
 export default {
   data: function() {
     return {
-
+      // 選択した難易度をVuexで取得
+      selectedMode: this.$store.getters['mode/choiceMode'],
     }
   },
-  methods: {
-    showSelectedMode() {
-      return this.$store.getters['mode/choiceMode']
+  computed: {
+    // 難易度による色の設定
+    getStyleColor: function() {
+      if (this.$data.selectedMode === 'MASTER') {
+        // 難易度MASTERの場合、紫色
+        return {
+          'color': '#A700FF',
+          'border': 'solid 1px #A700FF'
+        }
+      } else if (this.$data.selectedMode === 'SUDDENDEATH') {
+        // 難易度MASTERの場合、赤色
+        return {
+          'color': '#FF0000',
+          'border': 'solid 1px #FF0000'
+        }
+      }
     }
   }
 }
