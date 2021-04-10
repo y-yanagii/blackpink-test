@@ -7,11 +7,32 @@
         <div class="text-center">
           <div class="OtherLogo">
             <span class="title-logo">
-              START
+              {{ showSelectedMode() + " MODE"}}
             </span>
           </div>
+        </div>
+        <div class="text-center">
+          <v-btn
+            outlined
+            class="common-mode-button mode-button"
+          >TEST START!</v-btn>
         </div>
       </v-col>
     </v-row>
   </div>
 </template>
+
+<script>
+export default {
+  data: function() {
+    return {
+
+    }
+  },
+  methods: {
+    showSelectedMode() {
+      return this.$store.getters['mode/choiceMode']
+    }
+  }
+}
+</script>

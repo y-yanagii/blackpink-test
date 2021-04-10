@@ -1,9 +1,11 @@
-const state = {
+const state = () => ({
+  // グローバルなデータをここで定義
   mode: ""
-};
+});
 
 const getters = {
-  choiceMode: state => state.mode
+  // コンポーネントから参照時gettersから参照する
+  choiceMode: state => { return state.mode }
 }
 
 const mutations = {
