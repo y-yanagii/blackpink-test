@@ -21,7 +21,7 @@
           <v-text-field
             class="username-text"
             label="USERNANE"
-            v-model="username"
+            v-model="userName"
             :rules="rules"
             maxlength="50"
             hide-details="auto"
@@ -38,7 +38,7 @@
           outlined
           class="area-button"
           @click="userNameCheck"
-          :disabled="username === ''"
+          :disabled="!userName"
           to="/mode"
         >PLAY</v-btn>
         <br><br>
@@ -61,7 +61,7 @@ import Logo from '~/components/Logo.vue'
 export default {
   data: function() {
     return {
-      username: "",
+      userName: "",
       rules: [
         value => !!value || 'USERNAME is Required.',
         //value => (value && value.length >= 3) || 'Min 3 characters',
