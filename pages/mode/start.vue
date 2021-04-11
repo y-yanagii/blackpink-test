@@ -18,18 +18,30 @@
             :style="{'border': getStyleColor.border}"
           >TEST START!</v-btn>
         </div>
+        <div>
+          <ul>
+            <li v-for="(test, index) in tests" :key="index">{{test}}</li>
+          </ul>
+        </div>
       </v-col>
     </v-row>
   </div>
 </template>
 
 <script>
+import { db } from "~/plugins/firebase";
+
 export default {
   data: function() {
     return {
       // 選択した難易度をVuexで取得
       selectedMode: this.$store.getters['mode/choiceMode'],
+      tests: [],
     }
+  },
+  firestore: {
+    // firestoreのtestsコレクションを取得
+    tests: db.collection("tests")
   },
   computed: {
     // 難易度による色の設定
@@ -46,8 +58,15 @@ export default {
           'color': '#FF0000',
           'border': 'solid 1px #FF0000'
         }
+      } else {
+        // 難易度EASY, NORMAL, HARDの場合、ピンク
+        return {
+          'color': '#f4a6b8',
+          'border': 'solid 1px #f4a6b8'
+        }
       }
+      
     }
-  }
+  },
 }
 </script>
