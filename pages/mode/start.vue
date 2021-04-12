@@ -16,6 +16,8 @@
             outlined
             class="common-mode-button mode-button"
             :style="{'border': getStyleColor.border}"
+            to="/mode/test"
+            nuxt
           >TEST START!</v-btn>
         </div>
         <div>
