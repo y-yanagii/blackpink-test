@@ -1,8 +1,9 @@
 <template>
   <div class="text-left">
-    <div>
-      <span style="color: pink;">
-        {{ minutes | zeroPad }}:{{ seconds | zeroPad }}:{{ milliSeconds | zeroPad(3) }}
+    <div class="timer">
+      <span>
+        <!-- {{ minutes | zeroPad }}:{{ seconds | zeroPad }}:{{ milliSeconds | zeroPad(3) }} -->
+        00:00:000
       </span>
     </div>
   </div>
@@ -12,60 +13,67 @@
 export default {
   data: function() {
     return {
-      animateFrame: 0, // requestAnimationFrame(cd)の返り値(requestID)が入る
-      nowTime: 0, // 現在時刻
-      diffTime: 0, // 現在時刻とスタートボタンを押した時刻の差
-      startTime: 0, // スタートボタンを押した時刻
-      isRunning: false // 計測中の状態保持
+//      animateFrame: 0, // requestAnimationFrame(cd)の返り値(requestID)が入る
+//      nowTime: 0, // 現在時刻
+//      diffTime: 0, // 現在時刻とスタートボタンを押した時刻の差
+//      startTime: 0, // スタートボタンを押した時刻
+//      isRunning: false // 計測中の状態保持
     }
   },
   created() {
-    // タイマースタート
-    // loop()内でthisの値が変更されるため退避
-    let vm = this;
-    // 計測開始フラグ
-    vm.isRunning = true;
-
-    // loop処理
-    (function loop() {
-      vm.nowTime = Math.floor(performance.now());
-      vm.diffTime = vm.nowTime - vm.startTime;
-      vm.animateFrame = requestAnimationFrame(loop);
-    }());
-    
+//    // タイマースタート
+//    // loop()内でthisの値が変更されるため退避
+//    let vm = this;
+//    // 計測開始フラグ
+//    vm.isRunning = true;
+//
+//    // loop処理
+//    (function loop() {
+//      vm.nowTime = Math.floor(performance.now());
+//      vm.diffTime = vm.nowTime - vm.startTime;
+//      vm.animateFrame = requestAnimationFrame(loop);
+//    }());
   },
   beforeDestroy() {
-    // タイマーの初期化
-    let vm = this;
-    vm.nowTime = 0;
-    vm.diffTime = 0;
-    vm.startTime = 0;
-    vm.isRunning = false;
-    // タイマースットプ処理
-    cancelAnimationFrame(vm.animateFrame);
-    vm.animateFrame = 0;
+//    // タイマーの初期化
+//    let vm = this;
+//    vm.nowTime = 0;
+//    vm.diffTime = 0;
+//    vm.startTime = 0;
+//    vm.isRunning = false;
+//    // タイマースットプ処理
+//    cancelAnimationFrame(vm.animateFrame);
+//    vm.animateFrame = 0;
   },
   computed: {
-    minutes: function() {
-      // 分数を計算(99分になったら0分に戻る)
-      return Math.floor(this.diffTime / 1000 / 60) % 99;
-    },
-    seconds: function() {
-      // 秒数を計算(60秒になったら0秒に戻る)
-      return Math.floor(this.diffTime / 1000) % 60;
-    },
-    milliSeconds: function() {
-      // ミリ秒を計算(1000ミリ秒になったら0ミリ秒に戻る)
-      return Math.floor(this.diffTime % 1000)
-    }
+//    minutes: function() {
+//      // 分数を計算(99分になったら0分に戻る)
+//      return Math.floor(this.diffTime / 1000 / 60) % 99;
+//    },
+//    seconds: function() {
+//      // 秒数を計算(60秒になったら0秒に戻る)
+//      return Math.floor(this.diffTime / 1000) % 60;
+//    },
+//    milliSeconds: function() {
+//      // ミリ秒を計算(1000ミリ秒になったら0ミリ秒に戻る)
+//      return Math.floor(this.diffTime % 1000)
+//    }
   },
   filters: {
     // フォーマット整形
-    zeroPad: function(value, num) {
-      // タイマーを0埋め
-      var num = typeof num !== 'undefined' ? num : 2;
-      return value.toString().padStart(num, "0");
-    }
+//    zeroPad: function(value, num) {
+//      // タイマーを0埋め
+//      var num = typeof num !== 'undefined' ? num : 2;
+//      return value.toString().padStart(num, "0");
+//    }
   },
 }
 </script>
+
+<style scoped lang="scss">
+  .timer {
+    color: $base-text-color;
+    margin-left: 5%;
+    padding-bottom: 1%;
+  }
+</style>

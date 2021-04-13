@@ -35,6 +35,22 @@ body {
       height: 10rem;
     }
   }
+  
+  .TestTitleLogo {
+    display: inline-block;
+    margin: 1rem auto 0rem auto;
+    position: relative;
+    overflow: hidden;
+    height: 52px;
+    width: 75%;
+    .title-logo {
+      text-align: center;
+      font-size: 30px;
+      font-weight: bold;
+      color: $base-text-color;
+      height: 10rem;
+    }
+  }
 
   // STARTボタン
   .area-button {
@@ -91,6 +107,45 @@ body {
     span {
       font-size: 20px;
       color: $suddendeath-color;
+    }
+  }
+
+  // デフォルトの問題文領域
+  .question-area {
+    margin: auto;
+    color: $base-text-color;
+    width: 90%;
+    background-color: $base-bg-color;
+    border: solid 1px $base-text-color;
+    border-radius: 7px;
+    p {
+      padding: 2%;
+      margin: 0;
+    }
+  }
+
+  // 問題コンテンツエリア
+  .content-area {
+    width: 100%;
+    height: 40%;
+  }
+
+  // デフォルトの選択値ボタン
+  .options-area {
+    div {
+      margin: 1%;
+      .option-btn {
+        width: 90%;
+        text-align: left;
+        border: solid 1px $base-text-color;
+        border-radius: 7px;
+        color: $base-text-color;
+        background-color: $base-bg-color;
+        span {
+          display: inline-block;
+          font-weight: bold;
+        }
+      }
     }
   }
 }

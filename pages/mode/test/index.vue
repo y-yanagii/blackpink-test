@@ -4,7 +4,7 @@
       <v-col cols="12" sm="8" md="6">
         <ModeTitle></ModeTitle>
         <Time></Time>
-        <Card></Card>
+        <TestCard></TestCard>
       </v-col>
     </v-row>
   </div>
@@ -13,7 +13,7 @@
 <script>
 import ModeTitle from '~/components/ModeTitle.vue';
 import Time from '~/components/Time.vue';
-import Card from '~/components/Card.vue';
+import TestCard from '~/components/TestCard.vue';
 
 export default {
   data: function() {
@@ -23,7 +23,7 @@ export default {
   components: {
     ModeTitle,
     Time,
-    Card
+    TestCard
   }
 }
 </script>

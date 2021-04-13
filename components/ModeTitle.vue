@@ -1,6 +1,6 @@
 <template>
   <div class="text-center">
-    <div class="OtherLogo">
+    <div class="TestTitleLogo">
       <span class="title-logo">
         {{ selectedMode }}
       </span>
