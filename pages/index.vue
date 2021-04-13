@@ -34,16 +34,20 @@
           ><i class="mdi mdi-twitter"/></v-btn>
         </div>
         <br>
+
         <v-btn
           outlined
           class="area-button"
           @click="userNameCheck"
           :disabled="!userName"
           to="/mode"
+          nuxt
         >PLAY</v-btn>
         <br><br>
+
         <span class="base-text-color">or</span>
         <br><br>
+        
         <router-link
           to="/mode"
           active-class="link--active"

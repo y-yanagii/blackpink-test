@@ -4,11 +4,11 @@ body {
   font-weight: bold;
   .BlackPinkTestLogo {
     display: inline-block;
-    margin: 5rem auto;
+    margin: 2rem auto;
     position: relative;
     overflow: hidden;
-    border: solid 3px $base-text-color;
-    border-radius: 11px;
+    border: solid 4px $base-text-color;
+    // border-radius: 11px;
     height: 52px;
     width: 75%;
     .title-logo {
@@ -22,7 +22,23 @@ body {
 
   .OtherLogo {
     display: inline-block;
-    margin: 5rem auto 3rem auto;
+    margin: 2rem auto 2rem auto;
+    position: relative;
+    overflow: hidden;
+    height: 52px;
+    width: 75%;
+    .title-logo {
+      text-align: center;
+      font-size: 30px;
+      font-weight: bold;
+      color: $base-text-color;
+      height: 10rem;
+    }
+  }
+  
+  .TestTitleLogo {
+    display: inline-block;
+    margin: 1rem auto 0rem auto;
     position: relative;
     overflow: hidden;
     height: 52px;
@@ -41,7 +57,7 @@ body {
     text-align: center;
     font-weight: bold;
     border: solid 2px $base-text-color;
-    border-radius: 7px;
+    // border-radius: 7px;
     color: $base-text-color;
     width: 20%;
     span {
@@ -63,8 +79,8 @@ body {
 
   // EASY, NORMAL, HARDボタン
   .mode-button {
-    border: solid 1px $base-text-color;
-    border-radius: 7px;
+    border: solid 2px $base-text-color;
+    // border-radius: 7px;
     color: $base-text-color;
     span {
       font-size: 20px;
@@ -74,8 +90,8 @@ body {
 
   // MASTERボタン
   .master-mode-button {
-    border: solid 1px $master-color;
-    border-radius: 7px;
+    border: solid 2px $master-color;
+    // border-radius: 7px;
     color: $master-color;
     span {
       font-size: 20px;
@@ -85,12 +101,47 @@ body {
 
   // SUDDEN DEATHボタン
   .suddendeath-mode-button {
-    border: solid 1px $suddendeath-color;
-    border-radius: 7px;
+    border: solid 2px $suddendeath-color;
+    // border-radius: 7px;
     color: $suddendeath-color;
     span {
       font-size: 20px;
       color: $suddendeath-color;
+    }
+  }
+
+  // デフォルトの問題文領域
+  .question-area {
+    margin: auto;
+    color: $base-text-color;
+    width: 90%;
+    background-color: $base-bg-color;
+    border: solid 1px $base-text-color;
+    border-radius: 7px;
+  }
+
+  // 問題コンテンツエリア
+  .content-area {
+    width: 100%;
+    height: 40%;
+  }
+
+  // デフォルトの選択値ボタン
+  .options-area {
+    div {
+      margin: 1%;
+      .option-btn {
+        width: 90%;
+        text-align: left;
+        border: solid 1px $base-text-color;
+        border-radius: 7px;
+        color: $base-text-color;
+        background-color: $base-bg-color;
+        span {
+          display: inline-block;
+          font-weight: bold;
+        }
+      }
     }
   }
 }
