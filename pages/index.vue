@@ -13,7 +13,9 @@
       </div>
       <!-- タイトルロゴ -->
       <div class="text-center">
-        <logo />
+        <transition name="fade" appear>
+          <Logo></Logo>
+        </transition>
       </div>
       <!-- 初期登録領域 -->
       <div class="text-center">
@@ -47,7 +49,7 @@
 
         <span class="base-text-color">or</span>
         <br><br>
-        
+
         <router-link
           to="/mode"
           active-class="link--active"
@@ -87,6 +89,13 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 2.5s;
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+}
+
 .username-text {
   display: inline-block;
   margin: auto;
