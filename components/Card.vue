@@ -1,6 +1,11 @@
 <template>
-  <div>
-
+  <div class="text-center">
+    <div class="test-card text-center">
+      <div>a</div>
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
   </div>
 </template>
 
@@ -9,6 +14,11 @@ export default {
 }
 </script>
 
-<style scoped>
-
+<style scoped lang="scss">
+  .test-card {
+    width: 90%;
+    height: 450px;
+    border: solid 2px $base-text-color;
+    background-color: $card-background-color;
+  }
 </style>

@@ -52,19 +52,19 @@ export default {
         // 難易度MASTERの場合、紫色
         return {
           'color': '#A700FF',
-          'border': 'solid 1px #A700FF'
+          'border': 'solid 2px #A700FF'
         }
       } else if (this.$data.selectedMode === 'SUDDENDEATH') {
         // 難易度MASTERの場合、赤色
         return {
           'color': '#FF0000',
-          'border': 'solid 1px #FF0000'
+          'border': 'solid 2px #FF0000'
         }
       } else {
         // 難易度EASY, NORMAL, HARDの場合、ピンク
         return {
           'color': '#f4a6b8',
-          'border': 'solid 1px #f4a6b8'
+          'border': 'solid 2px #f4a6b8'
         }
       }
       

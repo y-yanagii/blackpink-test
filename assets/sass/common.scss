@@ -4,11 +4,11 @@ body {
   font-weight: bold;
   .BlackPinkTestLogo {
     display: inline-block;
-    margin: 5rem auto;
+    margin: 2rem auto;
     position: relative;
     overflow: hidden;
-    border: solid 3px $base-text-color;
-    border-radius: 11px;
+    border: solid 4px $base-text-color;
+    // border-radius: 11px;
     height: 52px;
     width: 75%;
     .title-logo {
@@ -22,7 +22,7 @@ body {
 
   .OtherLogo {
     display: inline-block;
-    margin: 5rem auto 3rem auto;
+    margin: 2rem auto 2rem auto;
     position: relative;
     overflow: hidden;
     height: 52px;
@@ -41,7 +41,7 @@ body {
     text-align: center;
     font-weight: bold;
     border: solid 2px $base-text-color;
-    border-radius: 7px;
+    // border-radius: 7px;
     color: $base-text-color;
     width: 20%;
     span {
@@ -63,8 +63,8 @@ body {
 
   // EASY, NORMAL, HARDボタン
   .mode-button {
-    border: solid 1px $base-text-color;
-    border-radius: 7px;
+    border: solid 2px $base-text-color;
+    // border-radius: 7px;
     color: $base-text-color;
     span {
       font-size: 20px;
@@ -74,8 +74,8 @@ body {
 
   // MASTERボタン
   .master-mode-button {
-    border: solid 1px $master-color;
-    border-radius: 7px;
+    border: solid 2px $master-color;
+    // border-radius: 7px;
     color: $master-color;
     span {
       font-size: 20px;
@@ -85,8 +85,8 @@ body {
 
   // SUDDEN DEATHボタン
   .suddendeath-mode-button {
-    border: solid 1px $suddendeath-color;
-    border-radius: 7px;
+    border: solid 2px $suddendeath-color;
+    // border-radius: 7px;
     color: $suddendeath-color;
     span {
       font-size: 20px;
