@@ -5,7 +5,14 @@
         {{ currentTest + " / " + testSum }}
       </div>
       <div class="question-area">
-        <p>{{ q }} YSLのアンバサダーを勤めたことのあるメンバーは誰でしょう？</p>
+        <!-- 問題文を1文字ずつ表示させるためv-forでかつspanタグ -->
+        <span
+          v-for="(q, index) in question"
+          :key="index"
+          v-text="q"
+          class="question-item"
+          :style="{animationDelay: index*100+'ms'}"
+        />
       </div>
       <div class="content-area">
 
@@ -17,11 +24,15 @@
           :key="optionBtn.textContent"
           :class="optionBtn.class"
         >
-          <v-btn
-            outlined
-            class="option-btn"
-            nuxt
-          >{{ optionBtn.textContent }}</v-btn>
+          <v-btn outlined class="option-btn" nuxt>
+            <span
+              v-for="(t, index) in optionBtn.textContent"
+              :key="index"
+              v-text="t"
+              class="option-item"
+              :style="{animationDelay: index*100+'ms'}"
+              />
+          </v-btn>
         </div>
       </div>
       <div>
@@ -37,12 +48,14 @@ export default {
     return {
       currentTest: 0,
       testSum: 15,
-      q: "Q. ",
+      question: "Q. YSLのアンバサダーを勤めたことのあるメンバーは誰でしょう？",
       a: "A. ",
       b: "B. ",
       c: "C. ",
       d: "D. ",
     }
+  },
+  methods: {
   },
   computed: {
     // 選択値をオブジェクトの配列で定義
@@ -71,5 +84,19 @@ export default {
   .test-number-area {
     color: $base-text-color;
     padding: 2%;
+  }
+
+  @keyframes text-in {
+    0% {
+      transform: translate(-1px, 0px);
+      opacity: 0;
+    }
+  }
+
+  .question-item,.option-item {
+    display: inline-block;
+    min-width: 0.3em;
+    animation-direction: normal;
+    animation: text-in 0.8s cubic-bezier(0.22, 0.15, 0.25, 1.43) 0s backwards;
   }
 </style>
