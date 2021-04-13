@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="text-left">
     <div>
       <span style="color: pink;">
         {{ minutes | zeroPad }}:{{ seconds | zeroPad }}:{{ milliSeconds | zeroPad(3) }}
@@ -22,7 +22,7 @@ export default {
   created() {
     // タイマースタート
     // loop()内でthisの値が変更されるため退避
-    var vm = this;
+    let vm = this;
     // 計測開始フラグ
     vm.isRunning = true;
 
@@ -34,10 +34,21 @@ export default {
     }());
     
   },
+  beforeDestroy() {
+    // タイマーの初期化
+    let vm = this;
+    vm.nowTime = 0;
+    vm.diffTime = 0;
+    vm.startTime = 0;
+    vm.isRunning = false;
+    // タイマースットプ処理
+    cancelAnimationFrame(vm.animateFrame);
+    vm.animateFrame = 0;
+  },
   computed: {
     minutes: function() {
-      // 分数を計算(60分になったら0分に戻る)
-      return Math.floor(this.diffTime / 1000 / 60) % 60;
+      // 分数を計算(99分になったら0分に戻る)
+      return Math.floor(this.diffTime / 1000 / 60) % 99;
     },
     seconds: function() {
       // 秒数を計算(60秒になったら0秒に戻る)
