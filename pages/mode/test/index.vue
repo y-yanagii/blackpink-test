@@ -4,7 +4,7 @@
       <v-col cols="12" sm="8" md="6">
         <ModeTitle></ModeTitle>
         <Time></Time>
-        <TestCard :tests="tests"></TestCard>
+        <TestCard :tests="getTests"></TestCard>
         <ul>
           <li v-for="(test, index) in tests" :key="index">{{test}}</li>
         </ul>
@@ -24,8 +24,11 @@ export default {
       
     }
   },
-  props: {
-    tests: Object
+  computed: {
+    // 難易度別にテスト情報取得
+    getTests: function() {
+      return this.$store.getters['tests/getTestsByMode'];
+    },
   },
   components: {
     ModeTitle,
@@ -33,7 +36,8 @@ export default {
     TestCard
   },
   created() {
-    console.log(this);
+    // tests情報の初期化
+    this.$store.dispatch('tests/init');
   }
 }
 </script>

@@ -20,11 +20,7 @@
             nuxt
           >TEST START!</v-btn>
         </div>
-        <div>
-          <ul>
-            <li v-for="(test, index) in getTests" :key="index">{{test}}</li>
-          </ul>
-        </div>
+        <div></div>
       </v-col>
     </v-row>
   </div>
@@ -44,7 +40,7 @@ export default {
   methods: {
     testStart() {
       // 検定画面に遷移（テスト開始）
-      this.$router.push({ name: "mode-test", path: "/mode/test", params: { tests: this.$data.tests }, props: true })
+      this.$router.push({ name: "mode-test", path: "/mode/test" })
     }
   },
   firestore: {
