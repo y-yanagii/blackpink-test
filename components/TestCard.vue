@@ -15,7 +15,10 @@
         />
       </div>
       <div class="content-area">
-
+        <!-- コンテンツ領域 -->
+        <ul>
+          <li v-for="(test, index) in tests" :key="index">{{test}}</li>
+        </ul>
       </div>
       <div class="options-area">
         <!-- 選択肢領域 -->
@@ -36,7 +39,7 @@
         </div>
       </div>
       <div>
-
+        
       </div>
     </div>
   </div>
@@ -55,6 +58,7 @@ export default {
       d: "D. ",
     }
   },
+  props: ["tests"],
   methods: {
   },
   computed: {

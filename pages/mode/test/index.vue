@@ -4,7 +4,10 @@
       <v-col cols="12" sm="8" md="6">
         <ModeTitle></ModeTitle>
         <Time></Time>
-        <TestCard></TestCard>
+        <TestCard :tests="tests"></TestCard>
+        <ul>
+          <li v-for="(test, index) in tests" :key="index">{{test}}</li>
+        </ul>
       </v-col>
     </v-row>
   </div>
@@ -18,12 +21,19 @@ import TestCard from '~/components/TestCard.vue';
 export default {
   data: function() {
     return {
+      
     }
+  },
+  props: {
+    tests: Object
   },
   components: {
     ModeTitle,
     Time,
     TestCard
+  },
+  created() {
+    console.log(this);
   }
 }
 </script>
