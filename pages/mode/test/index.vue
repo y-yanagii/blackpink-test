@@ -4,7 +4,12 @@
       <v-col cols="12" sm="8" md="6">
         <ModeTitle></ModeTitle>
         <Time></Time>
-        <TestCard :tests="getTests"></TestCard>
+        <TestCard
+          v-for="(test, index) in getTests"
+          :key="index"
+          :test="test"
+          :currentTest="currentTest"
+        ></TestCard>
       </v-col>
     </v-row>
   </div>
@@ -18,7 +23,7 @@ import TestCard from '~/components/TestCard.vue';
 export default {
   data: function() {
     return {
-      questionIndex: 0,
+      currentTest: 0,
     }
   },
   computed: {

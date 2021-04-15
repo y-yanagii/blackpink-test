@@ -13,7 +13,7 @@
       </div>
       <!-- タイトルロゴ -->
       <div class="text-center">
-        <transition name="fade" appear>
+        <transition name="fadeLogo" appear>
           <Logo></Logo>
         </transition>
       </div>
@@ -89,10 +89,10 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.fade-enter-active, .fade-leave-active {
-  transition: opacity 2.5s;
+.fadeLogo-enter-active, .fade-leave-active {
+  transition: opacity 3.5s;
 }
-.fade-enter, .fade-leave-to {
+.fadeLogo-enter, .fade-leave-to {
   opacity: 0;
 }
 

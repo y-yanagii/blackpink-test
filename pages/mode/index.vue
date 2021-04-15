@@ -13,6 +13,7 @@
         </div>
         <div class="text-center">
           <!-- computedに定義した配列オブジェクトをv-forで回しバインディングを設定 -->
+          <transition-group name="fade" appear>
           <v-btn
             v-for="modeButton in modeButtons"
             :key="modeButton.textContent"
@@ -23,6 +24,7 @@
           >
           {{ modeButton.textContent }}
           </v-btn>
+          </transition-group>
         </div>
       </v-col>
     </v-row>
@@ -60,3 +62,13 @@ export default {
   }
 }
 </script>
+
+<style scoped lang="scss">
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 1.5s;
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+  transform: translateY(-20px);
+}
+</style>
