@@ -16,22 +16,18 @@
             outlined
             class="common-mode-button mode-button"
             :style="{'border': getStyleColor.border}"
-            to="/mode/test"
+            @click="testStart()"
             nuxt
           >TEST START!</v-btn>
         </div>
-        <div>
-          <ul>
-            <li v-for="(test, index) in tests" :key="index">{{test}}</li>
-          </ul>
-        </div>
+        <div></div>
       </v-col>
     </v-row>
   </div>
 </template>
 
 <script>
-import { db } from "~/plugins/firebase";
+//import { db } from "~/plugins/firebase";
 
 export default {
   data: function() {
@@ -41,11 +37,21 @@ export default {
       tests: [],
     }
   },
+  methods: {
+    testStart() {
+      // 検定画面に遷移（テスト開始）
+      this.$router.push({ name: "mode-test", path: "/mode/test" })
+    }
+  },
   firestore: {
     // firestoreのtestsコレクションを取得
-    tests: db.collection("tests")
+    // tests: db.collection("tests")
   },
   computed: {
+    // 難易度別にテスト情報取得
+    getTests: function() {
+      return this.$store.getters['tests/getTestsByMode'];
+    },
     // 難易度による色の設定
     getStyleColor: function() {
       if (this.$data.selectedMode === 'MASTER') {
@@ -67,8 +73,11 @@ export default {
           'border': 'solid 2px #f4a6b8'
         }
       }
-      
     }
   },
+  created() {
+    // tests情報の初期化
+    this.$store.dispatch('tests/init');
+  }
 }
 </script>

@@ -4,7 +4,7 @@
       <v-col cols="12" sm="8" md="6">
         <ModeTitle></ModeTitle>
         <Time></Time>
-        <TestCard></TestCard>
+        <TestCard :tests="getTests"></TestCard>
       </v-col>
     </v-row>
   </div>
@@ -18,12 +18,23 @@ import TestCard from '~/components/TestCard.vue';
 export default {
   data: function() {
     return {
+      questionIndex: 0,
     }
+  },
+  computed: {
+    // 難易度別にテスト情報取得
+    getTests: function() {
+      return this.$store.getters['tests/getTestsByMode'];
+    },
   },
   components: {
     ModeTitle,
     Time,
     TestCard
+  },
+  created() {
+    // tests情報の初期化
+    this.$store.dispatch('tests/init');
   }
 }
 </script>

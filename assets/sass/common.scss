@@ -38,7 +38,7 @@ body {
   
   .TestTitleLogo {
     display: inline-block;
-    margin: 1rem auto 0rem auto;
+    margin: 0rem auto 0rem auto;
     position: relative;
     overflow: hidden;
     height: 52px;
@@ -129,7 +129,7 @@ body {
   // デフォルトの選択値ボタン
   .options-area {
     div {
-      margin: 1%;
+      margin-bottom: 2%;
       .option-btn {
         width: 90%;
         text-align: left;
