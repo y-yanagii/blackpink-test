@@ -7,8 +7,9 @@
         <TestCard
           :currentTest="currentTest"
           :test="tests[currentTest]"
+          ref="test_card"
+          @option-click="addAnswer"
         ></TestCard>
-        <v-btn @click="add()">次の問題</v-btn>
       </v-col>
     </v-row>
   </div>
@@ -24,6 +25,7 @@ export default {
     return {
       currentTest: 0,
       tests: this.$store.getters['tests/getTestsByMode'],
+      answers: [],
     }
   },
   computed: {
@@ -38,10 +40,18 @@ export default {
     TestCard
   },
   methods: {
-    add() {
+    // 選択肢押下時処理(解答時)
+    addAnswer(value) {
+      // 選択した結果を解答を配列に保持（正か誤かをtrue、falseで判断）
+      this.answers.push(value)
+      // 次のクイズに切り替え
       this.currentTest++
-      let targetElement = this.$el;
-        debugger
+      debugger
+      if (this.currentTest === this.tests.length - 1) {
+        // 最終問題の場合、結果表示処理に移行
+      } else {
+        // 次の問題に移行
+      }
     }
   },
   created() {

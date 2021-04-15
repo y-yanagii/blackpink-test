@@ -30,7 +30,7 @@
             outlined
             class="option-btn"
             nuxt
-            @click="addAnswer()"
+            @click="$emit('option-click', optionBtn.answer.isAnswer)"
           >
             {{abcd[index]}}
             <span
@@ -39,6 +39,7 @@
               v-text="t"
               class="option-item"
               :style="{animationDelay: index*100+'ms'}"
+              ref="test_card"
             />
           </v-btn>
         </div>
@@ -61,17 +62,6 @@ export default {
   },
   props: ["test", "currentTest"],
   methods: {
-    addAnswer() {
-      // 選択肢押下時処理
-      this.currentTest++;
-      console.log(this.currentTest)
-      debugger
-      if (this.currentTest === this.testTotal) {
-
-      } else {
-        
-      }
-    }
   },
   computed: {
     
