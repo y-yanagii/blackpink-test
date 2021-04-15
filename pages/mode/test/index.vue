@@ -5,11 +5,10 @@
         <ModeTitle></ModeTitle>
         <Time></Time>
         <TestCard
-          v-for="(test, index) in getTests"
-          :key="index"
-          :test="test"
           :currentTest="currentTest"
+          :test="tests[currentTest]"
         ></TestCard>
+        <v-btn @click="add()">次の問題</v-btn>
       </v-col>
     </v-row>
   </div>
@@ -24,6 +23,7 @@ export default {
   data: function() {
     return {
       currentTest: 0,
+      tests: this.$store.getters['tests/getTestsByMode'],
     }
   },
   computed: {
@@ -36,6 +36,13 @@ export default {
     ModeTitle,
     Time,
     TestCard
+  },
+  methods: {
+    add() {
+      this.currentTest++
+      let targetElement = this.$el;
+        debugger
+    }
   },
   created() {
     // tests情報の初期化

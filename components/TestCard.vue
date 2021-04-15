@@ -2,7 +2,7 @@
   <div class="text-center">
     <div class="test-card text-center">
       <div class="text-left test-number-area">
-        {{ currentTest + 1 + " / " + testSum }}
+        {{ currentTest + 1 + " / " + testTotal }}
       </div>
       <div class="question-area">
         <!-- 問題文を1文字ずつ表示させるためv-forでかつspanタグ -->
@@ -54,7 +54,7 @@
 export default {
   data: function() {
     return {
-      testSum: 15,
+      testTotal: 15,
       q: "Q. ",
       abcd: ["A. ", "B. ", "C. ", "D. "],
     }
@@ -63,15 +63,20 @@ export default {
   methods: {
     addAnswer() {
       // 選択肢押下時処理
+      this.currentTest++;
+      console.log(this.currentTest)
+      debugger
+      if (this.currentTest === this.testTotal) {
 
+      } else {
+        
+      }
     }
   },
   computed: {
     
   },
   created() {
-    console.log(this.test);
-    debugger
   }
 }
 </script>
@@ -91,13 +96,14 @@ export default {
     padding: 2%;
   }
 
+  // 問題文と解答文のアニメーション
   @keyframes text-in {
     0% {
       transform: translate(-1px, 0px);
       opacity: 0;
     }
   }
-
+  // 問題文と解答文のアニメーション
   .question-item,.option-item {
     display: inline-block;
     min-width: 0.3em;
@@ -105,18 +111,20 @@ export default {
     animation: text-in 0.8s cubic-bezier(0.22, 0.15, 0.25, 1.43) 0s backwards;
   }
 
-  .movie-wrap {
-     position: relative;
-     padding-bottom: 56.25%; /*アスペクト比 16:9の場合の縦幅*/
-     height: 0;
-     overflow: hidden;
+// youtube埋め込み用
+.movie-wrap {
+  position: relative;
+  padding-bottom: 56.25%; /*アスペクト比 16:9の場合の縦幅*/
+  height: 0;
+  overflow: hidden;
 }
- 
+
+// youtube埋め込み用
 .movie-wrap iframe {
-     position: absolute;
-     top: 0;
-     left: 0;
-     width: 100%;
-     height: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 }
 </style>
