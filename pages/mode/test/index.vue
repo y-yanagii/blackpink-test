@@ -5,9 +5,6 @@
         <ModeTitle></ModeTitle>
         <Time></Time>
         <TestCard :tests="getTests"></TestCard>
-        <ul>
-          <li v-for="(test, index) in tests" :key="index">{{test}}</li>
-        </ul>
       </v-col>
     </v-row>
   </div>
@@ -21,7 +18,7 @@ import TestCard from '~/components/TestCard.vue';
 export default {
   data: function() {
     return {
-      
+      questionIndex: 0,
     }
   },
   computed: {
