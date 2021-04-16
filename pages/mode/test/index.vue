@@ -50,8 +50,8 @@ export default {
         // 最終問題の場合
         // Vuexに解答結果を送信
         this.$store.dispatch('tests/setAnswerInfo', { answers: this.answers, clearTime: this.clearTime })
-        // 結果表示処理に遷移
-        //this.$router.push({ path: "/re" })
+        // 検定結果画面に遷移
+        this.$router.push({ path: "/result" })
       } else {
         // 次の問題に移行
         this.currentTest++

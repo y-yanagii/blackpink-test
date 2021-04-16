@@ -35,7 +35,6 @@ const mutations = {
   // mutationsがstate（グローバル変数的な）のデータを実際に変更
   // 解答結果をセット
   setAnswerInfo(state, answerInfo) {
-    debugger
     state.answerInfo.answerResults = answerInfo.answers;
     state.answerInfo.clearTime = answerInfo.clearTime;
   }
