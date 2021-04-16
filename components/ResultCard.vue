@@ -3,7 +3,7 @@
     <div class="result-card">
       <!-- タイトル領域 -->
       <div class="text-center result-card-title">
-        <p>CONGRATULATIONS！<br>BLACKPINK TEST(SUDDEN DEATH)</p>
+        <p>CONGRATULATIONS！<br>BLACKPINK TEST({{ selectedMode }})</p>
       </div>
       <!-- 結果情報領域 -->
       <div class="text-center result-area">
@@ -42,6 +42,7 @@
 export default {
   data() {
     return {
+      selectedMode: this.$store.getters['mode/choiceMode'],
       sns:{
         twitter:'https://twitter.com/intent/tweet?url=https://yahoo.co.jp&text=TEST結果は&hashtags=BLACKPINK,ブラックピンク,BLINK,BLACKPINKTEST',
       },
