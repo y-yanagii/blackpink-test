@@ -5,13 +5,17 @@ const testsRef = db.collection('tests');
 
 const state = () => ({
   // グローバルなデータをここで定義
-  tests: []
+  tests: [],
+  answerInfo: {
+    answerResults: [],
+    clearTime: "",
+  },
 });
 
 const getters = {
   // コンポーネントから参照時gettersから参照する
-  getTestsByMode: state => { return state.tests }
-  
+  getTestsByMode: state => { return state.tests },
+  getAnswerInfo: state => { return state.answerInfo },
 };
 
 const actions = {
@@ -20,10 +24,21 @@ const actions = {
   init: firestoreAction(({ bindFirestoreRef }) => {
     bindFirestoreRef('tests', testsRef)
   }),
+
+  // 解答結果情報をセット
+  setAnswerInfo(context, answerInfo) {
+    context.commit('setAnswerInfo', answerInfo);
+  }
 };
 
 const mutations = {
   // mutationsがstate（グローバル変数的な）のデータを実際に変更
+  // 解答結果をセット
+  setAnswerInfo(state, answerInfo) {
+    debugger
+    state.answerInfo.answerResults = answerInfo.answers;
+    state.answerInfo.clearTime = answerInfo.clearTime;
+  }
 };
 
 // 上のオブジェクトをexport

@@ -26,6 +26,7 @@ export default {
       currentTest: 0,
       tests: this.$store.getters['tests/getTestsByMode'],
       answers: [],
+      clearTime: "00:00:000",
     }
   },
   computed: {
@@ -44,12 +45,16 @@ export default {
     addAnswer(value) {
       // 選択した結果を解答を配列に保持（正か誤かをtrue、falseで判断）
       this.answers.push(value)
-      // 次のクイズに切り替え
-      this.currentTest++
+
       if (this.currentTest === this.tests.length - 1) {
-        // 最終問題の場合、結果表示処理に移行
+        // 最終問題の場合
+        // Vuexに解答結果を送信
+        this.$store.dispatch('tests/setAnswerInfo', { answers: this.answers, clearTime: this.clearTime })
+        // 結果表示処理に遷移
+        //this.$router.push({ path: "/re" })
       } else {
         // 次の問題に移行
+        this.currentTest++
       }
     }
   },
