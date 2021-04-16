@@ -30,7 +30,6 @@
           <v-btn
             :href=sns.twitter
             target="_blank"
-            color="#3298dc"
           ><i class="mdi mdi-twitter"/>Share
           </v-btn>
         </div>
@@ -49,23 +48,12 @@ export default {
     }
   },
   props: ["answerInfo"],
-  methods: {
-    toMode() {
-      // nameが取得できなければ促すダイアログを表示
-      this.$router.push({ path: "/mode" });
-    },
-    toRanking() {
-      // nameが取得できなければ促すダイアログを表示
-      this.$router.push({ path: "/" });
-    }
-  }
-
 }
 </script>
 
 <style scoped lang="scss">
 .result-card {
-  margin: 8% auto;
+  margin: 8% auto 2% auto;
   width: 90%;
   height: 100%;
   border: solid 2px $base-text-color;
@@ -108,6 +96,11 @@ export default {
     // Twiiterシェア領域
     .sns-share-area {
       margin: 5% auto;
+      a {
+        border: solid 2px #3298dc;
+        color: #3298dc;
+        background-color: black;
+      }
     }
   }
 }

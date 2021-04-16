@@ -9,6 +9,8 @@ const state = () => ({
   answerInfo: {
     answerResults: [],
     clearTime: "",
+    message: "",
+    rank: "",
   },
 });
 
@@ -25,7 +27,7 @@ const actions = {
     bindFirestoreRef('tests', testsRef)
   }),
 
-  // 解答結果情報をセット
+  // 解答結果オブジェクトをセット
   setAnswerInfo(context, answerInfo) {
     context.commit('setAnswerInfo', answerInfo);
   }
@@ -33,7 +35,7 @@ const actions = {
 
 const mutations = {
   // mutationsがstate（グローバル変数的な）のデータを実際に変更
-  // 解答結果をセット
+  // 解答結果オブジェクトをセット
   setAnswerInfo(state, answerInfo) {
     state.answerInfo.answerResults = answerInfo.answers;
     state.answerInfo.clearTime = answerInfo.clearTime;
