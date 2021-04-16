@@ -46,7 +46,6 @@ export default {
       this.answers.push(value)
       // 次のクイズに切り替え
       this.currentTest++
-      debugger
       if (this.currentTest === this.tests.length - 1) {
         // 最終問題の場合、結果表示処理に移行
       } else {
