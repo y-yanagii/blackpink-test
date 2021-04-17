@@ -25,13 +25,14 @@ export default {
     return {
       currentTest: 0,
       tests: this.$store.getters['tests/getTestsByMode'],
-      answers: [],
-      clearTime: "00:00:000",
-      rankings: [],
       newRecord: {
         name: "",
+        answers: [],
+        incorrects: [],
         score: 0,
         clearTime: "",
+        message: "",
+        ranking: "",
       },
     }
   },
@@ -49,8 +50,8 @@ export default {
   methods: {
     // 選択肢押下時処理(解答時)
     addAnswer(value) {
-      // 選択した解答を配列に保持（正誤かをtrue、falseで判断）
-      this.answers.push(value)
+      // 選択した解答をそれぞれの配列に保持（正誤かをtrue、falseで判断）
+      value ? this.newRecord.answers.push(value) : this.newRecord.incorrects.push(value)
 
       if (this.currentTest === this.tests.length - 1) {
         // タイマーストップ処理
@@ -63,31 +64,47 @@ export default {
     },
     // 終了処理
     testEndProcessing() {
-      // ランキング登録
-      this.rankingAdd();
+      // 検定結果レコード作成
+      this.setNewRecord();
+      
       // ランキング情報を取得
-      this.rankings = this.$store.getters['rankings/orderdRankings'];
-      // rankingsコレクションの初期化
-      this.$store.dispatch('rankings/init');
-      // 新規のテスト情報をリストに追加しSortする
-      // 100以内の場合ランキングに登録、それ以外ランク外
+      this.getRanking();
         // VuexのanswerInfoに登録処理
         // メッセージ取得処理
       // Vuexに解答結果を送信
-      this.$store.dispatch('tests/setAnswerInfo', { answers: this.answers, clearTime: this.clearTime })
+      this.$store.dispatch('tests/setAnswerInfo', { newRecord: this.newRecord })
       // 検定結果画面に遷移
       this.$router.push({ path: "/result" })
+    },
+    // Newレコード情報をセット
+    setNewRecord() {
+      this.newRecord.name = "test user";
+      this.newRecord.score = this.newRecord.answers * 10;
+      this.newRecord.clearTime = "00:00:000";
+      this.newRecord.message = "💖🖤👑test message!👑🖤💖" VuexよりFirestoreから点数に応じて取得
+    },
+    // ランキング情報を登録、取得
+    getRanking() {
+      // rankingsコレクションの初期化
+      this.$store.dispatch('rankings/init');
+      登録前にドキュメントのIDを取得できるかも？？取れたら何位になるかを下のランキングリストよりとってこれるconst id = firebase.firestore.collection('_').doc().id;
+      debugger
+      // ランキング登録
+      this.rankingAdd();
+      // 最新ランキング取得
+      const rankings = this.$store.getters['rankings/orderdRankings'];
+      this.newRecord.ranking = this.
     },
     // ランキング登録
     rankingAdd() {
       this.$store.dispatch('rankings/add', this.newRecord);
-    }
+    },
+  },
+  computed: {
   },
   created() {
     // testsコレクションの初期化
     this.$store.dispatch('tests/init');
-    // rankingsコレクションの初期化
-    this.$store.dispatch('rankings/init');
   }
 }
 </script>

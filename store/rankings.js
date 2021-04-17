@@ -12,7 +12,7 @@ const getters = {
   orderdRankings: state => {
     // ランキング情報をスコアの降順、クリアタイムの昇順、検定日の降順で取得
     return _.orderBy(state.rankings, ['score', 'clearTime', 'createdAt'], ['desc', 'asc', 'desc'])
-  }
+  },
 };
 
 const actions = {
