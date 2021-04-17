@@ -23,3 +23,4 @@ if (!firebase.apps.length) {
 
 // 他の場所から使えるようdbを定義しexport
 export const db = firebase.firestore();
+export default firebase
