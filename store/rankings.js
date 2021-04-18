@@ -1,5 +1,5 @@
-import { db } from "~/plugins/firebase";
 import firebase from "~/plugins/firebase";
+import { db } from "~/plugins/firebase";
 import { firestoreAction } from 'vuexfire';
 
 const rankingsRef = db.collection('rankings');
@@ -26,6 +26,7 @@ const actions = {
       name: rankingObject.name,
       score: rankingObject.score,
       clearTime: rankingObject.clearTime,
+      modeType: rankingObject.modeType,
       createdAt: firebase.firestore.FieldValue.serverTimestamp()
     })
   })

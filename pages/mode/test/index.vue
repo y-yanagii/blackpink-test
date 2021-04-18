@@ -27,9 +27,9 @@ export default {
       tests: this.$store.getters['tests/getTestsByMode'],
       newRecord: {
         name: "",
-        answers: [],
-        incorrects: [],
+        answerIncorrectsArray: [],
         score: 0,
+        modeType: "",
         clearTime: "",
         message: "",
         ranking: "",
@@ -50,8 +50,8 @@ export default {
   methods: {
     // 選択肢押下時処理(解答時)
     addAnswer(value) {
-      // 選択した解答をそれぞれの配列に保持（正誤かをtrue、falseで判断）
-      value ? this.newRecord.answers.push(value) : this.newRecord.incorrects.push(value)
+      // 選択した解答を配列に保持（正誤かをtrue、falseで判断）
+      this.newRecord.answerIncorrectsArray.push(value);
 
       if (this.currentTest === this.tests.length - 1) {
         // タイマーストップ処理
@@ -68,32 +68,33 @@ export default {
       this.setNewRecord();
       
       // ランキング情報を取得
-      this.getRanking();
+      this.addAndGetRanking();
         // VuexのanswerInfoに登録処理
         // メッセージ取得処理
       // Vuexに解答結果を送信
       this.$store.dispatch('tests/setAnswerInfo', { newRecord: this.newRecord })
       // 検定結果画面に遷移
+      debugger
       this.$router.push({ path: "/result" })
+      debugger
     },
     // Newレコード情報をセット
     setNewRecord() {
-      this.newRecord.name = "test user";
-      this.newRecord.score = this.newRecord.answers * 10;
-      this.newRecord.clearTime = "00:00:000";
-      this.newRecord.message = "💖🖤👑test message!👑🖤💖" VuexよりFirestoreから点数に応じて取得
+      this.newRecord.name = "555";
+      this.newRecord.score = this.newRecord.answerIncorrectsArray.filter(n => n !== false).length * 10; // 正解数 * 10
+      this.newRecord.clearTime = "07:00:000";
+      this.newRecord.message = "💖🖤👑test message!👑🖤💖"  //VuexよりFirestoreから点数に応じて取得
+      this.newRecord.modeType = this.$store.getters['mode/choiceMode'];
     },
     // ランキング情報を登録、取得
-    getRanking() {
-      // rankingsコレクションの初期化
-      this.$store.dispatch('rankings/init');
-      登録前にドキュメントのIDを取得できるかも？？取れたら何位になるかを下のランキングリストよりとってこれるconst id = firebase.firestore.collection('_').doc().id;
-      debugger
+    addAndGetRanking() {
+      // 登録前にドキュメントのIDを取得できるかも？？取れたら何位になるかを下のランキングリストよりとってこれる
+      
       // ランキング登録
-      this.rankingAdd();
+      this.rankingAdd()
       // 最新ランキング取得
-      const rankings = this.$store.getters['rankings/orderdRankings'];
-      this.newRecord.ranking = this.
+      this.getRankings
+      // this.newRecord.ranking = rankingId;
     },
     // ランキング登録
     rankingAdd() {
@@ -101,10 +102,15 @@ export default {
     },
   },
   computed: {
+    getRankings() {
+      this.$store.getters['rankings/orderdRankings'];
+    }
   },
   created() {
     // testsコレクションの初期化
     this.$store.dispatch('tests/init');
+    // rankingsコレクションの初期化
+    this.$store.dispatch('rankings/init');
   }
 }
 </script>
