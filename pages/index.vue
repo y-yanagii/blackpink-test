@@ -82,6 +82,18 @@ export default {
       }
     }
   },
+  mounted() {
+    // マウント時、ブラウザのローカルストレージにuserNameが存在する場合設定
+    if (localStorage.userName) {
+      this.userName = localStorage.userName;
+    }
+  },
+  watch: {
+    // ユーザ名を入力時ブラウザのローカルストレージに保持
+    userName(newUserName) {
+      localStorage.userName = newUserName
+    }
+  },
   components: {
     Logo,
   }
