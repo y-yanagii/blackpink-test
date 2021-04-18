@@ -80,7 +80,7 @@ export default {
     },
     // Newレコード情報をセット
     setNewRecord() {
-      this.newRecord.name = "555";
+      this.newRecord.name = localStorage.userName ? localStorage.userName : "No Name";
       this.newRecord.score = this.newRecord.answerIncorrectsArray.filter(n => n !== false).length * 10; // 正解数 * 10
       this.newRecord.clearTime = "07:00:000";
       this.newRecord.message = "💖🖤👑test message!👑🖤💖"  //VuexよりFirestoreから点数に応じて取得
