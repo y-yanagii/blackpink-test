@@ -3,7 +3,9 @@
     <v-row justify="center" align="center">
       <v-col cols="12" sm="8" md="6">
         <ModeTitle></ModeTitle>
-        <Time></Time>
+        <Time
+          :timerObject="timerObject"
+        ></Time>
         <TestCard
           :currentTest="currentTest"
           :test="tests[currentTest]"
@@ -34,6 +36,13 @@ export default {
         message: "",
         ranking: "",
       },
+      timerObject: {
+        animateFrame: 0, // requestAnimationFrame(cd)の返り値(requestID)が入る
+        nowTime: 0, // 現在時刻
+        diffTime: 0, // 現在時刻とスタートボタンを押した時刻の差
+        startTime: 0, // スタートボタンを押した時刻
+        isRunning: false // 計測中の状態保持
+      }
     }
   },
   computed: {
@@ -55,6 +64,7 @@ export default {
 
       if (this.currentTest === this.tests.length - 1) {
         // タイマーストップ処理
+        this.stopTimer();
         // 最終問題の場合終了処理
         this.testEndProcessing();
       } else {
@@ -80,9 +90,9 @@ export default {
     },
     // Newレコード情報をセット
     setNewRecord() {
-      this.newRecord.name = localStorage.userName ? localStorage.userName : "No Name";
+      this.newRecord.name = localStorage.userName ? localStorage.userName : "no_name"; // ブラウザのローカルストレージより取得
       this.newRecord.score = this.newRecord.answerIncorrectsArray.filter(n => n !== false).length * 10; // 正解数 * 10
-      this.newRecord.clearTime = "07:00:000";
+      this.newRecord.clearTime = document.getElementById("time").textContent.trim(); // クリアタイムをオブジェクトにセット
       this.newRecord.message = "💖🖤👑test message!👑🖤💖"  //VuexよりFirestoreから点数に応じて取得
       this.newRecord.modeType = this.$store.getters['mode/choiceMode'];
     },
@@ -100,6 +110,14 @@ export default {
     rankingAdd() {
       this.$store.dispatch('rankings/add', this.newRecord);
     },
+    // タイマーストップ処理
+    stopTimer() {
+      // タイマーの初期化
+      let vm = this.timerObject;
+      vm.isRunning = false;
+      // 実際のタイマーストップ処理
+      cancelAnimationFrame(vm.animateFrame);
+    }
   },
   computed: {
     getRankings() {
