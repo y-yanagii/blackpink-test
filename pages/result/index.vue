@@ -27,6 +27,6 @@ export default {
     ResultCard,
     ResultFooter,
     ResultSns
-  }
+  },
 }
 </script>
