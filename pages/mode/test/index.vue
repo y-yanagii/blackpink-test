@@ -103,7 +103,6 @@ export default {
       this.rankingAdd()
       // 最新ランキング取得
       this.getRankings
-      // this.newRecord.ranking = rankingId;
     },
     // ランキング登録
     rankingAdd() {

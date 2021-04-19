@@ -2,9 +2,11 @@
   <div>
     <v-row justify="center" align="center">
       <v-col cols="12" sm="8" md="6">
-        <ResultCard
-          :answerInfo="answerInfo"
-        ></ResultCard>
+        <transition name="fadeResultCard" appear>
+          <ResultCard
+            :newRecord="newRecord"
+          ></ResultCard>
+        </transition>
         <ResultSns></ResultSns>
         <ResultFooter></ResultFooter>
       </v-col>
@@ -20,7 +22,7 @@ import ResultSns from '~/components/ResultSns.vue';
 export default {
   data() {
     return {
-      answerInfo: this.$store.getters['tests/getAnswerInfo']
+      newRecord: this.$store.getters['tests/getNewRecord'].newRecord
     }
   },
   components: {
@@ -30,3 +32,12 @@ export default {
   },
 }
 </script>
+
+<style scoped lang="scss">
+.fadeResultCard-enter-active, .fade-leave-active {
+  transition: opacity 3.5s;
+}
+.fadeResultCard-enter, .fade-leave-to {
+  opacity: 0;
+}
+</style>
