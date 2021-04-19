@@ -50,9 +50,6 @@ export default {
     border: solid 2px $base-text-color;
     color: $base-text-color;
   }
-  // RETRYボタン領域
-  // .result-retry-area {
-  // }
   // RANKINGボタン領域
   .result-ranking-area {
     margin: 0 0 0 auto; // 右寄せ

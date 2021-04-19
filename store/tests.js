@@ -6,18 +6,21 @@ const testsRef = db.collection('tests');
 const state = () => ({
   // グローバルなデータをここで定義
   tests: [],
-  answerInfo: {
-    answerResults: [],
+  newRecord: {
+    name: "",
+    answerIncorrectsArray: [],
+    score: 0,
+    modeType: "",
     clearTime: "",
     message: "",
-    rank: "",
+    myRank: "",
   },
 });
 
 const getters = {
   // コンポーネントから参照時gettersから参照する
   getTestsByMode: state => { return state.tests },
-  getAnswerInfo: state => { return state.answerInfo },
+  getNewRecord: state => { return state.newRecord },
 };
 
 const actions = {
@@ -28,17 +31,16 @@ const actions = {
   }),
 
   // 解答結果オブジェクトをセット
-  setAnswerInfo(context, answerInfo) {
-    context.commit('setAnswerInfo', answerInfo);
+  setNewRecord(context, newRecord) {
+    context.commit('setNewRecord', newRecord);
   }
 };
 
 const mutations = {
   // mutationsがstate（グローバル変数的な）のデータを実際に変更
   // 解答結果オブジェクトをセット
-  setAnswerInfo(state, answerInfo) {
-    state.answerInfo.answerResults = answerInfo.answers;
-    state.answerInfo.clearTime = answerInfo.clearTime;
+  setNewRecord(state, newRecord) {
+    state.newRecord = newRecord;
   }
 };
 

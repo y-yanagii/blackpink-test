@@ -34,7 +34,7 @@ export default {
         modeType: "",
         clearTime: "",
         message: "",
-        ranking: "",
+        myRank: "",
       },
       timerObject: {
         animateFrame: 0, // requestAnimationFrame(cd)の返り値(requestID)が入る
@@ -63,8 +63,6 @@ export default {
       this.newRecord.answerIncorrectsArray.push(value);
 
       if (this.currentTest === this.tests.length - 1) {
-        // タイマーストップ処理
-        this.stopTimer();
         // 最終問題の場合終了処理
         this.testEndProcessing();
       } else {
@@ -74,27 +72,28 @@ export default {
     },
     // 終了処理
     testEndProcessing() {
+      // タイマーストップ処理
+      this.stopTimer();
+
       // 検定結果レコード作成
       this.setNewRecord();
       
       // ランキング情報を取得
       this.addAndGetRanking();
-        // VuexのanswerInfoに登録処理
+      // VuexのnewRecordに登録処理
         // メッセージ取得処理
       // Vuexに解答結果を送信
-      this.$store.dispatch('tests/setAnswerInfo', { newRecord: this.newRecord })
+      this.$store.dispatch('tests/setNewRecord', { newRecord: this.newRecord })
       // 検定結果画面に遷移
-      debugger
       this.$router.push({ path: "/result" })
-      debugger
     },
     // Newレコード情報をセット
     setNewRecord() {
       this.newRecord.name = localStorage.userName ? localStorage.userName : "no_name"; // ブラウザのローカルストレージより取得
       this.newRecord.score = this.newRecord.answerIncorrectsArray.filter(n => n !== false).length * 10; // 正解数 * 10
-      this.newRecord.clearTime = document.getElementById("time").textContent.trim(); // クリアタイムをオブジェクトにセット
-      this.newRecord.message = "💖🖤👑test message!👑🖤💖"  //VuexよりFirestoreから点数に応じて取得
       this.newRecord.modeType = this.$store.getters['mode/choiceMode'];
+      this.newRecord.clearTime = document.getElementById("time").textContent.trim(); // クリアタイムをオブジェクトにセット
+      this.newRecord.message = "💖🖤👑test message!👑🖤💖"; // VuexよりFirestoreから点数に応じて取得
     },
     // ランキング情報を登録、取得
     addAndGetRanking() {
