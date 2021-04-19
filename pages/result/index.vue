@@ -9,6 +9,9 @@
         </transition>
         <ResultSns></ResultSns>
         <ResultFooter></ResultFooter>
+        <ResultConfirm
+          :newRecord="newRecord"
+        ></ResultConfirm>
       </v-col>
     </v-row>
   </div>
@@ -18,6 +21,7 @@
 import ResultCard from '~/components/ResultCard.vue';
 import ResultFooter from '~/components/ResultFooter.vue';
 import ResultSns from '~/components/ResultSns.vue';
+import ResultConfirm from '~/components/ResultConfirm.vue';
 
 export default {
   data() {
@@ -28,7 +32,8 @@ export default {
   components: {
     ResultCard,
     ResultFooter,
-    ResultSns
+    ResultSns,
+    ResultConfirm,
   },
 }
 </script>
