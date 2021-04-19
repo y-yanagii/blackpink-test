@@ -3,26 +3,26 @@
     <div class="result-card">
       <!-- タイトル領域 -->
       <div class="text-center result-card-title">
-        <p>CONGRATULATIONS！<br>BLACKPINK TEST({{ selectedMode }})</p>
+        <p>CONGRATULATIONS！<br>BLACKPINK TEST({{ this.newRecord.modeType }})</p>
       </div>
       <!-- 結果情報領域 -->
       <div class="text-center result-area">
-        <div class="result-inline-area">
+        <div class="result-inline-area record-0" key="rank">
           <div class="result-label">RANK</div>
-          <div class="result-value">100</div>
+          <div class="result-value">{{ this.newRecord.myRank }}</div>
         </div>
-        <div class="result-inline-area">
+        <div class="result-inline-area record-1" key="score">
           <div class="result-label">SCORE</div>
-          <div class="result-value">100</div>
+          <div class="result-value">{{ this.newRecord.score }}</div>
         </div>
-        <div class="result-inline-area">
+        <div class="result-inline-area record-2" key="clearTime">
           <div class="result-label">CLEAR TIME</div>
-          <div class="result-value">00:00:000</div>
+          <div class="result-value">{{ this.newRecord.clearTime }}</div>
         </div>
       </div>
       <!-- メッセージ領域 -->
       <div class="result-message-area">
-        <p>🖤💖👑King Of BLINK👑💖🖤</p>
+        <p>{{ this.newRecord.message }}</p>
       </div>
       <!-- フッター領域 -->
       <div class="result-footer-area">
@@ -42,13 +42,12 @@
 export default {
   data() {
     return {
-      selectedMode: this.$store.getters['mode/choiceMode'],
       sns:{
         twitter:'https://twitter.com/intent/tweet?url=https://yahoo.co.jp&text=TEST結果は&hashtags=BLACKPINK,ブラックピンク,BLINK,BLACKPINKTEST',
       },
     }
   },
-  props: ["answerInfo"],
+  props: ["newRecord"],
 }
 </script>
 

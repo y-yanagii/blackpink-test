@@ -6,15 +6,7 @@ const testsRef = db.collection('tests');
 const state = () => ({
   // グローバルなデータをここで定義
   tests: [],
-  newRecord: {
-    name: "",
-    answerIncorrectsArray: [],
-    score: 0,
-    modeType: "",
-    clearTime: "",
-    message: "",
-    myRank: "",
-  },
+  newRecord: {},
 });
 
 const getters = {
