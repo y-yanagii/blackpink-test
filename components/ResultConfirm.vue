@@ -8,11 +8,11 @@
         v-for="(ansewerIncorrect, index) in newRecord.answerIncorrectsArray"
         :key="index"
         class="ansewerIncorrect-li"
-        :class="getAnswerCheckClass(ansewerIncorrect)"
+        :class="getAnswerCheckClass(ansewerIncorrect.isAnswer)"
       >
-        <div><i class="mdi" :class="getAnswerCheckIcon(ansewerIncorrect)"/></div>
-        <div class="ansewerIncorrect-number">{{ index + 1 + ". " }}</div>
-        <div class="ansewerIncorrect-value">{{ ansewerIncorrect }}</div>
+        <div><i class="mdi" :class="getAnswerCheckIcon(ansewerIncorrect.isAnswer)"/></div>
+        <div class="ansewerIncorrect-number">{{ index + 1 }}</div>
+        <div class="ansewerIncorrect-value">{{ ansewerIncorrect.answerContent }}</div>
       </div>
     </div>
   </div>
@@ -31,9 +31,11 @@ export default {
   props: ["newRecord"],
   methods: {
     getAnswerCheckClass(value) {
+      // 正解した問いはベースカラーで塗りつぶす
       return value ? this.answerClass : this.incorrectClass
     },
     getAnswerCheckIcon(value) {
+      // 正解した問いはチェックマーク付与
       return value ? this.answerIcon : this.incorrectIcon
     }
   }
