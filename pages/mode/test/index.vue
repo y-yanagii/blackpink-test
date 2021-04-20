@@ -97,8 +97,6 @@ export default {
     },
     // ランキング情報を登録、取得
     addAndGetRanking() {
-      // 登録前にドキュメントのIDを取得できるかも？？取れたら何位になるかを下のランキングリストよりとってこれる
-      
       // ランキング登録
       this.rankingAdd()
       // 最新ランキング取得
@@ -119,7 +117,7 @@ export default {
   },
   computed: {
     getRankings() {
-      this.$store.getters['rankings/orderdRankings'];
+      return this.$store.getters['rankings/orderdRankings'];
     }
   },
   created() {
