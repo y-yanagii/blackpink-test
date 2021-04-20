@@ -6,14 +6,14 @@
           class="result-footer-button"
           @click="toMode()"
         >
-        RETRY</v-btn>
+        <i class="mdi mdi-cached"/>RETRY</v-btn>
       </div>
       <div class="result-ranking-area">
         <v-btn
           class="result-footer-button"
           @click="toRanking()"
         >
-        RANKING</v-btn>
+        <i class="mdi mdi-crown-outline"/>RANKING</v-btn>
       </div>
     </div>
   </div>
@@ -49,6 +49,9 @@ export default {
     background-color: $base-bg-color;
     border: solid 2px $base-text-color;
     color: $base-text-color;
+    i {
+      font-size: 17px;
+    }
   }
   // RANKINGボタン領域
   .result-ranking-area {

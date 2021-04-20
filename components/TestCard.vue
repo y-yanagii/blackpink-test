@@ -23,18 +23,18 @@
       <div class="options-area">
         <!-- 選択肢領域 -->
         <div
-          v-for="(optionBtn, index) in test.options"
+          v-for="(optionBtnInfo, index) in test.options"
           :key="index"
         >
           <v-btn
             outlined
             class="option-btn"
             nuxt
-            @click="$emit('option-click', optionBtn.answer.isAnswer)"
+            @click="sendAnswer(abcd[index], optionBtnInfo)"
           >
             {{abcd[index]}}
             <span
-              v-for="(t, index) in optionBtn.optionContent"
+              v-for="(t, index) in optionBtnInfo.optionContent"
               :key="index"
               v-text="t"
               class="option-item"
@@ -62,6 +62,13 @@ export default {
   },
   props: ["test", "currentTest"],
   methods: {
+    sendAnswer(abcdStr, optionBtnInfo) {
+      // 解答送信する前に$emitに渡すオブジェクトを生成
+      let sendAnswerInfo = optionBtnInfo.answer
+      // 選択した解答のテキストとABCD連番と連結
+      sendAnswerInfo.answerContent = abcdStr + optionBtnInfo.optionContent;
+      this.$emit('option-click', sendAnswerInfo);
+    }
   },
   computed: {
     
