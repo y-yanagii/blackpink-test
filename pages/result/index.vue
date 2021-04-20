@@ -11,6 +11,7 @@
         <ResultFooter></ResultFooter>
         <ResultConfirm
           :newRecord="newRecord"
+          :tests="tests"
         ></ResultConfirm>
       </v-col>
     </v-row>
@@ -26,7 +27,8 @@ import ResultConfirm from '~/components/ResultConfirm.vue';
 export default {
   data() {
     return {
-      newRecord: this.$store.getters['tests/getNewRecord'].newRecord
+      newRecord: this.$store.getters['tests/getNewRecord'].newRecord,
+      tests: this.$store.getters['tests/getTestsByMode'],
     }
   },
   components: {
