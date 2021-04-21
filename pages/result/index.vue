@@ -13,6 +13,7 @@
           :newRecord="newRecord"
           :tests="tests"
         ></ResultConfirm>
+        <YoutubeArea></YoutubeArea>
       </v-col>
     </v-row>
   </div>
@@ -23,6 +24,7 @@ import ResultCard from '~/components/ResultCard.vue';
 import ResultFooter from '~/components/ResultFooter.vue';
 import ResultSns from '~/components/ResultSns.vue';
 import ResultConfirm from '~/components/ResultConfirm.vue';
+import YoutubeArea from '~/components/YoutubeArea.vue';
 
 export default {
   data() {
@@ -36,6 +38,7 @@ export default {
     ResultFooter,
     ResultSns,
     ResultConfirm,
+    YoutubeArea,
   },
 }
 </script>
