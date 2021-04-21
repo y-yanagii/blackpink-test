@@ -13,6 +13,9 @@
           :newRecord="newRecord"
           :tests="tests"
         ></ResultConfirm>
+        <YoutubeArea
+          :items="items"
+        ></YoutubeArea>
       </v-col>
     </v-row>
   </div>
@@ -23,6 +26,7 @@ import ResultCard from '~/components/ResultCard.vue';
 import ResultFooter from '~/components/ResultFooter.vue';
 import ResultSns from '~/components/ResultSns.vue';
 import ResultConfirm from '~/components/ResultConfirm.vue';
+import YoutubeArea from '~/components/YoutubeArea.vue';
 
 export default {
   data() {
@@ -31,11 +35,20 @@ export default {
       tests: this.$store.getters['tests/getTestsByMode'],
     }
   },
+  async asyncData(context) {
+    // youtube data apiを使用しblackpinkチェンネルから最新のデータを取得
+    // blackpinkのYouTubeチャンネルURL
+    const url = "https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=" + process.env.BLACKPINK_CHANNEL_ID + "&maxResults=5&order=date&type=video&key=" + process.env.YOUTUBE_DATA_API_V3_KEY;
+    // リクエストGet
+    const response = await context.$axios.$get(url);
+    return { items: response["items"] }
+  },
   components: {
     ResultCard,
     ResultFooter,
     ResultSns,
     ResultConfirm,
+    YoutubeArea,
   },
 }
 </script>
