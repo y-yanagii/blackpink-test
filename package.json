@@ -18,6 +18,7 @@
     "vuexfire": "^3.2.0-alpha.0"
   },
   "devDependencies": {
+    "@nuxtjs/axios": "^5.13.1",
     "@nuxtjs/moment": "^1.6.1",
     "@nuxtjs/vuetify": "^1.11.3",
     "node-sass": "^5.0.0",
