@@ -34,8 +34,7 @@
 <script>
 export default {
   data: function() {
-    return {
-    }
+    return {}
   },
   methods: {
     // 難易度選択を保持

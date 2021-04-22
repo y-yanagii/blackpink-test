@@ -33,7 +33,7 @@ export default {
     },
     toRanking() {
       // nameが取得できなければ促すダイアログを表示
-      this.$router.push({ path: "/" });
+      this.$router.push({ path: "/ranking" });
     }
   }
 }

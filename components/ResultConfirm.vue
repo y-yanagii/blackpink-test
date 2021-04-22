@@ -87,7 +87,7 @@ export default {
 
 <style scoped lang="scss">
 .check-the-answer-title {
-  margin: 6% auto 3% auto;
+  margin: 17% auto 3% auto;
   h3 {
     color: $base-text-color;
   }
