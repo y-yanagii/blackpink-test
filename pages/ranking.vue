@@ -24,7 +24,12 @@ export default {
     Ranking
   },
   firestore: {
-    rankings: db.collection("rankings")
+    // 初期表示時、EASYモードのランキングを取得
+    rankings: db.collection("rankings").where('modeType', '==', 0).orderBy('score', 'desc').orderBy('clearTime', 'asc').orderBy('createdAt', 'desc')
+  },
+  created() {
+    // rankingsコレクションの初期化
+    this.$store.dispatch('rankings/init');
   }
 }
 </script>

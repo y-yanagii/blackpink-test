@@ -2,7 +2,7 @@
   <div class="text-left">
     <div class="timer">
       <span id="time">
-        {{ minutes | zeroPad }}:{{ seconds | zeroPad }}:{{ milliSeconds | zeroPad(3) }}
+        {{ minutes | zeroPad }}:{{ seconds | zeroPad }}.{{ milliSeconds | zeroPad(3) }}
       </span>
     </div>
   </div>
@@ -62,7 +62,7 @@ export default {
     // フォーマット整形
     zeroPad: function(value, num) {
      // タイマーを0埋め
-      var num = typeof num !== 'undefined' ? num : 2;
+      var num = typeof num !== 'undefined' ? num : 2; // numに引数が渡されていた場合その数で０埋め
       return value.toString().padStart(num, "0");
     }
   },

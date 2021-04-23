@@ -40,6 +40,12 @@
               </tr>
             </thead>
             <tbody>
+              <tr
+                v-for="(ranking, index) in rankings"
+                :key="index"
+              >
+                <th :class="breakpointClass.header" class="text-left">{{ ranking }}</th>
+              </tr>
               <tr>
                 <td :class="breakpointClass.rankingValue" class="text-left">{{ "1" }}</td>
                 <td :class="breakpointClass.rankingValue" class="text-left">{{ "name name" }}</td>
