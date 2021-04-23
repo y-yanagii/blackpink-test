@@ -17,7 +17,7 @@
         </div>
         <div class="result-inline-area record-2" key="clearTime">
           <div class="result-label">CLEAR TIME</div>
-          <div class="result-value">{{ this.newRecord.clearTime }}</div>
+          <div class="result-value">{{ this.newRecord.clearTime | zeroPadAndFormat }}</div>
         </div>
       </div>
       <!-- メッセージ領域 -->
@@ -48,6 +48,17 @@ export default {
     }
   },
   props: ["newRecord"],
+  filters: {
+    // フォーマット整形
+    zeroPadAndFormat: function(value) {
+      // クリアタイムを０埋めし、mm:ss.fffに変換
+      const clearTime = value.toString().padStart(7, "0");
+      const mm = clearTime.slice(0, 2);
+      const ss = clearTime.slice(2, 4);
+      const fff = clearTime.slice(4, 7);
+      return mm + ":" + ss + "." + fff;
+    }
+  },
 }
 </script>
 
