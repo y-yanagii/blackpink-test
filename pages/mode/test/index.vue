@@ -91,7 +91,7 @@ export default {
     setNewRecord() {
       this.newRecord.name = localStorage.userName ? localStorage.userName : "no_name"; // ブラウザのローカルストレージより取得
       this.newRecord.score = this.newRecord.answerIncorrectsArray.filter(n => n.isAnswer !== false).length * 10; // 正解数 * 10
-      this.newRecord.modeType = this.$store.getters['mode/choiceMode'];
+      this.newRecord.modeType = this.$store.getters['modes/choiceMode'].modeValue.replace(/\s+/g, "");
       this.newRecord.clearTime = document.getElementById("time").textContent.trim(); // クリアタイムをオブジェクトにセット
       this.newRecord.message = "💖🖤👑test message!👑🖤💖"; // VuexよりFirestoreから点数に応じて取得
     },

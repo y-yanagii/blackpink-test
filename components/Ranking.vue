@@ -3,7 +3,7 @@
     <div class="text-center">
       <div class="OtherLogo">
         <span class="title-logo">
-          RANKKNG
+          RANKING
         </span>
       </div>
     </div>
@@ -177,6 +177,7 @@ export default {
   padding: 0% 1% !important;
   background-color: $base-bg-color !important;
   color: $base-text-color !important;
+  border-bottom: solid 1px $base-text-color !important;
 }
 
 .ranking-value-xs {
@@ -189,6 +190,7 @@ export default {
   padding: 0% 6px !important;
   background-color: $base-bg-color !important;
   color: $base-text-color !important;
+  border-bottom: solid 1px $base-text-color !important;
 }
 
 .ranking-value {

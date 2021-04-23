@@ -15,14 +15,14 @@
           <!-- computedに定義した配列オブジェクトをv-forで回しバインディングを設定 -->
           <transition-group name="fade" appear>
           <v-btn
-            v-for="modeButton in modeButtons"
-            :key="modeButton.textContent"
-            :class="modeButton.class"
+            v-for="mode in modes"
+            :key="mode.modeType"
+            :class="setClass(mode.modeType)"
             class="common-mode-button"
-            @click="selectMode($event)"
+            @click="selectMode(mode)"
             outlined
           >
-          {{ modeButton.textContent }}
+          {{ mode.modeValue }}
           </v-btn>
           </transition-group>
         </div>
@@ -32,33 +32,45 @@
 </template>
 
 <script>
+import { db } from "~/plugins/firebase";
+
 export default {
   data: function() {
-    return {}
+    return {
+      modes: []
+    }
+  },
+  firestore: {
+    // 初期表示firestoreのmodesコレクションをモードタイプの昇順で取得
+    modes: db.collection("modes").orderBy('modeType')
   },
   methods: {
-    // 難易度選択を保持
-    selectMode(event) {
+    selectMode(mode) {
+      // 難易度選択を保持
       // dispatchでVuexのactionsを呼ぶ
-      // replaceで文字列中の空白除去
-      this.$store.dispatch('mode/selectMode', event.target.textContent.replace(/\s+/g, ""));
+      this.$store.dispatch('modes/selectMode', { modeType: mode.modeType, modeValue: mode.modeValue });
 
       // 検定スタート画面に遷移
       this.$router.push({ path: "/mode/start" });
+    },
+    setClass(type) {
+      // それぞれの難易度ごとにクラス付与
+      if (type === 3) {
+        // MASTER
+        return "master-mode-button"
+      } else if (type === 4) {
+        // SUDDEN DEATH
+        return "suddendeath-mode-button"
+      } else {
+        // EASY, NORMAL, HARD
+        return "mode-button"
+      }
     }
   },
-  computed: {
-    modeButtons() {
-      // EASY, NORMAL, HARD, MASTER, SUDDEN DEATHのボタンオブジェクトを配列で定義
-      return [
-        { class: "mode-button", textContent: "E A S Y" },
-        { class: "mode-button", textContent: "N O R M A L" },
-        { class: "mode-button", textContent: "H A R D" },
-        { class: "master-mode-button", textContent: "M A S T E R" },
-        { class: "suddendeath-mode-button", textContent: "SUDDEN DEATH" },
-      ]
-    }
-  }
+  created() {
+    // modesコレクションの初期化
+    this.$store.dispatch('modes/init');
+  },
 }
 </script>
 

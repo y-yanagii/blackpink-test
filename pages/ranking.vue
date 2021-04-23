@@ -11,6 +11,7 @@
 </template>
 
 <script>
+import { db } from "~/plugins/firebase";
 import Ranking from '~/components/Ranking.vue';
 
 export default {
@@ -21,6 +22,9 @@ export default {
   },
   components: {
     Ranking
+  },
+  firestore: {
+    rankings: db.collection("rankings")
   }
 }
 </script>
