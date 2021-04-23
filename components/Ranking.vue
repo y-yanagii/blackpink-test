@@ -26,7 +26,7 @@
         <v-simple-table
           dense
           fixed-header
-          height="300px"
+          height="319px"
           :class="breakpointClass.rankingArea"
         >
           <template v-slot:default>
@@ -40,81 +40,58 @@
               </tr>
             </thead>
             <tbody>
+              <!-- 1位 -->
               <tr
-                v-for="(ranking, index) in rankings"
-                :key="index"
+                v-for="(ranking, index) in get1stRankings"
+                :key="index + 1"
               >
-                <th :class="breakpointClass.header" class="text-left">{{ ranking }}</th>
+                <td :class="breakpointClass.header" class="text-left">
+                  <i class="mdi mdi-crown-outline"></i>
+                  {{ index + 1 }}
+                </td>
+                <td :class="breakpointClass.header" class="text-left">{{ ranking.name }}</td>
+                <td :class="breakpointClass.header" class="text-left">{{ ranking.score }}</td>
+                <td :class="breakpointClass.header" class="text-left">{{ ranking.clearTime | zeroPadAndFormat }}</td>
+                <td :class="breakpointClass.header" class="text-left">{{ ranking.createdAt.toDate() | dateFormat }}</td>
               </tr>
-              <tr>
-                <td :class="breakpointClass.rankingValue" class="text-left">{{ "1" }}</td>
-                <td :class="breakpointClass.rankingValue" class="text-left">{{ "name name" }}</td>
-                <td :class="breakpointClass.rankingValue" class="text-left">{{ "1000" }}</td>
-                <td :class="breakpointClass.rankingValue" class="text-left">{{ "00:00:000" }}</td>
-                <td :class="breakpointClass.rankingValue" class="text-left">{{ "2021/04/23" }}</td>
+              <!-- 2位 -->
+              <tr
+                v-for="(ranking, index) in get2stRankings"
+                :key="index + 2"
+              >
+                <td :class="breakpointClass.header" class="text-left">
+                  <i class="mdi mdi-chess-king"></i>
+                  {{ index + 2 }}
+                </td>
+                <td :class="breakpointClass.header" class="text-left">{{ ranking.name }}</td>
+                <td :class="breakpointClass.header" class="text-left">{{ ranking.score }}</td>
+                <td :class="breakpointClass.header" class="text-left">{{ ranking.clearTime | zeroPadAndFormat }}</td>
+                <td :class="breakpointClass.header" class="text-left">{{ ranking.createdAt.toDate() | dateFormat }}</td>
               </tr>
-              <tr>
-                <td :class="breakpointClass.rankingValue" class="text-left">{{ "1" }}</td>
-                <td :class="breakpointClass.rankingValue" class="text-left">{{ "name name" }}</td>
-                <td :class="breakpointClass.rankingValue" class="text-left">{{ "1000" }}</td>
-                <td :class="breakpointClass.rankingValue" class="text-left">{{ "00:00:000" }}</td>
-                <td :class="breakpointClass.rankingValue" class="text-left">{{ "2021/04/23" }}</td>
+              <!-- 3位 -->
+              <tr
+                v-for="(ranking, index) in get3stRankings"
+                :key="index + 3"
+              >
+                <td :class="breakpointClass.header" class="text-left">
+                  <i class="mdi mdi-diamond-stone"></i>
+                  {{ index + 3 }}
+                </td>
+                <td :class="breakpointClass.header" class="text-left">{{ ranking.name }}</td>
+                <td :class="breakpointClass.header" class="text-left">{{ ranking.score }}</td>
+                <td :class="breakpointClass.header" class="text-left">{{ ranking.clearTime | zeroPadAndFormat }}</td>
+                <td :class="breakpointClass.header" class="text-left">{{ ranking.createdAt.toDate() | dateFormat }}</td>
               </tr>
-              <tr>
-                <td :class="breakpointClass.rankingValue" class="text-left">{{ "1" }}</td>
-                <td :class="breakpointClass.rankingValue" class="text-left">{{ "name name" }}</td>
-                <td :class="breakpointClass.rankingValue" class="text-left">{{ "1000" }}</td>
-                <td :class="breakpointClass.rankingValue" class="text-left">{{ "00:00:000" }}</td>
-                <td :class="breakpointClass.rankingValue" class="text-left">{{ "2021/04/23" }}</td>
-              </tr>
-              <tr>
-                <td :class="breakpointClass.rankingValue" class="text-left">{{ "1" }}</td>
-                <td :class="breakpointClass.rankingValue" class="text-left">{{ "name name name namename namename name" }}</td>
-                <td :class="breakpointClass.rankingValue" class="text-left">{{ "1000" }}</td>
-                <td :class="breakpointClass.rankingValue" class="text-left">{{ "00:00:000" }}</td>
-                <td :class="breakpointClass.rankingValue" class="text-left">{{ "2021/04/23" }}</td>
-              </tr>
-              <tr>
-                <td :class="breakpointClass.rankingValue" class="text-left">{{ "1" }}</td>
-                <td :class="breakpointClass.rankingValue" class="text-left">{{ "name name" }}</td>
-                <td :class="breakpointClass.rankingValue" class="text-left">{{ "1000" }}</td>
-                <td :class="breakpointClass.rankingValue" class="text-left">{{ "00:00:000" }}</td>
-                <td :class="breakpointClass.rankingValue" class="text-left">{{ "2021/04/23" }}</td>
-              </tr>
-              <tr>
-                <td :class="breakpointClass.rankingValue" class="text-left">{{ "1" }}</td>
-                <td :class="breakpointClass.rankingValue" class="text-left">{{ "name name" }}</td>
-                <td :class="breakpointClass.rankingValue" class="text-left">{{ "1000" }}</td>
-                <td :class="breakpointClass.rankingValue" class="text-left">{{ "00:00:000" }}</td>
-                <td :class="breakpointClass.rankingValue" class="text-left">{{ "2021/04/23" }}</td>
-              </tr>
-              <tr>
-                <td :class="breakpointClass.rankingValue" class="text-left">{{ "1" }}</td>
-                <td :class="breakpointClass.rankingValue" class="text-left">{{ "name name" }}</td>
-                <td :class="breakpointClass.rankingValue" class="text-left">{{ "1000" }}</td>
-                <td :class="breakpointClass.rankingValue" class="text-left">{{ "00:00:000" }}</td>
-                <td :class="breakpointClass.rankingValue" class="text-left">{{ "2021/04/23" }}</td>
-              </tr>
-              <tr>
-                <td :class="breakpointClass.rankingValue" class="text-left">{{ "1" }}</td>
-                <td :class="breakpointClass.rankingValue" class="text-left">{{ "name name" }}</td>
-                <td :class="breakpointClass.rankingValue" class="text-left">{{ "1000" }}</td>
-                <td :class="breakpointClass.rankingValue" class="text-left">{{ "00:00:000" }}</td>
-                <td :class="breakpointClass.rankingValue" class="text-left">{{ "2021/04/23" }}</td>
-              </tr>
-              <tr>
-                <td :class="breakpointClass.rankingValue" class="text-left">{{ "1" }}</td>
-                <td :class="breakpointClass.rankingValue" class="text-left">{{ "name name" }}</td>
-                <td :class="breakpointClass.rankingValue" class="text-left">{{ "1000" }}</td>
-                <td :class="breakpointClass.rankingValue" class="text-left">{{ "00:00:000" }}</td>
-                <td :class="breakpointClass.rankingValue" class="text-left">{{ "2021/04/23" }}</td>
-              </tr>
-              <tr>
-                <td :class="breakpointClass.rankingValue" class="text-left">{{ "100" }}</td>
-                <td :class="breakpointClass.rankingValue" class="text-left">{{ "name name" }}</td>
-                <td :class="breakpointClass.rankingValue" class="text-left">{{ "1000" }}</td>
-                <td :class="breakpointClass.rankingValue" class="text-left">{{ "00:00:000" }}</td>
-                <td :class="breakpointClass.rankingValue" class="text-left">{{ "2021/04/23" }}</td>
+              <!-- 4位以下 -->
+              <tr
+                v-for="(ranking, index) in getOtherRankings"
+                :key="index + 4"
+              >
+                <td :class="breakpointClass.header" class="text-left">{{ index + 4 }}</td>
+                <td :class="breakpointClass.header" class="text-left">{{ ranking.name }}</td>
+                <td :class="breakpointClass.header" class="text-left">{{ ranking.score }}</td>
+                <td :class="breakpointClass.header" class="text-left">{{ ranking.clearTime | zeroPadAndFormat }}</td>
+                <td :class="breakpointClass.header" class="text-left">{{ ranking.createdAt.toDate() | dateFormat }}</td>
               </tr>
             </tbody>
           </template>
@@ -160,6 +137,56 @@ export default {
           rankingValue: "ranking-value"
         }
       }
+    }
+  },
+  computed: {
+    get1stRankings: function() {
+      // 1位の取得
+      const firstRank = this.rankings.filter(function(ranking, index) {
+        // filterメソッドとコールバック関数で1位のみ取得
+        return index === 0;
+      })
+      return firstRank
+    },
+    get2stRankings: function() {
+      // 2位の取得
+      const secondRank = this.rankings.filter(function(ranking, index) {
+        // filterメソッドとコールバック関数で2位のみ取得
+        return index === 1;
+      })
+      return secondRank
+    },
+    get3stRankings: function() {
+      // 3位の取得
+      const thirdRank = this.rankings.filter(function(ranking, index) {
+        // filterメソッドとコールバック関数で3位のみ取得
+        return index === 2;
+      })
+      return thirdRank
+    },
+    getOtherRankings: function() {
+      // 1位、2位、3位以外のランキング
+      const otherRanks = this.rankings.filter(function(ranking, index) {
+        // filterメソッドとコールバック関数で3位以下取得
+        return index !== 0 && index !== 1 && index !== 2;
+      })
+      return otherRanks
+    }
+  },
+  filters: {
+    // フォーマット整形
+    zeroPadAndFormat: function(value) {
+      // クリアタイムを０埋めし、mm:ss.fffに変換
+      const clearTime = value.toString().padStart(7, "0");
+      const mm = clearTime.slice(0, 2);
+      const ss = clearTime.slice(2, 4);
+      const fff = clearTime.slice(4, 7);
+      return mm + ":" + ss + "." + fff;
+    },
+    dateFormat: function(value) {
+      // yyyy/mm/ddの形に変換
+      const date = value;
+      return date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDate();
     }
   },
 }

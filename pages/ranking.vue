@@ -27,7 +27,7 @@ export default {
     // 初期表示時、EASYモードのランキングを取得
     rankings: db.collection("rankings").where('modeType', '==', 0).orderBy('score', 'desc').orderBy('clearTime').orderBy('createdAt', 'desc')
   },
-  created() {
+  mounted() {
     // rankingsコレクションの初期化
     this.$store.dispatch('rankings/init');
   }
