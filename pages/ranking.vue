@@ -4,6 +4,7 @@
       <v-col cols="12" sm="8" md="6">
         <Ranking
           :rankings="rankings"
+          @selected-mode="changeModeType"
         ></Ranking>
       </v-col>
     </v-row>
@@ -20,6 +21,12 @@ export default {
       rankings: []
     }
   },
+  methods: {
+    // 難易度別にランキングを取得
+    changeModeType(value) {
+      this.rankings = db.collection("rankings").where('modeType', '==', value.abbr).orderBy('score', 'desc').orderBy('clearTime').orderBy('createdAt', 'desc')
+    }
+  },
   components: {
     Ranking
   },
@@ -33,7 +40,3 @@ export default {
   }
 }
 </script>
-
-<style scoped lang="scss">
-
-</style>

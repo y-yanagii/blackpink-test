@@ -17,7 +17,7 @@
         return-object
         outlined
         class="modeSelect"
-        @input="changedRanking"
+        @input="sendModeType"
       ></v-select>
     </div>
     <!-- ランキング領域 -->
@@ -118,9 +118,10 @@ export default {
   },
   props: ["rankings"],
   methods: {
-    changedRanking(value) {
-      // valueにitemsのオブジェクトが入ってくる
-      value.abbr
+    sendModeType(value) {
+      debugger
+      // valueにmodesのオブジェクトが入ってくる
+      this.$emit('selected-mode', value)
     },
     getBreakPoint() {
       // スマホ表示とそれ以外でテーブルのスタイルを切り分け
