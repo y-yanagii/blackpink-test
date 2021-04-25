@@ -10,12 +10,11 @@
     <div class="text-center">
       <v-select
         v-model="modeSelect"
-        :items="items"
-        item-text="state"
-        item-value="abbr"
+        :items="setModeItems"
+        item-text="modeValue"
+        item-value="modeType"
         label="MODE"
         return-object
-        outlined
         class="modeSelect"
         @input="sendModeType"
       ></v-select>
@@ -102,24 +101,22 @@
 </template>
 
 <script>
+import { db } from "~/plugins/firebase";
+
 export default {
   data: function() {
     return {
-      modeSelect: { state: 'E A S Y', abbr: 0 },
-      items: [
-        { state: "E A S Y", abbr: 0 }, 
-        { state: "N O R M A L", abbr: 1 },
-        { state: "H A R D", abbr: 2 },
-        { state: "M A S T E R", abbr: 3 },
-        { state: "SUDDEN DEATH", abbr: 4 }
-      ],
+      modes: [],
+      modeSelect: { modeType: 0, modeValue: 'E A S Y' },
       breakpointClass: this.getBreakPoint()
     }
+  },
+  firestore: {
+    modes: db.collection("modes").orderBy('modeType')
   },
   props: ["rankings"],
   methods: {
     sendModeType(value) {
-      debugger
       // valueにmodesのオブジェクトが入ってくる
       this.$emit('selected-mode', value)
     },
@@ -141,6 +138,14 @@ export default {
     }
   },
   computed: {
+    // 難易度選択セレクトボックスの作成
+    setModeItems: function() {
+      let modeItems = [];
+      this.modes.map(mode => {
+        modeItems.push({ modeType: mode.modeType, modeValue: mode.modeValue })
+      });
+      return modeItems
+    },
     get1stRankings: function() {
       // 1位の取得
       const firstRank = this.rankings.filter(function(ranking, index) {
@@ -190,6 +195,10 @@ export default {
       return date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDate();
     }
   },
+  created() {
+    // modesコレクションの初期化
+    this.$store.dispatch('modes/init')
+  }
 }
 </script>
 
