@@ -32,7 +32,7 @@ export default {
         answerIncorrectsArray: [],
         score: 0,
         modeType: "",
-        clearTime: "",
+        clearTime: 0,
         message: "",
         myRank: "",
       },
@@ -91,8 +91,8 @@ export default {
     setNewRecord() {
       this.newRecord.name = localStorage.userName ? localStorage.userName : "no_name"; // ブラウザのローカルストレージより取得
       this.newRecord.score = this.newRecord.answerIncorrectsArray.filter(n => n.isAnswer !== false).length * 10; // 正解数 * 10
-      this.newRecord.modeType = this.$store.getters['mode/choiceMode'];
-      this.newRecord.clearTime = document.getElementById("time").textContent.trim(); // クリアタイムをオブジェクトにセット
+      this.newRecord.modeType = this.$store.getters['modes/choiceMode'].modeType;
+      this.newRecord.clearTime = this.$options.filters.replaceClearTimeWithNumber(document.getElementById("time").textContent.trim()); // クリアタイム(mm:ss.fff)をフォーマットし、オブジェクトにセット
       this.newRecord.message = "💖🖤👑test message!👑🖤💖"; // VuexよりFirestoreから点数に応じて取得
     },
     // ランキング情報を登録、取得
@@ -118,6 +118,13 @@ export default {
   computed: {
     getRankings() {
       return this.$store.getters['rankings/orderdRankings'];
+    }
+  },
+  filters: {
+    // フォーマット整形
+    replaceClearTimeWithNumber: function(value) {
+      // タイマーの「:」と「.」を削除しNumber型に変換する
+      return Number(value.replace(/:/g, '').replace(/\./g, ''));
     }
   },
   created() {

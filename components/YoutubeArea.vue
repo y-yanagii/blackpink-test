@@ -1,5 +1,8 @@
 <template>
   <div class="text-center">
+    <div class="youtube-video-list-title">
+      <h3>DO YOU WANT TO LEARN ABOUT BLACKPINK?</h3>
+    </div>
     <div class="youtube-list-area">
       <div
         v-for="(item, index) in items"
@@ -23,6 +26,13 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.youtube-video-list-title {
+  margin: 6% auto 3% auto;
+  h3 {
+    color: $base-text-color;
+  }
+}
+
 .youtube-list-area {
   width: 90%;
   margin: 5% auto;

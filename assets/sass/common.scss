@@ -162,4 +162,27 @@ body {
       height: 100%;
     }
   }
+
+  // ランキングセレクトエリア
+  .modeSelect {
+    width: 60%;
+    margin: auto !important;
+    div {
+      div {
+        color: $base-text-color;
+        div {
+          label {
+            color: $base-text-color !important;
+          }
+          div {
+            div {
+              i {
+                color: $base-text-color !important;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 }
