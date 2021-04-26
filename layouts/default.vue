@@ -7,22 +7,58 @@
       class="default-header"
     >
       <v-toolbar-title v-text="title" @click="root()" class="navbar-title" />
+
       <v-spacer />
+      <!-- FAB -->
+      <v-speed-dial
+        v-model="fab"
+        :direction="direction"
+        :transition="transition"
+      >
+        <template v-slot:activator>
+          <v-btn
+            v-model="fab"
+            color="#272727"
+            fab
+          >
+            <v-icon v-if="fab">
+              mdi-close
+            </v-icon>
+            <v-icon v-else>
+              mdi-menu
+            </v-icon>
+          </v-btn>
+        </template>
+          <v-btn
+            v-for="(item, index) in items"
+            :key="index"
+            :to="item.to"
+            fab
+            dark
+            small
+            color="#f4a6b8"
+          >
+            <v-icon>{{ item.icon }}</v-icon>
+          </v-btn>
+      </v-speed-dial>
+
+      <!-- <v-spacer /> -->
       <!-- ハンバーガーアイコン -->
-      <v-btn
+      <!-- <v-btn
         icon
         @click.stop="rightDrawer = !rightDrawer"
       >
         <v-icon>mdi-menu</v-icon>
-      </v-btn>
+      </v-btn> -->
     </v-app-bar>
+    <!-- ボディ領域の呼び出し元 -->
     <v-main>
       <v-container>
         <nuxt />
       </v-container>
     </v-main>
     <!-- ナビゲーション領域 -->
-    <v-navigation-drawer
+    <!-- <v-navigation-drawer
       v-model="rightDrawer"
       :right="right"
       temporary
@@ -44,7 +80,9 @@
           </v-list-item-content>
         </v-list-item>
       </v-list>
-    </v-navigation-drawer>
+    </v-navigation-drawer> -->
+
+    <!-- フッター -->
     <v-footer
       :absolute="!fixed"
       app
@@ -63,7 +101,7 @@ export default {
       fixed: false,
       items: [
         {
-          icon: 'mdi-apps',
+          icon: 'mdi-yin-yang',
           title: 'Welcome',
           to: '/'
         },
@@ -71,20 +109,33 @@ export default {
           icon: 'mdi-chart-bubble',
           title: 'Inspire',
           to: '/inspire'
+        },
+        {
+          icon: 'mdi-crown-outline',
+          title: 'RANKING',
+          to: '/ranking'
+        },
+        {
+          icon: 'mdi-play-box',
+          title: 'MODE',
+          to: '/mode'
         }
       ],
       miniVariant: false,
       right: true,
       rightDrawer: false,
       title: 'BLAↃKPINK TEST',
+      direction: 'bottom',
+      fab: false,
+      transition: 'scale-transition',
     }
   },
   methods: {
     root() {
       // ヘッダタイトル押下時rootに遷移
       this.$router.push('/')
-    }
-  }
+    },
+  },
 }
 </script>
 
