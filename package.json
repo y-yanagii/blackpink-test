@@ -13,6 +13,7 @@
     "core-js": "^3.9.1",
     "firebase": "^8.3.3",
     "nuxt": "^2.15.3",
+    "vee-validate": "^3.4.5",
     "vue-youtube": "^1.4.0",
     "vuefire": "^3.0.0-alpha.2",
     "vuexfire": "^3.2.0-alpha.0"

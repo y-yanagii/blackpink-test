@@ -14,42 +14,51 @@
           <div class="text-center">
             <!-- お問い合わせ領域 -->
             <div class="contact-card text-center">
-              <v-form v-model="valid">
-                <div class="contact-icons">
-                  <div>
-                    <v-btn
-                      icon
-                      @click="show = !show"
-                      class="contact-information-icon"
-                    ><i class="mdi mdi-information-outline"></i></v-btn>
+              <ValidationObserver ref="obs" v-slot="{ invalid }">
+                <v-form @submit.prevent="submit">
+                  <div class="contact-icons">
+                    <div>
+                      <v-btn
+                        icon
+                        @click="show = !show"
+                        class="contact-information-icon"
+                      ><i class="mdi mdi-information-outline"></i></v-btn>
+                    </div>
+                    <div>
+                      <v-btn
+                        type="submit"
+                        icon
+                        class="contact-send-icon"
+                        :disabled="invalid"
+                      ><i class="mdi mdi-send"></i></v-btn>
+                    </div>
                   </div>
-                  <div>
-                    <v-btn
-                      type="submit"
-                      icon
-                      class="contact-send-icon"
-                    ><i class="mdi mdi-send"></i></v-btn>
+                  <div class="device-area">
+                    <v-select
+                      v-model="contact.device"
+                      :items="devices"
+                      label="DEVICE"
+                      class="device-select"
+                    ></v-select>
                   </div>
-                </div>
-                <div class="device-area">
-                  <v-select
-                    v-model="contact.device"
-                    :items="devices"
-                    label="DEVICE"
-                    class="device-select"
-                  ></v-select>
-                </div>
-                <!-- 問い合わせ内容 -->
-                <div class="contact-area">
-                  <v-textarea
-                    v-model="contact.content"
-                    :rules="contentRules"
-                    outlined
-                    label="CONTACT"
-                    class="contact-content"
-                  ></v-textarea>
-                </div>
-              </v-form>
+                  <!-- 問い合わせ内容 -->
+                  <div class="contact-area">
+                    <ValidationProvider
+                      v-slot="{ errors }"
+                      rules="contentRequired|contentMax:300"
+                      name="CONTACT"
+                    >
+                      <v-textarea
+                        v-model="contact.content"
+                        outlined
+                        label="CONTACT"
+                        class="contact-content"
+                        :error-messages="errors"
+                      ></v-textarea>
+                    </ValidationProvider>
+                  </div>
+                </v-form>
+              </ValidationObserver>
             </div>
             <!-- 問い合わせの説明ダイアログ領域 -->
             <v-tooltip
@@ -76,6 +85,8 @@
 </template>
 
 <script>
+import { db } from "~/plugins/firebase";
+
 export default {
   data() {
     return {
@@ -86,12 +97,26 @@ export default {
       },
       show: false,
       devices: ["Phone", "Tablet", "PC"],
-      contentRules: [
+      rules: [
         value => !!value || 'CONTENT is Required',
         value => (value && value.length <= 300) || 'Max 300 characters',
       ],
     }
-  }
+  },
+  methods: {
+    submit() {
+      // 問い合わせコレクションへ登録
+      db.collection('contacts').add({
+        content: this.contact.content,
+        device: this.contact.device
+      });
+
+      // 値のリセット
+      this.contact.content = "Phone"
+      this.contact.device = ""
+      
+    }
+  },
 }
 </script>
 
