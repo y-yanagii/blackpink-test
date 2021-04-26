@@ -37,6 +37,7 @@
             dark
             small
             color="#f4a6b8"
+            class="fab-icon"
           >
             <v-icon>{{ item.icon }}</v-icon>
           </v-btn>
@@ -119,7 +120,12 @@ export default {
           icon: 'mdi-play-box',
           title: 'MODE',
           to: '/mode'
-        }
+        },
+        {
+          icon: 'mdi-email-edit-outline',
+          title: 'CONTACT',
+          to: '/contact'
+        },
       ],
       miniVariant: false,
       right: true,
@@ -140,6 +146,10 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.fab-icon {
+  color: $base-bg-color;
+}
+
 .default-header {
   background-color: $base-glay !important;
 }
