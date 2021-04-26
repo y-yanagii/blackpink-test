@@ -3,6 +3,7 @@
   <div>
     <v-row justify="center" align="center">
       <v-col cols="12" sm="8" md="6">
+        <HistoryBackBtn></HistoryBackBtn>
         <!-- タイトルロゴ -->
         <div class="text-center">
           <div class="OtherLogo">
@@ -28,6 +29,7 @@
 
 <script>
 //import { db } from "~/plugins/firebase";
+import HistoryBackBtn from "~/components/HistoryBackBtn.vue";
 
 export default {
   data: function() {
@@ -78,6 +80,9 @@ export default {
   created() {
     // tests情報の初期化
     this.$store.dispatch('tests/init');
+  },
+  components: {
+    HistoryBackBtn
   }
 }
 </script>

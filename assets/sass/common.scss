@@ -185,4 +185,20 @@ body {
       }
     }
   }
+
+  // 戻るボタン
+  .history {
+    margin: 2%;
+    .history-btn {
+      border: solid 2px $base-text-color;
+      padding: 0 7px !important;
+      span {
+        font-size: 14px;
+        color: $base-text-color;
+        i {
+          font-size: 16px !important;
+        }
+      }
+    }
+  }
 }
