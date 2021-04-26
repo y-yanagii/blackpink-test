@@ -134,7 +134,7 @@ export default {
     root() {
       // ヘッダタイトル押下時rootに遷移
       this.$router.push('/')
-    }
+    },
   },
 }
 </script>
