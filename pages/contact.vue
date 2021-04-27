@@ -77,6 +77,9 @@
                 送信された内容はサイト管理者のみ確認が可能です。
               </span>
             </v-tooltip>
+
+            <!-- 問い合わせを送信した場合お礼のダイアログ表示 -->
+            <ThanksDialog ref="dlg" />
           </div>
         </div>
       </v-col>
@@ -86,14 +89,15 @@
 
 <script>
 import { db } from "~/plugins/firebase";
+import ThanksDialog from "~/components/ThanksDialog.vue";
 
 export default {
   data() {
     return {
       valid: false,
       contact: {
+        device: "Phone",
         content: "",
-        device: "Phone"
       },
       show: false,
       devices: ["Phone", "Tablet", "PC"],
@@ -112,11 +116,16 @@ export default {
       });
 
       // 値のリセット
-      this.contact.content = "Phone"
-      this.contact.device = ""
+      this.contact.device = "Phone"
+      this.contact.content = ""
       
+      // お礼のダイアログを表示
+      this.$refs.dlg.isDisplay = true
     }
   },
+  components: {
+    ThanksDialog
+  }
 }
 </script>
 
