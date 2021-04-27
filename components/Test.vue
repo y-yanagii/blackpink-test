@@ -4,11 +4,11 @@
       <v-col cols="12" sm="8" md="6">
         <ModeTitle></ModeTitle>
         <Time
-          v-show="localModeType !== 4"
+          v-show="localModeType !== $mode.suddendeath"
           :timerObject="timerObject"
         ></Time>
         <Life
-          v-show="localModeType === 4"
+          v-show="localModeType === $mode.suddendeath"
           :lives="lives"
         ></Life>
         <TestCard
@@ -66,7 +66,7 @@ export default {
           color: "#f4a6b8",
         },
       ],
-      localStorage: Number
+      localModeType: Number
     }
   },
   computed: {

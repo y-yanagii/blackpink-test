@@ -48,7 +48,7 @@ export default {
   methods: {
     selectMode(mode) {
       // 難易度選択をローカルストレージに保持
-      this.modeType = mode.modeType
+      this.localModeType = mode.modeType
 
       // dispatchでVuexのactionsを呼ぶ
       this.$store.dispatch('modes/selectMode', { modeType: mode.modeType, modeValue: mode.modeValue });
