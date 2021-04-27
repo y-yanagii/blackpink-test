@@ -169,7 +169,6 @@ body {
     margin: auto !important;
     div {
       div {
-        color: $base-text-color;
         div {
           label {
             color: $base-text-color !important;
@@ -200,5 +199,33 @@ body {
         }
       }
     }
+  }
+
+  // デバイス選択
+  .device-select {
+    div {
+      div {
+        div {
+          label {
+            color: $base-text-color !important;
+          }
+          div {
+            div {
+              i {
+                color: $base-text-color !important;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+
+  label {
+    color: $base-text-color !important;
+  }
+
+  .theme--dark.v-input {
+    color: $base-text-color !important;
   }
 }

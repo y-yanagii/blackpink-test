@@ -70,7 +70,7 @@ export default {
       userName: "",
       rules: [
         value => !!value || 'USERNAME is Required.',
-        //value => (value && value.length >= 3) || 'Min 3 characters',
+        value => (value && value.length <= 15) || 'Max 15 characters',
       ],
       colorThema: false,
     }
