@@ -42,46 +42,14 @@
             <v-icon>{{ item.icon }}</v-icon>
           </v-btn>
       </v-speed-dial>
-
-      <!-- <v-spacer /> -->
-      <!-- ハンバーガーアイコン -->
-      <!-- <v-btn
-        icon
-        @click.stop="rightDrawer = !rightDrawer"
-      >
-        <v-icon>mdi-menu</v-icon>
-      </v-btn> -->
     </v-app-bar>
+
     <!-- ボディ領域の呼び出し元 -->
     <v-main>
       <v-container>
         <nuxt />
       </v-container>
     </v-main>
-    <!-- ナビゲーション領域 -->
-    <!-- <v-navigation-drawer
-      v-model="rightDrawer"
-      :right="right"
-      temporary
-      fixed
-    >
-      <v-list>
-        <v-list-item
-          v-for="(item, i) in items"
-          :key="i"
-          :to="item.to"
-          router
-          exact
-        >
-          <v-list-item-action>
-            <v-icon>{{ item.icon }}</v-icon>
-          </v-list-item-action>
-          <v-list-item-content>
-            <v-list-item-title v-text="item.title" />
-          </v-list-item-content>
-        </v-list-item>
-      </v-list>
-    </v-navigation-drawer> -->
 
     <!-- フッター -->
     <v-footer
@@ -125,6 +93,11 @@ export default {
           icon: 'mdi-email-edit-outline',
           title: 'CONTACT',
           to: '/contact'
+        },
+        {
+          icon: 'mdi-note-outline',
+          title: 'TERMS OF USE',
+          to: '/terms'
         },
       ],
       miniVariant: false,
