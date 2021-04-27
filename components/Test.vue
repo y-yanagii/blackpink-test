@@ -4,8 +4,13 @@
       <v-col cols="12" sm="8" md="6">
         <ModeTitle></ModeTitle>
         <Time
+          v-show="localModeType !== 4"
           :timerObject="timerObject"
         ></Time>
+        <Life
+          v-show="localModeType === 4"
+          :lives="lives"
+        ></Life>
         <TestCard
           :currentTest="currentTest"
           :test="tests[currentTest]"
@@ -21,6 +26,7 @@
 import ModeTitle from '~/components/ModeTitle.vue';
 import Time from '~/components/Time.vue';
 import TestCard from '~/components/TestCard.vue';
+import Life from '~/components/Life.vue';
 
 export default {
   data: function() {
@@ -42,7 +48,25 @@ export default {
         diffTime: 0, // 現在時刻とスタートボタンを押した時刻の差
         startTime: 0, // スタートボタンを押した時刻
         isRunning: false // 計測中の状態保持
-      }
+      },
+      lives: [
+        {
+          life: true,
+          icon: "mdi-heart-outline",
+          color: "#f4a6b8",
+        },
+        {
+          life: true,
+          icon: "mdi-heart-outline",
+          color: "#f4a6b8",
+        },
+        {
+          life: true,
+          icon: "mdi-heart-outline",
+          color: "#f4a6b8",
+        },
+      ],
+      localStorage: Number
     }
   },
   computed: {
@@ -54,7 +78,8 @@ export default {
   components: {
     ModeTitle,
     Time,
-    TestCard
+    TestCard,
+    Life
   },
   methods: {
     // 選択肢押下時処理(解答時)
@@ -132,6 +157,11 @@ export default {
     this.$store.dispatch('tests/init');
     // rankingsコレクションの初期化
     this.$store.dispatch('rankings/init');
+  },
+  mounted() {
+    if (localStorage.localModeType) {
+      this.localModeType = localStorage.localModeType
+    }
   }
 }
 </script>

@@ -38,6 +38,7 @@ export default {
   data: function() {
     return {
       modes: [],
+      localModeType: Number,
     }
   },
   firestore: {
@@ -46,7 +47,9 @@ export default {
   },
   methods: {
     selectMode(mode) {
-      // 難易度選択を保持
+      // 難易度選択をローカルストレージに保持
+      this.modeType = mode.modeType
+
       // dispatchでVuexのactionsを呼ぶ
       this.$store.dispatch('modes/selectMode', { modeType: mode.modeType, modeValue: mode.modeValue });
 
@@ -71,6 +74,12 @@ export default {
     // modesコレクションの初期化
     this.$store.dispatch('modes/init');
   },
+  watch: {
+    // 選択した難易度をブラウザのローカルストレージに保持
+    localModeType(selectedMode) {
+      localStorage.localModeType = selectedMode
+    }
+  }
 }
 </script>
 
