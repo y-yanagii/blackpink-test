@@ -37,7 +37,7 @@ import { db } from "~/plugins/firebase";
 export default {
   data: function() {
     return {
-      modes: []
+      modes: [],
     }
   },
   firestore: {
@@ -51,7 +51,7 @@ export default {
       this.$store.dispatch('modes/selectMode', { modeType: mode.modeType, modeValue: mode.modeValue });
 
       // 検定スタート画面に遷移
-      this.$router.push({ path: "/mode/start" });
+      this.$router.push({ path: "/mode/" + mode.modeValue.replace(/\s+/g, "").toLowerCase() });
     },
     setClass(type) {
       // それぞれの難易度ごとにクラス付与

@@ -37,12 +37,13 @@ export default {
       // 選択した難易度をVuexで取得
       selectedMode: this.$store.getters['modes/choiceMode'],
       tests: [],
+      show: false,
     }
   },
   methods: {
     testStart() {
       // 検定画面に遷移（テスト開始）
-      this.$router.push({ name: "mode-test", path: "/mode/test" })
+      this.$emit('change-show')
     }
   },
   firestore: {
