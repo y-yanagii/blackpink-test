@@ -37,7 +37,8 @@ import { db } from "~/plugins/firebase";
 export default {
   data: function() {
     return {
-      modes: []
+      modes: [],
+      localModeType: Number,
     }
   },
   firestore: {
@@ -46,12 +47,14 @@ export default {
   },
   methods: {
     selectMode(mode) {
-      // 難易度選択を保持
+      // 難易度選択をローカルストレージに保持
+      this.localModeType = mode.modeType
+
       // dispatchでVuexのactionsを呼ぶ
       this.$store.dispatch('modes/selectMode', { modeType: mode.modeType, modeValue: mode.modeValue });
 
       // 検定スタート画面に遷移
-      this.$router.push({ path: "/mode/start" });
+      this.$router.push({ path: "/mode/" + mode.modeValue.replace(/\s+/g, "").toLowerCase() });
     },
     setClass(type) {
       // それぞれの難易度ごとにクラス付与
@@ -71,6 +74,12 @@ export default {
     // modesコレクションの初期化
     this.$store.dispatch('modes/init');
   },
+  watch: {
+    // 選択した難易度をブラウザのローカルストレージに保持
+    localModeType(selectedMode) {
+      localStorage.localModeType = selectedMode
+    }
+  }
 }
 </script>
 

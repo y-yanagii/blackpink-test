@@ -85,7 +85,7 @@ export default {
           to: '/ranking'
         },
         {
-          icon: 'mdi-play-box',
+          icon: 'mdi-gamepad-variant-outline',
           title: 'MODE',
           to: '/mode'
         },
