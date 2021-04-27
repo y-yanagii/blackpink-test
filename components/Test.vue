@@ -4,11 +4,11 @@
       <v-col cols="12" sm="8" md="6">
         <ModeTitle></ModeTitle>
         <Time
-          v-show="localModeType !== $mode.suddendeath"
+          v-show="localModeType !== $mode.suddendeath.toString()"
           :timerObject="timerObject"
         ></Time>
         <Life
-          v-show="localModeType === $mode.suddendeath"
+          v-show="localModeType === $mode.suddendeath.toString()"
           :lives="lives"
         ></Life>
         <TestCard
@@ -49,7 +49,8 @@ export default {
         startTime: 0, // スタートボタンを押した時刻
         isRunning: false // 計測中の状態保持
       },
-      lives: [
+      remainingLife: 3, // 残ライフ
+      lives: [ // ライフオブジェクト
         {
           life: true,
           icon: "mdi-heart-outline",
@@ -90,6 +91,9 @@ export default {
       if (this.currentTest === this.tests.length - 1) {
         // 最終問題の場合終了処理
         this.testEndProcessing();
+      } else if (this.localModeType === this.$mode.suddendeath.toString()) {
+        // sudden deathの場合ライフの判定
+        this.judgmentLife(value);
       } else {
         // 次の問題に移行
         this.currentTest++
@@ -138,6 +142,22 @@ export default {
       vm.isRunning = false;
       // 実際のタイマーストップ処理
       cancelAnimationFrame(vm.animateFrame);
+    },
+    judgmentLife(answer) {
+      if (!answer.isAnswer) {
+        // 不正解の場合、ライフを１削る
+        this.lives.filter(l => l.life)[this.lives.filter(l => l.life).length - 1].icon = "mdi-heart-broken-outline"
+        this.lives.filter(l => l.life)[this.lives.filter(l => l.life).length - 1].life = false
+        this.remainingLife--;
+      }
+      
+      if (this.remainingLife === 0) {
+        // 残ライフが0の場合、検定終了(最終問題の場合はaddAnswerメソッドのif文で処理される)
+        this.testEndProcessing();
+      } else {
+        // 次の問題に移行
+        this.currentTest++
+      }
     }
   },
   computed: {
