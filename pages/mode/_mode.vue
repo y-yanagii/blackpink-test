@@ -3,7 +3,8 @@
   <Start
     v-if="!show"
     @change-show="changeShow"
-  ></Start>
+  >
+  </Start>
   <Test v-else></Test>
 </template>
 
@@ -27,6 +28,11 @@ export default {
   components: {
     Start,
     Test
-  }
+  },
+  async asyncData(context) {
+    const url = "https://itunes.apple.com/search";
+    const response = await context.$axios.$get(url);
+    debugger
+  } 
 }
 </script>
