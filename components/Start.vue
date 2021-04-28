@@ -7,7 +7,10 @@
         <!-- タイトルロゴ -->
         <div class="text-center">
           <div class="OtherLogo">
-            <span class="title-logo" :style="{'color': getStyleColor.color}">
+            <span
+              :class="getModeTypeClass.modeTypeTitleClass"
+              class="title-logo"
+            >
               {{ selectedMode.modeValue.replace(/\s+/g, "") + " MODE"}}
             </span>
           </div>
@@ -16,7 +19,7 @@
           <v-btn
             outlined
             class="common-mode-button mode-button"
-            :style="{'border': getStyleColor.border}"
+            :class="getModeTypeClass.modeTypeButtonClass"
             @click="testStart()"
             nuxt
           >TEST START!</v-btn>
@@ -55,25 +58,33 @@ export default {
     getTests: function() {
       return this.$store.getters['tests/getTestsByMode'];
     },
-    // 難易度による色の設定
-    getStyleColor: function() {
-      if (this.$data.selectedMode.modeType === 3) {
+    // 難易度による色の設定(easy,normal,hardの場合デフォルト色)
+    getModeTypeClass: function() {
+      const modeType = this.$data.selectedMode.modeType;
+
+      if (modeType === this.$mode.master) {
         // 難易度MASTERの場合、紫色
         return {
-          'color': '#A700FF',
-          'border': 'solid 2px #A700FF'
+          modeTypeTitleClass: 'title-logo-master',
+          modeTypeButtonClass: 'start-button-master',
         }
-      } else if (this.$data.selectedMode.modeType === 4) {
-        // 難易度MASTERの場合、赤色
+      } else if (modeType === this.$mode.suddendeath) {
+        // 難易度SUDDEN DEATHの場合、赤色
         return {
-          'color': '#FF0000',
-          'border': 'solid 2px #FF0000'
+          modeTypeTitleClass: 'title-logo-suddendeath',
+          modeTypeButtonClass: 'start-button-suddendeath',
+        }
+      } else if (modeType === this.$mode.music) {
+        // 難易度MUSICの場合、水青
+        return {
+          modeTypeTitleClass: 'title-logo-music',
+          modeTypeButtonClass: 'start-button-music',
         }
       } else {
-        // 難易度EASY, NORMAL, HARDの場合、ピンク
+        // 難易度EASY, NORMAL, HARDの場合、デフォルト色
         return {
-          'color': '#f4a6b8',
-          'border': 'solid 2px #f4a6b8'
+          modeTypeTitleClass: 'title-logo-default',
+          modeTypeButtonClass: 'start-button-default',
         }
       }
     }
@@ -87,3 +98,16 @@ export default {
   }
 }
 </script>
+
+<style scoped lang="scss">
+// 選択した難易度のタイトル領域
+.title-logo-master {
+  color: $master-color !important;
+}
+.title-logo-suddendeath {
+  color: $suddendeath-color !important;
+}
+.title-logo-music {
+  color: $music-color !important;
+}
+</style>

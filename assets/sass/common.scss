@@ -35,6 +35,12 @@ body {
       height: 10rem;
     }
   }
+
+  .start-logo {
+    .title-logo {
+      color: $base-text-color;
+    }
+  }
   
   .TestTitleLogo {
     display: inline-block;
@@ -118,6 +124,26 @@ body {
     span {
       font-size: 20px;
       color: $music-color;
+    }
+  }
+
+  // TEST START!ボタン
+  .start-button-master {
+    border: solid 2px $master-color;
+    span {
+      color: $master-color !important;
+    }
+  }
+  .start-button-suddendeath {
+    border: solid 2px $suddendeath-color;
+    span {
+      color: $suddendeath-color !important;
+    }
+  }
+  .start-button-music {
+    border: solid 2px $music-color;
+    span {
+      color: $music-color !important;
     }
   }
 
