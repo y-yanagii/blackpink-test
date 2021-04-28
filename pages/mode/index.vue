@@ -58,12 +58,15 @@ export default {
     },
     setClass(type) {
       // それぞれの難易度ごとにクラス付与
-      if (type === 3) {
+      if (type === this.$mode.master) {
         // MASTER
         return "master-mode-button"
-      } else if (type === 4) {
+      } else if (type === this.$mode.suddendeath) {
         // SUDDEN DEATH
         return "suddendeath-mode-button"
+      } else if (type === this.$mode.music) {
+        // MUSIC
+        return "music-mode-button"
       } else {
         // EASY, NORMAL, HARD
         return "mode-button"

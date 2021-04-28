@@ -109,6 +109,17 @@ body {
       color: $suddendeath-color;
     }
   }
+  
+  // MUSICボタン
+  .music-mode-button {
+    border: solid 2px $music-color;
+    // border-radius: 7px;
+    color: $music-color;
+    span {
+      font-size: 20px;
+      color: $music-color;
+    }
+  }
 
   // デフォルトの問題文領域
   .question-area {

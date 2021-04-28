@@ -11,4 +11,6 @@ Vue.prototype.$mode = {
   master: 3,
   // sudden-deathモード
   suddendeath: 4,
+  // musicモード
+  music: 5,
 }
