@@ -50,7 +50,7 @@ export default {
     '@nuxtjs/proxy',
   ],
   
-  // urlにapiを使用している場合のCORS policy にブロックされる問題
+  // apiを使用する場合のCORS policy にブロックされる問題
   // 呼び出し側はapi以下の/v1/jp/itunes-music/hot-tracks/all/10/explicit.jsonを指定
   axios: {
     proxy: true,

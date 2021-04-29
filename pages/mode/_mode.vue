@@ -1,11 +1,30 @@
 <!-- 難易度選択領域 -->
 <template>
+<div>
   <Start
     v-if="!show"
     @change-show="changeShow"
   >
   </Start>
   <Test v-else></Test>
+  <div
+    v-for="(result, index) in results"
+    :key="index"
+  >
+    <div>
+      <div>artistName : {{ result.artistName }}</div>
+      <div>trackName : {{ result.trackName }}</div>
+      <div>previewUrl : {{ result.previewUrl }}</div>
+      <audio controls preload="auto" id="audio">
+        <source
+          :src=result.previewUrl
+          type="audio/mp4"
+        />
+      </audio>
+      
+    </div>
+  </div>
+</div>
 </template>
 
 <script>
@@ -30,10 +49,17 @@ export default {
     Test
   },
   async asyncData(context) {
-    const url = "/search?term=blackpink";
-    const response = await context.$axios.$get(url);
+    // 詳細はnuxt.config.jsのproxyを参照
+    const url = "/search";
+    const response = await context.$axios.$get(url, {
+      params: {
+        term: "blackpink",
+        entity: "musicTrack"
+      }
+    });
 
-    console.log(response.data)
+    // 他のアーティストも取れてきてしまうため一旦はK-Popで絞る
+    return { results: response.results.filter(n => n.primaryGenreName === "K-Pop") }
   } 
 }
 </script>
