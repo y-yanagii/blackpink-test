@@ -151,11 +151,11 @@ body {
   .question-area {
     text-align: left;
     margin: auto;
-    padding-left: 3%;
+    padding: 1% 1% 1% 3%;
     color: $base-text-color;
     width: 90%;
     background-color: $base-bg-color;
-    border: solid 1px $base-text-color;
+    border: solid 2px $base-text-color;
     border-radius: 7px;
   }
 
@@ -172,7 +172,7 @@ body {
       .option-btn {
         width: 90%;
         text-align: left;
-        border: solid 1px $base-text-color;
+        border: solid 2px $base-text-color;
         border-radius: 7px;
         color: $base-text-color;
         background-color: $base-bg-color;

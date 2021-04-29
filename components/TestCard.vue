@@ -23,7 +23,14 @@
           class="gif"
         >
           <!-- defaultのGif画像を -->
-          <iframe src="https://giphy.com/embed/o8ncre3fl0SuRwkLeq" width="100%" height="100%" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
+          <iframe
+            :src="test.embedInfo.embedCode"
+            width="100%"
+            height="100%"
+            frameBorder="0"
+            class="giphy-embed"
+            allowFullScreen
+          ></iframe>
         </div>
         
         <!-- <iframe width="85%" height="90%" src="https://www.youtube.com/embed/3E8l6I95cZY" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe> -->
@@ -34,7 +41,15 @@
           v-if="test.modeType === 5"
           class="music"
         >
-          <!-- <img :src="imageSrc" class="music-icon"> -->
+          <img :src="imageSrc" class="music-icon">
+          <div class="replay">
+            <v-btn
+              class="replay-btn"
+            >
+              <i class="mdi mdi-headphones"></i>
+              REPLAY
+            </v-btn>
+          </div>
         </div>
       </div>
       <div class="options-area">
@@ -62,9 +77,9 @@
         </div>
       </div>
     </div>
-    <div v-if="!test.embedInfo.subCode">
+    <div v-if="test.embedInfo.detail">
       <!-- サブコード（埋め込み、api取得元のリンクなどあればここに表示） -->
-      <p><a href="https://giphy.com/gifs/BLACKPINK-blackpink-the-show-o8ncre3fl0SuRwkLeq">via GIPHY</a></p>
+      <p><a :href="test.embedInfo.detail.subCode">{{ test.embedInfo.detail.subContent }}</a></p>
     </div>
   </div>
 </template>
@@ -76,7 +91,7 @@ export default {
       testTotal: 15,
       q: "Q. ",
       abcd: ["A. ", "B. ", "C. ", "D. "],
-      imageSrc: require("~/assets/images/music-icon.jpeg")
+      imageSrc: require("~/assets/images/music-icon.png")
     }
   },
   props: ["test", "currentTest"],
@@ -142,6 +157,13 @@ export default {
   left: 0;
   width: 100%;
   height: 100%;
+}
+
+// replayボタン
+.replay-btn{
+  color: $text-color-black;
+  background-color: $base-text-color !important;
+  border: solid 2px #f4a6b8;
 }
 
 // gif領域
