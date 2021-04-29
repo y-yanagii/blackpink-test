@@ -30,9 +30,10 @@ export default {
     Test
   },
   async asyncData(context) {
-    const url = "https://itunes.apple.com/search";
+    const url = "/search?term=blackpink";
     const response = await context.$axios.$get(url);
-    debugger
+
+    console.log(response.data)
   } 
 }
 </script>

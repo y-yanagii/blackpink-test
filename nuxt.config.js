@@ -53,10 +53,11 @@ export default {
   // urlにapiを使用している場合のCORS policy にブロックされる問題
   // 呼び出し側はapi以下の/v1/jp/itunes-music/hot-tracks/all/10/explicit.jsonを指定
   axios: {
-    prefix: '/api',
+    proxy: true,
+    prefix: '/search'
   },
   proxy: {
-    '/api/': { target: 'https://rss.itunes.apple.com/api', pathRewrite: {'^/api/': '/'} },
+    '/search/': { target: process.env.ITUNES_APPLE_URL, }
   },
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
