@@ -32,7 +32,7 @@ export default {
   data: function() {
     return {
       currentTest: 0,
-      tests: this.$store.getters['tests/getTestsByMode'],
+      tests: this.$store.getters['tests/getTestsByMode'](localStorage.localModeType),
       newRecord: {
         name: "",
         answerIncorrectsArray: [],
@@ -73,7 +73,7 @@ export default {
   computed: {
     // 難易度別にテスト情報取得
     getTests: function() {
-      return this.$store.getters['tests/getTestsByMode'];
+      return this.$store.getters['tests/getTestsByMode'](localStorage.localModeType);
     },
   },
   components: {

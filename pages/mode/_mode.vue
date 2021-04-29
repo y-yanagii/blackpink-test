@@ -1,30 +1,11 @@
 <!-- 難易度選択領域 -->
 <template>
-<div>
   <Start
     v-if="!show"
     @change-show="changeShow"
   >
   </Start>
   <Test v-else></Test>
-  <div
-    v-for="(result, index) in results"
-    :key="index"
-  >
-    <div>
-      <div>artistName : {{ result.artistName }}</div>
-      <div>trackName : {{ result.trackName }}</div>
-      <div>previewUrl : {{ result.previewUrl }}</div>
-      <audio controls preload="auto" id="audio">
-        <source
-          :src=result.previewUrl
-          type="audio/mp4"
-        />
-      </audio>
-      
-    </div>
-  </div>
-</div>
 </template>
 
 <script>

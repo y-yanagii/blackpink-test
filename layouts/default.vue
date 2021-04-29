@@ -128,6 +128,7 @@ export default {
 }
 
 .navbar-title {
+  cursor: pointer;
   color: $base-text-color;
 }
 
