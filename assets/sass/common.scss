@@ -149,7 +149,9 @@ body {
 
   // デフォルトの問題文領域
   .question-area {
+    text-align: left;
     margin: auto;
+    padding-left: 3%;
     color: $base-text-color;
     width: 90%;
     background-color: $base-bg-color;
