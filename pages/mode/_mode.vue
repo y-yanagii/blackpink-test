@@ -1,4 +1,4 @@
-<!-- スタート、テスト領域 -->
+<!-- 難易度選択領域 -->
 <template>
   <Start
     v-if="!show"
@@ -30,7 +30,7 @@ export default {
     Test
   },
   async asyncData(context) {
-    // iTuensAPIで楽曲情報を取得。URIの詳細はnuxt.config.jsのproxyを参照
+    // 詳細はnuxt.config.jsのproxyを参照
     const url = "/search";
     const response = await context.$axios.$get(url, {
       params: {

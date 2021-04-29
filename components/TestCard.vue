@@ -17,8 +17,25 @@
       </div>
       <div class="content-area">
         <!-- コンテンツ領域 -->
+        <!-- gifの場合 -->
+        <div
+          v-if="test.embedInfo.embedType === 0"
+          class="gif"
+        >
+          <!-- defaultのGif画像を -->
+          <iframe src="https://giphy.com/embed/o8ncre3fl0SuRwkLeq" width="100%" height="100%" frameBorder="0" class="giphy-embed" allowFullScreen></iframe>
+        </div>
+        
         <!-- <iframe width="85%" height="90%" src="https://www.youtube.com/embed/3E8l6I95cZY" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe> -->
         <!-- <blockquote class="twitter-tweet" data-dnt="true" data-theme="dark"><p lang="ko" dir="ltr"><a href="https://twitter.com/hashtag/BLACKP1NK_888?src=hash&amp;ref_src=twsrc%5Etfw">#BLACKP1NK_888</a> <a href="https://twitter.com/hashtag/BLACKP1NKINYOURAREA?src=hash&amp;ref_src=twsrc%5Etfw">#BLACKP1NKINYOURAREA</a> <a href="https://twitter.com/hashtag/BLACKPINK?src=hash&amp;ref_src=twsrc%5Etfw">#BLACKPINK</a> 와 <a href="https://twitter.com/hashtag/BLINK?src=hash&amp;ref_src=twsrc%5Etfw">#BLINK</a> 의 특별한 오늘을 축하합니다! <a href="https://t.co/OUTOtMyt7d">pic.twitter.com/OUTOtMyt7d</a></p>&mdash; BLACKPINK GLOBAL BLINK (@ygofficialblink) <a href="https://twitter.com/ygofficialblink/status/894574371083177984?ref_src=twsrc%5Etfw">August 7, 2017</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> -->
+
+        <!-- MUSICの場合 -->
+        <div
+          v-if="test.modeType === 5"
+          class="music"
+        >
+          <!-- <img :src="imageSrc" class="music-icon"> -->
+        </div>
       </div>
       <div class="options-area">
         <!-- 選択肢領域 -->
@@ -44,9 +61,10 @@
           </v-btn>
         </div>
       </div>
-      <div>
-        
-      </div>
+    </div>
+    <div v-if="!test.embedInfo.subCode">
+      <!-- サブコード（埋め込み、api取得元のリンクなどあればここに表示） -->
+      <p><a href="https://giphy.com/gifs/BLACKPINK-blackpink-the-show-o8ncre3fl0SuRwkLeq">via GIPHY</a></p>
     </div>
   </div>
 </template>
@@ -58,6 +76,7 @@ export default {
       testTotal: 15,
       q: "Q. ",
       abcd: ["A. ", "B. ", "C. ", "D. "],
+      imageSrc: require("~/assets/images/music-icon.jpeg")
     }
   },
   props: ["test", "currentTest"],
@@ -123,5 +142,10 @@ export default {
   left: 0;
   width: 100%;
   height: 100%;
+}
+
+// gif領域
+.gif {
+  padding: 4%;
 }
 </style>
