@@ -84,7 +84,7 @@ export default {
       testTotal: 15,
       q: "Q. ",
       abcd: ["A. ", "B. ", "C. ", "D. "],
-      audio: this.audioSetting,
+      audio: this.test.modeType === 5 ? new Audio(this.test.embedInfo.embedCode) : false,
     }
   },
   props: ["test", "currentTest"],
@@ -97,10 +97,13 @@ export default {
       this.$emit('option-click', sendAnswerInfo);
     }
   },
-  computed: {
-    audioSetting: function() {
-      // 楽曲クイズの場合、audioオブジェクト生成
-      return this.test.modeType === 5 ? new Audio(this.test.embedInfo.embedCode) : false;
+  watch: {
+    test(newTest) {
+      if (newTest.modeType === 5) {
+        // 1つ前の問題の曲を止める
+        this.audio.pause();
+        this.audio = new Audio(newTest.embedInfo.embedCode)
+      }
     }
   },
   components: {
