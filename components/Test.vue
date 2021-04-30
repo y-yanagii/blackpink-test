@@ -3,10 +3,10 @@
     <v-row justify="center" align="center">
       <v-col cols="12" sm="8" md="6">
         <ModeTitle></ModeTitle>
-        <Time
+        <!-- <Time
           v-show="localModeType !== $mode.suddendeath.toString()"
           :timerObject="timerObject"
-        ></Time>
+        ></Time> -->
         <Life
           v-show="localModeType === $mode.suddendeath.toString()"
           :lives="lives"

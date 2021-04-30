@@ -37,20 +37,11 @@
         <!-- <blockquote class="twitter-tweet" data-dnt="true" data-theme="dark"><p lang="ko" dir="ltr"><a href="https://twitter.com/hashtag/BLACKP1NK_888?src=hash&amp;ref_src=twsrc%5Etfw">#BLACKP1NK_888</a> <a href="https://twitter.com/hashtag/BLACKP1NKINYOURAREA?src=hash&amp;ref_src=twsrc%5Etfw">#BLACKP1NKINYOURAREA</a> <a href="https://twitter.com/hashtag/BLACKPINK?src=hash&amp;ref_src=twsrc%5Etfw">#BLACKPINK</a> 와 <a href="https://twitter.com/hashtag/BLINK?src=hash&amp;ref_src=twsrc%5Etfw">#BLINK</a> 의 특별한 오늘을 축하합니다! <a href="https://t.co/OUTOtMyt7d">pic.twitter.com/OUTOtMyt7d</a></p>&mdash; BLACKPINK GLOBAL BLINK (@ygofficialblink) <a href="https://twitter.com/ygofficialblink/status/894574371083177984?ref_src=twsrc%5Etfw">August 7, 2017</a></blockquote> <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script> -->
 
         <!-- MUSICの場合 -->
-        <div
+        <MusicTest
           v-if="test.modeType === 5"
-          class="music"
-        >
-          <img :src="imageSrc" class="music-icon">
-          <div class="replay">
-            <v-btn
-              class="replay-btn"
-            >
-              <i class="mdi mdi-headphones"></i>
-              REPLAY
-            </v-btn>
-          </div>
-        </div>
+          :test="test"
+          :audio="audio"
+        ></MusicTest>
       </div>
       <div class="options-area">
         <!-- 選択肢領域 -->
@@ -85,13 +76,15 @@
 </template>
 
 <script>
+import MusicTest from '~/components/pages/tests/MusicTest.vue';
+
 export default {
   data: function() {
     return {
       testTotal: 15,
       q: "Q. ",
       abcd: ["A. ", "B. ", "C. ", "D. "],
-      imageSrc: require("~/assets/images/music-icon.png")
+      audio: this.audioSetting,
     }
   },
   props: ["test", "currentTest"],
@@ -105,9 +98,13 @@ export default {
     }
   },
   computed: {
-    
+    audioSetting: function() {
+      // 楽曲クイズの場合、audioオブジェクト生成
+      return this.test.modeType === 5 ? new Audio(this.test.embedInfo.embedCode) : false;
+    }
   },
-  created() {
+  components: {
+    MusicTest
   }
 }
 </script>
@@ -157,13 +154,6 @@ export default {
   left: 0;
   width: 100%;
   height: 100%;
-}
-
-// replayボタン
-.replay-btn{
-  color: $text-color-black;
-  background-color: $base-text-color !important;
-  border: solid 2px #f4a6b8;
 }
 
 // gif領域
