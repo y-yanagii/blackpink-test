@@ -46,7 +46,7 @@ export default {
     }
   },
   destroyed() {
-    // musicクイズの終了時
+    // musicクイズの終了時曲を止める
     this.audio.pause();
   }
 }

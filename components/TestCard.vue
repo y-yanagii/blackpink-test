@@ -68,9 +68,14 @@
         </div>
       </div>
     </div>
-    <div v-if="test.embedInfo.detail">
+    <div
+      v-if="test.embedInfo.detail"
+      class="sub-code-area"
+    >
       <!-- サブコード（埋め込み、api取得元のリンクなどあればここに表示） -->
-      <p><a :href="test.embedInfo.detail.subCode">{{ test.embedInfo.detail.subContent }}</a></p>
+      <!-- <p><a :href="test.embedInfo.detail.subCode">{{ test.embedInfo.detail.subContent }}</a></p> -->
+      <div v-html="test.embedInfo.detail.subCode"></div>
+      <!-- <iframe allow="autoplay *; encrypted-media *; fullscreen *" frameborder="0" height="140" style="width:90%;max-width:660px;overflow:hidden;background:transparent;" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation" src="https://embed.music.apple.com/us/album/kill-this-love-japan-version-blackpink-2019-2020-world/1512384089?i=1512385038"></iframe> -->
     </div>
   </div>
 </template>
@@ -162,5 +167,10 @@ export default {
 // gif領域
 .gif {
   padding: 4%;
+}
+
+// サブコード領域（テストカードの下のリンクや埋め込み部分）
+.sub-code-area {
+  margin: 3%;
 }
 </style>
