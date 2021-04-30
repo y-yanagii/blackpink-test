@@ -9,7 +9,7 @@
         {{ q }}
         <span
           v-for="(q, index) in test.question"
-          :key="index"
+          :key="index + Math.random()"
           v-text="q"
           class="question-item"
           :style="{animationDelay: index*100+'ms'}"
@@ -58,7 +58,7 @@
             {{abcd[index]}}
             <span
               v-for="(t, index) in optionBtnInfo.optionContent"
-              :key="index"
+              :key="index + Math.random()"
               v-text="t"
               class="option-item"
               :style="{animationDelay: index*100+'ms'}"
