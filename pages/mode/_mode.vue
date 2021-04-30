@@ -3,7 +3,8 @@
   <Start
     v-if="!show"
     @change-show="changeShow"
-  ></Start>
+  >
+  </Start>
   <Test v-else></Test>
 </template>
 
@@ -27,6 +28,19 @@ export default {
   components: {
     Start,
     Test
-  }
+  },
+  async asyncData(context) {
+    // 詳細はnuxt.config.jsのproxyを参照
+    const url = "/search";
+    const response = await context.$axios.$get(url, {
+      params: {
+        term: "blackpink",
+        entity: "musicTrack"
+      }
+    });
+
+    // 他のアーティストも取れてきてしまうため一旦はK-Popで絞る
+    return { results: response.results.filter(n => n.primaryGenreName === "K-Pop") }
+  } 
 }
 </script>

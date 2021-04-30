@@ -47,7 +47,18 @@ export default {
   modules: [
     '@nuxtjs/dotenv',
     '@nuxtjs/axios',
+    '@nuxtjs/proxy',
   ],
+  
+  // apiを使用する場合のCORS policy にブロックされる問題
+  // 呼び出し側はapi以下の/v1/jp/itunes-music/hot-tracks/all/10/explicit.jsonを指定
+  axios: {
+    proxy: true,
+    prefix: '/search'
+  },
+  proxy: {
+    '/search/': { target: process.env.ITUNES_APPLE_URL, }
+  },
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
   vuetify: {

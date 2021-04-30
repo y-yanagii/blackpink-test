@@ -35,6 +35,12 @@ body {
       height: 10rem;
     }
   }
+
+  .start-logo {
+    .title-logo {
+      color: $base-text-color;
+    }
+  }
   
   .TestTitleLogo {
     display: inline-block;
@@ -109,14 +115,47 @@ body {
       color: $suddendeath-color;
     }
   }
+  
+  // MUSICボタン
+  .music-mode-button {
+    border: solid 2px $music-color;
+    // border-radius: 7px;
+    color: $music-color;
+    span {
+      font-size: 20px;
+      color: $music-color;
+    }
+  }
+
+  // TEST START!ボタン
+  .start-button-master {
+    border: solid 2px $master-color;
+    span {
+      color: $master-color !important;
+    }
+  }
+  .start-button-suddendeath {
+    border: solid 2px $suddendeath-color;
+    span {
+      color: $suddendeath-color !important;
+    }
+  }
+  .start-button-music {
+    border: solid 2px $music-color;
+    span {
+      color: $music-color !important;
+    }
+  }
 
   // デフォルトの問題文領域
   .question-area {
+    text-align: left;
     margin: auto;
+    padding: 1% 1% 1% 3%;
     color: $base-text-color;
     width: 90%;
     background-color: $base-bg-color;
-    border: solid 1px $base-text-color;
+    border: solid 2px $base-text-color;
     border-radius: 7px;
   }
 
@@ -133,7 +172,7 @@ body {
       .option-btn {
         width: 90%;
         text-align: left;
-        border: solid 1px $base-text-color;
+        border: solid 2px $base-text-color;
         border-radius: 7px;
         color: $base-text-color;
         background-color: $base-bg-color;
