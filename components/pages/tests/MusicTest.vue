@@ -4,6 +4,7 @@
     <div class="replay">
       <v-btn
         class="replay-btn"
+        @click="replay()"
       >
         <i class="mdi mdi-headphones"></i>
         REPLAY
@@ -24,8 +25,16 @@ export default {
   },
   props: ["test", "audio"],
   created() {
-    this.audio.volume = 1.0
-    this.audio.play()
+    this.audio.pause();
+    this.audio.volume = 1.0;
+    this.audio.play();
+  },
+  methods: {
+    replay() {
+      this.currentTime = 0
+      this.audio.volume = 1.0
+      this.audio.play()
+    }
   },
   watch: {
     // watchで監視し、次の問題に移行時audioオブジェクトを新たに生成する
