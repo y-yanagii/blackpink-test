@@ -25,6 +25,7 @@
             label="USERNANE"
             v-model="userName"
             :rules="rules"
+            @blur="setUserName"
             maxlength="50"
             hide-details="auto"
             color="#f4a6b8"
@@ -67,7 +68,7 @@ import Logo from '~/components/Logo.vue'
 export default {
   data: function() {
     return {
-      userName: "",
+      userName: this.$store.getters['localStorages/getUserName'],
       rules: [
         value => !!value || 'USERNAME is Required.',
         value => (value && value.length <= 15) || 'Max 15 characters',
@@ -76,22 +77,10 @@ export default {
     }
   },
   methods: {
+    setUserName() {
+      this.$store.dispatch('localStorages/setUserName', this.userName)
+    },
     userNameCheck() {
-      if (this.username) {
-
-      }
-    }
-  },
-  mounted() {
-    // マウント時、ブラウザのローカルストレージにuserNameが存在する場合設定
-    if (localStorage.userName) {
-      this.userName = localStorage.userName;
-    }
-  },
-  watch: {
-    // ユーザ名を入力時ブラウザのローカルストレージに保持
-    userName(newUserName) {
-      localStorage.userName = newUserName
     }
   },
   components: {

@@ -32,7 +32,7 @@ export default {
     { src: '~/plugins/vue-youtube.js' },
     { src: '~/plugins/vee-validate.js' },
     { src: '~/plugins/blackpink-config.js' },
-    { src: '~/plugins/vuexPersistedstate.js', ssr: false },
+    { src: '~/plugins/persistedState.client.js', ssr: false },
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components
