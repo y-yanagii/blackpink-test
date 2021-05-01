@@ -22,7 +22,7 @@
             @click="selectMode(mode)"
             outlined
           >
-          {{ mode.modeValue }}
+          {{ mode.modeText }}
           </v-btn>
           </transition-group>
         </div>
@@ -47,14 +47,15 @@ export default {
   },
   methods: {
     selectMode(mode) {
-      // 難易度選択をローカルストレージに保持
-      this.localModeType = mode.modeType
+      // 空白除去
+      let modeValue = mode.modeText.replace(/\s+/g, "");
 
+      // 難易度選択をvuex-persistedstateを使用し、ローカルストレージ管理
       // dispatchでVuexのactionsを呼ぶ
-      this.$store.dispatch('modes/selectMode', { modeType: mode.modeType, modeValue: mode.modeValue });
+      this.$store.dispatch('localStorages/selectMode', { modeType: mode.modeType, modeValue: modeValue.toUpperCase() });
 
       // 検定スタート画面に遷移
-      this.$router.push({ path: "/mode/" + mode.modeValue.replace(/\s+/g, "").toLowerCase() });
+      this.$router.push({ path: "/mode/" + modeValue.toLowerCase() });
     },
     setClass(type) {
       // それぞれの難易度ごとにクラス付与
@@ -77,12 +78,6 @@ export default {
     // modesコレクションの初期化
     this.$store.dispatch('modes/init');
   },
-  watch: {
-    // 選択した難易度をブラウザのローカルストレージに保持
-    localModeType(selectedMode) {
-      localStorage.localModeType = selectedMode
-    }
-  }
 }
 </script>
 

@@ -6,15 +6,18 @@ const modesRef = db.collection('modes');
 const state = () => ({
   // グローバルなデータをここで定義
   modes: [],
-  mode: {
-    modeType: 0,
-    modeValue: "E A S Y"
-  }
+  modeType: 0,
+  modeValue: ""
 });
 
 const getters = {
   // コンポーネントから参照時gettersから参照する
-  choiceMode: state => { return state.mode },
+  choiceMode: state => {
+    // ローカルストレージ保存のモード種別とモード値をオブジェクトで返す
+    return {
+      modeType: state.modeType, modeValue: state.modeValue
+    }
+  },
   orderdModes: state => {
     return _.orderBy(state.modes, ['modeType'], ['asc'])
   }
@@ -23,7 +26,8 @@ const getters = {
 const mutations = {
   // mutationsがstate（グローバル変数的な）のデータを実際に変更
   selectMode(state, choiceMode) {
-    state.mode = choiceMode;
+    state.modeType = choiceMode.modeType;
+    state.modeValue = choiceMode.modeValue;
   }
 };
 

@@ -3,10 +3,10 @@
     <v-row justify="center" align="center">
       <v-col cols="12" sm="8" md="6">
         <ModeTitle></ModeTitle>
-        <!-- <Time
+        <Time
           v-show="localModeType !== $mode.suddendeath.toString()"
           :timerObject="timerObject"
-        ></Time> -->
+        ></Time>
         <Life
           v-show="localModeType === $mode.suddendeath.toString()"
           :lives="lives"
@@ -120,9 +120,9 @@ export default {
     setNewRecord() {
       this.newRecord.name = localStorage.userName ? localStorage.userName : "no_name"; // ブラウザのローカルストレージより取得
       this.newRecord.score = this.newRecord.answerIncorrectsArray.filter(n => n.isAnswer !== false).length * 10; // 正解数 * 10
-      const selectedMode = this.$store.getters['modes/choiceMode']
+      const selectedMode = this.$store.getters['localStorages/choiceMode']
       this.newRecord.modeType = selectedMode.modeType;
-      this.newRecord.modeValue = selectedMode.modeValue;
+      this.newRecord.modeText = selectedMode.modeText;
       this.newRecord.clearTime = this.$options.filters.replaceClearTimeWithNumber(document.getElementById("time").textContent.trim()); // クリアタイム(mm:ss.fff)をフォーマットし、オブジェクトにセット
       this.newRecord.message = "💖🖤👑test message!👑🖤💖"; // VuexよりFirestoreから点数に応じて取得
     },
