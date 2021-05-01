@@ -38,7 +38,6 @@ export default {
   data: function() {
     return {
       modes: [],
-      localModeType: Number,
     }
   },
   firestore: {
