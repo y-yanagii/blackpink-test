@@ -11,7 +11,7 @@
       <v-select
         v-model="modeSelect"
         :items="setModeItems"
-        item-text="modeValue"
+        item-text="modeText"
         item-value="modeType"
         label="MODE"
         return-object
@@ -107,7 +107,7 @@ export default {
   data: function() {
     return {
       modes: [],
-      modeSelect: { modeType: 0, modeValue: 'E A S Y' },
+      modeSelect: { modeType: 0, modeText: 'E A S Y' },
       breakpointClass: this.getBreakPoint()
     }
   },
@@ -142,7 +142,7 @@ export default {
     setModeItems: function() {
       let modeItems = [];
       this.modes.map(mode => {
-        modeItems.push({ modeType: mode.modeType, modeValue: mode.modeValue })
+        modeItems.push({ modeType: mode.modeType, modeText: mode.modeText })
       });
       return modeItems
     },

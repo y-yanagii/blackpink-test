@@ -3,9 +3,10 @@
   <Start
     v-if="!show"
     @change-show="changeShow"
-  >
-  </Start>
-  <Test v-else></Test>
+  ></Start>
+  <Test
+    v-else
+  ></Test>
 </template>
 
 <script>

@@ -2,7 +2,7 @@
   <div class="text-center">
     <div class="TestTitleLogo">
       <span class="title-logo">
-        {{ selectedMode.modeValue.replace(/\s+/g, "") }}
+        {{ selectedMode.modeValue }}
       </span>
     </div>
   </div>
@@ -12,7 +12,7 @@
 export default {
   data: function() {
     return {
-      selectedMode: this.$store.getters['modes/choiceMode'],
+      selectedMode: this.$store.getters['localStorages/choiceMode'],
     }
   },
 }

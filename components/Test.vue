@@ -3,12 +3,12 @@
     <v-row justify="center" align="center">
       <v-col cols="12" sm="8" md="6">
         <ModeTitle></ModeTitle>
-        <!-- <Time
-          v-show="localModeType !== $mode.suddendeath.toString()"
+        <Time
+          v-show="selectedMode.modeType !== $mode.suddendeath.toString()"
           :timerObject="timerObject"
-        ></Time> -->
+        ></Time>
         <Life
-          v-show="localModeType === $mode.suddendeath.toString()"
+          v-show="selectedMode.modeType === $mode.suddendeath.toString()"
           :lives="lives"
         ></Life>
         <TestCard
@@ -32,7 +32,7 @@ export default {
   data: function() {
     return {
       currentTest: 0,
-      tests: this.$store.getters['tests/getTestsByMode'](localStorage.localModeType),
+      tests: this.$store.getters['tests/getTestsByMode'](this.$store.getters['localStorages/choiceMode'].modeType),
       newRecord: {
         name: "",
         answerIncorrectsArray: [],
@@ -67,13 +67,13 @@ export default {
           color: "#f4a6b8",
         },
       ],
-      localModeType: Number
+      selectedMode: this.$store.getters['localStorages/choiceMode']
     }
   },
   computed: {
     // 難易度別にテスト情報取得
     getTests: function() {
-      return this.$store.getters['tests/getTestsByMode'](localStorage.localModeType);
+      return this.$store.getters['tests/getTestsByMode'](this.selectedMode.modeType);
     },
   },
   components: {
@@ -91,7 +91,7 @@ export default {
       if (this.currentTest === this.tests.length - 1) {
         // 最終問題の場合終了処理
         this.testEndProcessing();
-      } else if (this.localModeType === this.$mode.suddendeath.toString()) {
+      } else if (this.modeType === this.$mode.suddendeath.toString()) {
         // sudden deathの場合ライフの判定
         this.judgmentLife(value);
       } else {
@@ -120,9 +120,8 @@ export default {
     setNewRecord() {
       this.newRecord.name = localStorage.userName ? localStorage.userName : "no_name"; // ブラウザのローカルストレージより取得
       this.newRecord.score = this.newRecord.answerIncorrectsArray.filter(n => n.isAnswer !== false).length * 10; // 正解数 * 10
-      const selectedMode = this.$store.getters['modes/choiceMode']
-      this.newRecord.modeType = selectedMode.modeType;
-      this.newRecord.modeValue = selectedMode.modeValue;
+      this.newRecord.modeType = this.selectedMode.modeType;
+      this.newRecord.modeValue = this.selectedMode.modeValue;
       this.newRecord.clearTime = this.$options.filters.replaceClearTimeWithNumber(document.getElementById("time").textContent.trim()); // クリアタイム(mm:ss.fff)をフォーマットし、オブジェクトにセット
       this.newRecord.message = "💖🖤👑test message!👑🖤💖"; // VuexよりFirestoreから点数に応じて取得
     },
@@ -180,10 +179,5 @@ export default {
     // rankingsコレクションの初期化
     this.$store.dispatch('rankings/init');
   },
-  mounted() {
-    if (localStorage.localModeType) {
-      this.localModeType = localStorage.localModeType
-    }
-  }
 }
 </script>

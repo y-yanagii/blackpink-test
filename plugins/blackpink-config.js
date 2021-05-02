@@ -1,3 +1,4 @@
+// 定数管理ファイル
 import Vue from 'vue';
 
 Vue.prototype.$mode = {

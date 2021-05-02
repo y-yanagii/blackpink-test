@@ -11,7 +11,7 @@
               :class="getModeTypeClass.modeTypeTitleClass"
               class="title-logo"
             >
-              {{ selectedMode.modeValue.replace(/\s+/g, "") + " MODE"}}
+              {{ selectedMode.modeValue + " MODE"}}
             </span>
           </div>
         </div>
@@ -38,7 +38,7 @@ export default {
   data: function() {
     return {
       // 選択した難易度をVuexで取得
-      selectedMode: this.$store.getters['modes/choiceMode'],
+      selectedMode: this.$store.getters['localStorages/choiceMode'],
       tests: [],
       show: false,
     }
