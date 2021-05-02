@@ -90,5 +90,16 @@ export default {
     transpile: [
       'vee-validate/dist/rules',
     ],
-  }
+  },
+
+  // Routing configuration
+  router: {
+    extendRoutes (routes, resolve) {
+      routes.push({
+        name: 'custome',
+        path: '*',
+        component: resolve(__dirname, 'pages/errors/404.vue')
+      })
+    }
+  },
 }
