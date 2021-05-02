@@ -80,6 +80,11 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.crown {
+  width: 65%;
+  margin: auto;
+}
+
 .result-card {
   margin: auto auto 2% auto;
   width: 90%;
