@@ -27,6 +27,7 @@ import ModeTitle from '~/components/ModeTitle.vue';
 import Time from '~/components/Time.vue';
 import TestCard from '~/components/TestCard.vue';
 import Life from '~/components/Life.vue';
+import { db } from "~/plugins/firebase";
 
 export default {
   data: function() {
@@ -67,7 +68,7 @@ export default {
           color: "#f4a6b8",
         },
       ],
-      selectedMode: this.$store.getters['localStorages/choiceMode']
+      selectedMode: this.$store.getters['localStorages/choiceMode'],
     }
   },
   computed: {
@@ -91,7 +92,7 @@ export default {
       if (this.currentTest === this.tests.length - 1) {
         // 最終問題の場合終了処理
         this.testEndProcessing();
-      } else if (this.modeType === this.$mode.suddendeath.toString()) {
+      } else if (this.selectedMode.modeType === this.$mode.suddendeath.toString()) {
         // sudden deathの場合ライフの判定
         this.judgmentLife(value);
       } else {
@@ -106,19 +107,23 @@ export default {
 
       // 検定結果レコード作成
       this.setNewRecord();
-      
+
       // ランキング情報を取得
-      this.addAndGetRanking();
+      this.addRanking();
+
+      // 自分のランクをセット
+      this.setMyRank();
+
       // VuexのnewRecordに登録処理
         // メッセージ取得処理
-      // Vuexに解答結果を送信
+      // Vuexに解答結果を送信し保持
       this.$store.dispatch('tests/setNewRecord', { newRecord: this.newRecord })
       // 検定結果画面に遷移
       this.$router.push({ path: "/result" })
     },
     // Newレコード情報をセット
     setNewRecord() {
-      this.newRecord.name = localStorage.userName ? localStorage.userName : "no_name"; // ブラウザのローカルストレージより取得
+      this.newRecord.name = this.$store.getters['localStorages/getUserName'] ? this.$store.getters['localStorages/getUserName'] : this.$user.defaultName; // ブラウザのローカルストレージより取得
       this.newRecord.score = this.newRecord.answerIncorrectsArray.filter(n => n.isAnswer !== false).length * 10; // 正解数 * 10
       this.newRecord.modeType = this.selectedMode.modeType;
       this.newRecord.modeValue = this.selectedMode.modeValue;
@@ -126,14 +131,8 @@ export default {
       this.newRecord.message = "💖🖤👑test message!👑🖤💖"; // VuexよりFirestoreから点数に応じて取得
     },
     // ランキング情報を登録、取得
-    addAndGetRanking() {
+    addRanking() {
       // ランキング登録
-      this.rankingAdd()
-      // 最新ランキング取得
-      this.getRankings
-    },
-    // ランキング登録
-    rankingAdd() {
       this.$store.dispatch('rankings/add', this.newRecord);
     },
     // タイマーストップ処理
@@ -159,12 +158,41 @@ export default {
         // 次の問題に移行
         this.currentTest++
       }
-    }
-  },
-  computed: {
-    getRankings() {
-      return this.$store.getters['rankings/orderdRankings'];
-    }
+    },
+    setMyRank() {
+      // モード種別ごとのランキングを取得
+      let rankings = this.$store.getters['rankings/rankingsByModeType'](this.selectedMode.modeType)
+      
+      // 今回の結果のオブジェクトをランキング配列に追加
+      const myRankObject = {
+        id: this.$user.defaultRankId,
+        score: this.newRecord.score,
+        clearTime: this.newRecord.clearTime,
+        createdAt: this.$store.getters['rankings/serverTime']
+      }
+      rankings.push(myRankObject);
+
+      // ランキングソート
+      rankings.sort(function(a, b) {
+        // scoreの降順
+        if (a.score !== b.score) {
+          return (a.score - b.score) * -1
+        }
+
+        // clearTimeの昇順
+        if (a.clearTime !== b.clearTime) {
+          return a.clearTime - b.clearTime
+        }
+
+        // createdAtの降順
+        if (a.createdAt !== b.createdAt) {
+          return (a.createdAt - b.createdAt) * -1
+        }
+      });
+
+      // 今回のランクをセット
+      this.newRecord.myRank = rankings.indexOf(rankings.find(ranking => ranking.id === this.$user.defaultRankId)) + 1
+    },
   },
   filters: {
     // フォーマット整形
@@ -173,7 +201,7 @@ export default {
       return Number(value.replace(/:/g, '').replace(/\./g, ''));
     }
   },
-  created() {
+  mounted() {
     // testsコレクションの初期化
     this.$store.dispatch('tests/init');
     // rankingsコレクションの初期化

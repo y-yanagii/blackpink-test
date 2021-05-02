@@ -1,6 +1,11 @@
 // 定数管理ファイル
 import Vue from 'vue';
 
+Vue.prototype.$user = {
+  defaultName: "NO NAME",
+  defaultRankId: "new",
+}
+
 Vue.prototype.$mode = {
   // easyモード
   easy: 0,
