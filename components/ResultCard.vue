@@ -1,5 +1,15 @@
 <template>
   <div class="text-center">
+    <div class="text-center crown">
+      <iframe
+        :src="crownGif.src"
+        :width="crownGif.width"
+        :height="crownGif.height"
+        :frameBorder="crownGif.frameBorder"
+        :class="crownGif.class"
+        allowFullScreen
+      ></iframe>
+    </div>
     <div class="result-card">
       <!-- タイトル領域 -->
       <div class="text-center result-card-title">
@@ -45,6 +55,13 @@ export default {
       sns:{
         twitter:'https://twitter.com/intent/tweet?url=https://yahoo.co.jp&text=TEST結果は&hashtags=BLACKPINK,ブラックピンク,BLINK,BLACKPINKTEST',
       },
+      crownGif: {
+        src: "https://giphy.com/embed/AV7jFEFlWSUl8oEwH8",
+        width: "90%",
+        height: "50%",
+        frameBorder: 0,
+        class: "giphy-embed",
+      }
     }
   },
   props: ["newRecord"],
@@ -64,7 +81,7 @@ export default {
 
 <style scoped lang="scss">
 .result-card {
-  margin: 8% auto 2% auto;
+  margin: auto auto 2% auto;
   width: 90%;
   height: 100%;
   border: solid 2px $base-text-color;

@@ -118,7 +118,8 @@ export default {
     },
     // Newレコード情報をセット
     setNewRecord() {
-      this.newRecord.name = localStorage.userName ? localStorage.userName : "no_name"; // ブラウザのローカルストレージより取得
+      this.newRecord.name = this.$store.getters['localStorages/getUserName'] ? this.$store.getters['localStorages/getUserName'] : this.$user.defaultName; // ブラウザのローカルストレージより取得
+      debugger
       this.newRecord.score = this.newRecord.answerIncorrectsArray.filter(n => n.isAnswer !== false).length * 10; // 正解数 * 10
       this.newRecord.modeType = this.selectedMode.modeType;
       this.newRecord.modeValue = this.selectedMode.modeValue;
