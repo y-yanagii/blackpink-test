@@ -3,6 +3,7 @@ import Vue from 'vue';
 
 Vue.prototype.$user = {
   defaultName: "NO NAME",
+  defaultRankId: "new",
 }
 
 Vue.prototype.$mode = {
