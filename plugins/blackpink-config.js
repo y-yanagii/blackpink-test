@@ -20,3 +20,7 @@ Vue.prototype.$mode = {
   // musicモード
   music: 5,
 }
+
+Vue.prototype.$path = {
+  modes: ["easy", "normal", "hard", "master", "suddendeath", "music"]
+}

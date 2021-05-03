@@ -4,11 +4,11 @@
       <v-col cols="12" sm="8" md="6">
         <ModeTitle></ModeTitle>
         <Time
-          v-show="selectedMode.modeType !== $mode.suddendeath.toString()"
+          v-show="selectedMode.modeType !== $mode.suddendeath"
           :timerObject="timerObject"
         ></Time>
         <Life
-          v-show="selectedMode.modeType === $mode.suddendeath.toString()"
+          v-show="selectedMode.modeType === $mode.suddendeath"
           :lives="lives"
         ></Life>
         <TestCard
@@ -92,7 +92,7 @@ export default {
       if (this.currentTest === this.tests.length - 1) {
         // 最終問題の場合終了処理
         this.testEndProcessing();
-      } else if (this.selectedMode.modeType === this.$mode.suddendeath.toString()) {
+      } else if (this.selectedMode.modeType === this.$mode.suddendeath) {
         // sudden deathの場合ライフの判定
         this.judgmentLife(value);
       } else {

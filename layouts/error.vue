@@ -1,9 +1,7 @@
 <template>
-  <v-app dark>
-    <h1 v-if="error.statusCode === 404">
-      {{ pageNotFound }}
-    </h1>
-    <h1 v-else>
+  <NotFound v-if="error.statusCode === 404"></NotFound>
+  <v-app v-else dark>
+    <h1>
       {{ otherError }}
     </h1>
     <NuxtLink to="/">
@@ -13,6 +11,8 @@
 </template>
 
 <script>
+import NotFound from '/pages/errors/404.vue';
+
 export default {
   layout: 'empty',
   props: {
@@ -33,6 +33,9 @@ export default {
     return {
       title
     }
+  },
+  components: {
+    NotFound
   }
 }
 </script>
