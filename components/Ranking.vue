@@ -230,7 +230,7 @@ export default {
 
 // スマホ以外のヘッダーとランキング情報
 .ranking-header {
-  padding: 0% 6px !important;
+  padding: 0% 4px !important;
   background-color: $base-bg-color !important;
   color: $base-text-color !important;
   border-bottom: solid 1px $base-text-color !important;
