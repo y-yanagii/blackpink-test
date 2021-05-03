@@ -26,11 +26,20 @@ export default {
       this.show = true
     }
   },
+  validate(context) {
+    // urlチェック
+    const modePath = ["easy", "normal", "hard", "master", "suddendeath", "music"]
+    if (modePath.includes(context.params.mode)) return true
+    
+    // エラーページ（404）
+    return false
+  },
   components: {
     Start,
     Test
   },
   async asyncData(context) {
+    // ituensAPIで楽曲情報取得処理
     // 詳細はnuxt.config.jsのproxyを参照
     const url = "/search";
     const response = await context.$axios.$get(url, {
@@ -42,6 +51,6 @@ export default {
 
     // 他のアーティストも取れてきてしまうため一旦はK-Popで絞る
     return { results: response.results.filter(n => n.primaryGenreName === "K-Pop") }
-  } 
+  },
 }
 </script>
