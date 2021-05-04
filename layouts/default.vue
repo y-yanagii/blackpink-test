@@ -94,6 +94,11 @@ export default {
           title: 'TERMS OF USE',
           to: '/terms'
         },
+        {
+          icon: 'mdi-bell-outline',
+          title: 'NOTICES',
+          to: '/notice'
+        }
       ],
       miniVariant: false,
       right: true,
