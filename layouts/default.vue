@@ -75,11 +75,6 @@ export default {
           to: '/'
         },
         {
-          icon: 'mdi-chart-bubble',
-          title: 'Inspire',
-          to: '/inspire'
-        },
-        {
           icon: 'mdi-crown-outline',
           title: 'RANKING',
           to: '/ranking'
@@ -99,6 +94,11 @@ export default {
           title: 'TERMS OF USE',
           to: '/terms'
         },
+        {
+          icon: 'mdi-bell-outline',
+          title: 'NOTICES',
+          to: '/notice'
+        }
       ],
       miniVariant: false,
       right: true,
