@@ -114,12 +114,23 @@ export default {
       // 自分のランクをセット
       this.setMyRank();
 
+      // メッセージをセット
+      this.setMessage();
+
       // VuexのnewRecordに登録処理
         // メッセージ取得処理
       // Vuexに解答結果を送信し保持
       this.$store.dispatch('tests/setNewRecord', { newRecord: this.newRecord })
       // 検定結果画面に遷移
       this.$router.push({ path: "/result" })
+    },
+    stopTimer() {
+      // タイマーストップ処理
+      // タイマーの初期化
+      let vm = this.timerObject;
+      vm.isRunning = false;
+      // 実際のタイマーストップ処理
+      cancelAnimationFrame(vm.animateFrame);
     },
     // Newレコード情報をセット
     setNewRecord() {
@@ -128,36 +139,11 @@ export default {
       this.newRecord.modeType = this.selectedMode.modeType;
       this.newRecord.modeValue = this.selectedMode.modeValue;
       this.newRecord.clearTime = this.$options.filters.replaceClearTimeWithNumber(document.getElementById("time").textContent.trim()); // クリアタイム(mm:ss.fff)をフォーマットし、オブジェクトにセット
-      this.newRecord.message = "💖🖤👑test message!👑🖤💖"; // VuexよりFirestoreから点数に応じて取得
     },
     // ランキング情報を登録、取得
     addRanking() {
       // ランキング登録
       this.$store.dispatch('rankings/add', this.newRecord);
-    },
-    // タイマーストップ処理
-    stopTimer() {
-      // タイマーの初期化
-      let vm = this.timerObject;
-      vm.isRunning = false;
-      // 実際のタイマーストップ処理
-      cancelAnimationFrame(vm.animateFrame);
-    },
-    judgmentLife(answer) {
-      if (!answer.isAnswer) {
-        // 不正解の場合、ライフを１削る
-        this.lives.filter(l => l.life)[this.lives.filter(l => l.life).length - 1].icon = "mdi-heart-broken-outline"
-        this.lives.filter(l => l.life)[this.lives.filter(l => l.life).length - 1].life = false
-        this.remainingLife--;
-      }
-      
-      if (this.remainingLife === 0) {
-        // 残ライフが0の場合、検定終了(最終問題の場合はaddAnswerメソッドのif文で処理される)
-        this.testEndProcessing();
-      } else {
-        // 次の問題に移行
-        this.currentTest++
-      }
     },
     setMyRank() {
       // モード種別ごとのランキングを取得
@@ -193,6 +179,21 @@ export default {
       // 今回のランクをセット
       this.newRecord.myRank = rankings.indexOf(rankings.find(ranking => ranking.id === this.$user.defaultRankId)) + 1
     },
+    setMessage() {
+      // ランクごとのメッセージをセット
+      this.newRecord.message = this.$store.getters['messages/getMessage'](this.newRecord.myRank)
+    },
+    judgmentLife(answer) {
+      if (!answer.isAnswer) {
+        // 不正解の場合、ライフを１削る
+        this.lives.filter(l => l.life)[this.lives.filter(l => l.life).length - 1].icon = "mdi-heart-broken-outline"
+        this.lives.filter(l => l.life)[this.lives.filter(l => l.life).length - 1].life = false
+        this.remainingLife--;
+      }
+      
+      // 残ライフが0の場合、検定終了(最終問題の場合はaddAnswerメソッドのif文で処理される)それ以外、次の問題に移行
+      this.remainingLife === 0 ? this.testEndProcessing() : this.currentTest++
+    },
   },
   filters: {
     // フォーマット整形
@@ -206,6 +207,8 @@ export default {
     this.$store.dispatch('tests/init');
     // rankingsコレクションの初期化
     this.$store.dispatch('rankings/init');
+    // messagesコレクションの初期化
+    this.$store.dispatch('messages/init');
   },
 }
 </script>
