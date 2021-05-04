@@ -40,6 +40,14 @@
               </v-simple-table>
             </div>
           </div>
+          <div class="text-center">
+            <v-pagination
+              v-model="page"
+              :length="pageLength"
+              class="pagenation-btn"
+              color="#f4a6b8"
+            ></v-pagination>
+          </div>
         </div>
       </v-col>
     </v-row>
@@ -52,7 +60,10 @@ import { db } from "~/plugins/firebase";
 export default {
   data() {
     return {
-      notices: []
+      notices: [],
+      displayNotices: [],
+      page: 1,
+      pageLength: 3,
     }
   },
   firestore: {
@@ -69,22 +80,26 @@ export default {
 </script>
 
 <style scoped lang="scss">
+// テーブル
 .notices-table {
   width: 100%;
   background-color: $base-bg-color;
   border: solid 2px $base-text-color;
 }
 
+// テーブルヘッダ
 .notice-header {
   background-color: $base-bg-color !important;
   color: $base-text-color !important;
 }
 
+// テーブルのupdate, content領域
 .notice-created-at, .notice-content {
   color: $base-text-color !important;
   border-bottom: solid 1px $base-text-color !important;
 }
 
+// テーブルのcontent領域
 .notice-content {
   word-break: break-all;
 }

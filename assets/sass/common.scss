@@ -267,4 +267,22 @@ body {
   .theme--dark.v-input {
     color: $base-text-color !important;
   }
+
+  // ページネーション領域
+  .pagenation-btn {
+    ul {
+      li {
+        button {
+          border: solid 1px $base-text-color !important;
+          color: $base-text-color !important;
+          i {
+            color: $base-text-color !important;
+          }
+        }
+        .v-pagination__item--active {
+          color: $text-color-black !important;
+        }
+      }
+    }
+  }
 }
