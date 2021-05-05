@@ -1,17 +1,11 @@
 <template>
   <NotFound v-if="error.statusCode === 404"></NotFound>
-  <v-app v-else dark>
-    <h1>
-      {{ otherError }}
-    </h1>
-    <NuxtLink to="/">
-      Home page
-    </NuxtLink>
-  </v-app>
+  <ServerError v-else-if="error.statusCode === 500"></ServerError>
 </template>
 
 <script>
 import NotFound from '/pages/errors/404.vue';
+import ServerError from '/pages/errors/500.vue';
 
 export default {
   layout: 'empty',
@@ -21,21 +15,9 @@ export default {
       default: null
     }
   },
-  data () {
-    return {
-      pageNotFound: '404 Not Found',
-      otherError: 'An error occurred'
-    }
-  },
-  head () {
-    const title =
-      this.error.statusCode === 404 ? this.pageNotFound : this.otherError
-    return {
-      title
-    }
-  },
   components: {
-    NotFound
+    NotFound,
+    ServerError
   }
 }
 </script>

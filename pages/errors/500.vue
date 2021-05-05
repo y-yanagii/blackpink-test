@@ -5,7 +5,7 @@
         <div class="text-center">
           <div class="OtherLogo">
             <span class="title-logo error-title">
-              404 NOT FOUND
+              500 SERVER ERROR
             </span>
           </div>
         </div>
