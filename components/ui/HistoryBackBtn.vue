@@ -12,10 +12,11 @@
 
 <script>
 export default {
+  props: ["showNumber"],
   methods: {
     historyBack() {
-      // ブラウザバック処理
-      this.$router.back();
+      // 戻る処理
+      this.$emit('change-show-number', this.showNumber)
     }
   }
 }

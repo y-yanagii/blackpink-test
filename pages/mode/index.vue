@@ -1,91 +1,46 @@
-<!-- 難易度選択領域 -->
 <template>
-  <div>
-    <v-row justify="center" align="center">
-      <v-col cols="12" sm="8" md="6">
-        <!-- タイトルロゴ -->
-        <div class="text-center">
-          <div class="OtherLogo">
-            <span class="title-logo">
-              MODE
-            </span>
-          </div>
-        </div>
-        <div class="text-center">
-          <!-- computedに定義した配列オブジェクトをv-forで回しバインディングを設定 -->
-          <transition-group name="fade" appear>
-          <v-btn
-            v-for="mode in modes"
-            :key="mode.modeType"
-            :class="setClass(mode.modeType)"
-            class="common-mode-button"
-            @click="selectMode(mode)"
-            outlined
-          >
-          {{ mode.modeText }}
-          </v-btn>
-          </transition-group>
-        </div>
-      </v-col>
-    </v-row>
-  </div>
+  <Mode
+    v-if="showNumber === $modeNumber.mode"
+    @change-show-number="changeShowNumber"
+  ></Mode>
+  <ModeSelect
+    v-else-if="showNumber === $modeNumber.test || showNumber === $modeNumber.game"
+    @change-show-number="changeShowNumber"
+    :showNumber="showNumber"
+    :playModeText="playModeText"
+  ></ModeSelect>
 </template>
 
 <script>
-import { db } from "~/plugins/firebase";
+import Mode from '~/components/pages/modes/Mode.vue';
+import ModeSelect from '~/components/pages/modes/ModeSelect.vue';
+import GameMode from '~/components/pages/modes/GameMode.vue';
 
 export default {
-  data: function() {
+  data() {
     return {
-      modes: [],
+      showNumber: 0,
+      playModeText: "",
     }
-  },
-  firestore: {
-    // 初期表示firestoreのmodesコレクションをモードタイプの昇順で取得
-    modes: db.collection("modes").orderBy('modeType')
   },
   methods: {
-    selectMode(mode) {
-      // 空白除去
-      let modeValue = mode.modeText.replace(/\s+/g, "");
-
-      // 難易度選択をvuex-persistedstateを使用し、ローカルストレージ管理
-      // dispatchでVuexのactionsを呼ぶ
-      this.$store.dispatch('localStorages/selectMode', { modeType: mode.modeType, modeValue: modeValue.toUpperCase() });
-
-      // 検定スタート画面に遷移
-      this.$router.push({ path: "/mode/" + modeValue.toLowerCase() });
-    },
-    setClass(type) {
-      // それぞれの難易度ごとにクラス付与
-      if (type === this.$mode.master) {
-        // MASTER
-        return "master-mode-button"
-      } else if (type === this.$mode.suddendeath) {
-        // SUDDEN DEATH
-        return "suddendeath-mode-button"
-      } else if (type === this.$mode.music) {
-        // MUSIC
-        return "music-mode-button"
+    // 選択したモードに対応して画面を切り替える
+    changeShowNumber(newNumber) {
+      if (newNumber === this.$modeNumber.test) {
+        this.playModeText = this.$playModeText.test
+      } else if (newNumber === this.$modeNumber.game) {
+        this.playModeText = this.$playModeText.game
       } else {
-        // EASY, NORMAL, HARD
-        return "mode-button"
+        this.playModeText = "";
       }
+
+      this.showNumber = newNumber
     }
   },
-  created() {
-    // modesコレクションの初期化
-    this.$store.dispatch('modes/init');
-  },
+  components: {
+    Mode,
+    ModeSelect,
+    GameMode
+  }
 }
 </script>
-
-<style scoped lang="scss">
-.fade-enter-active, .fade-leave-active {
-  transition: opacity 1.5s;
-}
-.fade-enter, .fade-leave-to {
-  opacity: 0;
-  transform: translateY(-20px);
-}
-</style>

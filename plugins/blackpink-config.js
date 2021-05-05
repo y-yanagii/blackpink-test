@@ -19,8 +19,26 @@ Vue.prototype.$mode = {
   suddendeath: 4,
   // musicモード
   music: 5,
+  // bubbleモード
+  bubble: 6,
 }
 
 Vue.prototype.$path = {
-  modes: ["easy", "normal", "hard", "master", "suddendeath", "music"]
+  modes: ["easy", "normal", "hard", "master", "suddendeath", "music", "bubble"]
+}
+
+Vue.prototype.$modeNumber = {
+  // モード選択画面
+  mode: 0,
+  // testモード画面(playTypeも兼ね備える)
+  test: 1,
+  // gameモード画面(playTypeも兼ね備える)
+  game: 2,
+}
+
+Vue.prototype.$playModeText = {
+  // テスト画面タイトル
+  test: "TEST",
+  // ゲーム画面タイトル
+  game: "GAME",
 }

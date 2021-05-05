@@ -32,7 +32,7 @@
 
 <script>
 //import { db } from "~/plugins/firebase";
-import HistoryBackBtn from "~/components/HistoryBackBtn.vue";
+import HistoryBackBtn from "~/components/ui/HistoryBackBtn.vue";
 
 export default {
   data: function() {
