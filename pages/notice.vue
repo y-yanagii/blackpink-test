@@ -26,7 +26,7 @@
                 </thead>
                 <tbody>
                   <tr
-                    v-for="(notice, index) in notices"
+                    v-for="(notice, index) in displayNotices"
                     :key="index"
                   >
                     <td class="text-left notice-created-at">
@@ -40,6 +40,15 @@
               </v-simple-table>
             </div>
           </div>
+          <div class="text-center mt-2">
+            <v-pagination
+              v-model="page"
+              :length="pageLength"
+              class="pagenation-btn"
+              color="#f4a6b8"
+              @input="pageChange"
+            ></v-pagination>
+          </div>
         </div>
       </v-col>
     </v-row>
@@ -47,16 +56,36 @@
 </template>
 
 <script>
-import { db } from "~/plugins/firebase";
-
 export default {
   data() {
     return {
-      notices: []
+      page: 1, // 初期ページ
+      pageSize: 10, // 1ページに対してのお知らせの数
     }
   },
-  firestore: {
-    notices: db.collection("notices").orderBy('createdAt', 'desc')
+  computed: {
+    notices() {
+      // notices情報取得
+      return this.$store.state.notices.notices
+    },
+    displayNotices: {
+      // デフォルトでcomputedはget()。pageChangeメソッドでセットしたいためset(value) {}を設定
+      get() {
+        // sliceで選択したページ数と一致するnoticesを取得
+        return this.notices.slice(this.pageSize * (this.page - 1), this.pageSize * (this.page));
+      },
+      set(value) {}
+    },
+    pageLength() {
+      // 小数点を切り上げてページ数を返す
+      return Math.ceil(this.notices.length / this.pageSize);
+    }
+  },
+  methods: {
+    pageChange(pageNumber) {
+      // sliceの引数は要素数なので第一引数は-1
+      this.displayNotices = this.notices.slice(this.pageSize * (pageNumber - 1), this.pageSize * (pageNumber));
+    },
   },
   filters: {
     dateFormat: function(value) {
@@ -65,26 +94,34 @@ export default {
       return date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDate();
     }
   },
+  created() {
+    // noticesコレクションの初期化
+    this.$store.dispatch('notices/init');
+  },
 }
 </script>
 
 <style scoped lang="scss">
+// テーブル
 .notices-table {
   width: 100%;
   background-color: $base-bg-color;
   border: solid 2px $base-text-color;
 }
 
+// テーブルヘッダ
 .notice-header {
   background-color: $base-bg-color !important;
   color: $base-text-color !important;
 }
 
+// テーブルのupdate, content領域
 .notice-created-at, .notice-content {
   color: $base-text-color !important;
   border-bottom: solid 1px $base-text-color !important;
 }
 
+// テーブルのcontent領域
 .notice-content {
   word-break: break-all;
 }
