@@ -16,7 +16,12 @@ export default {
   methods: {
     historyBack() {
       // 戻る処理
-      this.$emit('change-show-number', this.showNumber)
+      if (this.showNumber === undefined) {
+        // ブラウザバック処理
+        this.$router.back();
+      } else {
+        this.$emit('change-show-number', this.showNumber)
+      }
     }
   }
 }

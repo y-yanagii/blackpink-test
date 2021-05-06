@@ -3,7 +3,9 @@
   <div>
     <v-row justify="center" align="center">
       <v-col cols="12" sm="8" md="6">
-        <HistoryBackBtn></HistoryBackBtn>
+        <HistoryBackBtn
+          :startPoint="true"
+        ></HistoryBackBtn>
         <!-- タイトルロゴ -->
         <div class="text-center">
           <div class="OtherLogo">
@@ -11,7 +13,7 @@
               :class="getModeTypeClass.modeTypeTitleClass"
               class="title-logo"
             >
-              {{ selectedMode.modeValue + " MODE"}}
+              {{ selectedMode.modeValue + " MODE" }}
             </span>
           </div>
         </div>
@@ -80,6 +82,12 @@ export default {
           modeTypeTitleClass: 'title-logo-music',
           modeTypeButtonClass: 'start-button-music',
         }
+      } else if (modeType === this.$mode.bubble) {
+        // BUBBLEの場合、黄緑
+        return {
+          modeTypeTitleClass: 'title-logo-bubble',
+          modeTypeButtonClass: 'start-button-bubble',
+        }
       } else {
         // 難易度EASY, NORMAL, HARDの場合、デフォルト色
         return {
@@ -109,5 +117,8 @@ export default {
 }
 .title-logo-music {
   color: $music-color !important;
+}
+.title-logo-bubble {
+  color: $bubble-color !important;
 }
 </style>

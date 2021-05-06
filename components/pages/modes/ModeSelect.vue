@@ -56,7 +56,7 @@ export default {
 
       // 難易度選択をvuex-persistedstateを使用し、ローカルストレージ管理
       // dispatchでVuexのactionsを呼ぶ
-      this.$store.dispatch('localStorages/selectMode', { modeType: mode.modeType, modeValue: modeValue.toUpperCase() });
+      this.$store.dispatch('localStorages/selectMode', { modeType: mode.modeType, modeValue: modeValue.toUpperCase(), playType: this.showNumber });
 
       // 検定スタート画面に遷移
       this.$router.push({ path: "/mode/" + modeValue.toLowerCase() });
@@ -87,6 +87,7 @@ export default {
   },
   computed: {
     modeButtons() {
+      // 選択したプレイタイプ別にモードの情報をフィルタリングする（TEST or GAME）
       return this.modes.filter(mode => mode.playType === this.showNumber)
     }
   },

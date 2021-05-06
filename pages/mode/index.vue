@@ -14,10 +14,9 @@
 <script>
 import Mode from '~/components/pages/modes/Mode.vue';
 import ModeSelect from '~/components/pages/modes/ModeSelect.vue';
-import GameMode from '~/components/pages/modes/GameMode.vue';
 
 export default {
-  data() {
+  data: function() {
     return {
       showNumber: 0,
       playModeText: "",
@@ -34,13 +33,15 @@ export default {
         this.playModeText = "";
       }
 
+      // ローカルストレージにplayTypeを保持
+      this.$store.dispatch('localStorages/setPlayType', newNumber);
+
       this.showNumber = newNumber
-    }
+    },
   },
   components: {
     Mode,
     ModeSelect,
-    GameMode
   }
 }
 </script>

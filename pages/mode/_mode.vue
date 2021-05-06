@@ -28,7 +28,7 @@ export default {
   },
   validate(context) {
     // urlチェック
-    const modePath = ["easy", "normal", "hard", "master", "suddendeath", "music"]
+    const modePath = ["easy", "normal", "hard", "master", "suddendeath", "music", "bubble"]
     if (modePath.includes(context.params.mode)) return true
     
     // エラーページ（404）
