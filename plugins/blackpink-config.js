@@ -42,3 +42,12 @@ Vue.prototype.$playModeText = {
   // ゲーム画面タイトル
   game: "GAME",
 }
+
+Vue.prototype.$deleteFlag = {
+  // 表示
+  display: 0,
+  // 削除対象
+  delete: 1,
+  // 削除済み
+  deleted: 2
+}

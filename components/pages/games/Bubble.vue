@@ -24,10 +24,10 @@
             <div
               v-for="(ball, index) in getBalls"
               :key="index"
-              :class="ball.class"
+              :class="ball.className"
               @click="ballBreak(ball)"
               class="ball"
-            ></div>
+            >{{ index }}</div>
           </div>
         </div>
       </v-col>
@@ -52,8 +52,45 @@ export default {
       this.getBalls;
     },
     ballBreak(ball) {
-      
+      // 消える対象のボール配列
+      this.breakCheckRecursive(ball, ball.className)
+
+      // 削除対象のボールを取得
+      let breakBalls = this.balls.find(b => b.deleteFlag === this.$deleteFlag.delete);
+
+      // 消える対象が無い場合return
+      if (typeof breakBalls === "undefined") return
     },
+    breakCheckRecursive(startingBall, selectedClassName) {
+      // 消える対象のボールを再帰的(上下左右)に取得
+      // 上下左右に同色があるかチェック。存在した場合そのボールを起点に左右上下をチェック
+      // 左(x-1 && y === y)
+      const leftBall = this.balls.find(b => b.x === startingBall.x - 1 && b.y === startingBall.y);
+      this.targetDelBall(leftBall, selectedClassName);
+
+      // 右(x+1 && y === y)
+      const rightBall = this.balls.find(b => b.x === startingBall.x + 1 && b.y === startingBall.y);
+      this.targetDelBall(rightBall, selectedClassName);
+
+      // 上(x === x && y - 10)
+      const topBall = this.balls.find(b => b.x === startingBall.x && b.y === startingBall.y - 1);
+      this.targetDelBall(topBall, selectedClassName);
+
+      // 下(x === x && y + 10)
+      const bottomBall = this.balls.find(b => b.x === startingBall.x && b.y === startingBall.y + 1);
+      this.targetDelBall(bottomBall, selectedClassName);
+    },
+    targetDelBall(delBall, selectedClassName) {
+      // 削除対象ボールのチェックと削除情報設定
+      if (delBall && delBall.className === selectedClassName && delBall.deleteFlag === this.$deleteFlag.display) {
+        // 同色かつ表示対象のボールを削除対象とする
+        this.balls[delBall.serialNumber].deleteFlag = this.$deleteFlag.delete;
+        this.balls[delBall.serialNumber].className = "";
+
+        // 起点を変え再度breakCheckRecursiveを呼び出す
+        this.breakCheckRecursive(delBall, selectedClassName);
+      }
+    }
   },
   computed: {
     getBalls() {
@@ -64,11 +101,12 @@ export default {
         // x座標
         for (let j = 0; j < 10; j++) {
           let ballInfo = {
-            class: this.ballClass[Math.floor(Math.random() * this.ballClass.length)],
+            className: this.ballClass[Math.floor(Math.random() * this.ballClass.length)],
             x: j,
             y: i,
             serialNumber: serialNumber,
             deleteFlag: 0,
+            breakCheck: false,
           }
 
           this.balls.push(ballInfo);

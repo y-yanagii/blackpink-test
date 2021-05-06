@@ -16,7 +16,7 @@ export default {
   methods: {
     historyBack() {
       // 戻る処理
-      if (this.showNumber === undefined) {
+      if (typeof this.showNumber === "undefined") {
         // ブラウザバック処理
         this.$router.back();
       } else {
