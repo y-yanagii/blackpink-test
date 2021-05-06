@@ -15,7 +15,7 @@
 <script>
 import Start from '~/components/Start.vue';
 import Test from '~/components/Test.vue';
-import Game from '~/components/pages/games/game.vue';
+import Game from '~/components/pages/games/Game.vue';
 
 export default {
   data: function() {
