@@ -6,9 +6,9 @@
           <div class="score">
             SCORE： {{ score }}
           </div>
-          <div class="bubble-title">
-            BUBBLE
-          </div>
+            <div class="bubble-title">
+              BUBBLE
+            </div>
           <div class="replay">
             <v-btn
               icon
@@ -20,15 +20,22 @@
           </div>
         </div>
         <div class="bubble-card">
-          <div class="grid">
+          <transition-group
+            name="bounce"
+            enter-active-class="bounceIn"
+            leave-active-class="bounceOut"
+            appear
+            tag="div"
+            class="grid"
+          >
             <div
-              v-for="(ball, index) in getBalls"
-              :key="index"
+              v-for="(ball, index) in balls"
+              :key="ball.serialNumber"
               :class="ball.className"
               @click="ballBreak(ball)"
               class="ball"
             >{{ index }}</div>
-          </div>
+          </transition-group>
         </div>
       </v-col>
     </v-row>
@@ -52,19 +59,19 @@ export default {
       this.getBalls;
     },
     ballBreak(ball) {
-      // 消える対象のボール配列
-      this.breakCheckRecursive(ball, ball.className)
-
       // 削除対象のボールを取得
+      this.breakCheckRecursive(ball, ball.className)
       let breakBalls = this.balls.filter(b => b.deleteFlag === this.$deleteFlag.delete);
 
       // 消える対象が無い場合return
       if (typeof breakBalls === "undefined") return
 
-      // 削除対象のボールの削除フラグを2へ変更
-      breakBalls = breakBalls.map(function(b) { b.deleteFlag = 2; return b })
+      // 削除対象のボールの削除フラグを2へ変更し、ballsから削除対象を削除
+      this.balls = this.balls.filter(b => b.deleteFlag !== this.$deleteFlag.delete);
+      // breakBalls = breakBalls.map(function(b) { b.deleteFlag = 2; return b })
 
-      // 詰め処理
+      // 下方向への詰め処理
+      this.ballDown(breakBalls);
 
       // 得点計算
       this.scoreCalculation(breakBalls);
@@ -91,13 +98,16 @@ export default {
     targetDelBall(delBall, selectedClassName) {
       // 削除対象ボールのチェックと削除情報設定
       if (delBall && delBall.className === selectedClassName && delBall.deleteFlag === this.$deleteFlag.display) {
-        // 同色かつ表示対象のボールを削除対象とする
+        // 同色かつ表示されているボールを削除対象とする
         this.balls[delBall.serialNumber].deleteFlag = this.$deleteFlag.delete;
-        this.balls[delBall.serialNumber].className = "";
 
         // 起点を変え再度breakCheckRecursiveを呼び出す
         this.breakCheckRecursive(delBall, selectedClassName);
       }
+    },
+    ballDown(breakBalls) {
+      debugger
+      // 
     },
     scoreCalculation(breakBalls) {
       const addScore = breakBalls.length * (breakBalls.length - 1);
@@ -155,12 +165,15 @@ export default {
       
     //   this.balls.push(y)
     // }
-  }
+  },
+  created() {
+    // ballsに初期値をセット
+    this.balls = this.getBalls
+  },
 }
 </script>
 
 <style scoped lang="scss">
-
 // ヘッダー領域
 .bubble-header {
   display: flex;
