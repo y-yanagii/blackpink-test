@@ -56,10 +56,18 @@ export default {
       this.breakCheckRecursive(ball, ball.className)
 
       // 削除対象のボールを取得
-      let breakBalls = this.balls.find(b => b.deleteFlag === this.$deleteFlag.delete);
+      let breakBalls = this.balls.filter(b => b.deleteFlag === this.$deleteFlag.delete);
 
       // 消える対象が無い場合return
       if (typeof breakBalls === "undefined") return
+
+      // 削除対象のボールの削除フラグを2へ変更
+      breakBalls = breakBalls.map(function(b) { b.deleteFlag = 2; return b })
+
+      // 詰め処理
+
+      // 得点計算
+      this.scoreCalculation(breakBalls);
     },
     breakCheckRecursive(startingBall, selectedClassName) {
       // 消える対象のボールを再帰的(上下左右)に取得
@@ -90,7 +98,11 @@ export default {
         // 起点を変え再度breakCheckRecursiveを呼び出す
         this.breakCheckRecursive(delBall, selectedClassName);
       }
-    }
+    },
+    scoreCalculation(breakBalls) {
+      const addScore = breakBalls.length * (breakBalls.length - 1);
+      this.score += addScore;
+    },
   },
   computed: {
     getBalls() {
