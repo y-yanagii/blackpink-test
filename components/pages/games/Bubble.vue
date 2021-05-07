@@ -30,12 +30,12 @@
             class="grid"
           >
             <div
-              v-for="(ball, index) in balls"
-              :key="ball.serialNumber"
+              v-for="(ball) in balls"
+              :key="ball.primaryKey"
               :class="ball.className"
               @click="ballBreak(ball)"
               class="ball"
-            >{{ index }}</div>
+            >{{ ball.serialNumber }}</div>
           </transition-group>
         </div>
       </v-col>
@@ -76,6 +76,9 @@ export default {
 
       // 得点計算
       this.scoreCalculation(breakBalls);
+
+      // sortし直す
+      this.balls.sort((a, b) => a.serialNumber - b.serialNumber)
     },
     breakCheckRecursive(startingBall, selectedClassName) {
       // 消える対象のボールを再帰的(上下左右)に取得
@@ -101,6 +104,8 @@ export default {
       if (delBall && delBall.className === selectedClassName && delBall.deleteFlag === this.$deleteFlag.display) {
         // 同色かつ表示されているボールを削除対象とする
         this.balls[delBall.serialNumber].deleteFlag = this.$deleteFlag.delete;
+        this.balls[delBall.serialNumber].breakCheck = true;
+        this.balls[delBall.serialNumber].className = "";
 
         // 起点を変え再度breakCheckRecursiveを呼び出す
         this.breakCheckRecursive(delBall, selectedClassName);
@@ -108,20 +113,69 @@ export default {
     },
     ballDown(ballsBackUp, breakBalls) {
       // 落下対象のボールをindexの降順で取得（最後尾から落下させたい）
-      const orderdBreakBalls = breakBalls.sort((a, b) => b.serialNumber - a.serialNumber)
+      const orderdBreakBalls = breakBalls.sort((a, b) => b.serialNumber - a.serialNumber);
+      let xCoordinates = [];
       for (let i = 0; i < orderdBreakBalls.length; i++) {
-        debugger
+        // x軸方向へ既に落下処理済みの場合スキップ
+        if (xCoordinates.includes(this.balls[orderdBreakBalls[i].serialNumber].x)) continue
+
         // 削除対象のボールを起点とし、y軸方向に検索をして落下対象のボールを取得
-        let startBall = this.balls[orderdBreakBalls[i].serialNumber];
+        let startBall = Object.assign({}, this.balls[orderdBreakBalls[i].serialNumber]);
+        let topBall = undefined;
+
         while (typeof startBall !== "undefined") {
-          // 1つ上のボールを取得
-          let topBall = this.balls[startBall.serialNumber - 10]
-          if ()
-          // topBallが削除対象のボールの場合スキップ。startBallが削除対象ボールの場合topとチェンジ
+          // 1つ上のボールを取得(continueからきた場合を想定して1度undefinedチェック)
+          topBall = this.getTopBall(topBall, startBall);
+          // 空のオブジェクトの場合break
+          if (!Object.keys(topBall).length || typeof topBall === "undefined") break;
+          if (topBall.deleteFlag !== this.$deleteFlag.delete) {
+            // 1つ上のボールが有色の場合、起点ボールに取り込む
+            this.changeBall(startBall, topBall, true, orderdBreakBalls)
+            // 起点ボールの情報を1つ上のボールに渡す
+            this.changeBall(topBall, startBall, false)
+          } else {
+            // 1つ上のボールが削除対象ボールの場合、topBallを更に１つ上げて再処理
+            topBall = Object.assign({}, this.balls[topBall.serialNumber - 10])
+            continue
+          }
+
+          // startBallの１個上のボールを起点としループ
+          startBall = Object.assign({}, this.balls[startBall.serialNumber - 10]);
+          // 1つ上のボールオブジェクトを初期化
+          topBall = undefined
+
+          // topBallが削除対象のボールの場合スキップ。それ以外とstartBallが削除対象ボールの場合topとチェンジ
+          // 最後削除は必要でバックアップを使えばいける？
         }
+        // x軸方向へは1度だけ落下処理したいため処理済みのx方向を保持
+        xCoordinates.push(this.balls[orderdBreakBalls[i].serialNumber].x)
+      }
+    },
+    changeBall(ball1, ball2, startFlag, orderdBreakBalls) {
+      // 起点ボールと1つ上のボールの情報を入れ替える
+      this.balls[ball1.serialNumber].className = ball2.className;
+      this.balls[ball1.serialNumber].deleteFlag = ball2.deleteFlag;
+      this.balls[ball1.serialNumber].breakCheck = ball2.breakCheck;
+      if (ball1.breakCheck && startFlag && orderdBreakBalls.some(obb => obb.serialNumber === ball1.serialNumber)) {
+        // 削除対象ボールのみkeyを変更
+        this.balls[ball1.serialNumber].primaryKey = Math.random().toString(32).substring(2);
+      }
+    },
+    getTopBall(topBall, startBall) {
+      // topBall取得処理
+      if (typeof topBall === "undefined") {
+        // （通常成立時）startBallから1つ上のボールを取得
+        return Object.assign({}, this.balls[startBall.serialNumber - 10])
+      } else if (!Object.keys(topBall).length) {
+        // （不成立時）既存のtopBall位置から1つ上のボールを取得
+        return Object.assign({}, this.balls[topBall.serialNumber - 10])
+      } else {
+        // topBall取得済み
+        return topBall
       }
     },
     scoreCalculation(breakBalls) {
+      // 得点計算
       const addScore = breakBalls.length * (breakBalls.length - 1);
       this.score += addScore;
     },
@@ -141,6 +195,7 @@ export default {
             serialNumber: serialNumber,
             deleteFlag: 0,
             breakCheck: false,
+            primaryKey: Math.random().toString(32).substring(2),
           }
 
           this.balls.push(ballInfo);
