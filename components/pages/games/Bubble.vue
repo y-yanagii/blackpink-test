@@ -25,6 +25,7 @@
             enter-active-class="bounceIn"
             leave-active-class="bounceOut"
             appear
+            mode="out-in"
             tag="div"
             class="grid"
           >
@@ -66,12 +67,12 @@ export default {
       // 消える対象が無い場合return
       if (typeof breakBalls === "undefined") return
 
-      // 削除対象のボールの削除フラグを2へ変更し、ballsから削除対象を削除
-      this.balls = this.balls.filter(b => b.deleteFlag !== this.$deleteFlag.delete);
-      // breakBalls = breakBalls.map(function(b) { b.deleteFlag = 2; return b })
+      // 削除対象を含めたballsのバックアップとballsから削除対象を削除
+      const ballsBackUp = this.balls;
+      // this.balls = this.balls.filter(b => b.deleteFlag !== this.$deleteFlag.delete);
 
       // 下方向への詰め処理
-      this.ballDown(breakBalls);
+      this.ballDown(ballsBackUp, breakBalls);
 
       // 得点計算
       this.scoreCalculation(breakBalls);
@@ -105,9 +106,20 @@ export default {
         this.breakCheckRecursive(delBall, selectedClassName);
       }
     },
-    ballDown(breakBalls) {
-      debugger
-      // 
+    ballDown(ballsBackUp, breakBalls) {
+      // 落下対象のボールをindexの降順で取得（最後尾から落下させたい）
+      const orderdBreakBalls = breakBalls.sort((a, b) => b.serialNumber - a.serialNumber)
+      for (let i = 0; i < orderdBreakBalls.length; i++) {
+        debugger
+        // 削除対象のボールを起点とし、y軸方向に検索をして落下対象のボールを取得
+        let startBall = this.balls[orderdBreakBalls[i].serialNumber];
+        while (typeof startBall !== "undefined") {
+          // 1つ上のボールを取得
+          let topBall = this.balls[startBall.serialNumber - 10]
+          if ()
+          // topBallが削除対象のボールの場合スキップ。startBallが削除対象ボールの場合topとチェンジ
+        }
+      }
     },
     scoreCalculation(breakBalls) {
       const addScore = breakBalls.length * (breakBalls.length - 1);
