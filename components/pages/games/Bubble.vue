@@ -21,10 +21,9 @@
         </div>
         <div class="bubble-card">
           <transition-group
-            name="bounce"
-            enter-active-class="bounceIn"
-            leave-active-class="bounceOut"
-            appear
+            name="bounceIn"
+            enter-active-class="animated bounceIn"
+            leave-active-class="animated bounceOut"
             mode="out-in"
             tag="div"
             class="grid"
@@ -74,11 +73,19 @@ export default {
       // 下方向への詰め処理
       this.ballDown(ballsBackUp, breakBalls);
 
+      // 削除対象を削除済みにする
+      for (let i = 0; i < this.balls.length; i++) { 
+        if (this.balls[i].deleteFlag === this.$deleteFlag.delete) this.balls[i].deleteFlag = this.$deleteFlag.deleted;
+      }
+
+      // 右寄せ処理
+      this.alignRight();
+
       // 得点計算
       this.scoreCalculation(breakBalls);
 
       // sortし直す
-      this.balls.sort((a, b) => a.serialNumber - b.serialNumber)
+      // this.balls.sort((a, b) => a.serialNumber - b.serialNumber)
     },
     breakCheckRecursive(startingBall, selectedClassName) {
       // 消える対象のボールを再帰的(上下左右)に取得
@@ -113,8 +120,10 @@ export default {
     },
     ballDown(ballsBackUp, breakBalls) {
       // 落下対象のボールをindexの降順で取得（最後尾から落下させたい）
-      const orderdBreakBalls = breakBalls.sort((a, b) => b.serialNumber - a.serialNumber);
+      let orderdBreakBalls = breakBalls.sort((a, b) => b.serialNumber - a.serialNumber);
       let xCoordinates = [];
+
+      // 削除対象をループ
       for (let i = 0; i < orderdBreakBalls.length; i++) {
         // x軸方向へ既に落下処理済みの場合スキップ
         if (xCoordinates.includes(this.balls[orderdBreakBalls[i].serialNumber].x)) continue
@@ -147,6 +156,7 @@ export default {
           // topBallが削除対象のボールの場合スキップ。それ以外とstartBallが削除対象ボールの場合topとチェンジ
           // 最後削除は必要でバックアップを使えばいける？
         }
+
         // x軸方向へは1度だけ落下処理したいため処理済みのx方向を保持
         xCoordinates.push(this.balls[orderdBreakBalls[i].serialNumber].x)
       }
@@ -172,6 +182,51 @@ export default {
       } else {
         // topBall取得済み
         return topBall
+      }
+    },
+    alignRight() {
+      // 最下にあるx軸に有色が存在しなければ右寄せ（左端はスキップ）
+      for (let i = (this.balls.length - 1); i >= 150; i--) {
+        debugger
+        if (this.balls[i].deleteFlag !== this.$deleteFlag.display && i !== 150) {
+          // y軸が全て空の場合かつ左端以外
+          let leftIndex = i - 1;
+          // 左隣の有色のxが取得できるまでループする
+          while (leftIndex !== 150 && this.balls[leftIndex].deleteFlag !== this.$deleteFlag.display) {
+            // 次の左隣のボールを取得しに行く
+            leftIndex--;
+          }
+
+          // 左隣の縦列を全て右に+1する
+          this.columnLeftToRight(leftIndex, i);
+        }
+      }
+    },
+    columnLeftToRight(leftIndex, index) {
+      // 下から上(150 -> 0)に左隣のボール情報を右ボールに渡す
+      const firstLeftIndex = leftIndex;
+
+      for (let i=index; i>=0; i-=10) {
+        let primaryKey = this.balls[i].primaryKey;
+        this.balls[i].breakCheck = this.balls[leftIndex].breakCheck;
+        this.balls[i].className = this.balls[leftIndex].className;
+        this.balls[i].deleteFlag = this.balls[leftIndex].deleteFlag;
+        this.balls[i].primaryKey = this.balls[leftIndex].primaryKey;
+        this.balls[leftIndex].primaryKey = primaryKey; // primaryKeyが重複しないようにする
+        leftIndex -= 10;
+      }
+
+      if (firstLeftIndex !== 150) {
+        // 空白列と有色列を入れ替えたイメージのため右寄せのトリガー設定（次の右が空白列で無ければ右寄せにできないため）
+        this.balls[firstLeftIndex].deleteFlag = this.$deleteFlag.deleted;
+      } else {
+        // 左端の列を空にする
+        for (let i=firstLeftIndex; i>=0; i-=10) {
+          this.balls[i].breakCheck = true;
+          this.balls[i].className = "";
+          this.balls[i].deleteFlag = this.$deleteFlag.deleted;
+          this.balls[i].primaryKey = Math.random().toString(32).substring(2);
+        }
       }
     },
     scoreCalculation(breakBalls) {
