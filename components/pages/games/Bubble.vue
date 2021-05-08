@@ -21,10 +21,7 @@
         </div>
         <div class="bubble-card">
           <transition-group
-            name="bounceIn"
-            enter-active-class="animated bounceIn"
-            leave-active-class="animated bounceOut"
-            mode="out-in"
+            name="bubble"
             tag="div"
             class="grid"
           >
@@ -34,6 +31,7 @@
               :class="ball.className"
               @click="ballBreak(ball)"
               class="ball"
+              :style="ball.gridArea"
             >{{ ball.serialNumber }}</div>
           </transition-group>
         </div>
@@ -187,7 +185,6 @@ export default {
     alignRight() {
       // 最下にあるx軸に有色が存在しなければ右寄せ（左端はスキップ）
       for (let i = (this.balls.length - 1); i >= 150; i--) {
-        debugger
         if (this.balls[i].deleteFlag !== this.$deleteFlag.display && i !== 150) {
           // y軸が全て空の場合かつ左端以外
           let leftIndex = i - 1;
@@ -251,6 +248,7 @@ export default {
             deleteFlag: 0,
             breakCheck: false,
             primaryKey: Math.random().toString(32).substring(2),
+            gridArea: "grid-area: " + (i + 1) + " / " + (j + 1) + " / span 1 / span 1;"
           }
 
           this.balls.push(ballInfo);
@@ -260,33 +258,6 @@ export default {
 
       return this.balls
     },
-    // 2次元配列型
-    // balls() {
-    //   let balls = []
-    //   let serialNumber = 0;
-    //   // y座標
-    //   for (let i = 0; i < 16; i++) {
-    //     let y = []
-    //     // x座標
-    //     for (let j = 0; i < 10; j++) {
-    //       let x = []
-    //       let ballInfo = {
-    //         ballClass: this.ballClass[Math.floor(Math.random() * this.ballClass.length)], // ランダムでボールの色をセット
-    //         x: j, // x座標
-    //         y: i, // y座標
-    //         serialNumber: serialNumber, // 通し番号
-    //         deleteFlag: 0,
-    //       }
-
-    //       x.push(ballInfo);
-    //       serialNumber++;
-    //     }
-
-    //     y.push(x);
-    //   }
-      
-    //   this.balls.push(y)
-    // }
   },
   created() {
     // ballsに初期値をセット
@@ -328,6 +299,7 @@ export default {
   border: solid 2px $base-text-color;
   border-radius: 7px;
   .grid {
+    cursor: pointer;
     --grid-width:10;
     --grid-height:16;
     align-self: center;
@@ -369,4 +341,6 @@ export default {
     }
   }
 }
+
+// バブルアニメーション
 </style>
