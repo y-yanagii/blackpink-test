@@ -22,7 +22,7 @@
         <div class="bubble-card">
           <transition-group
             name="bubble"
-            leave-active-class="animated bounceOut"
+            enter-active-class="animated slideInDown"
             type="animation"
             tag="div"
             class="grid"
@@ -34,7 +34,7 @@
               @click="ballBreak(ball)"
               class="ball"
               :style="ball.gridArea"
-            >{{ ball.serialNumber }}</div>
+            ></div>
           </transition-group>
         </div>
       </v-col>
@@ -336,4 +336,7 @@ export default {
 }
 
 // バブルアニメーション
+.bubble-move {
+  transition: transform 0.5s;
+}
 </style>
