@@ -63,6 +63,7 @@ export default {
       this.getBalls;
     },
     ballBreak(ball) {
+      // 選択したボールの削除処理
       // 削除対象のボールを取得
       this.breakCheckRecursive(ball, ball.className)
       let breakBalls = this.balls.filter(b => b.deleteFlag === this.$deleteFlag.delete);
@@ -84,6 +85,9 @@ export default {
 
       // 得点計算
       this.scoreCalculation(breakBalls);
+
+      // 終了チェック
+      this.endOfGameCheck();
     },
     breakCheckRecursive(startingBall, selectedClassName) {
       // 消える対象のボールを再帰的(上下左右)に取得
@@ -197,37 +201,39 @@ export default {
         return xBalls
       });
     },
-    
-    changeBall(ball1, ball2, startFlag, orderdBreakBalls) {
-      // 起点ボールと1つ上のボールの情報を入れ替える
-      this.balls[ball1.serialNumber].className = ball2.className;
-      this.balls[ball1.serialNumber].deleteFlag = ball2.deleteFlag;
-      this.balls[ball1.serialNumber].breakCheck = ball2.breakCheck;
-      if (ball1.breakCheck && startFlag && orderdBreakBalls.some(obb => obb.serialNumber === ball1.serialNumber)) {
-        // 削除対象ボールのみkeyを変更
-        this.balls[ball1.serialNumber].primaryKey = Math.random().toString(32).substring(2);
-      }
-    },
-    getTopBall(topBall, startBall) {
-      // topBall取得処理
-      if (typeof topBall === "undefined") {
-        // （通常成立時）startBallから1つ上のボールを取得
-        return Object.assign({}, this.balls[startBall.serialNumber - 10])
-      } else if (!Object.keys(topBall).length) {
-        // （不成立時）既存のtopBall位置から1つ上のボールを取得
-        return Object.assign({}, this.balls[topBall.serialNumber - 10])
-      } else {
-        // topBall取得済み
-        return topBall
-      }
-    },
     scoreCalculation(breakBalls) {
       // 得点計算
       const addScore = breakBalls.length * (breakBalls.length - 1);
       this.score += addScore;
     },
     formatScore(score) {
+      // 数値アニメーションのフォーマット（小数点以下切り捨て）
       return Math.floor(score)
+    },
+    endOfGameCheck() {
+      if (this.balls.length === 0) {
+        // 終了処理
+      }
+
+      // 削除対象ボールの存在チェック
+      const breakBallsYes = this.balls.some(breakBall => {
+        const leftBall = this.balls.find(b => b.x === breakBall.x - 1 && b.y === breakBall.y); // 左(x-1 && y === y)
+        const rightBall = this.balls.find(b => b.x === breakBall.x + 1 && b.y === breakBall.y); // 右(x+1 && y === y)
+        const topBall = this.balls.find(b => b.x === breakBall.x && b.y === breakBall.y - 1); // 上(x === x && y - 10)
+        const bottomBall = this.balls.find(b => b.x === breakBall.x && b.y === breakBall.y + 1); // 下(x === x && y + 10)
+        // 削除対象ボールのチェックと削除情報設定
+        if ((leftBall && leftBall.className === breakBall.className && leftBall.deleteFlag === this.$deleteFlag.display)
+        || (rightBall && rightBall.className === breakBall.className && rightBall.deleteFlag === this.$deleteFlag.display)
+        || (topBall && topBall.className === breakBall.className && topBall.deleteFlag === this.$deleteFlag.display)
+        || (bottomBall && bottomBall.className === breakBall.className && bottomBall.deleteFlag === this.$deleteFlag.display)) {
+          return true
+        }
+      });
+
+      if (!breakBallsYes) {
+        // 終了処理
+        
+      }
     }
   },
   computed: {
@@ -275,6 +281,7 @@ export default {
   .score {
     padding-top: 2%;
     margin: 1% 0;
+    width: 30%;
     color: $base-text-color;
   }
   .bubble-title {
@@ -319,7 +326,7 @@ export default {
     .ball {
       position: relative;
       margin: 0.5%;
-      height: 24px;
+      height: 4vh;
       background-color: $base-bg-color;
       border: 2px solid $base-text-color;
       border-radius: 100%;
