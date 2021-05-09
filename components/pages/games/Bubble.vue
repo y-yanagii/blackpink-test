@@ -22,6 +22,8 @@
         <div class="bubble-card">
           <transition-group
             name="bubble"
+            leave-active-class="animated bounceOut"
+            type="animation"
             tag="div"
             class="grid"
           >
@@ -47,6 +49,8 @@ export default {
       score: 0,
       balls: [],
       ballClass: ["lisa", "jennie", "rose", "jisoo"],
+      xAxis: 10,
+      yAxis: 16,
     }
   },
   methods: {
@@ -66,24 +70,20 @@ export default {
 
       // 削除対象を含めたballsのバックアップとballsから削除対象を削除
       const ballsBackUp = this.balls;
-      // this.balls = this.balls.filter(b => b.deleteFlag !== this.$deleteFlag.delete);
 
       // 下方向への詰め処理
-      this.ballDown(ballsBackUp, breakBalls);
+      // this.ballDown(ballsBackUp, breakBalls);
+      this.setGridArea(ballsBackUp, breakBalls);
 
-      // 削除対象を削除済みにする
-      for (let i = 0; i < this.balls.length; i++) { 
-        if (this.balls[i].deleteFlag === this.$deleteFlag.delete) this.balls[i].deleteFlag = this.$deleteFlag.deleted;
-      }
+      // 削除対象を削除
+      this.balls = this.balls.filter(b => b.deleteFlag === this.$deleteFlag.display);
 
       // 右寄せ処理
-      this.alignRight();
+      // this.alignRightCheck();
+      this.rightJustified();
 
       // 得点計算
       this.scoreCalculation(breakBalls);
-
-      // sortし直す
-      // this.balls.sort((a, b) => a.serialNumber - b.serialNumber)
     },
     breakCheckRecursive(startingBall, selectedClassName) {
       // 消える対象のボールを再帰的(上下左右)に取得
@@ -108,9 +108,10 @@ export default {
       // 削除対象ボールのチェックと削除情報設定
       if (delBall && delBall.className === selectedClassName && delBall.deleteFlag === this.$deleteFlag.display) {
         // 同色かつ表示されているボールを削除対象とする
-        this.balls[delBall.serialNumber].deleteFlag = this.$deleteFlag.delete;
-        this.balls[delBall.serialNumber].breakCheck = true;
-        this.balls[delBall.serialNumber].className = "";
+        let ball = this.balls.find(b => b.x === delBall.x && b.y === delBall.y)
+        ball.deleteFlag = this.$deleteFlag.delete;
+        ball.breakCheck = true;
+        ball.className = "";
 
         // 起点を変え再度breakCheckRecursiveを呼び出す
         this.breakCheckRecursive(delBall, selectedClassName);
@@ -182,7 +183,7 @@ export default {
         return topBall
       }
     },
-    alignRight() {
+    alignRightCheck() {
       // 最下にあるx軸に有色が存在しなければ右寄せ（左端はスキップ）
       for (let i = (this.balls.length - 1); i >= 150; i--) {
         if (this.balls[i].deleteFlag !== this.$deleteFlag.display && i !== 150) {
@@ -231,15 +232,153 @@ export default {
       const addScore = breakBalls.length * (breakBalls.length - 1);
       this.score += addScore;
     },
+
+
+
+
+
+
+    // --------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    setGridArea(ballsBackUp, breakBalls) {
+      // 削除対象をループし、y軸方向へのgrid-areaを設定後削除対象ボールを削除する
+      // 落下対象のボールをindexの降順で取得（下から上へ処理）
+      let orderdBreakBalls = breakBalls.sort((a, b) => b.serialNumber - a.serialNumber);
+      let xProcessed = [];
+
+      // 削除対象をループ
+      for (let i = 0; i < orderdBreakBalls.length; i++) {
+        // 同じx軸のボールは既にgrid-areaを設定したためスキップ
+        if (xProcessed.includes(orderdBreakBalls[i].x)) continue
+
+        // 削除対象ボールを起点とし、起点より上にあるボールのgrid-areaを設定する
+        let topBall = this.balls.find(b => b.x === orderdBreakBalls[i].x && b.y === (orderdBreakBalls[i].y - 1)) // 上のボール
+        let downCount = 1; // 落下数
+        // 先頭のy軸になるまでループ
+        while (typeof topBall !== "undefined") {
+          let beforeTopBallY = topBall.y; // topBallの元のy座標
+          // 上のボールが表示対象のボールの場合
+          if (topBall.deleteFlag === this.$deleteFlag.display) {
+            // grid-areaを設定
+            topBall.y += downCount;
+            topBall.serialNumber += downCount * 10;
+            topBall.gridArea = "grid-area: " + (topBall.y + 1) + " / " + (topBall.x + 1) + " / span 1 / span 1;"
+          } else {
+            // 上のボールが削除対象の場合、落下数を+1にして次のループ
+            downCount++;
+          }
+
+          // 更に1つ上のボール
+          topBall = this.balls.find(b => b.x === topBall.x && b.y === (beforeTopBallY - 1));
+        }
+
+        // x軸方向へは1度だけ落下処理したいため処理済みのx方向を保持
+        xProcessed.push(orderdBreakBalls[i].x)
+      }
+    },
+    rightJustified() {
+      // 右へ移動数
+      let rightCount = 0;
+      // x軸分ループ
+      for (let xi = (this.xAxis - 1); xi >= 0; xi--) {
+        // x方向のリストを取得
+        let xBalls = this.balls.filter(b => b.x === xi);
+debugger
+        // x軸に存在しない場合
+        if (xBalls.length === 0) {
+          rightCount++;
+          // 左隣のx軸を取得
+          let nextXBalls = this.balls.filter(b => b.x === (xi - 1) && b.deleteFlag === this.$deleteFlag.display);
+          if (nextXBalls.length !== 0) {
+            // x軸を右寄せ
+            nextXBalls = nextXBalls.map(function(nextBall) {
+              nextBall.x += rightCount;
+              nextBall.serialNumber += rightCount;
+              nextBall.gridArea = "grid-area: " + (nextBall.y + 1) + " / " + (nextBall.x + 1) + " / span 1 / span 1;"
+              return nextXBalls
+            });
+
+            // 移動した分xiも進める
+            xi++;
+          } else {
+            // 左隣のx軸が取得できなかった場合、更に左隣のx軸を取得
+            rightCount++;
+          }
+        }
+      }
+      // // 右へ移動数
+      // let rightCount = 0;
+      // // x軸分ループ
+      // for (let xi = (this.xAxis - 1); xi >= 0; xi--) {
+      //   // x方向のリストを取得
+      //   let xBalls = this.balls.filter(b => b.x === xi);
+
+      //   // x軸に存在しない場合
+      //   if (xBalls.length === 0) {
+      //     rightCount++;
+      //     let next = 1;
+      //     let nextFlag = false; // 次の空列管理
+      //     while (!nextFlag) {
+      //       // 左隣のx軸を取得
+      //       let nextXBalls = this.balls.filter(b => b.x === (xi - next) && b.deleteFlag === this.$deleteFlag.display);
+      //       if (nextXBalls.length !== 0) {
+      //         // x軸を右寄せ
+      //         nextXBalls = nextXBalls.map(function(nextBall) {
+      //           nextBall.x += rightCount;
+      //           nextBall.gridArea = "grid-area: " + (nextBall.y + 1) + " / " + (nextBall.x + 1) + " / span 1 / span 1;"
+      //           return nextXBalls
+      //         });
+      //       } else {
+      //         // 左隣のx軸が取得できなかった場合、更に左隣のx軸を取得
+      //         rightCount++;
+      //       }
+
+      //       next++;
+      //     }
+      //   }
+      // }
+
+
+      // for (let i = 159; i >= 150; i--) {
+      //   // 最下にあるx軸にボールが存在しなければ右寄せ（左端はスキップ）
+      //   if (typeof this.balls[i] === "undefined" && i !== 150) {
+      //     // y軸が全て空の場合かつ左端以外
+      //     let leftIndex = i - 1;
+      //     // 左隣の有色のxが取得できるまでループする
+      //     while (leftIndex !== 150 && this.balls[leftIndex].deleteFlag !== this.$deleteFlag.display) {
+      //       // 次の左隣のボールを取得しに行く
+      //       leftIndex--;
+      //     }
+
+      //     // 左隣の縦列を全て右に+1する
+      //     this.columnLeftToRight(leftIndex, i);
+      //   }
+      // }
+    },
+
+
+
+
+    // --------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
   },
   computed: {
     getBalls() {
       // 通し番号
       let serialNumber = 0;
       // y座標
-      for (let i = 0; i < 16; i++) {
+      for (let i = 0; i < this.yAxis; i++) {
         // x座標
-        for (let j = 0; j < 10; j++) {
+        for (let j = 0; j < this.xAxis; j++) {
           let ballInfo = {
             className: this.ballClass[Math.floor(Math.random() * this.ballClass.length)],
             x: j,
