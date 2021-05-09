@@ -4,7 +4,7 @@
       <v-col cols="12" sm="8">
         <div class="bubble-header">
           <div class="score">
-            SCORE： {{ score }}
+            SCORE： <animated-number :value="score" :format-value="formatScore" />
           </div>
             <div class="bubble-title">
               BUBBLE
@@ -43,6 +43,8 @@
 </template>
 
 <script>
+import AnimatedNumber from "animated-number-vue";
+
 export default {
   data: function() {
     return {
@@ -224,6 +226,9 @@ export default {
       const addScore = breakBalls.length * (breakBalls.length - 1);
       this.score += addScore;
     },
+    formatScore(score) {
+      return Math.floor(score)
+    }
   },
   computed: {
     getBalls() {
@@ -256,6 +261,9 @@ export default {
     // ballsに初期値をセット
     this.balls = this.getBalls
   },
+  components: {
+    AnimatedNumber,
+  }
 }
 </script>
 
