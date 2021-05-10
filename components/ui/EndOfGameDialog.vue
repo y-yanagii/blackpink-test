@@ -65,8 +65,10 @@ export default {
     }
   },
   props: ["message", "score", "gameName"],
-  methods: {
-
+  watch: {
+    isDisplay(flag) {
+      if (!flag) this.$emit('retry');
+    }
   }
 }
 </script>

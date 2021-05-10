@@ -64,6 +64,12 @@ export default {
       yAxis: 16,
       message: "",
       gameName: "BUBBLE",
+      newRecord: {
+        name: "",
+        score: 0,
+        modeType: "",
+        clearTime: 0,
+      }
     }
   },
   methods: {
@@ -252,9 +258,17 @@ export default {
     },
     endOfGame() {
       // 終了処理
-
+      // ランキング登録
+      this.addRanking();
       // ゲーム終了ダイアログ表示
       this.$refs.dlg.isDisplay = true
+    },
+    addRanking() {
+      // ランキング登録
+      this.newRecord.name = this.$store.getters['localStorages/getUserName'] ? this.$store.getters['localStorages/getUserName'] : this.$user.defaultName;
+      this.newRecord.score = this.score;
+      this.newRecord.modeType = this.$store.getters['localStorages/choiceMode'].modeType;
+      this.$store.dispatch('rankings/add', this.newRecord);
     },
   },
   computed: {
@@ -287,6 +301,8 @@ export default {
   created() {
     // ballsに初期値をセット
     this.balls = this.getBalls
+    // rankingsコレクションの初期化
+    this.$store.dispatch('rankings/init');
   },
   components: {
     AnimatedNumber,
