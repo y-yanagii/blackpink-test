@@ -64,6 +64,10 @@ export default {
       yAxis: 16,
       message: "",
       gameName: "BUBBLE",
+      bubbleSound2_3: new Audio(require('~/assets/images/bubble/bubble2-3.mp3')),
+      bubbleSound4_5: new Audio(require('~/assets/images/bubble/bubble4-5.mp3')),
+      bubbleSound6_9: new Audio(require('~/assets/images/bubble/bubble6-9.mp3')),
+      bubbleSound10: new Audio(require('~/assets/images/bubble/bubble10.mp3')),
       newRecord: {
         name: "",
         score: 0,

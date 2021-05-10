@@ -90,6 +90,16 @@ export default {
     transpile: [
       'vee-validate/dist/rules',
     ],
+    extend (config, ctx) {
+      // mp3を扱うloader設定
+      config.module.rules.push({
+        test: /\.(ogg|mp3|wav|mpe?g)$/i,
+        loader: 'file-loader',
+        options: {
+          name: '[path][name].[ext]'
+        }
+      })
+    }
   },
 
   // Routing configuration
