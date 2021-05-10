@@ -2,16 +2,17 @@
 const state = () => ({
   userName: "",
   modeType: 0,
-  modeValue: ""
+  modeValue: "",
+  playType: 0,
 });
 
 const getters = {
   // ローカルストレージ保存のモード種別とモード値をオブジェクトで返す
   choiceMode: state => {
-    return { modeType: state.modeType, modeValue: state.modeValue }
+    return { modeType: state.modeType, modeValue: state.modeValue, playType: state.playType }
   },
-  getUserName: state => {
-    return state.userName }
+  getUserName: state => { return state.userName },
+  getPlayType: state => { return state.playType },
 };
 
 const mutations = {
@@ -19,10 +20,14 @@ const mutations = {
   selectMode(state, choiceMode) {
     state.modeType = choiceMode.modeType;
     state.modeValue = choiceMode.modeValue;
+    state.playType = choiceMode.playType;
   },
   setUserName(state, newUserName) {
     state.userName = newUserName;
-  }
+  },
+  setPlayType(state, showNumber) {
+    state.playType = showNumber;
+  },
 };
 
 const actions = {
@@ -31,6 +36,9 @@ const actions = {
   },
   setUserName(context, newUserName) {
     context.commit('setUserName', newUserName);
+  },
+  setPlayType(context, showNumber) {
+    context.commit('setPlayType', showNumber)
   }
 };
 
