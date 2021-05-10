@@ -51,3 +51,14 @@ Vue.prototype.$deleteFlag = {
   // 削除済み
   deleted: 2
 }
+
+Vue.prototype.$gameMessage = {
+  // PERFECT
+  perfect: "💖🖤👑 PERFECT 👑🖤💖",
+
+  // CLEAR
+  clear: "GAME CLEAR!!!",
+
+  // GAME OVER
+  gameOver: "GAME OVER",
+}

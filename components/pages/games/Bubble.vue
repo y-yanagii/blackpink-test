@@ -37,6 +37,14 @@
             ></div>
           </transition-group>
         </div>
+        <!-- EndOfGameダイアログ -->
+        <EndOfGameDialog
+          ref="dlg"
+          :message="message"
+          :score="score"
+          :gameName="gameName"
+          @retry="retry"
+        ></EndOfGameDialog>
       </v-col>
     </v-row>
   </div>
@@ -44,6 +52,7 @@
 
 <script>
 import AnimatedNumber from "animated-number-vue";
+import EndOfGameDialog from "~/components/ui/EndOfGameDialog.vue";
 
 export default {
   data: function() {
@@ -53,11 +62,14 @@ export default {
       ballClass: ["lisa", "jennie", "rose", "jisoo"],
       xAxis: 10,
       yAxis: 16,
+      message: "",
+      gameName: "BUBBLE",
     }
   },
   methods: {
     retry() {
       // ボールを初期化し最初から
+      this.$refs.dlg.isDisplay = false;
       this.score = 0;
       this.balls = [];
       this.getBalls;
@@ -213,6 +225,8 @@ export default {
     endOfGameCheck() {
       if (this.balls.length === 0) {
         // 終了処理
+        this.message = this.$gameMessage.perfect;
+        this.endOfGame();
       }
 
       // 削除対象ボールの存在チェック
@@ -232,9 +246,16 @@ export default {
 
       if (!breakBallsYes) {
         // 終了処理
-        
+        this.message = this.balls.length < 8 ? this.$gameMessage.clear : this.$gameMessage.gameOver;
+        this.endOfGame();
       }
-    }
+    },
+    endOfGame() {
+      // 終了処理
+
+      // ゲーム終了ダイアログ表示
+      this.$refs.dlg.isDisplay = true
+    },
   },
   computed: {
     getBalls() {
@@ -269,6 +290,7 @@ export default {
   },
   components: {
     AnimatedNumber,
+    EndOfGameDialog,
   }
 }
 </script>
