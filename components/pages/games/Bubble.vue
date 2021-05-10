@@ -53,6 +53,14 @@
 <script>
 import AnimatedNumber from "animated-number-vue";
 import EndOfGameDialog from "~/components/ui/EndOfGameDialog.vue";
+import bubble23 from '~/assets/images/bubble/bubble2-3.mp3'
+import bubble45 from '~/assets/images/bubble/bubble4-5.mp3'
+import bubble69 from '~/assets/images/bubble/bubble6-9.mp3'
+import bubble10 from '~/assets/images/bubble/bubble10.mp3'
+const bubbleSound2_3 = new Audio(bubble23)
+const bubbleSound4_5 = new Audio(bubble45)
+const bubbleSound6_9 = new Audio(bubble69)
+const bubbleSound10 = new Audio(bubble10)
 
 export default {
   data: function() {
@@ -64,10 +72,6 @@ export default {
       yAxis: 16,
       message: "",
       gameName: "BUBBLE",
-      bubbleSound2_3: new Audio(require('~/assets/images/bubble/bubble2-3.mp3')),
-      bubbleSound4_5: new Audio(require('~/assets/images/bubble/bubble4-5.mp3')),
-      bubbleSound6_9: new Audio(require('~/assets/images/bubble/bubble6-9.mp3')),
-      bubbleSound10: new Audio(require('~/assets/images/bubble/bubble10.mp3')),
       newRecord: {
         name: "",
         score: 0,
@@ -101,6 +105,9 @@ export default {
 
       // 削除対象を削除
       this.balls = this.balls.filter(b => b.deleteFlag === this.$deleteFlag.display);
+
+      // 効果音
+      this.bubbleSound(breakBalls);
 
       // 右寄せ処理
       this.rightJustified();
@@ -177,6 +184,27 @@ export default {
 
         // x軸方向へは1度だけ落下処理したいため処理済みのx方向を保持
         xProcessed.push(orderdBreakBalls[i].x)
+      }
+    },
+    bubbleSound(breakBalls) {
+      // 削除数によって効果音を出す
+      const breakCount = breakBalls.length;
+      if (breakCount >= 10) {
+        // 10以上
+        bubbleSound10.volume = 1.0;
+        bubbleSound10.play();
+      } else if (breakCount >= 6 && breakCount <= 9) {
+        // 6以上9以下
+        bubbleSound6_9.volume = 1.0;
+        bubbleSound6_9.play();
+      } else if (breakCount >= 4 && breakCount <= 5) {
+        // 4以上5以下
+        bubbleSound4_5.volume = 1.0;
+        bubbleSound4_5.play();
+      } else if (breakCount >= 2 && breakCount <= 3) {
+        // 2以上3以下
+        bubbleSound2_3.volume = 1.0;
+        bubbleSound2_3.play();
       }
     },
     rightJustified() {
