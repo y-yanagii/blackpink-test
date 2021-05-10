@@ -265,6 +265,7 @@ export default {
         // 終了処理
         this.message = this.$gameMessage.perfect;
         this.endOfGame();
+        return
       }
 
       // 削除対象ボールの存在チェック
