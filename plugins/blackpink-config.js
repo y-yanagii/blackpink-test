@@ -21,6 +21,8 @@ Vue.prototype.$mode = {
   music: 5,
   // bubbleモード
   bubble: 6,
+  // puzzleモード
+  puzzle: 7,
 }
 
 Vue.prototype.$path = {

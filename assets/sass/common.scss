@@ -138,6 +138,17 @@ body {
     }
   }
 
+  // PUZZLEボタン
+  .puzzle-mode-button {
+    border: solid 2px $puzzle-color;
+    // border-radius: 7px;
+    color: $puzzle-color;
+    span {
+      font-size: 20px;
+      color: $puzzle-color;
+    }
+  }
+
   // TEST START!ボタン
   .start-button-master {
     border: solid 2px $master-color;
