@@ -182,6 +182,7 @@ export default {
   filters: {
     // フォーマット整形
     zeroPadAndFormat: function(value) {
+      if (value === 0) return "-";
       // クリアタイムを０埋めし、mm:ss.fffに変換
       const clearTime = value.toString().padStart(7, "0");
       const mm = clearTime.slice(0, 2);
