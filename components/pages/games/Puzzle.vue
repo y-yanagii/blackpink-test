@@ -3,7 +3,7 @@
     <v-row justify="center" align="center">
       <v-col cols="12" sm="8">
         <ModeTitle></ModeTitle>
-        <Time class="puzzle-time" :timerObject="timerObject"></Time>
+        <!-- <Time class="puzzle-time" :timerObject="timerObject"></Time> -->
         <div class="text-center">
           <div class="puzzle-card">
             <transition-group
@@ -14,11 +14,11 @@
               <div
                 v-for="piece in pieces"
                 :key="piece.serialNumber"
-                @click="pieceMove()"
+                @click="pieceMove(piece)"
                 class="piece"
                 :class="piece.class"
                 :style="piece.gridArea"
-              ></div>
+              >{{piece.serialNumber}}{{piece.answer}}</div>
             </transition-group>
           </div>
         </div>
@@ -47,8 +47,42 @@ export default {
     }
   },
   methods: {
-    pieceMove() {
+    pieceMove(piece) {
+      // ピースの移動
+      // クリックしたピースとの上下左右の空きをチェック
+      const leftPiece = this.pieces.find(p => p.x === piece.x - 1 && p.y === piece.y);
+      const rightPiece = this.pieces.find(p => p.x === piece.x + 1 && p.y === piece.y);
+      const topPiece = this.pieces.find(p => p.x === piece.x && p.y === piece.y - 1);
+      const bottomPiece = this.pieces.find(p => p.x === piece.x && p.y === piece.y + 1);
+      let displayNonePiece = this.pieces.find(p => p.displayFlag);
 
+      // 左右上下で1つでも空きがある場合
+      if (leftPiece === displayNonePiece
+      || rightPiece === displayNonePiece
+      || topPiece === displayNonePiece
+      || bottomPiece === displayNonePiece) {
+          // 空きがある場合、空きのクリックしたピースと空きのスペース情報を交換
+          const choicePiece = Object.assign({}, piece);
+          // 選択したピース
+          piece.x = displayNonePiece.x;
+          piece.y = displayNonePiece.y;
+          piece.serialNumber = displayNonePiece.serialNumber;
+          piece.gridArea = displayNonePiece.gridArea;
+
+          // 非表示ピース
+          displayNonePiece.x = choicePiece.x;
+          displayNonePiece.y = choicePiece.y;
+          displayNonePiece.serialNumber = choicePiece.serialNumber;
+          displayNonePiece.gridArea = choicePiece.gridArea;
+      } else {
+        return
+      }
+
+      // 正誤判定
+      this.answerJudgment()
+    },
+    answerJudgment() {
+      // 正誤判定処理
     },
     stopTimer() {
       // タイマーストップ処理
@@ -58,6 +92,7 @@ export default {
       // 実際のタイマーストップ処理
       cancelAnimationFrame(vm.animateFrame);
     },
+
   },
   computed: {
     getPieces() {
@@ -81,14 +116,14 @@ export default {
           let pieceInfo = {
             x: randomX, // x座標
             y: randomY, // y座標
-            serialNumber: serialNumber, // 通し番号
+            serialNumber: randomX + (randomY * this.xAxis), // 通し番号
             gridArea: "grid-area: " + (randomY + 1) + " / " + (randomX + 1) + " / span 1 / span 1;", // ピースのgrid位置
             answer: pieceNumbers[serialNumber], // 答えの番号
-            class: "piece-" + pieceNumbers[serialNumber], // ピースの実体
+            class: pieceNumbers[serialNumber] === 8 ? "piece-" + pieceNumbers[serialNumber] + " piece-none" : "piece-" + pieceNumbers[serialNumber], // ピースの実体
+            displayFlag: pieceNumbers[serialNumber] === 8 ? true : false,
           }
 
           this.pieces.push(pieceInfo);
-
           serialNumber++;
           randomXs = randomXs.filter(x => x !== randomX); // 使用したランダムの座標を削除
         }
@@ -135,7 +170,7 @@ export default {
 }
 
 .puzzle-card {
-  margin: 5% auto;
+  margin: 3% auto;
   width: 355px;
   background-color: $base-glay;
   padding: 11px;
@@ -192,5 +227,8 @@ $piece-image: url('~/assets/images/puzzle/krunk.png');
 }
 .piece-8 {
   background: $piece-image no-repeat bottom right;
+}
+.piece-none {
+  display: none;
 }
 </style>
