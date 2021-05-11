@@ -3,7 +3,7 @@
     <v-row justify="center" align="center">
       <v-col cols="12" sm="8">
         <ModeTitle></ModeTitle>
-        <!-- <Time class="puzzle-time" :timerObject="timerObject"></Time> -->
+        <Time class="puzzle-time" :timerObject="timerObject"></Time>
         <div class="text-center">
           <div class="puzzle-card">
             <transition-group
@@ -44,6 +44,12 @@ export default {
         startTime: 0, // スタートボタンを押した時刻
         isRunning: false // 計測中の状態保持
       },
+      newRecord: {
+        name: "",
+        score: 0,
+        modeType: "",
+        clearTime: 0,
+      }
     }
   },
   methods: {
@@ -83,6 +89,25 @@ export default {
     },
     answerJudgment() {
       // 正誤判定処理
+      const judgment = this.pieces.filter(p => p.serialNumber === p.answer);
+      if (judgment && judgment.length === this.xAxis * this.yAxis) {
+        // ピースの総数と正当数が一致の場合、終了処理
+        this.endOfPuzzleGame();
+      }
+    },
+    endOfPuzzleGame() {
+      // 終了処理
+      // タイマーストップ処理
+      this.stopTimer();
+      // ランキング登録
+      this.addPuzzleRanking();
+    },
+    addPuzzleRanking() {
+      // ランキング登録
+      this.newRecord.name = this.$store.getters['localStorages/getUserName'] ? this.$store.getters['localStorages/getUserName'] : this.$user.defaultName;
+      this.newRecord.modeType = this.$store.getters['localStorages/choiceMode'].modeType;
+      this.newRecord.clearTime = this.$options.filters.replaceClearTimeWithNumber(document.getElementById("time").textContent.trim());
+      this.$store.dispatch('rankings/add', this.newRecord);
     },
     stopTimer() {
       // タイマーストップ処理
@@ -92,7 +117,6 @@ export default {
       // 実際のタイマーストップ処理
       cancelAnimationFrame(vm.animateFrame);
     },
-
   },
   computed: {
     getPieces() {
@@ -152,9 +176,18 @@ export default {
       return numbers;
     },
   },
+  filters: {
+    // フォーマット整形
+    replaceClearTimeWithNumber: function(value) {
+      // タイマーの「:」と「.」を削除しNumber型に変換する
+      return Number(value.replace(/:/g, '').replace(/\./g, ''));
+    }
+  },
   created() {
     // piecesに初期値をセット
     this.pieces = this.getPieces;
+    // rankingsコレクションの初期化
+    this.$store.dispatch('rankings/init');
   },
   components: {
     ModeTitle,

@@ -292,11 +292,11 @@ export default {
     endOfGame() {
       // 終了処理
       // ランキング登録
-      this.addRanking();
+      this.addBubbleRanking();
       // ゲーム終了ダイアログ表示
       this.$refs.dlg.isDisplay = true
     },
-    addRanking() {
+    addBubbleRanking() {
       // ランキング登録
       this.newRecord.name = this.$store.getters['localStorages/getUserName'] ? this.$store.getters['localStorages/getUserName'] : this.$user.defaultName;
       this.newRecord.score = this.score;
