@@ -67,19 +67,19 @@ export default {
       || rightPiece === displayNonePiece
       || topPiece === displayNonePiece
       || bottomPiece === displayNonePiece) {
-          // 空きがある場合、空きのクリックしたピースと空きのスペース情報を交換
-          const choicePiece = Object.assign({}, piece);
-          // 選択したピース
-          piece.x = displayNonePiece.x;
-          piece.y = displayNonePiece.y;
-          piece.serialNumber = displayNonePiece.serialNumber;
-          piece.gridArea = displayNonePiece.gridArea;
+        // 空きがある場合、空きのクリックしたピースと空きのスペース情報を交換
+        const choicePiece = Object.assign({}, piece);
+        // 選択したピース
+        piece.x = displayNonePiece.x;
+        piece.y = displayNonePiece.y;
+        piece.serialNumber = displayNonePiece.serialNumber;
+        piece.gridArea = displayNonePiece.gridArea;
 
-          // 非表示ピース
-          displayNonePiece.x = choicePiece.x;
-          displayNonePiece.y = choicePiece.y;
-          displayNonePiece.serialNumber = choicePiece.serialNumber;
-          displayNonePiece.gridArea = choicePiece.gridArea;
+        // 非表示ピース
+        displayNonePiece.x = choicePiece.x;
+        displayNonePiece.y = choicePiece.y;
+        displayNonePiece.serialNumber = choicePiece.serialNumber;
+        displayNonePiece.gridArea = choicePiece.gridArea;
       } else {
         return
       }
@@ -101,13 +101,8 @@ export default {
       this.stopTimer();
       // ランキング登録
       this.addPuzzleRanking();
-    },
-    addPuzzleRanking() {
-      // ランキング登録
-      this.newRecord.name = this.$store.getters['localStorages/getUserName'] ? this.$store.getters['localStorages/getUserName'] : this.$user.defaultName;
-      this.newRecord.modeType = this.$store.getters['localStorages/choiceMode'].modeType;
-      this.newRecord.clearTime = this.$options.filters.replaceClearTimeWithNumber(document.getElementById("time").textContent.trim());
-      this.$store.dispatch('rankings/add', this.newRecord);
+      // 最後のピースをfadeInで表示させ3秒待つ
+      this.displayLastPiece();
     },
     stopTimer() {
       // タイマーストップ処理
@@ -117,6 +112,53 @@ export default {
       // 実際のタイマーストップ処理
       cancelAnimationFrame(vm.animateFrame);
     },
+    addPuzzleRanking() {
+      // ランキング登録
+      this.newRecord.name = this.$store.getters['localStorages/getUserName'] ? this.$store.getters['localStorages/getUserName'] : this.$user.defaultName;
+      this.newRecord.modeType = this.$store.getters['localStorages/choiceMode'].modeType;
+      this.newRecord.clearTime = this.$options.filters.replaceClearTimeWithNumber(document.getElementById("time").textContent.trim());
+      this.$store.dispatch('rankings/add', this.newRecord);
+    },
+    displayLastPiece() {
+      // DOM更新されるのを待ってから実行（nextTick）
+      this.$nextTick(() => {
+        // 非表示にしている最後のピースdivを取得
+        let lastPiece = document.getElementsByClassName('piece-none')[0];
+        let opacityInt = 0;
+        // フェードイン処理（opacityを100ミリ秒ごとに0.1ずつ増やす）
+        const IntervalId = setInterval(() => {
+          opacityInt += 10;
+          lastPiece.style.opacity = opacityInt / 100;
+          if (lastPiece.style.opacity >= 1) {
+            clearInterval(IntervalId);
+
+            // 2秒待って、ダイアログ表示
+            this.sleep(2, function() {
+              // コールバックfunction
+              
+            });
+          }
+        }, 100)
+      });
+    },
+    sleep(waitSec, callbackFunc) {
+      // javascriptではsleep処理がないため自前で書く(指定された秒数待って、第二引数の関数を実行)
+      // 経過時間（秒）
+      let spanedSec = 0;
+
+      // 実際のスリープ処理を無名関数で(1秒間隔で無名関数を実行)
+      let id = setInterval(function() {
+        spanedSec++;
+
+        // 経過時間 >= 待機時間の場合、待機終了
+        if (spanedSec >= waitSec) {
+          // タイマー停止
+          clearInterval(id);
+          // コールバック関数実行（ダイアログ表示の）
+          if (callbackFunc) callbackFunc();
+        }
+      }, 1000); // 1秒間隔
+    }
   },
   computed: {
     getPieces() {
@@ -262,6 +304,6 @@ $piece-image: url('~/assets/images/puzzle/krunk.png');
   background: $piece-image no-repeat bottom right;
 }
 .piece-none {
-  display: none;
+  opacity: 0;
 }
 </style>
