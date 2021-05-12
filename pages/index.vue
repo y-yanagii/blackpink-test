@@ -56,7 +56,7 @@
           @click.native="fromGuestToMode()"
           active-class="link--active"
           class="link"
-        >GUEST PLAY</v-btn>
+        >PLAY AS GUEST</v-btn>
       </div>
       <Confirm
         ref="dlg"
