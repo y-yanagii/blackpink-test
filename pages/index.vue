@@ -81,7 +81,10 @@ export default {
       ],
       colorThema: false,
       isDisplay: false,
-      message: "qwertyu",
+      message: `This is not reflected in the ranking.
+      ランキングに反映されません
+      Are you sure you want to do this?
+      よろしいでしょうか？`,
     }
   },
   methods: {
@@ -96,7 +99,6 @@ export default {
     confirm(dialogFlag) {
       // 確認ダイアログのOK、キャンセル処理判定
       this.$refs.dlg.isDisplay = false;
-debugger
       if (dialogFlag) {
         // 確認ダイアログでOKの場合
       } else {

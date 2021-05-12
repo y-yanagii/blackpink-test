@@ -5,11 +5,13 @@
     persistent
     max-width="290"
   >
-    <v-card>
-      <v-card-title class="headline">
+    <v-card class="confirm-card">
+      <v-card-title class="headline confirm-title">
         <v-icon>mdi-shield-alert-outline</v-icon>CONFIRM
       </v-card-title>
-      <v-card-text>{{ this.message }}</v-card-text>
+      <v-card-text class="confirm-message">
+        {{ this.message }}
+      </v-card-text>
       <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn
@@ -17,6 +19,7 @@
           class="cancel-btn"
           outlined
           @click="toCancelOrToOk(false)"
+          color="#f4a6b8"
         >
           <v-icon>mdi-close</v-icon> CANCEL
         </v-btn>
@@ -25,6 +28,7 @@
           class="ok-btn"
           outlined
           @click="toCancelOrToOk(true)"
+          color="#f4a6b8"
         >
           <v-icon>mdi-check</v-icon> OK
         </v-btn>
@@ -51,5 +55,20 @@ export default {
 </script>
 
 <style scoped lang="scss">
-
+.confirm-card {
+  border: solid 2px $base-text-color;
+  border-radius: 7px;
+  i {
+    color: $base-text-color;
+  }
+  .confirm-title {
+    color: $base-text-color;
+  }
+  .confirm-message {
+    padding: 0 !important;
+    color: $base-text-color;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+  }
+}
 </style>
