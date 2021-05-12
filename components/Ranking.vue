@@ -49,7 +49,7 @@
                   {{ index + 1 }}
                 </td>
                 <td :class="breakpointClass.header" class="text-left">{{ ranking.name }}</td>
-                <td :class="breakpointClass.header" class="text-left">{{ ranking.score }}</td>
+                <td :class="breakpointClass.header" class="text-left">{{ ranking.score === 0 ? "-" : ranking.score }}</td>
                 <td :class="breakpointClass.header" class="text-left">{{ ranking.clearTime | zeroPadAndFormat }}</td>
                 <td :class="breakpointClass.header" class="text-left">{{ ranking.createdAt.toDate() | dateFormat }}</td>
               </tr>
@@ -63,7 +63,7 @@
                   {{ index + 2 }}
                 </td>
                 <td :class="breakpointClass.header" class="text-left">{{ ranking.name }}</td>
-                <td :class="breakpointClass.header" class="text-left">{{ ranking.score }}</td>
+                <td :class="breakpointClass.header" class="text-left">{{ ranking.score === 0 ? "-" : ranking.score }}</td>
                 <td :class="breakpointClass.header" class="text-left">{{ ranking.clearTime | zeroPadAndFormat }}</td>
                 <td :class="breakpointClass.header" class="text-left">{{ ranking.createdAt.toDate() | dateFormat }}</td>
               </tr>
@@ -77,7 +77,7 @@
                   {{ index + 3 }}
                 </td>
                 <td :class="breakpointClass.header" class="text-left">{{ ranking.name }}</td>
-                <td :class="breakpointClass.header" class="text-left">{{ ranking.score }}</td>
+                <td :class="breakpointClass.header" class="text-left">{{ ranking.score === 0 ? "-" : ranking.score }}</td>
                 <td :class="breakpointClass.header" class="text-left">{{ ranking.clearTime | zeroPadAndFormat }}</td>
                 <td :class="breakpointClass.header" class="text-left">{{ ranking.createdAt.toDate() | dateFormat }}</td>
               </tr>
@@ -88,7 +88,7 @@
               >
                 <td :class="breakpointClass.header" class="text-left">{{ index + 4 }}</td>
                 <td :class="breakpointClass.header" class="text-left">{{ ranking.name }}</td>
-                <td :class="breakpointClass.header" class="text-left">{{ ranking.score }}</td>
+                <td :class="breakpointClass.header" class="text-left">{{ ranking.score === 0 ? "-" : ranking.score }}</td>
                 <td :class="breakpointClass.header" class="text-left">{{ ranking.clearTime | zeroPadAndFormat }}</td>
                 <td :class="breakpointClass.header" class="text-left">{{ ranking.createdAt.toDate() | dateFormat }}</td>
               </tr>

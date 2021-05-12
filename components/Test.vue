@@ -23,8 +23,8 @@
 </template>
 
 <script>
-import ModeTitle from '~/components/ModeTitle.vue';
-import Time from '~/components/Time.vue';
+import ModeTitle from '~/components/ui/ModeTitle.vue';
+import Time from '~/components/ui/Time.vue';
 import TestCard from '~/components/TestCard.vue';
 import Life from '~/components/Life.vue';
 import { db } from "~/plugins/firebase";

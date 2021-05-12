@@ -27,11 +27,30 @@
       </div>
       <div class="end-of-game">
         <div class="end-of-game-text">END OF {{ gameName }} GAME</div>
-        <div class="ball-area">
+        <div
+          v-if="selectedMode.modeType === $mode.bubble"
+          class="ball-area">
           <div class="ball jennie"></div>
           <div class="ball jisoo"></div>
           <div class="ball rose"></div>
           <div class="ball lisa"></div>
+        </div>
+        <div
+          v-else-if="selectedMode.modeType === $mode.puzzle"
+          class="puzzle-area"
+        >
+          <div>
+            <v-icon class="jennie-puzzle">mdi-puzzle</v-icon>
+          </div>
+          <div>
+            <v-icon class="jisoo-puzzle">mdi-puzzle</v-icon>
+          </div>
+          <div>
+            <v-icon class="rose-puzzle">mdi-puzzle</v-icon>
+          </div>
+          <div>
+            <v-icon class="lisa-puzzle">mdi-puzzle</v-icon>
+          </div>
         </div>
       </div>
       <div class="game-record">
@@ -39,7 +58,7 @@
           {{ message }}
         </div>
         <div>
-          SCORE： {{ score }}
+          {{ resultStr }}
         </div>
       </div>
       <div class="end-game-footer">
@@ -56,18 +75,20 @@
 
 <script>
 export default {
-  data() {
+  data: function() {
     return {
       isDisplay: false,
       sns:{
         twitter:'https://twitter.com/intent/tweet?url=https://yahoo.co.jp&text=GAME結果は&hashtags=BLACKPINK,ブラックピンク,BLINK,BLACKPINKTEST',
       },
+      selectedMode: this.$store.getters['localStorages/choiceMode'],
     }
   },
-  props: ["message", "score", "gameName"],
+  props: ["message", "resultStr", "gameName"],
   watch: {
     isDisplay(flag) {
-      if (!flag) this.$emit('retry');
+      // ダイアログ外を押下した場合のリプレイ処理は一旦コメントアウト
+      // if (!flag) this.$emit('retry');
     }
   }
 }
@@ -109,6 +130,7 @@ export default {
       font-size: 21px;
       padding-right: 3%;
     }
+    // BUBBLEゲーム用
     .ball-area {
       text-align: center;
       height: 40px;
@@ -135,6 +157,26 @@ export default {
       .jisoo {
         background-color: $ball-purple-color;
         border: 2px solid $ball-purple-color;
+      }
+    }
+    // PUZZLEゲーム用
+    .puzzle-area {
+      text-align: center;
+      div {
+        display: -webkit-inline-box;
+        margin: 0.5%;
+      }
+      .lisa-puzzle {
+        color: $ball-green-color;
+      }
+      .jennie-puzzle {
+        color: $ball-red-color;
+      }
+      .rose-puzzle {
+        color: $ball-orange-color;
+      }
+      .jisoo-puzzle {
+        color: $ball-purple-color;
       }
     }
   }

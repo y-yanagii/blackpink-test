@@ -33,7 +33,7 @@ export default {
   },
   validate(context) {
     // urlチェック
-    const modePath = ["easy", "normal", "hard", "master", "suddendeath", "music", "bubble"]
+    const modePath = ["easy", "normal", "hard", "master", "suddendeath", "music", "bubble", "puzzle"]
     if (modePath.includes(context.params.mode)) return true
     
     // エラーページ（404）

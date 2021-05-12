@@ -41,7 +41,7 @@
         <EndOfGameDialog
           ref="dlg"
           :message="message"
-          :score="score"
+          :resultStr="resultStr"
           :gameName="gameName"
           @retry="retry"
         ></EndOfGameDialog>
@@ -77,7 +77,8 @@ export default {
         score: 0,
         modeType: "",
         clearTime: 0,
-      }
+      },
+      resultStr: "",
     }
   },
   methods: {
@@ -292,11 +293,13 @@ export default {
     endOfGame() {
       // 終了処理
       // ランキング登録
-      this.addRanking();
+      this.addBubbleRanking();
+
       // ゲーム終了ダイアログ表示
+      this.resultStr = "SCORE： " + this.score;
       this.$refs.dlg.isDisplay = true
     },
-    addRanking() {
+    addBubbleRanking() {
       // ランキング登録
       this.newRecord.name = this.$store.getters['localStorages/getUserName'] ? this.$store.getters['localStorages/getUserName'] : this.$user.defaultName;
       this.newRecord.score = this.score;
@@ -356,12 +359,14 @@ export default {
     color: $base-text-color;
   }
   .bubble-title {
+    width: 33%;
     margin: 1% auto;
     font-size: 25px;
     color: $base-text-color;
   }
   .replay {
     margin: 1% 1% 1% auto;
+    width: 4%;
     button {
       width: 100%;
       height: 100%;

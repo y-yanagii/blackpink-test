@@ -48,7 +48,7 @@ export default {
   methods: {
     testStart() {
       // 検定画面に遷移（テスト開始）
-      this.$emit('change-show')
+      this.$emit('change-show');
     }
   },
   firestore: {
@@ -88,6 +88,12 @@ export default {
           modeTypeTitleClass: 'title-logo-bubble',
           modeTypeButtonClass: 'start-button-bubble',
         }
+      } else if (modeType === this.$mode.puzzle) {
+        // PUZZLEの場合、黄緑
+        return {
+          modeTypeTitleClass: 'title-logo-puzzle',
+          modeTypeButtonClass: 'start-button-puzzle',
+        }
       } else {
         // 難易度EASY, NORMAL, HARDの場合、デフォルト色
         return {
@@ -120,5 +126,8 @@ export default {
 }
 .title-logo-bubble {
   color: $bubble-color !important;
+}
+.title-logo-puzzle {
+  color: $puzzle-color !important;
 }
 </style>
