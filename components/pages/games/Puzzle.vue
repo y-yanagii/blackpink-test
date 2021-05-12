@@ -32,7 +32,7 @@
                 class="piece"
                 :class="piece.class"
                 :style="piece.gridArea"
-              >{{piece.serialNumber}}{{piece.answer}}</div>
+              ></div>
             </transition-group>
           </div>
         </div>

@@ -87,7 +87,8 @@ export default {
   props: ["message", "resultStr", "gameName"],
   watch: {
     isDisplay(flag) {
-      if (!flag) this.$emit('retry');
+      // ダイアログ外を押下した場合のリプレイ処理は一旦コメントアウト
+      // if (!flag) this.$emit('retry');
     }
   }
 }
