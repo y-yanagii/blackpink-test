@@ -3,7 +3,21 @@
     <v-row justify="center" align="center">
       <v-col cols="12" sm="8">
         <ModeTitle></ModeTitle>
-        <Time class="puzzle-time" :timerObject="timerObject"></Time>
+        <div class="puzzle-header">
+          <Time
+            :timerObject="timerObject"
+            ref="time"
+          ></Time>
+          <div class="replay">
+            <v-btn
+              icon
+              class="replay-btn"
+              @click="retry()"
+            >
+              <v-icon>mdi-sync</v-icon>
+            </v-btn>
+          </div>
+        </div>
         <div class="text-center">
           <div class="puzzle-card">
             <transition-group
@@ -67,6 +81,7 @@ export default {
   methods: {
     retry() {
       // puzzleを初期化し最初から
+      this.stopTimer();
       this.$refs.dlg.isDisplay = false;
       this.timerObject = {
         animateFrame: 0,
@@ -75,7 +90,17 @@ export default {
         startTime: 0,
         isRunning: false
       };
+      this.pieces = [];
       this.getPieces;
+      // 新しいピースリストの非表示ピースのopacityを0に戻す
+      document.getElementsByClassName('piece-none')[0].style.opacity = "";
+
+      let _this = this; // 入れ子関数内はグローバルになるためVueインスタンスであるthisを別で持っておく（値渡し）
+        this.sleep(1, function() {
+          // コールバックfunction
+          // 1秒待って、タイマースタート（親から子のVueインスタンスのメソッドを呼ぶ）
+          _this.$refs.time.timeStart(_this.timerObject);
+        });
     },
     pieceMove(piece) {
       // ピースの移動
@@ -210,8 +235,8 @@ export default {
           let pieceInfo = {
             x: randomX, // x座標
             y: randomY, // y座標
-            // serialNumber: randomX + (randomY * this.xAxis), // 通し番号
-            serialNumber: pieceNumbers[serialNumber],
+            serialNumber: randomX + (randomY * this.xAxis), // 通し番号
+            // serialNumber: pieceNumbers[serialNumber],
             gridArea: "grid-area: " + (randomY + 1) + " / " + (randomX + 1) + " / span 1 / span 1;", // ピースのgrid位置
             answer: pieceNumbers[serialNumber], // 答えの番号
             class: pieceNumbers[serialNumber] === 8 ? "piece-" + pieceNumbers[serialNumber] + " piece-none" : "piece-" + pieceNumbers[serialNumber], // ピースの実体
@@ -269,9 +294,19 @@ export default {
 </script>
 
 <style scoped lang="scss">
-.puzzle-time {
-  margin-right: 5%;
-  text-align: center !important;
+.puzzle-header {
+  margin: 3% auto 0% auto;
+  display: flex;
+  width: 355px;
+  .replay {
+    margin: 0% 2% 0% auto;
+    width: 4%;
+    button {
+      width: 100%;
+      height: 100%;
+      color: $base-text-color;
+    }
+  }
 }
 
 .puzzle-card {

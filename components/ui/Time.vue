@@ -21,6 +21,21 @@ export default {
   },
   props: ["timerObject"],
   methods: {
+    timeStart(timerObject) {
+      // loop()内でthisの値が変更されるため退避
+      let vm = timerObject;
+      // 計測開始フラグ
+      vm.isRunning = true;
+      // 現在時刻から引数に渡した数値をstartTimeに代入
+      vm.startTime = this.setSubtractStartTime(vm.diffTime);
+
+      // loop処理
+      (function loop() {
+        vm.nowTime = Math.floor(performance.now());
+        vm.diffTime = vm.nowTime - vm.startTime;
+        vm.animateFrame = requestAnimationFrame(loop);
+      }());
+    },
     // 現在時刻から引数に渡した数値をstartTimeに代入
     setSubtractStartTime(time) {
       var time = typeof time !== 'undefined' ? time : 0;
@@ -30,19 +45,7 @@ export default {
   },
   mounted() {
     // タイマースタート処理
-    // loop()内でthisの値が変更されるため退避
-    let vm = this.timerObject;
-    // 計測開始フラグ
-    vm.isRunning = true;
-    // 現在時刻から引数に渡した数値をstartTimeに代入
-    vm.startTime = this.setSubtractStartTime(vm.diffTime);
-
-    // loop処理
-    (function loop() {
-      vm.nowTime = Math.floor(performance.now());
-      vm.diffTime = vm.nowTime - vm.startTime;
-      vm.animateFrame = requestAnimationFrame(loop);
-    }());
+    this.timeStart(this.timerObject);
   },
   computed: {
     minutes: function() {
