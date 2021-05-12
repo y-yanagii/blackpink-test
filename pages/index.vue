@@ -19,6 +19,7 @@
       </div>
       <!-- 初期登録領域 -->
       <div class="text-center">
+        <!-- USERNAME領域 -->
         <div>
           <v-text-field
             class="username-text"
@@ -37,7 +38,7 @@
           ><i class="mdi mdi-twitter"/></v-btn>
         </div>
         <br>
-
+        <!-- PLAY -->
         <v-btn
           outlined
           class="area-button"
@@ -50,20 +51,25 @@
 
         <span class="base-text-color">or</span>
         <br><br>
-
-        <router-link
-          to="/mode"
+        <!-- GUESTボタン -->
+        <v-btn
+          @click.native="fromGuestToMode()"
           active-class="link--active"
-          exact
           class="link"
-        >GUEST PLAY</router-link>
+        >GUEST PLAY</v-btn>
       </div>
+      <Confirm
+        ref="dlg"
+        :message="message"
+        @confirm-discrimination="confirm"
+      ></Confirm>
     </v-col>
   </v-row>
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue'
+import Logo from '~/components/Logo.vue';
+import Confirm from '~/components/ui/Confirm.vue';
 
 export default {
   data: function() {
@@ -74,6 +80,8 @@ export default {
         value => (value && value.length <= 15) || 'Max 15 characters',
       ],
       colorThema: false,
+      isDisplay: false,
+      message: "qwertyu",
     }
   },
   methods: {
@@ -81,10 +89,24 @@ export default {
       this.$store.dispatch('localStorages/setUserName', this.userName)
     },
     userNameCheck() {
+    },
+    fromGuestToMode() {
+      this.$refs.dlg.isDisplay = true;
+    },
+    confirm(dialogFlag) {
+      // 確認ダイアログのOK、キャンセル処理判定
+      this.$refs.dlg.isDisplay = false;
+debugger
+      if (dialogFlag) {
+        // 確認ダイアログでOKの場合
+      } else {
+        // 確認ダイアログでキャンセルの場合
+      }
     }
   },
   components: {
     Logo,
+    Confirm,
   }
 }
 </script>
@@ -112,6 +134,7 @@ export default {
 
 .link {
   font-weight: bold;
+  background-color: #121212 !important;
   color: $base-text-color;
   width: 60%;
 }

@@ -1,5 +1,5 @@
+<!-- EndOfGameダイアログ -->
 <template>
-  <!-- EndOfGameダイアログ -->
   <v-dialog
     v-model="isDisplay"
     max-width="550px"
