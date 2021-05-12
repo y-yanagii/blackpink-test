@@ -1,5 +1,5 @@
+<!-- EndOfGameダイアログ -->
 <template>
-  <!-- EndOfGameダイアログ -->
   <v-dialog
     v-model="isDisplay"
     max-width="550px"
@@ -85,6 +85,11 @@ export default {
     }
   },
   props: ["message", "resultStr", "gameName"],
+  methods: {
+    toMode() {
+      this.$router.push({ path: "/mode" })
+    }
+  },
   watch: {
     isDisplay(flag) {
       // ダイアログ外を押下した場合のリプレイ処理は一旦コメントアウト
