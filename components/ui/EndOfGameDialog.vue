@@ -39,7 +39,7 @@
           {{ message }}
         </div>
         <div>
-          SCORE： {{ score }}
+          {{ resultStr }}
         </div>
       </div>
       <div class="end-game-footer">
@@ -64,7 +64,7 @@ export default {
       },
     }
   },
-  props: ["message", "score", "gameName"],
+  props: ["message", "resultStr", "gameName"],
   watch: {
     isDisplay(flag) {
       if (!flag) this.$emit('retry');

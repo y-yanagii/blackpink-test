@@ -22,6 +22,14 @@
             </transition-group>
           </div>
         </div>
+        <!-- EndOfGameダイアログ -->
+        <EndOfGameDialog
+          ref="dlg"
+          :message="message"
+          :resultStr="resultStr"
+          :gameName="gameName"
+          @retry="retry"
+        ></EndOfGameDialog>
       </v-col>
     </v-row>
   </div>
@@ -30,6 +38,7 @@
 <script>
 import ModeTitle from '~/components/ui/ModeTitle.vue';
 import Time from '~/components/ui/Time.vue';
+import EndOfGameDialog from '~/components/ui/EndOfGameDialog.vue';
 
 export default {
   data: function() {
@@ -37,6 +46,7 @@ export default {
       pieces: [],
       xAxis: 3,
       yAxis: 3,
+      gameName: "PUZZLE",
       timerObject: {
         animateFrame: 0, // requestAnimationFrame(cd)の返り値(requestID)が入る
         nowTime: 0, // 現在時刻
@@ -49,10 +59,24 @@ export default {
         score: 0,
         modeType: "",
         clearTime: 0,
-      }
+      },
+      message: "",
+      resultStr: "",
     }
   },
   methods: {
+    retry() {
+      // puzzleを初期化し最初から
+      this.$refs.dlg.isDisplay = false;
+      this.timerObject = {
+        animateFrame: 0,
+        nowTime: 0,
+        diffTime: 0,
+        startTime: 0,
+        isRunning: false
+      };
+      this.getPieces;
+    },
     pieceMove(piece) {
       // ピースの移動
       // クリックしたピースとの上下左右の空きをチェック
@@ -132,10 +156,13 @@ export default {
           if (lastPiece.style.opacity >= 1) {
             clearInterval(IntervalId);
 
-            // 2秒待って、ダイアログ表示
+            // 2秒待って、ダイアログ表示(完成したパズルを見る時間)
+            let _this = this; // 入れ子関数内はグローバルになるためVueインスタンスであるthisを別で持っておく（値渡し）
             this.sleep(2, function() {
               // コールバックfunction
-              
+              _this.resultStr = "CLEAR TIME： " + document.getElementById("time").textContent.trim();
+              _this.message = _this.$gameMessage.perfect;
+              _this.$refs.dlg.isDisplay = true;
             });
           }
         }, 100)
@@ -155,6 +182,7 @@ export default {
           // タイマー停止
           clearInterval(id);
           // コールバック関数実行（ダイアログ表示の）
+          // グローバルでcallbackFuncつまりsleepの第二引数を呼んでいるためcallbackFunc内のthisはwindowオブジェクトになる
           if (callbackFunc) callbackFunc();
         }
       }, 1000); // 1秒間隔
@@ -182,7 +210,8 @@ export default {
           let pieceInfo = {
             x: randomX, // x座標
             y: randomY, // y座標
-            serialNumber: randomX + (randomY * this.xAxis), // 通し番号
+            // serialNumber: randomX + (randomY * this.xAxis), // 通し番号
+            serialNumber: pieceNumbers[serialNumber],
             gridArea: "grid-area: " + (randomY + 1) + " / " + (randomX + 1) + " / span 1 / span 1;", // ピースのgrid位置
             answer: pieceNumbers[serialNumber], // 答えの番号
             class: pieceNumbers[serialNumber] === 8 ? "piece-" + pieceNumbers[serialNumber] + " piece-none" : "piece-" + pieceNumbers[serialNumber], // ピースの実体
@@ -234,6 +263,7 @@ export default {
   components: {
     ModeTitle,
     Time,
+    EndOfGameDialog,
   }
 }
 </script>
