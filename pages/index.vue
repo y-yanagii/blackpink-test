@@ -81,10 +81,8 @@ export default {
       ],
       colorThema: false,
       isDisplay: false,
-      message: `This is not reflected in the ranking.
-      ランキングに反映されません
-      Are you sure you want to do this?
-      よろしいでしょうか？`,
+      message: `You may not be able to play
+      some games. Is that OK?`,
     }
   },
   methods: {
@@ -97,12 +95,12 @@ export default {
       this.$refs.dlg.isDisplay = true;
     },
     confirm(dialogFlag) {
-      // 確認ダイアログのOK、キャンセル処理判定
+      // 確認ダイアログのOK、キャンセル判定処理
       this.$refs.dlg.isDisplay = false;
       if (dialogFlag) {
-        // 確認ダイアログでOKの場合
-      } else {
-        // 確認ダイアログでキャンセルの場合
+        // 確認ダイアログのOKの場合true、キャンセルの場合false
+        this.$store.dispatch('localStorages/setGuestPlay', dialogFlag);
+        this.$router.push({ path: "/mode" });
       }
     }
   },
