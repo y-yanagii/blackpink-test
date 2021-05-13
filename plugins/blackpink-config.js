@@ -32,10 +32,12 @@ Vue.prototype.$path = {
 Vue.prototype.$modeNumber = {
   // モード選択画面
   mode: 0,
-  // testモード画面(playTypeも兼ね備える)
+  // testモード画面(playTypeにも使用)
   test: 1,
-  // gameモード画面(playTypeも兼ね備える)
+  // gameモード画面(playTypeにも使用)
   game: 2,
+  // challengeモード画面(playTypeにも使用)
+  challenge: 3, 
 }
 
 Vue.prototype.$playModeText = {
@@ -43,6 +45,8 @@ Vue.prototype.$playModeText = {
   test: "TEST",
   // ゲーム画面タイトル
   game: "GAME",
+  // チャレンジ画面タイトル
+  challenge: "CHALLENGE",
 }
 
 Vue.prototype.$deleteFlag = {

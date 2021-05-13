@@ -25,7 +25,7 @@
 <script>
 import ModeTitle from '~/components/ui/ModeTitle.vue';
 import Time from '~/components/ui/Time.vue';
-import TestCard from '~/components/TestCard.vue';
+import TestCard from '~/components/pages/tests/TestCard.vue';
 import Life from '~/components/Life.vue';
 import { db } from "~/plugins/firebase";
 

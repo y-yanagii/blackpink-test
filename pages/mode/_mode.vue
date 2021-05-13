@@ -10,12 +10,16 @@
   <Game
     v-else-if="show && playType === $modeNumber.game"
   ></Game>
+  <Challenge
+    v-else-if="show && playType === $modeNumber.challenge"
+  ></Challenge>
 </template>
 
 <script>
 import Start from '~/components/Start.vue';
-import Test from '~/components/Test.vue';
+import Test from '~/components/pages/tests/Test.vue';
 import Game from '~/components/pages/games/Game.vue';
+import Challenge from '~/components/pages/challenges/Challenge.vue';
 
 export default {
   data: function() {
@@ -43,6 +47,7 @@ export default {
     Start,
     Test,
     Game,
+    Challenge
   },
   async asyncData(context) {
     // ituensAPIで楽曲情報取得処理
