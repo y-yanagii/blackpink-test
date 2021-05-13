@@ -4,7 +4,7 @@
     @change-show-number="changeShowNumber"
   ></Mode>
   <ModeSelect
-    v-else-if="showNumber === $modeNumber.test || showNumber === $modeNumber.game"
+    v-else-if="showNumber === $modeNumber.test || showNumber === $modeNumber.game || showNumber === $modeNumber.challenge"
     @change-show-number="changeShowNumber"
     :showNumber="showNumber"
     :playModeText="playModeText"
@@ -29,6 +29,8 @@ export default {
         this.playModeText = this.$playModeText.test
       } else if (newNumber === this.$modeNumber.game) {
         this.playModeText = this.$playModeText.game
+      } else if (newNumber === this.$modeNumber.challenge) {
+        this.playModeText = this.$playModeText.challenge
       } else {
         this.playModeText = "";
       }

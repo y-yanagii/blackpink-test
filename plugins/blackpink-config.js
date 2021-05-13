@@ -45,6 +45,8 @@ Vue.prototype.$playModeText = {
   test: "TEST",
   // ゲーム画面タイトル
   game: "GAME",
+  // チャレンジ画面タイトル
+  challenge: "CHALLENGE",
 }
 
 Vue.prototype.$deleteFlag = {
