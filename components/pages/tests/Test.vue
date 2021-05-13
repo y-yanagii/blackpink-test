@@ -7,10 +7,6 @@
           v-show="selectedMode.modeType !== $mode.suddendeath"
           :timerObject="timerObject"
         ></Time>
-        <Life
-          v-show="selectedMode.modeType === $mode.suddendeath"
-          :lives="lives"
-        ></Life>
         <TestCard
           :currentTest="currentTest"
           :test="tests[currentTest]"
@@ -26,7 +22,6 @@
 import ModeTitle from '~/components/ui/ModeTitle.vue';
 import Time from '~/components/ui/Time.vue';
 import TestCard from '~/components/pages/tests/TestCard.vue';
-import Life from '~/components/Life.vue';
 import { db } from "~/plugins/firebase";
 
 export default {
@@ -50,24 +45,6 @@ export default {
         startTime: 0, // スタートボタンを押した時刻
         isRunning: false // 計測中の状態保持
       },
-      remainingLife: 3, // 残ライフ
-      lives: [ // ライフオブジェクト
-        {
-          life: true,
-          icon: "mdi-heart-outline",
-          color: "#f4a6b8",
-        },
-        {
-          life: true,
-          icon: "mdi-heart-outline",
-          color: "#f4a6b8",
-        },
-        {
-          life: true,
-          icon: "mdi-heart-outline",
-          color: "#f4a6b8",
-        },
-      ],
       selectedMode: this.$store.getters['localStorages/choiceMode'],
     }
   },
@@ -81,7 +58,6 @@ export default {
     ModeTitle,
     Time,
     TestCard,
-    Life
   },
   methods: {
     // 選択肢押下時処理(解答時)
@@ -92,9 +68,6 @@ export default {
       if (this.currentTest === this.tests.length - 1) {
         // 最終問題の場合終了処理
         this.testEndProcessing();
-      } else if (this.selectedMode.modeType === this.$mode.suddendeath) {
-        // sudden deathの場合ライフの判定
-        this.judgmentLife(value);
       } else {
         // 次の問題に移行
         this.currentTest++
@@ -182,17 +155,6 @@ export default {
     setMessage() {
       // ランクごとのメッセージをセット
       this.newRecord.message = this.$store.getters['messages/getMessage'](this.newRecord.myRank)
-    },
-    judgmentLife(answer) {
-      if (!answer.isAnswer) {
-        // 不正解の場合、ライフを１削る
-        this.lives.filter(l => l.life)[this.lives.filter(l => l.life).length - 1].icon = "mdi-heart-broken-outline"
-        this.lives.filter(l => l.life)[this.lives.filter(l => l.life).length - 1].life = false
-        this.remainingLife--;
-      }
-      
-      // 残ライフが0の場合、検定終了(最終問題の場合はaddAnswerメソッドのif文で処理される)それ以外、次の問題に移行
-      this.remainingLife === 0 ? this.testEndProcessing() : this.currentTest++
     },
   },
   filters: {
