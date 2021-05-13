@@ -133,10 +133,11 @@ export default {
 }
 
 .link {
+  width: 60%;
   font-weight: bold;
   background-color: #121212 !important;
   color: $base-text-color;
-  width: 60%;
+  text-decoration: underline !important;
 }
 
 </style>
