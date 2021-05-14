@@ -90,7 +90,7 @@ export default {
     transpile: [
       'vee-validate/dist/rules',
     ],
-    extend (config, ctx) {
+    extend (config, { isServer, isClient }) {
       // mp3を扱うloader設定
       config.module.rules.push({
         test: /\.(ogg|mp3|wav|mpe?g)$/i,
@@ -98,8 +98,24 @@ export default {
         options: {
           name: '[path][name].[ext]'
         }
-      })
-    }
+      });
+      // Webスクレイピング用のNode.jsライブラリのpuppeterの設定
+      config.externals = config.externals || {}
+      if (!isServer) {
+        config.node = {
+          fs: 'empty',
+        }
+      }
+      if (Array.isArray(config.externals)) {
+        config.externals.push({
+          puppeteer: require('puppeteer'),
+        })
+      } else {
+        config.externals.puppeteer = require('puppeteer')
+      }
+      config.output.globalObject = 'this'
+      return config
+    },
   },
 
   // Routing configuration
