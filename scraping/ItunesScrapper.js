@@ -1,41 +1,82 @@
 // PuppeteerによるWebスクレイピング
 const puppeteer = require('puppeteer');
 
+let tests = []; // テストコレクションオブジェクト
+// テストドキュメント
+let test = {
+  embedInfo: {
+    detail: {
+      subCode: "",
+      subContent: "",
+    },
+    embedCode: "",
+    embedType: 1,
+  },
+  modeType: 5,
+  options: [
+    {
+      answer: {
+        isAnswer: false,
+        isNumber: 0,
+      },
+      optionContent: "",
+    },
+    {
+      answer: {
+        isAnswer: false,
+        isNumber: 0,
+      },
+      optionContent: "",
+    },
+    {
+      answer: {
+        isAnswer: false,
+        isNumber: 0,
+      },
+      optionContent: "",
+    },
+    {
+      answer: {
+        isAnswer: false,
+        isNumber: 0,
+      },
+      optionContent: "",
+    },
+  ],
+  question: "この曲のタイトルは？",
+  questionType: 5,
+}
+
 // ブラウザ起動
 puppeteer.launch({
   headless: false, // ヘッドレスをオフ（ブラウザが見えるように）
-  slowMo: 300      // 何が起こっているかを分かりやすくするため遅延
+  slowMo: 300      // 何が起こっているかを分かりやすくするため動作遅延
 }).then(async browser => {
   const page = await browser.newPage() // ブラウザの新しいタブを表示
   await page.goto('https://music.apple.com/jp/search/song?term=blackpink'); // iTunesのURLにアクセス（曲検索でブラックピンクを指定して検索した画面にアクセス）
   await page.waitForSelector('.context-menu__overflow'); // 指定した要素が表示されるまで待つ
-  const menus = await page.$$(".songs-list .songs-list-row"); // 1曲の行リストdiv
+  const menus = await page.$$(".songs-list .songs-list-row"); // 曲の行リストdiv
 
-  // 1曲の行ずつループ
+  // 曲の行をループ
   for (const menu of menus) {
-    const menuDiv = await menu.$('div.dt-media-contextual-menu.songs-list-row__context-menu'); // 「•••」のdiv
+    const menuDiv = await menu.$('div.dt-media-contextual-menu.songs-list-row__context-menu'); // 「•••」のdiv部分
     if (menuDiv !== null) {
-      await menu.click();
-      await menuDiv.click(); // 共有liを表示
-      // await page.waitForSelector('.context-menu__option.context-menu__option--parent'); // 共有liが表示されるまで待つ
-      const menuShare = await page.$('.context-menu__option.context-menu__option--parent'); // 共有li
+      await menu.click(); // 曲の行をクリック（フォーカスさせたいため）
+      await menuDiv.click(); // 「•••」をクリックし共有liを表示
+      const menuShare = await page.$('.context-menu__option.context-menu__option--parent'); // 共有liをクリックした時のサブメニュー
       await menuShare.hover(); // 共有liにフォーカス
       await menuShare.click(); // 共有liをクリック
-      // const subMenu = await menuShare.$('.context-menu.context-menu--submenu'); // シェアDiv領域(Twitter ~ リンクをコピー)
       const embed = await page.$('ul .context-menu__option:nth-child(3)'); // 埋め込みコードli
       await embed.click(); // 埋め込みコードをクリック
 
-      await browser.defaultBrowserContext().overridePermissions('https://music.apple.com/jp/search/song?term=blackpink', ['clipboard-read', 'clipboard-write']);
-      await page.bringToFront();
+      await browser.defaultBrowserContext().overridePermissions('https://music.apple.com/jp/search/song?term=blackpink', ['clipboard-read', 'clipboard-write']); // クリップボードAPIへのアクセス許可を設定
+      await page.bringToFront(); // ページを前に出す（タブを有効化）
+      // embedコード文字列
       const paste = await page.evaluate(() => {
-        // Copy the selected content to the clipboard
-        // document.execCommand('copy');
-        // Obtain the content of the clipboard as a string
-        return navigator.clipboard.readText();
+        return navigator.clipboard.readText(); // 既にクリップボードにコピー済みのため、クリップボードを参照し文字列を返す
       });
 
       console.log(paste);
-      
     }
   }
 
