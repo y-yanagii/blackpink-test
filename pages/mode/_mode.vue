@@ -1,6 +1,6 @@
 <!-- 難易度選択領域 -->
 <template>
-  <!-- <Start
+  <Start
     v-if="!show"
     @change-show="changeShow"
   ></Start>
@@ -12,26 +12,7 @@
   ></Game>
   <Challenge
     v-else-if="show && playType === $modeNumber.challenge"
-  ></Challenge> -->
-  <div>
-    <div
-      v-for="(result, index) in results"
-      :key="index"
-    >
-      <div>
-        <div>artistName : {{ result.artistName }}</div>
-        <div>trackName : {{ result.trackName }}</div>
-        <div>previewUrl : {{ result.previewUrl }}</div>
-        <audio controls preload="auto" id="audio">
-          <source
-            :src=result.previewUrl
-            type="audio/mp4"
-          />
-        </audio>
-        
-      </div>
-    </div>
-  </div>
+  ></Challenge>
   
 </template>
 
@@ -72,16 +53,16 @@ export default {
   async asyncData(context) {
     // ituensAPIで楽曲情報取得処理
     // 詳細はnuxt.config.jsのproxyを参照
-    const url = "/search";
-    const response = await context.$axios.$get(url, {
-      params: {
-        term: "blackpink",
-        entity: "musicTrack"
-      }
-    });
+    // const url = "/search";
+    // const response = await context.$axios.$get(url, {
+    //   params: {
+    //     term: "blackpink",
+    //     entity: "musicTrack"
+    //   }
+    // });
 
     // 他のアーティストも取れてきてしまうため一旦はK-Popで絞る
-    return { results: response.results.filter(n => n.primaryGenreName === "K-Pop") }
+    // return { results: response.results.filter(n => n.primaryGenreName === "K-Pop") }
   },
 }
 </script>
