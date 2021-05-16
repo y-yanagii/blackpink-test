@@ -1,5 +1,6 @@
 // PuppeteerによるWebスクレイピング
 const puppeteer = require('puppeteer');
+const XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 
 let tests = []; // テストコレクションオブジェクト
 // テストドキュメント
@@ -50,7 +51,13 @@ let test = {
 let ituensSiteDatas = []; // iTuensサイトデータ
 let songs = []; // 曲名のみの配列も保持
 
-// ブラウザ起動
+// iTuensAPIより楽曲情報の取得
+let request = new XMLHttpRequest(); // HTTP通信用のオブジェクト
+request.open('GET', "https://itunes.apple.com/search/?term=BLACKPINK&entity=musicTrack", false); // リクエスト設定
+request.send(); // リクエスト投げる
+let iTuensApiDatas = JSON.parse(request.responseText); // 返ってきたレスポンスがstringのためJSON.parse
+
+// ここからスクレイピング処理（ブラウザ起動）
 puppeteer.launch({
   headless: false, // ヘッドレスをオフ（ブラウザが見えるように）
   slowMo: 300      // 何が起こっているかを分かりやすくするため動作遅延
@@ -88,7 +95,7 @@ puppeteer.launch({
       });
       // 曲名
       siteData.songName =　await (await (await menu.$('.songs-list-row__song-name')).getProperty('textContent')).jsonValue(); // jsonValueをstringの形で取得するためにjsonValueにもawaitを使用(未使用の場合Promiseが返る)
-      console.log(siteData.embed);
+      const replaceSongName = siteData.songName.replace(/\([^\)]*\)/g, ""); // ()内ごと削除する正規表現
       songs.push(siteData.songName);
       ituensSiteDatas.push(siteData);
     }
@@ -96,5 +103,15 @@ puppeteer.launch({
 
   await browser.close() // ブラウザを閉じる
 
-  // iTuensAPIのデータをここで定義
+  // 試聴データ分ループ
+  for (const iTuensApiData of iTuensApiDatas) {
+    const matchData = ituensSiteDatas.find(itunesSite => itunesSite.songName === iTuensApiData.trackName); // 全く同じ曲名を取得
+
+    // 取得できた場合
+    if (typeof matchData !== "undefined") {
+      // Firestoreに格納するテストドキュメントの生成
+      
+    }
+  }
+
 });
