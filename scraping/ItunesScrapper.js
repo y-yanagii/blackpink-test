@@ -96,7 +96,7 @@ puppeteer.launch({
       // 曲名
       siteData.songName =　await (await (await menu.$('.songs-list-row__song-name')).getProperty('textContent')).jsonValue(); // jsonValueをstringの形で取得するためにjsonValueにもawaitを使用(未使用の場合Promiseが返る)
       const replaceSongName = siteData.songName.replace(/\([^\)]*\)/g, ""); // ()内ごと削除する正規表現
-      songs.push(siteData.songName);
+      if (!songs.includes(replaceSongName)) songs.push(replaceSongName); // 曲名の重複をチェックしつつ追加
       ituensSiteDatas.push(siteData);
     }
   }
