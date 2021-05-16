@@ -90,7 +90,8 @@ sw.*
 *.swp
 
 # スクレイピングファイル
-scraping/
+scraping/ItunesScrapper.js
+scraping/newTests.json
 
 # サービスアカウント（firebase admin sdk）
 serviceAccount.json
