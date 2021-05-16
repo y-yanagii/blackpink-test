@@ -47,18 +47,29 @@ let test = {
   questionType: 5,
 }
 
+let ituensSiteDatas = []; // iTuensサイトデータ
+let songs = []; // 曲名のみの配列も保持
+
 // ブラウザ起動
 puppeteer.launch({
   headless: false, // ヘッドレスをオフ（ブラウザが見えるように）
   slowMo: 300      // 何が起こっているかを分かりやすくするため動作遅延
 }).then(async browser => {
+  let res = asyncData();
+  console.log(res);
   const page = await browser.newPage() // ブラウザの新しいタブを表示
   await page.goto('https://music.apple.com/jp/search/song?term=blackpink'); // iTunesのURLにアクセス（曲検索でブラックピンクを指定して検索した画面にアクセス）
   await page.waitForSelector('.context-menu__overflow'); // 指定した要素が表示されるまで待つ
   const menus = await page.$$(".songs-list .songs-list-row"); // 曲の行リストdiv
 
+  await page.evaluate(() => { document.getElementsByClassName('songs-list-row')[24].scrollIntoView(true); }); // 曲リストを最下部までスクロールさせ曲リストを取得してくる
+  await page.waitForSelector('div .songs-list-row:nth-child(30)') // 曲リストが増えるのを待つ
+  await page.evaluate(() => { document.getElementsByClassName('songs-list-row')[74].scrollIntoView(true); }); // 再度曲リストを追加し50曲以上にする（iTuensAPIで取得した試聴データが50件のため）
+  await page.waitForSelector('div .songs-list-row:nth-child(80)') // 曲リストが増えるのを待つ
+
   // 曲の行をループ
   for (const menu of menus) {
+    let siteData = { songName: "", embed: "" }; // 曲の行データ（曲名、embedコード）
     const menuDiv = await menu.$('div.dt-media-contextual-menu.songs-list-row__context-menu'); // 「•••」のdiv部分
     if (menuDiv !== null) {
       await menu.click(); // 曲の行をクリック（フォーカスさせたいため）
@@ -72,37 +83,18 @@ puppeteer.launch({
       await browser.defaultBrowserContext().overridePermissions('https://music.apple.com/jp/search/song?term=blackpink', ['clipboard-read', 'clipboard-write']); // クリップボードAPIへのアクセス許可を設定
       await page.bringToFront(); // ページを前に出す（タブを有効化）
       // embedコード文字列
-      const paste = await page.evaluate(() => {
+      siteData.embed = await page.evaluate(() => {
         return navigator.clipboard.readText(); // 既にクリップボードにコピー済みのため、クリップボードを参照し文字列を返す
       });
-
-      console.log(paste);
+      // 曲名
+      siteData.songName =　await (await (await menu.$('.songs-list-row__song-name')).getProperty('textContent')).jsonValue(); // jsonValueをstringの形で取得するためにjsonValueにもawaitを使用(未使用の場合Promiseが返る)
+      console.log(siteData.embed);
+      songs.push(siteData.songName);
+      ituensSiteDatas.push(siteData);
     }
   }
 
-
-
-
-  // await Promise.all(menus.map(async menu => await setEmbedCode(menu))); // •••divリストを1件ずつ処理
-  
-  // console.log(typeof(menus[0].$('.dt-media-contextual-menu.songs-list-row__context-menu')));
-  // console.log(await menus[0].$('.dt-media-contextual-menu.songs-list-row__context-menu'));
-  // 共有liのクラス名.context-menu__option
-  // 埋め込みコードをコピーspanのクラス名context-menu__option-text-clamp
-
-  
-  // await page.screenshot({ path: './scraping/sample1.png' })
   await browser.close() // ブラウザを閉じる
+
+  // iTuensAPIのデータをここで定義
 });
-
-// async function setEmbedCode(menu) {
-  // const songMenu = await menu.$('.dt-media-contextual-menu.songs-list-row__context-menu');
-  
-  // await songMenu.click();
-
-  // await (await menu.$('.songs-list-row__context-menu')).click();
-  // await (await menus[0].$('.songs-list-row__context-menu')).click();
-  // const songMenu = await menu.$(".songs-list-row__context-menu"); // •••div
-  // await songMenu.click(); // •••div
-  // await page.screenshot({ path: './scraping/sample1.png' });
-// }
