@@ -13,6 +13,7 @@
   <Challenge
     v-else-if="show && playType === $modeNumber.challenge"
   ></Challenge>
+  
 </template>
 
 <script>
@@ -52,7 +53,7 @@ export default {
   async asyncData(context) {
     // ituensAPIで楽曲情報取得処理
     // 詳細はnuxt.config.jsのproxyを参照
-    const url = "/search";
+    // const url = "/search";
     // const response = await context.$axios.$get(url, {
     //   params: {
     //     term: "blackpink",
