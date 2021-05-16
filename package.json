@@ -10,7 +10,8 @@
     "export": "nuxt export",
     "serve": "nuxt serve",
     "lint:js": "eslint --ext .js,.vue --ignore-path .gitignore .",
-    "lint": "yarn lint:js", "test": "jest",
+    "lint": "yarn lint:js",
+    "test": "jest",
     "postinstall": "node script"
   },
   "dependencies": {
@@ -19,6 +20,7 @@
     "animated-number-vue": "^1.0.0",
     "core-js": "^3.9.1",
     "firebase": "^8.3.3",
+    "firebase-admin": "^9.8.0",
     "net": "^1.0.2",
     "nuxt": "^2.15.3",
     "puppeteer": "^9.1.1",
