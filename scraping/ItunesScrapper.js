@@ -2,7 +2,7 @@
 const puppeteer = require('puppeteer');
 const XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 const fs = require('fs');
-const firebaseAdmin = require('firebase-admin');
+const admin = require('firebase-admin');
 
 let tests = []; // テストコレクションオブジェクト
 // テストドキュメント
@@ -157,13 +157,13 @@ console.log(iTuensApiDatas.results.length)
   // let rawData = fs.readFileSync('scraping/newTests.json'); // 読み込み用Jsonファイルデータ
   // let registerTests = JSON.parse(rawData); // JSONファイルをJSONデータへ変換
   // // Firebase設定
-  // firebaseAdmin.initializeApp({
+  // admin.initializeApp({
   //   apiKey: "AIzaSyDchpCeBzZM6r1sgqxaLPcj3MZV9gEjqcM",
   //   authDomain: "blackpink-test.firebaseapp.com",
   //   projectId: "blackpink-test"
   // });
 
-  // const db = firebaseAdmin.firestore();
+  // const db = admin.firestore();
 
   // registerTests.tests.forEach(function(obj) {
   //   db.collection("tests").doc().set({
@@ -218,13 +218,15 @@ console.log(iTuensApiDatas.results.length)
 let rawData = fs.readFileSync('scraping/newTests.json'); // 読み込み用Jsonファイルデータ
   let registerTests = JSON.parse(rawData); // JSONファイルをJSONデータへ変換
   // Firebase設定
-  firebaseAdmin.initializeApp({
+  admin.initializeApp({
+    credential: admin.credential.applicationDefault(),
+    databaseURL: 'https://blackpink-test.firebaseio.com',
     apiKey: "AIzaSyDchpCeBzZM6r1sgqxaLPcj3MZV9gEjqcM",
     authDomain: "blackpink-test.firebaseapp.com",
     projectId: "blackpink-test"
   });
 
-  const db = firebaseAdmin.firestore();
+  const db = admin.firestore();
 
   registerTests.tests.forEach(function(obj) {
     db.collection("tests").doc().set({

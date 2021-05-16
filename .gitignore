@@ -91,3 +91,6 @@ sw.*
 
 # スクレイピングファイル
 scraping/
+
+# サービスアカウント（firebase admin sdk）
+serviceAccount.json
