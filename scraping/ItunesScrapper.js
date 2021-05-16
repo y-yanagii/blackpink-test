@@ -3,6 +3,7 @@ const puppeteer = require('puppeteer');
 const XMLHttpRequest = require("xmlhttprequest").XMLHttpRequest;
 const fs = require('fs');
 const admin = require('firebase-admin');
+const serviceAccount = require('../serviceAccount.json');
 
 let tests = []; // テストコレクションオブジェクト
 // テストドキュメント
@@ -219,8 +220,7 @@ let rawData = fs.readFileSync('scraping/newTests.json'); // 読み込み用Json�
   let registerTests = JSON.parse(rawData); // JSONファイルをJSONデータへ変換
   // Firebase設定
   admin.initializeApp({
-    credential: admin.credential.applicationDefault(),
-    databaseURL: 'https://blackpink-test.firebaseio.com',
+    credential: admin.credential.cert(serviceAccount), // 
     apiKey: "AIzaSyDchpCeBzZM6r1sgqxaLPcj3MZV9gEjqcM",
     authDomain: "blackpink-test.firebaseapp.com",
     projectId: "blackpink-test"
