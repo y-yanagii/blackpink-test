@@ -31,8 +31,8 @@ import YoutubeArea from '~/components/YoutubeArea.vue';
 export default {
   data() {
     return {
-      newRecord: this.$store.getters['tests/getNewRecord'].newRecord,
-      tests: this.$store.getters['tests/getTestsByMode'],
+      newRecord: this.$store.getters['localStorages/getNewRecord'].newRecord,
+      tests: this.$store.getters['localStorages/getTargetTests'],
     }
   },
   async asyncData(context) {
