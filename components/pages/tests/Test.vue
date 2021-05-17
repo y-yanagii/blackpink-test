@@ -49,9 +49,24 @@ export default {
     }
   },
   computed: {
-    // 難易度別にテスト情報取得
-    getTests: function() {
-      return this.$store.getters['tests/getTestsByMode'](this.selectedMode.modeType);
+    // 取得したテストコレクションをシャッフルかつ10件にする
+    processingTests: function() {
+      // 問題をシャッフル
+      for (let i = (this.tests.length - 1); 0 < i; i--) {
+        // ランダムで要素数1つを取得
+        let r = Math.floor(Math.random() * (i + 1));
+
+        // 並び替え
+        let tmp = this.tests[i];
+        this.tests[i] = this.tests[r];
+        this.tests[r] = tmp
+      }
+
+      // サドンデスの場合はシャッフルのみ
+      if (this.selectedMode.modeType === $mode.suddendeath) return
+
+      // シャッフル後、最初の10件をテスト問題とする
+      this.tests = this.tests.slice(0, 10);
     },
   },
   components: {
@@ -171,6 +186,9 @@ export default {
     this.$store.dispatch('rankings/init');
     // messagesコレクションの初期化
     this.$store.dispatch('messages/init');
+
+    // 取得したテストコレクションをシャッフルかつ10件にする
+    this.processingTests;
   },
 }
 </script>

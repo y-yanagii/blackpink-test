@@ -11,7 +11,7 @@ const state = () => ({
 
 const getters = {
   // コンポーネントから参照時gettersから参照する
-  getTestsByMode: state => modeType => { 
+  getTestsByMode: state => modeType => {
     // 選択したモード種別でテストを取得する
     return state.tests.filter(t => t.modeType === Number(modeType))
   },
