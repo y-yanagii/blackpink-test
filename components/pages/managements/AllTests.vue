@@ -16,6 +16,7 @@
                   <th class="text-center" style="border-bottom: solid 1px #f4a6b8 !important;">B</th>
                   <th class="text-center" style="border-bottom: solid 1px #f4a6b8 !important;">C</th>
                   <th class="text-center" style="border-bottom: solid 1px #f4a6b8 !important;">D</th>
+                  <th class="text-center" style="border-bottom: solid 1px #f4a6b8 !important;"></th>
                 </tr>
               </thead>
               <tbody>
@@ -29,6 +30,7 @@
                   <td :class="answerClass(test.options[1].answer.isAnswer)" class="option-border-right-bottom">{{ test.options[1].optionContent }}</td>
                   <td :class="answerClass(test.options[2].answer.isAnswer)" class="option-border-right-bottom">{{ test.options[2].optionContent }}</td>
                   <td :class="answerClass(test.options[3].answer.isAnswer)" class="option-border-right-bottom">{{ test.options[3].optionContent }}</td>
+                  <td class="option-border-right-bottom"></td>
                 </tr>
               </tbody>
             </v-simple-table>
