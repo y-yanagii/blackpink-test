@@ -53,7 +53,7 @@ export default {
   data() {
     return {
       sns:{
-        twitter:'https://twitter.com/intent/tweet?url=https://yahoo.co.jp&text=TEST結果は&hashtags=BLACKPINK,ブラックピンク,BLINK,BLACKPINKTEST',
+        twitter:'https://twitter.com/intent/tweet?url=https://yahoo.co.jp&text=TEST結果は&hashtags=BLACKPINK,ブラックピンク,BLINK,BLACKPINKTEST,BLINKTEST',
       },
       crownGif: {
         src: "https://giphy.com/embed/AV7jFEFlWSUl8oEwH8",
