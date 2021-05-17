@@ -17,6 +17,10 @@
         </v-col>
       </v-row>
     </div>
+    <TestCrud
+      :allTests="allTests"
+      :modeType="modeType"
+    ></TestCrud>
     <AllTests
       :tests="tests"
       :modeType="modeType"
@@ -26,22 +30,27 @@
 
 <script>
 import AllTests from "~/components/pages/managements/AllTests.vue";
+import TestCrud from "~/components/pages/managements/TestCrud.vue";
 import { db } from "~/plugins/firebase";
 
 export default {
-  data: function() {
+  data() {
     return {
       tests: [],
+      allTests: [],
       modeType: 0,
     }
   },
   firestore: {
-    tests: db.collection("tests").where('modeType', '==', 5)
+    tests: db.collection("tests").where('modeType', '==', 0),
+    allTests: db.collection("tests").orderBy('modeType', 'asc')
   },
   methods: {
     getTests(modeType) {
-
-    }
+      // テストの種類別に取得
+      this.$bind('tests', db.collection("tests").where('modeType', '==', modeType));
+      this.modeType = modeType;
+    },
   },
   computed: {
     modeButtons() {
@@ -58,7 +67,8 @@ export default {
     this.$store.dispatch('tests/init');
   },
   components: {
-    AllTests
+    AllTests,
+    TestCrud
   }
 }
 </script>
