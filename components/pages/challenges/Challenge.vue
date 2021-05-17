@@ -14,6 +14,7 @@
         <TestCard
           :currentTest="currentTest"
           :test="tests[currentTest]"
+          :testTotal="tests.length"
           ref="test_card"
           @option-click="addAnswer"
         ></TestCard>

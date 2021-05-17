@@ -93,13 +93,12 @@ import MusicTest from '~/components/pages/tests/MusicTest.vue';
 export default {
   data: function() {
     return {
-      testTotal: 15,
       q: "Q. ",
       abcd: ["A. ", "B. ", "C. ", "D. "],
       audio: this.test.modeType === 5 ? new Audio(this.test.embedInfo.embedCode) : false,
     }
   },
-  props: ["test", "currentTest"],
+  props: ["test", "currentTest", "testTotal"],
   methods: {
     sendAnswer(abcdStr, optionBtnInfo) {
       // 解答送信する前に$emitに渡すオブジェクトを生成
