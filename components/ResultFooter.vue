@@ -29,7 +29,7 @@ export default {
   methods: {
     toMode() {
       // nameが取得できなければ促すダイアログを表示
-      this.$router.push({ path: "/mode" });
+      this.$router.push({ path: "/mode/" + this.$store.getters['localStorages/choiceMode'].modeValue.toLowerCase() });
     },
     toRanking() {
       // nameが取得できなければ促すダイアログを表示

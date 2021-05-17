@@ -35,6 +35,15 @@
           <div class="modal-answer-content">
             {{ "A. " + modalAnswerContent }}
           </div>
+          <div
+            v-if="newRecord.modeType === $mode.music"
+            class="modal-answer-music-embed"
+          >
+            <!-- 楽曲テストの場合リンクを表示 -->
+            <a :href="embedCode">
+              <img src="https://linkmaker.itunes.apple.com/assets/shared/badges/ja-jp/music-lrg.svg">
+            </a>
+          </div>
           <v-card-actions class="modal-footer">
             <v-spacer></v-spacer>
             <v-btn
@@ -59,6 +68,7 @@ export default {
       dialog: false,
       modalQuestion: "",
       modalAnswerContent: "",
+      embedCode: "",
     }
   },
   props: ["newRecord", "tests"],
@@ -80,6 +90,7 @@ export default {
       this.dialog = true;
       this.modalQuestion = testsObject[index].question;
       this.modalAnswerContent = testsObject[index].options.filter(f => f.answer.isAnswer)[0].optionContent;
+      this.embedCode = testsObject[index].embedInfo.detail.subCode;
     }
   },
 }
@@ -158,6 +169,11 @@ export default {
     padding: 2%;
     color: $text-color-black !important;
     border-radius: 7px;
+  }
+
+  .modal-answer-music-embed {
+    margin-top: 4%;
+    text-align: center;
   }
 
   .modal-footer-btn {

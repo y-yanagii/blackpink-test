@@ -5,6 +5,8 @@ const state = () => ({
   modeValue: "",
   playType: 0,
   guestPlayFlag: false,
+  newRecord: {},
+  targetTests: [],
 });
 
 const getters = {
@@ -15,6 +17,8 @@ const getters = {
   getUserName: state => { return state.userName },
   getPlayType: state => { return state.playType },
   getGuestPlay: state => { return state.guestPlayFlag },
+  getNewRecord: state => { return state.newRecord },
+  getTargetTests: state => { return state.targetTests },
 };
 
 const mutations = {
@@ -32,6 +36,13 @@ const mutations = {
   },
   setGuestPlay(state, guestPlayFlag) {
     state.guestPlayFlag = guestPlayFlag;
+  },
+  // 解答結果オブジェクトをセット
+  setNewRecord(state, newRecord) {
+    state.newRecord = newRecord;
+  },
+  setTargetTests(state, targetTests) {
+    state.targetTests = targetTests;
   }
 };
 
@@ -47,6 +58,13 @@ const actions = {
   },
   setGuestPlay(context, guestPlayFlag) {
     context.commit('setGuestPlay', guestPlayFlag);
+  },
+  // 解答結果オブジェクトをセット
+  setNewRecord(context, newRecord) {
+    context.commit('setNewRecord', newRecord);
+  },
+  setTargetTests(context, targetTests) {
+    context.commit('setTargetTests', targetTests);
   }
 };
 

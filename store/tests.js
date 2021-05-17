@@ -6,7 +6,6 @@ const testsRef = db.collection('tests');
 const state = () => ({
   // グローバルなデータをここで定義
   tests: [],
-  newRecord: {},
 });
 
 const getters = {
@@ -15,7 +14,6 @@ const getters = {
     // 選択したモード種別でテストを取得する
     return state.tests.filter(t => t.modeType === Number(modeType))
   },
-  getNewRecord: state => { return state.newRecord },
 };
 
 const actions = {
@@ -24,19 +22,10 @@ const actions = {
   init: firestoreAction(({ bindFirestoreRef }) => {
     bindFirestoreRef('tests', testsRef)
   }),
-
-  // 解答結果オブジェクトをセット
-  setNewRecord(context, newRecord) {
-    context.commit('setNewRecord', newRecord);
-  }
 };
 
 const mutations = {
   // mutationsがstate（グローバル変数的な）のデータを実際に変更
-  // 解答結果オブジェクトをセット
-  setNewRecord(state, newRecord) {
-    state.newRecord = newRecord;
-  }
 };
 
 // 上のオブジェクトをexport
