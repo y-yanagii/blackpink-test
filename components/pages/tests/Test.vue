@@ -62,6 +62,9 @@ export default {
         this.tests[r] = tmp
       }
 
+      // サドンデスの場合はシャッフルのみ
+      if (this.selectedMode.modeType === $mode.suddendeath) return
+
       // シャッフル後、最初の10件をテスト問題とする
       this.tests = this.tests.slice(0, 10);
     },
