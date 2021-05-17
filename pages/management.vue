@@ -19,6 +19,7 @@
     </div>
     <AllTests
       :tests="tests"
+      :modeType="modeType"
     ></AllTests>
   </div>
 </template>
@@ -51,7 +52,7 @@ export default {
         { modeType: 3, class: "management-btn management-master-btn", modeText: "MASTER" },
         { modeType: 5, class: "management-btn management-music-btn", modeText: "MUSIC" },
       ]
-    }
+    },
   },
   mounted() {
     this.$store.dispatch('tests/init');

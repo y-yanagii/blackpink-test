@@ -10,12 +10,12 @@
             >
               <thead>
                 <tr>
-                  <th>No.</th>
-                  <th class="text-center">Q</th>
-                  <th class="text-center">A</th>
-                  <th class="text-center">B</th>
-                  <th class="text-center">C</th>
-                  <th class="text-center">D</th>
+                  <th style="border-right: solid 1px #f4a6b8; border-bottom: solid 1px #f4a6b8 !important;">No.</th>
+                  <th class="text-center" style="border-bottom: solid 1px #f4a6b8 !important;">Q</th>
+                  <th class="text-center" style="border-bottom: solid 1px #f4a6b8 !important;">A</th>
+                  <th class="text-center" style="border-bottom: solid 1px #f4a6b8 !important;">B</th>
+                  <th class="text-center" style="border-bottom: solid 1px #f4a6b8 !important;">C</th>
+                  <th class="text-center" style="border-bottom: solid 1px #f4a6b8 !important;">D</th>
                 </tr>
               </thead>
               <tbody>
@@ -23,12 +23,12 @@
                   v-for="(test, index) in tests"
                   :key="test.id"
                 >
-                  <td>{{ index }}</td>
-                  <td class="option-content">{{ test.question }}</td>
-                  <td :class="answerClass(test.options[0].answer.isAnswer)" class="option-content">{{ test.options[0].optionContent }}</td>
-                  <td :class="answerClass(test.options[1].answer.isAnswer)" class="option-content">{{ test.options[1].optionContent }}</td>
-                  <td :class="answerClass(test.options[2].answer.isAnswer)" class="option-content">{{ test.options[2].optionContent }}</td>
-                  <td :class="answerClass(test.options[3].answer.isAnswer)" class="option-content">{{ test.options[3].optionContent }}</td>
+                  <td class="option-border-right">{{ index }}</td>
+                  <td class="option-border-right-bottom">{{ test.question }}</td>
+                  <td :class="answerClass(test.options[0].answer.isAnswer)" class="option-border-right-bottom">{{ test.options[0].optionContent }}</td>
+                  <td :class="answerClass(test.options[1].answer.isAnswer)" class="option-border-right-bottom">{{ test.options[1].optionContent }}</td>
+                  <td :class="answerClass(test.options[2].answer.isAnswer)" class="option-border-right-bottom">{{ test.options[2].optionContent }}</td>
+                  <td :class="answerClass(test.options[3].answer.isAnswer)" class="option-border-right-bottom">{{ test.options[3].optionContent }}</td>
                 </tr>
               </tbody>
             </v-simple-table>
@@ -41,7 +41,7 @@
 
 <script>
 export default {
-  props: ["tests"],
+  props: ["tests", "modeType"],
   methods: {
     answerClass(isAnswer) {
       if (isAnswer) {
@@ -49,13 +49,25 @@ export default {
       }
     }
   },
+  computed: {
+    songCount() {
+
+    }
+  }
 }
 </script>
 
 <style scoped lang="scss">
 // テーブル領域
-.option-content {
-  border: solid 1px $base-text-color;
+.option-border-right-bottom {
+  border-right: solid 1px $base-text-color;
+  border-bottom: solid 1px $base-text-color !important;
+}
+.option-border-bottom {
+  border-bottom: solid 1px $base-text-color !important;
+}
+.option-border-right {
+  border-right: solid 1px $base-text-color;
 }
 .is-answer {
   background-color: $base-bg-pink;
