@@ -22,11 +22,11 @@
 </template>
 
 <script>
-import ResultCard from '~/components/ResultCard.vue';
-import ResultFooter from '~/components/ResultFooter.vue';
-import ResultSns from '~/components/ResultSns.vue';
-import ResultConfirm from '~/components/ResultConfirm.vue';
-import YoutubeArea from '~/components/YoutubeArea.vue';
+import ResultCard from '~/components/pages/results/ResultCard.vue';
+import ResultFooter from '~/components/pages/results/ResultFooter.vue';
+import ResultSns from '~/components/pages/results/ResultSns.vue';
+import ResultConfirm from '~/components/pages/results/ResultConfirm.vue';
+import YoutubeArea from '~/components/ui/YoutubeArea.vue';
 
 export default {
   data() {
