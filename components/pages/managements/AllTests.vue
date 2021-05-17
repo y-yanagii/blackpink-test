@@ -24,7 +24,7 @@
                   v-for="(test, index) in tests"
                   :key="test.id"
                 >
-                  <td class="option-border-right">{{ index }}</td>
+                  <td class="option-border-right">{{ index + 1 }}</td>
                   <td class="option-border-right-bottom">{{ test.question }}</td>
                   <td :class="answerClass(test.options[0].answer.isAnswer)" class="option-border-right-bottom">{{ test.options[0].optionContent }}</td>
                   <td :class="answerClass(test.options[1].answer.isAnswer)" class="option-border-right-bottom">{{ test.options[1].optionContent }}</td>
