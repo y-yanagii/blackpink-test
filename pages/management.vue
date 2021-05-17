@@ -1,76 +1,87 @@
 <template>
   <div>
-    <v-row justify="center" align="center">
-      <v-col cols="12" sm="12" md="12">
-        <div class="text-center">
-          <div>
-            <v-simple-table
-              dense
-              fixed-header
+    <div>
+      <v-row justify="center" align="center">
+        <v-col cols="12" sm="12" md="12">
+          <div class="text-center">
+            <v-btn
+              v-for="mode in modeButtons"
+              :key="mode.modeType"
+              :class="mode.class"
+              @click="getTests(mode.modeType)"
+              outlined
             >
-              <thead>
-                <tr>
-                  <th>No.</th>
-                  <th class="text-center">A</th>
-                  <th class="text-center">B</th>
-                  <th class="text-center">C</th>
-                  <th class="text-center">D</th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr
-                  v-for="(test, index) in tests"
-                  :key="test.id"
-                >
-                  <td>{{ index }}</td>
-                  <td :class="answerClass(test.options[0].answer.isAnswer)" class="option-content">{{ test.options[0].optionContent }}</td>
-                  <td :class="answerClass(test.options[1].answer.isAnswer)" class="option-content">{{ test.options[1].optionContent }}</td>
-                  <td :class="answerClass(test.options[2].answer.isAnswer)" class="option-content">{{ test.options[2].optionContent }}</td>
-                  <td :class="answerClass(test.options[3].answer.isAnswer)" class="option-content">{{ test.options[3].optionContent }}</td>
-                </tr>
-              </tbody>
-            </v-simple-table>
+            {{ mode.modeText }}
+            </v-btn>
           </div>
-        </div>
-      </v-col>
-    </v-row>
+        </v-col>
+      </v-row>
+    </div>
+    <AllTests
+      :tests="tests"
+    ></AllTests>
   </div>
 </template>
 
 <script>
+import AllTests from "~/components/pages/managements/AllTests.vue";
 import { db } from "~/plugins/firebase";
 
 export default {
   data: function() {
     return {
       tests: [],
+      modeType: 0,
     }
   },
   firestore: {
     tests: db.collection("tests").where('modeType', '==', 5)
   },
   methods: {
-    answerClass(isAnswer) {
-      if (isAnswer) {
-        return "is-answer"
-      }
+    getTests(modeType) {
+
+    }
+  },
+  computed: {
+    modeButtons() {
+      return [
+        { modeType: 0, class: "management-btn", modeText: "EASY" },
+        { modeType: 1, class: "management-btn", modeText: "NORMAL" },
+        { modeType: 2, class: "management-btn", modeText: "HARD" },
+        { modeType: 3, class: "management-btn management-master-btn", modeText: "MASTER" },
+        { modeType: 5, class: "management-btn management-music-btn", modeText: "MUSIC" },
+      ]
     }
   },
   mounted() {
     this.$store.dispatch('tests/init');
+  },
+  components: {
+    AllTests
   }
 }
 </script>
 
 <style scoped lang="scss">
-.option-content {
-  border: solid 1px $base-text-color;
+// 難易度選択ボタン共通
+.management-btn {
+  text-align: center;
+  font-weight: bold;
+  margin: 5% 3% 3% 0%;
+  border: solid 2px $base-text-color;
+  color: $base-text-color;
+  span {
+    font-size: 20px;
+  }
 }
-.is-answer {
-  background-color: $base-bg-pink;
-  color: $text-color-black;
+
+.management-master-btn {
+  border: solid 2px $master-color;
+  color: $master-color;
 }
-.is-not-answer {
-  background-color: $base-bg-color;
+
+.management-music-btn {
+  border: solid 2px $music-color;
+  color: $music-color;
 }
 </style>
