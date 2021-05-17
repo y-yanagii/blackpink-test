@@ -74,7 +74,14 @@
     >
       <!-- サブコード（埋め込み、api取得元のリンクなどあればここに表示） -->
       <!-- <p><a :href="test.embedInfo.detail.subCode">{{ test.embedInfo.detail.subContent }}</a></p> -->
-      <div v-html="test.embedInfo.detail.subCode"></div>
+      <!-- <div v-html="test.embedInfo.detail.subCode"></div> --> <!-- iframe用 -->
+      <div
+        v-if="test.modeType === $mode.music"
+      >
+        <a :href="test.embedInfo.detail.subCode">
+          <img src="https://linkmaker.itunes.apple.com/assets/shared/badges/ja-jp/music-lrg.svg">
+        </a>
+      </div>
       <!-- <iframe allow="autoplay *; encrypted-media *; fullscreen *" frameborder="0" height="140" style="width:90%;max-width:660px;overflow:hidden;background:transparent;" sandbox="allow-forms allow-popups allow-same-origin allow-scripts allow-storage-access-by-user-activation allow-top-navigation-by-user-activation" src="https://embed.music.apple.com/us/album/kill-this-love-japan-version-blackpink-2019-2020-world/1512384089?i=1512385038"></iframe> -->
     </div>
   </div>
