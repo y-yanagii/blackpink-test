@@ -36,8 +36,7 @@
         <!-- PLAY -->
         <v-btn
           class="area-button"
-          @click="userNameCheck"
-          :disabled="!userName"
+          @click="showTermsOfUse()"
           outlined
         >
           PLAY<i class="mdi mdi-twitter twitter-icon" />
@@ -58,6 +57,10 @@
         :message="message"
         @confirm-discrimination="confirm"
       ></Confirm>
+      <TermsDialog
+        ref="dlg"
+        @terms-discrimination="oauthTwitter"
+      ></TermsDialog>
     </v-col>
   </v-row>
 </template>
@@ -65,10 +68,12 @@
 <script>
 import Logo from '~/components/defaults/Logo.vue';
 import Confirm from '~/components/ui/Confirm.vue';
+import TermsDialog from '~/components/ui/TermsDialog.vue';
 
 export default {
   data: function() {
     return {
+      termsOfUseDisplay: false,
       userName: this.$store.getters['localStorages/getUserName'],
       rules: [
         value => !!value || 'USERNAME is Required.',
@@ -84,8 +89,6 @@ export default {
     setUserName() {
       this.$store.dispatch('localStorages/setUserName', this.userName)
     },
-    userNameCheck() {
-    },
     fromGuestToMode() {
       this.$refs.dlg.isDisplay = true;
     },
@@ -97,11 +100,19 @@ export default {
         this.$store.dispatch('localStorages/setGuestPlay', dialogFlag);
         this.$router.push({ path: "/mode" });
       }
+    },
+    showTermsOfUse() {
+      // ログイン前の利用規約を表示する
+      this.$refs.dlg.termsOfUseDisplay = true;
+    },
+    oauthTwitter() {
+      // Twitter認証
     }
   },
   components: {
     Logo,
     Confirm,
+    TermsDialog,
   }
 }
 </script>
