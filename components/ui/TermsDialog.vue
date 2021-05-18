@@ -49,7 +49,7 @@ import Terms from '~/components/ui/Terms.vue';
 export default {
   data: function() {
     return {
-      termsOfUseDisplay: true,
+      termsOfUseDisplay: false,
       check: false,
     }
   },
