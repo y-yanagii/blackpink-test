@@ -58,7 +58,7 @@
         @confirm-discrimination="confirm"
       ></Confirm>
       <TermsDialog
-        ref="dlg"
+        ref="termsdlg"
         @terms-discrimination="oauthTwitter"
       ></TermsDialog>
     </v-col>
@@ -103,10 +103,12 @@ export default {
     },
     showTermsOfUse() {
       // ログイン前の利用規約を表示する
-      this.$refs.dlg.termsOfUseDisplay = true;
+      this.$refs.termsdlg.termsOfUseDisplay = true;
     },
     oauthTwitter() {
       // Twitter認証
+      this.$refs.termsdlg.termsOfUseDisplay = false;
+      this.$refs.termsdlg.check = false;
     }
   },
   components: {
