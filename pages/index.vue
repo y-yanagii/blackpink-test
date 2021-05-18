@@ -31,22 +31,17 @@
             hide-details="auto"
             color="#f4a6b8"
           ></v-text-field>
-          <v-btn
-            elevation="2"
-            icon
-            color="#f4a6b8"
-          ><i class="mdi mdi-twitter"/></v-btn>
         </div>
         <br>
         <!-- PLAY -->
         <v-btn
-          outlined
           class="area-button"
           @click="userNameCheck"
           :disabled="!userName"
-          to="/mode"
-          nuxt
-        >PLAY</v-btn>
+          outlined
+        >
+          PLAY<i class="mdi mdi-twitter twitter-icon" />
+        </v-btn>
         <br><br>
 
         <span class="base-text-color">or</span>
@@ -68,7 +63,7 @@
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue';
+import Logo from '~/components/defaults/Logo.vue';
 import Confirm from '~/components/ui/Confirm.vue';
 
 export default {
@@ -139,5 +134,4 @@ export default {
   color: $base-text-color;
   text-decoration: underline !important;
 }
-
 </style>
