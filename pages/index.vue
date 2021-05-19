@@ -104,9 +104,11 @@ export default {
     showTermsOfUse() {
       // ログイン前の利用規約を表示する
       this.$refs.termsdlg.termsOfUseDisplay = true;
+      this.$refs.termsdlg.check = false;
     },
     oauthTwitter() {
       // Twitter認証
+      this.$store.dispatch('twitter/loginTwitter');
       this.$refs.termsdlg.termsOfUseDisplay = false;
       this.$refs.termsdlg.check = false;
     }
