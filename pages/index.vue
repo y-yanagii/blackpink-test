@@ -31,22 +31,16 @@
             hide-details="auto"
             color="#f4a6b8"
           ></v-text-field>
-          <v-btn
-            elevation="2"
-            icon
-            color="#f4a6b8"
-          ><i class="mdi mdi-twitter"/></v-btn>
         </div>
         <br>
         <!-- PLAY -->
         <v-btn
-          outlined
           class="area-button"
-          @click="userNameCheck"
-          :disabled="!userName"
-          to="/mode"
-          nuxt
-        >PLAY</v-btn>
+          @click="showTermsOfUse()"
+          outlined
+        >
+          PLAY<i class="mdi mdi-twitter twitter-icon" />
+        </v-btn>
         <br><br>
 
         <span class="base-text-color">or</span>
@@ -63,17 +57,23 @@
         :message="message"
         @confirm-discrimination="confirm"
       ></Confirm>
+      <TermsDialog
+        ref="termsdlg"
+        @terms-discrimination="oauthTwitter"
+      ></TermsDialog>
     </v-col>
   </v-row>
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue';
+import Logo from '~/components/defaults/Logo.vue';
 import Confirm from '~/components/ui/Confirm.vue';
+import TermsDialog from '~/components/ui/TermsDialog.vue';
 
 export default {
   data: function() {
     return {
+      termsOfUseDisplay: false,
       userName: this.$store.getters['localStorages/getUserName'],
       rules: [
         value => !!value || 'USERNAME is Required.',
@@ -89,8 +89,6 @@ export default {
     setUserName() {
       this.$store.dispatch('localStorages/setUserName', this.userName)
     },
-    userNameCheck() {
-    },
     fromGuestToMode() {
       this.$refs.dlg.isDisplay = true;
     },
@@ -102,11 +100,23 @@ export default {
         this.$store.dispatch('localStorages/setGuestPlay', dialogFlag);
         this.$router.push({ path: "/mode" });
       }
+    },
+    showTermsOfUse() {
+      // ログイン前の利用規約を表示する
+      this.$refs.termsdlg.termsOfUseDisplay = true;
+      this.$refs.termsdlg.check = false;
+    },
+    oauthTwitter() {
+      // Twitter認証
+      this.$store.dispatch('twitter/loginTwitter');
+      this.$refs.termsdlg.termsOfUseDisplay = false;
+      this.$refs.termsdlg.check = false;
     }
   },
   components: {
     Logo,
     Confirm,
+    TermsDialog,
   }
 }
 </script>
@@ -139,5 +149,4 @@ export default {
   color: $base-text-color;
   text-decoration: underline !important;
 }
-
 </style>

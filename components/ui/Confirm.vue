@@ -17,18 +17,14 @@
         <v-btn
           elevation="2"
           class="cancel-btn"
-          outlined
           @click="toCancelOrToOk(false)"
-          color="#f4a6b8"
         >
           <v-icon>mdi-close</v-icon> CANCEL
         </v-btn>
         <v-btn
           elevation="2"
           class="ok-btn"
-          outlined
           @click="toCancelOrToOk(true)"
-          color="#f4a6b8"
         >
           <v-icon>mdi-check</v-icon> OK
         </v-btn>
@@ -56,6 +52,7 @@ export default {
 
 <style scoped lang="scss">
 .confirm-card {
+  background-color: $base-glay;
   border: solid 2px $base-text-color;
   border-radius: 7px;
   i {
@@ -70,5 +67,14 @@ export default {
     white-space: pre-wrap;
     word-wrap: break-word;
   }
+}
+
+.cancel-btn {
+  background-color: $base-glay;
+  color: $base-text-color;
+}
+.ok-btn {
+  background-color: $base-glay;
+  color: $base-text-color;
 }
 </style>
