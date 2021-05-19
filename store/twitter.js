@@ -18,13 +18,16 @@ const actions = {
     debugger
     let provider = new firebase.auth.TwitterAuthProvider();
     firebase.auth().signInWithPopup(provider).then(function (result) {
+      debugger
       dispatch('checkLogin')
     }).catch(function (error) {
+      debugger
       console.log(error)
     })
   },
   checkLogin ({ commit }) {
     firebase.auth().onAuthStateChanged(function (user) {
+      debugger
       if (user) {
         commit('getData', { uid: user.uid })
         commit('switchLogin')

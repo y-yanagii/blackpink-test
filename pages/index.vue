@@ -69,6 +69,7 @@
 import Logo from '~/components/defaults/Logo.vue';
 import Confirm from '~/components/ui/Confirm.vue';
 import TermsDialog from '~/components/ui/TermsDialog.vue';
+import firebase from '~/plugins/firebase.js';
 
 export default {
   data: function() {
@@ -108,7 +109,8 @@ export default {
     },
     oauthTwitter() {
       // Twitter認証
-      this.$store.dispatch('twitter/loginTwitter');
+      // this.$store.dispatch('twitter/loginTwitter');
+      firebase.auth().signInWithRedirect(new firebase.auth.TwitterAuthProvider());
       this.$refs.termsdlg.termsOfUseDisplay = false;
       this.$refs.termsdlg.check = false;
     }
