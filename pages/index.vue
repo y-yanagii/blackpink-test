@@ -108,13 +108,18 @@ export default {
       this.$refs.termsdlg.check = false;
     },
     oauthTwitter() {
-      // Twitter認証
-      // this.$store.dispatch('twitter/loginTwitter');
-      firebase.auth().signInWithRedirect(new firebase.auth.TwitterAuthProvider());
+      // Twitter認証処理
+      this.$store.dispatch('twitter/loginTwitter');
+
+      // 利用規約ダイアログを閉じる
       this.$refs.termsdlg.termsOfUseDisplay = false;
       this.$refs.termsdlg.check = false;
+
+      // mode画面に遷移
+      this.$router.push({ path: "/mode" });
     }
   },
+  
   components: {
     Logo,
     Confirm,
