@@ -103,6 +103,13 @@ export default {
       }
     },
     showTermsOfUse() {
+      let user = this.$store.getters['twitter/user'];
+      if (user.isLogin) {
+        // 認証済みの場合画面遷移
+        this.$router.push({ path: "/mode" });
+        return;
+      }
+
       // ログイン前の利用規約を表示する
       this.$refs.termsdlg.termsOfUseDisplay = true;
       this.$refs.termsdlg.check = false;
@@ -110,13 +117,10 @@ export default {
     oauthTwitter() {
       // Twitter認証処理
       this.$store.dispatch('twitter/loginTwitter');
-
       // 利用規約ダイアログを閉じる
+      console.log("oauthTwitter");
       this.$refs.termsdlg.termsOfUseDisplay = false;
       this.$refs.termsdlg.check = false;
-
-      // mode画面に遷移
-      this.$router.push({ path: "/mode" });
     }
   },
   

@@ -126,6 +126,7 @@ export default {
         path: '*',
         component: resolve(__dirname, 'pages/errors/404.vue')
       })
-    }
+    },
+    middleware: ["authenticated"],
   },
 }
