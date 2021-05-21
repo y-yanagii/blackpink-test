@@ -1,7 +1,7 @@
 <template>
   <v-row justify="center" align="center">
     <v-col cols="12" sm="8" md="6">
-      <!-- ログイン、ログアウト通知 -->
+      <!-- 通知のスナックバー -->
       <v-snackbar
         :value="snackbar"
         :timeout="2000"
