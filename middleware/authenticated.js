@@ -1,6 +1,8 @@
 import firebase from '~/plugins/firebase';
 
 export default function(context) {
+  const guest = context.store.getters["localStorages/getGuestPlay"];
+  if (guest) return; // ゲストの場合認証チェックスキップ
   // Twitter認証済みチェック
   firebase.auth().onAuthStateChanged((user) => {
     if (user) {

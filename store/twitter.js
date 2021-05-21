@@ -9,9 +9,7 @@ const state = () => ({
 })
 
 const getters = {
-  user: state => {
-    return state.user
-  }
+  user: state => { return state.user },
 }
 
 const mutations = {

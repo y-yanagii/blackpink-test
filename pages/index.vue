@@ -121,6 +121,8 @@ export default {
       console.log("oauthTwitter");
       this.$refs.termsdlg.termsOfUseDisplay = false;
       this.$refs.termsdlg.check = false;
+      // ゲストモードをoff
+      this.$store.dispatch('localStorages/setGuestPlay', false);
     }
   },
   
