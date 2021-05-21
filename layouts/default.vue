@@ -70,6 +70,11 @@ export default {
       fixed: false,
       items: [
         {
+          icon: 'mdi-account-outline',
+          title: 'User',
+          to: '/profile',
+        },
+        {
           icon: 'mdi-yin-yang',
           title: 'Welcome',
           to: '/'

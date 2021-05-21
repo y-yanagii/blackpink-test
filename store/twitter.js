@@ -10,6 +10,7 @@ const state = () => ({
 
 const getters = {
   user: state => { return state.user },
+  currentUser: state => { return firebase.auth().currentUser }
 }
 
 const mutations = {

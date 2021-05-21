@@ -13,7 +13,7 @@
         :right="true"
       >{{ snackbarText }}</v-snackbar>
       <!-- スウィッチ領域 -->
-      <div class="text-right">
+      <!-- <div class="text-right">
         <v-switch
           v-model="colorThema"
           inset
@@ -21,7 +21,7 @@
           color="#f4a6b8"
           dark
         ></v-switch>
-      </div>
+      </div> -->
       <!-- タイトルロゴ -->
       <div class="text-center">
         <transition name="fadeLogo" appear>
