@@ -31,14 +31,16 @@ const mutations = {
 }
 
 const actions = {
-  loginTwitter(context) {
+  loginTwitter(context, auterAuthenticationFunc) {
     // Twitter認証処理(ログイン。未登録の場合登録してログイン)
     let provider = new firebase.auth.TwitterAuthProvider();
-    firebase.auth().signInWithRedirect(provider)
+    firebase.auth().signInWithPopup(provider)
       .then(function (result) {
         // Twitter連携認証。未登録の場合登録されuser情報が返る。登録済みの場合もuser情報が返る
         // storeにユーザ情報を格納
         context.commit('setUser', result.user);
+        // 第二引数のコールバック関数呼び出し（認証したユーザ情報を元に、スナックバー通知とステータス登録）
+        auterAuthenticationFunc();
       }).catch(function (error) {
         console.log(error)
       })

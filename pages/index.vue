@@ -123,19 +123,35 @@ export default {
       this.$refs.termsdlg.check = false;
     },
     oauthTwitter() {
+      let _this = this;
+      // ユーザ登録後に呼び出すコールバック関数（ダイアログを閉じる、スナックバー通知、ステータス登録）
+      const auterAuthenticationFunc = function() {
+        // 利用規約ダイアログを閉じる
+        console.log("oauthTwitter");
+        _this.$refs.termsdlg.termsOfUseDisplay = false;
+        _this.$refs.termsdlg.check = false;
+        // ゲストモードをoff
+        _this.$store.dispatch('localStorages/setGuestPlay', false);
+        // ログイン済み通知
+        _this.snackbarText = _this.$signMessages.login;
+        _this.snackbar = true;
+
+        // ユーザ情報を取得し、ユーザプライバシー登録
+        let status = {
+          id: _this.$store.getters['twitter/user'].uid,
+          privacy: false,
+        }
+        _this.$store.dispatch('statuses/set', status);
+      }
+      
       // Twitter認証処理
-      this.$store.dispatch('twitter/loginTwitter');
-      // 利用規約ダイアログを閉じる
-      console.log("oauthTwitter");
-      this.$refs.termsdlg.termsOfUseDisplay = false;
-      this.$refs.termsdlg.check = false;
-      // ゲストモードをoff
-      this.$store.dispatch('localStorages/setGuestPlay', false);
-      this.snackbarText = this.$signMessages.login;
-      this.snackbar = true;
+      this.$store.dispatch('twitter/loginTwitter', auterAuthenticationFunc);
     }
   },
-  
+  created() {
+    // statusesの初期化
+    this.$store.dispatch('statuses/init');
+  },
   components: {
     Logo,
     Confirm,
