@@ -21,11 +21,11 @@
             color="#272727"
             fab
           >
-            <v-icon v-if="fab">
+            <v-icon v-if="fab" color="#f4a6b8">
               mdi-close
             </v-icon>
-            <v-icon v-else>
-              mdi-menu
+            <v-icon v-else color="#f4a6b8">
+              mdi-yin-yang
             </v-icon>
           </v-btn>
         </template>
@@ -73,11 +73,6 @@ export default {
           icon: 'mdi-account-outline',
           title: 'User',
           to: '/profile',
-        },
-        {
-          icon: 'mdi-yin-yang',
-          title: 'Welcome',
-          to: '/'
         },
         {
           icon: 'mdi-crown-outline',

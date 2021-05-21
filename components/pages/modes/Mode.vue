@@ -39,8 +39,10 @@ export default {
       this.$emit('change-show-number', showNumber)
     },
     logout() {
-      // ログアウト処理
+      // ログアウト処理(ホーム画面遷移)
+      this.$store.dispatch('localStorages/setGuestPlay', false);
       this.$store.dispatch('twitter/logoutTwitter');
+      this.$router.push({ path: "/" });
     }
   },
   computed: {
