@@ -6,12 +6,22 @@
 export default {
   data: function() {
     return {
-      user: {}
+      user: {
+        uid: "",
+        name: "",
+        isLogin: false,
+        photoURL: "",
+        privacy: false,
+      }
     }
   },
   mounted() {
-    this.user = this.$store.getters['twitter/user'];
-    console.log("profile");
+    let currentUser = this.$store.getters['twitter/user'];
+    this.user.uid = currentUser.uid;
+    this.user.name = currentUser.name;
+    this.user.isLogin = currentUser.isLogin;
+    this.user.photoURL = currentUser.uid;
+    this.user.privacy = this.$store.getters['statuses/getStatus', currentUser.uid].privacy
   }
 }
 </script>
