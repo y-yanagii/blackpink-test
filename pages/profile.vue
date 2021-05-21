@@ -10,8 +10,8 @@ export default {
     }
   },
   mounted() {
-    this.user = this.$store.getters['localStorages/user'];
-    debugger
+    this.user = this.$store.getters['twitter/user'];
+    console.log("profile");
   }
 }
 </script>

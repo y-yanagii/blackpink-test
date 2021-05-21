@@ -5,6 +5,7 @@ const state = () => ({
     uid: "",
     name: "",
     isLogin: false,
+    photoURL: "",
   },
 })
 
@@ -16,8 +17,9 @@ const getters = {
 const mutations = {
   setUser(state, user) {
     state.user.uid = user.uid
-    state.user.name = user.name
+    state.user.name = user.displayName
     state.user.isLogin = true
+    state.user.photoURL = user.photoURL
   },
   logout(state) {
     state.user = {
