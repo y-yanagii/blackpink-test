@@ -1,6 +1,18 @@
 <template>
   <v-row justify="center" align="center">
     <v-col cols="12" sm="8" md="6">
+      <v-snackbar
+        :value="snackbar"
+        :timeout="2000"
+        absolute
+        centered
+        color="#f4a6b8"
+        elevation="24"
+        :top="true"
+        :right="true"
+      >
+        I'm logged in.
+      </v-snackbar>
       <!-- スウィッチ領域 -->
       <div class="text-right">
         <v-switch
@@ -69,7 +81,6 @@
 import Logo from '~/components/defaults/Logo.vue';
 import Confirm from '~/components/ui/Confirm.vue';
 import TermsDialog from '~/components/ui/TermsDialog.vue';
-import firebase from '~/plugins/firebase.js';
 
 export default {
   data: function() {
@@ -84,6 +95,7 @@ export default {
       isDisplay: false,
       message: `You may not be able to play
       some games. Is that OK?`,
+      snackbar: true,
     }
   },
   methods: {
