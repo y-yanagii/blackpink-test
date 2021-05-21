@@ -32,7 +32,7 @@ const actions = {
     // Twitter認証処理(ログイン。未登録の場合登録してログイン)
     let provider = new firebase.auth.TwitterAuthProvider();
     firebase.auth().signInWithRedirect(provider)
-      .then(async function (result) {
+      .then(function (result) {
         // Twitter連携認証。未登録の場合登録されuser情報が返る。登録済みの場合もuser情報が返る
         // storeにユーザ情報を格納
         context.commit('setUser', result.user);

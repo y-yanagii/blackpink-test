@@ -1,6 +1,7 @@
 <template>
   <v-row justify="center" align="center">
     <v-col cols="12" sm="8" md="6">
+      <!-- ログイン、ログアウト通知 -->
       <v-snackbar
         :value="snackbar"
         :timeout="2000"
@@ -10,9 +11,7 @@
         elevation="24"
         :top="true"
         :right="true"
-      >
-        I'm logged in.
-      </v-snackbar>
+      >{{ snackbarText }}</v-snackbar>
       <!-- スウィッチ領域 -->
       <div class="text-right">
         <v-switch
@@ -95,7 +94,8 @@ export default {
       isDisplay: false,
       message: `You may not be able to play
       some games. Is that OK?`,
-      snackbar: true,
+      snackbar: false,
+      snackbarText: "",
     }
   },
   methods: {
@@ -115,12 +115,8 @@ export default {
       }
     },
     showTermsOfUse() {
-      let user = this.$store.getters['twitter/user'];
-      if (user.isLogin) {
-        // 認証済みの場合画面遷移
-        this.$router.push({ path: "/mode" });
-        return;
-      }
+      // 認証済みの場合、そのまま画面遷移。それ以外利用規約画面表示(リロード対応)
+      this.$router.push({ path: "/mode" });
 
       // ログイン前の利用規約を表示する
       this.$refs.termsdlg.termsOfUseDisplay = true;
@@ -135,6 +131,8 @@ export default {
       this.$refs.termsdlg.check = false;
       // ゲストモードをoff
       this.$store.dispatch('localStorages/setGuestPlay', false);
+      this.snackbarText = this.$signMessages.login;
+      this.snackbar = true;
     }
   },
   
