@@ -5,6 +5,7 @@ export default function(context) {
   if (guest) return; // ゲストの場合認証チェックスキップ
   // Twitter認証済みチェック
   firebase.auth().onAuthStateChanged((user) => {
+    debugger
     if (user) {
       // ユーザ情報をstoreに設定
       context.store.dispatch("twitter/setUser", user);
