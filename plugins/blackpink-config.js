@@ -68,3 +68,10 @@ Vue.prototype.$gameMessage = {
   // GAME OVER
   gameOver: "GAME OVER",
 }
+
+Vue.prototype.$signMessages = {
+  // ログインしました。
+  login: "I'm logged in.",
+  // ログアウトしました。
+  logout: "I'm logged out.",
+}

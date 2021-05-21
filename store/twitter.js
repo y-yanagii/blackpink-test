@@ -2,44 +2,58 @@ import firebase from "~/plugins/firebase";
 
 const state = () => ({
   user: {
-    uid: '',
-    login: false,
+    uid: "",
+    name: "",
+    isLogin: false,
   },
 })
 
 const getters = {
-  user: state => {
-    return state.user
+  user: state => { return state.user },
+}
+
+const mutations = {
+  setUser(state, user) {
+    state.user.uid = user.uid
+    state.user.name = user.name
+    state.user.isLogin = true
+  },
+  logout(state) {
+    state.user = {
+      uid: "",
+      name: "",
+      isLogin: false,
+    };
   }
 }
 
 const actions = {
-  loginTwitter ({ dispatch }) {
-    debugger
+  loginTwitter(context) {
+    // Twitter認証処理(ログイン。未登録の場合登録してログイン)
     let provider = new firebase.auth.TwitterAuthProvider();
-    firebase.auth().signInWithPopup(provider).then(function (result) {
-      dispatch('checkLogin')
-    }).catch(function (error) {
-      console.log(error)
-    })
+    firebase.auth().signInWithRedirect(provider)
+      .then(function (result) {
+        // Twitter連携認証。未登録の場合登録されuser情報が返る。登録済みの場合もuser情報が返る
+        // storeにユーザ情報を格納
+        context.commit('setUser', result.user);
+      }).catch(function (error) {
+        console.log(error)
+      })
   },
-  checkLogin ({ commit }) {
-    firebase.auth().onAuthStateChanged(function (user) {
-      if (user) {
-        commit('getData', { uid: user.uid })
-        commit('switchLogin')
-      }
-    })
+  logoutTwitter(context) {
+    firebase.auth().signOut()
+      .then(()=> {
+        console.log('ログアウト');
+        context.commit('logout');
+      })
+      .catch((error) => {
+        console.log(error)
+      })
   },
-}
-
-const mutations = {
-  getData (state, payload) {
-    state.user.uid = payload.uid
-  },
-  switchLogin (state) {
-    state.user.login = true
-  },
+  setUser(context, user) {
+    // storeにuser情報を設定
+    context.commit('setUser', user);
+  }
 }
 
 export default {

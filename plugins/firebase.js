@@ -2,6 +2,7 @@ import Vue from 'vue';
 import { firestorePlugin } from 'vuefire';
 import firebase from 'firebase/app';
 import 'firebase/firestore';
+import 'firebase/auth';
 
 Vue.use(firestorePlugin)
 
@@ -21,6 +22,12 @@ if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig)
 }
 
+// Twitter認証PROVIDER_ID
+export const authProviders = {
+  Twitter: firebase.auth.TwitterAuthProvider.PROVIDER_ID,
+}
+
 // 他の場所から使えるようdbを定義しexport
 export const db = firebase.firestore();
 export default firebase
+export const auth = firebase.auth();

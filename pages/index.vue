@@ -1,6 +1,17 @@
 <template>
   <v-row justify="center" align="center">
     <v-col cols="12" sm="8" md="6">
+      <!-- ログイン、ログアウト通知 -->
+      <v-snackbar
+        :value="snackbar"
+        :timeout="2000"
+        absolute
+        centered
+        color="#f4a6b8"
+        elevation="24"
+        :top="true"
+        :right="true"
+      >{{ snackbarText }}</v-snackbar>
       <!-- スウィッチ領域 -->
       <div class="text-right">
         <v-switch
@@ -83,6 +94,8 @@ export default {
       isDisplay: false,
       message: `You may not be able to play
       some games. Is that OK?`,
+      snackbar: false,
+      snackbarText: "",
     }
   },
   methods: {
@@ -102,17 +115,27 @@ export default {
       }
     },
     showTermsOfUse() {
+      // 認証済みの場合、そのまま画面遷移。それ以外利用規約画面表示(リロード対応)
+      this.$router.push({ path: "/mode" });
+
       // ログイン前の利用規約を表示する
       this.$refs.termsdlg.termsOfUseDisplay = true;
       this.$refs.termsdlg.check = false;
     },
     oauthTwitter() {
-      // Twitter認証
+      // Twitter認証処理
       this.$store.dispatch('twitter/loginTwitter');
+      // 利用規約ダイアログを閉じる
+      console.log("oauthTwitter");
       this.$refs.termsdlg.termsOfUseDisplay = false;
       this.$refs.termsdlg.check = false;
+      // ゲストモードをoff
+      this.$store.dispatch('localStorages/setGuestPlay', false);
+      this.snackbarText = this.$signMessages.login;
+      this.snackbar = true;
     }
   },
+  
   components: {
     Logo,
     Confirm,
