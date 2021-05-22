@@ -58,8 +58,8 @@
                     v-else
                     @click="update()"
                     icon
-                    color="#f4a6b8"
-                    class="edit-icon-btn"
+                    color="#87ceeb"
+                    class="send-icon-btn"
                   >
                     <v-icon>mdi-send-outline</v-icon>
                   </v-btn>
@@ -88,7 +88,26 @@
                   </template>
                   <!-- 編集モード -->
                   <template v-else>
-                    
+                    <!-- public, privateトグルボタン -->
+                    <v-btn-toggle
+                      v-model="privacyToggle"
+                      tile
+                      color="#f4a6b8"
+                      group
+                    >
+                      <v-btn
+                        value="false"
+                        class="privacy-btn"
+                      >
+                        {{ $privacyText.public }}
+                      </v-btn>
+                      <v-btn
+                        value="true"
+                        class="privacy-btn"
+                      >
+                        {{ $privacyText.private }}
+                      </v-btn>
+                    </v-btn-toggle>
                   </template>
                 </div>
               </div>
@@ -123,7 +142,8 @@ export default {
   data: function() {
     return {
       isEdit: false,
-      rankClass: "master"
+      rankClass: "master",
+      privacyToggle: this.$privacyText.public,
     }
   },
   computed: {
@@ -180,6 +200,9 @@ export default {
       .edit-icon-btn {
         border: solid 2px $base-text-color;
       }
+      .send-icon-btn {
+        border: solid 2px skyblue;
+      }
     }
   }
   .description {
@@ -198,6 +221,7 @@ export default {
     .privacy {
       margin: 4px 0px 0px 15px;
       text-align: left;
+      height: 30px;
       div {
         .privacy-icon {
           color: $base-text-color;
@@ -224,6 +248,11 @@ export default {
     }
   }
 }
+
+.privacy-btn {
+  height: 27px !important;
+}
+
 .ranking {
   .ranking-title {
     color: $base-text-color;
