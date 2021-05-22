@@ -75,3 +75,10 @@ Vue.prototype.$signMessages = {
   // ログアウトしました。
   logout: "I'm logged out.",
 }
+
+Vue.prototype.$privacyText = {
+  // public
+  public: "PUBLIC",
+  // private
+  private: "PRIVATE",
+}
