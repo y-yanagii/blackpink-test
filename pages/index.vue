@@ -137,13 +137,9 @@ export default {
         _this.snackbar = true;
       }
 
-      // Twitter認証処理
+      // Twitter認証処理(ユーザ情報登録も担う)
       this.$store.dispatch('twitter/loginTwitter', auterAuthenticationFunc);
     }
-  },
-  created() {
-    // statusesの初期化
-    this.$store.dispatch('statuses/init');
   },
   components: {
     Logo,

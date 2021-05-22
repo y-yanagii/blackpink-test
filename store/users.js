@@ -6,6 +6,7 @@ const usersRef = db.collection('users');
 const state = () => ({
   users: [],
   user: {
+    uid: "",
     name: "",
     twitterId: "",
     description: "",
@@ -15,36 +16,55 @@ const state = () => ({
 });
 
 const getters = {
-  getUser: state => id => { return state.users.filter(user => user.id === id)[0] }
+  getUser: state => id => { return state.users.filter(user => user.id === id)[0] },
+  getCurrentUser: state => { return state.user }
 };
+
+const mutations = {
+  setUser(state, userObject) {
+    state.user.uid = userObject.id;
+    state.user.name = userObject.name;
+    state.user.twitterId = userObject.twitterId;
+    state.user.description = userObject.description;
+    state.user.photoURL = userObject.photoURL;
+    state.user.privacy = userObject.privacy;
+  }
+}
 
 const actions = {
   init: firestoreAction(({ bindFirestoreRef }) => {
     bindFirestoreRef('users', usersRef);
   }),
-  set: firestoreAction((context, usersObject) => {
-    debugger
-    usersRef.doc(usersObject.id).set({
-      name: usersObject.name,
-      twitterId: usersObject.twitterId,
-      description: usersObject.description,
-      photoURL: usersObject.photoURL,
-      privacy: usersObject.privacy,
+  set: firestoreAction((context, userObject) => {
+    usersRef.doc(userObject.id).set({
+      name: userObject.name,
+      twitterId: userObject.twitterId,
+      description: userObject.description,
+      photoURL: userObject.photoURL,
+      privacy: userObject.privacy,
     }, { merge: false });
+
+    context.dispatch('setUser', userObject);
   }),
-  update: firestoreAction((context, usersObject) => {
-    usersRef.doc(usersObject.id).update({
-      name: usersObject.name,
-      twitterId: usersObject.twitterId,
-      description: usersObject.description,
-      photoURL: usersObject.photoURL,
-      privacy: usersObject.privacy,
+  update: firestoreAction((context, userObject) => {
+    usersRef.doc(userObject.id).update({
+      name: userObject.name,
+      twitterId: userObject.twitterId,
+      description: userObject.description,
+      photoURL: userObject.photoURL,
+      privacy: userObject.privacy,
     });
-  })
+
+    context.dispatch('setUser', userObject);
+  }),
+  setUser(context, userObject) {
+    context.commit('setUser', userObject);
+  }
 };
 
 export default {
   state,
   getters,
+  mutations,
   actions,
 }

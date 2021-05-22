@@ -48,7 +48,8 @@ export default {
       user: {
         uid: "",
         name: "",
-        isLogin: false,
+        twitterId: "",
+        description: "",
         photoURL: "",
         privacy: false,
       }
@@ -60,15 +61,17 @@ export default {
     }
   },
   mounted() {
-    let currentUser = this.$store.getters['twitter/user'];
+    // ユーザ情報取得
+    let currentUser = this.$store.getters['users/getCurrentUser'];
     this.user.uid = currentUser.uid;
     this.user.name = currentUser.name;
-    this.user.isLogin = currentUser.isLogin;
+    this.user.twitterId = currentUser.twitterId;
+    this.user.description = currentUser.description;
     this.user.photoURL = currentUser.photoURL;
-    this.user.privacy = this.$store.getters['statuses/getStatus', currentUser.uid]
+    this.user.privacy = currentUser.privacy;
   },
   created() {
-    this.$store.dispatch('statuses/init');
+    this.$store.dispatch('users/init');
   },
 }
 </script>
