@@ -122,6 +122,17 @@
               </div>
             </div>
           </div>
+          <!-- Twitter情報アップデートボタン -->
+          <div class="profile-footer-area">
+            <div class="update-twitter">
+              <v-btn
+                @click="updateTwitter()"
+                target="_blank"
+                class="up-twitter-btn"
+              ><i class="mdi mdi-twitter"/>UPDATE
+              </v-btn>
+            </div>
+          </div>
           <!-- ランク領域 -->
           <div class="text-left ranking">
             <div class="ranking-title">
@@ -178,10 +189,14 @@ export default {
     setPrivacy($event) {
       // プライバシー選択によってpublicかprivateかを保持しておく
       $event.target.textContent === this.$privacyText.private ? this.newPrivacy = true : this.newPrivacy = false;
+    },
+    updateTwitter() {
+      // Twitterよりユーザの最新情報を取得
     }
   },
   created() {
     this.$store.dispatch('users/init');
+    this.$store.dispatch('rankings/init');
   },
 }
 </script>
@@ -277,6 +292,19 @@ export default {
 .privacy-slash {
   margin: auto 0;
 }
+
+// Twitter情報アップデート領域
+  .profile-footer-area {
+    // Twiiterシェア領域
+    .update-twitter {
+      .up-twitter-btn {
+        margin: auto auto 5% auto;
+        background-color: black !important;
+        color: skyblue !important;
+        border: solid 2px skyblue;
+      }
+    }
+  }
 
 .ranking {
   .ranking-title {
