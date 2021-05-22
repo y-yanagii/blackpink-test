@@ -6,7 +6,7 @@
           <div class="text-center">
             <div class="OtherLogo">
               <span class="title-logo">
-                PROFILE
+                MY PROFILE
               </span>
             </div>
           </div>
@@ -44,6 +44,26 @@
                     </v-btn>
                   </div>
                 </div>
+                <div class="edit">
+                  <v-btn
+                    v-if="isEdit === false"
+                    @click="edit()"
+                    icon
+                    color="#f4a6b8"
+                    class="edit-icon-btn"
+                  >
+                    <v-icon>mdi-pencil-outline</v-icon>
+                  </v-btn>
+                  <v-btn
+                    v-else
+                    @click="update()"
+                    icon
+                    color="#f4a6b8"
+                    class="edit-icon-btn"
+                  >
+                    <v-icon>mdi-send-outline</v-icon>
+                  </v-btn>
+                </div>
               </div>
               <!-- 紹介文 -->
               <div class="description">
@@ -57,18 +77,39 @@
                   STATUS
                 </div>
                 <div class="privacy">
-                  <div v-if="!user.privacy">
-                    <v-icon class="privacy-icon">mdi-earth</v-icon>{{ $privacyText.public }}
-                  </div>
-                  <div v-else-if="user.privacy">
-                    <v-icon class="privacy-icon">mdi-lock-outline</v-icon>{{ $privacyText.private }}
+                  <!-- 閲覧モード -->
+                  <template v-if="isEdit === false">
+                    <div v-if="!user.privacy">
+                      <v-icon class="privacy-icon">mdi-earth</v-icon>{{ $privacyText.public }}
+                    </div>
+                    <div v-else-if="user.privacy">
+                      <v-icon class="privacy-icon">mdi-lock-outline</v-icon>{{ $privacyText.private }}
+                    </div>
+                  </template>
+                  <!-- 編集モード -->
+                  <template v-else>
+                    
+                  </template>
+                </div>
+              </div>
+              <div class="rank-area">
+                <div class="rank-title">
+                  RANK
+                </div>
+                <div class="rank">
+                  <div v-if="true" :class="rankClass">
+                    <v-icon class="rank-icon">mdi-crown</v-icon>MASTER
                   </div>
                 </div>
               </div>
             </div>
           </div>
           <!-- ランク領域 -->
-          
+          <div class="text-left ranking">
+            <div class="ranking-title">
+              RECORD RANKING
+            </div>
+          </div>
         </div>
       </v-col>
     </v-row>
@@ -80,11 +121,22 @@ import { mapGetters } from 'vuex';
 
 export default {
   data: function() {
-    return {}
+    return {
+      isEdit: false,
+      rankClass: "master"
+    }
   },
   computed: {
     // users/getCurrentUserで取得するstoreのuserが取得できたタイミングで、リアクティブに反映させる
     ...mapGetters({ user: "users/getCurrentUser" }),
+  },
+  methods: {
+    edit() {
+      this.isEdit = !this.isEdit;
+    },
+    update() {
+      this.isEdit = !this.isEdit
+    }
   },
   created() {
     this.$store.dispatch('users/init');
@@ -94,7 +146,8 @@ export default {
 
 <style scoped lang="scss">
 .profile-template {
-  padding: 3%;
+  margin-bottom: 6%;
+  padding: 4%;
   width: 100%;
   border: solid 2px $base-text-color;
   border-radius: 6px;
@@ -122,6 +175,12 @@ export default {
         }
       }
     }
+    .edit {
+      margin: 0 0 0 auto;
+      .edit-icon-btn {
+        border: solid 2px $base-text-color;
+      }
+    }
   }
   .description {
     margin-bottom: 10px;
@@ -131,6 +190,7 @@ export default {
     }
   }
   .privacy-area {
+    margin-bottom: 10px;
     .privacy-title {
       text-align: left;
       color: $base-text-color;
@@ -145,6 +205,29 @@ export default {
         }
       }
     }
+  }
+  .rank-area {
+    .rank-title {
+      text-align: left;
+      color: $base-text-color;
+    }
+    .rank {
+      margin: 4px 0px 0px 15px;
+      text-align: left;
+      .master {
+        color: $master-color;
+        .rank-icon {
+          color: $master-color;
+          margin-right: 17px;
+        }
+      }
+    }
+  }
+}
+.ranking {
+  .ranking-title {
+    color: $base-text-color;
+    font-size: 20px;
   }
 }
 </style>
