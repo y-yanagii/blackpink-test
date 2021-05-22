@@ -96,17 +96,16 @@
                       group
                     >
                       <v-btn
+                        @click="setPrivacy($event)"
                         value="false"
                         class="privacy-btn"
-                      >
-                        {{ $privacyText.public }}
-                      </v-btn>
+                      >{{ $privacyText.public }}</v-btn>
+                      <span class="privacy-slash">/</span>
                       <v-btn
+                        @click="setPrivacy($event)"
                         value="true"
                         class="privacy-btn"
-                      >
-                        {{ $privacyText.private }}
-                      </v-btn>
+                      >{{ $privacyText.private }}</v-btn>
                     </v-btn-toggle>
                   </template>
                 </div>
@@ -144,6 +143,7 @@ export default {
       isEdit: false,
       rankClass: "master",
       privacyToggle: this.$privacyText.public,
+      newPrivacy: 0,
     }
   },
   computed: {
@@ -155,7 +155,29 @@ export default {
       this.isEdit = !this.isEdit;
     },
     update() {
-      this.isEdit = !this.isEdit
+      if (!Number.isInteger(this.newPrivacy)) {
+        // ステータスが0以外処理アップデート処理
+        // ...mapGettersで使用しているuser自身の値を変更することはNGのためuser情報を再定義
+        const newUserInfo = {
+          id: this.user.uid,
+          name: this.user.name,
+          twitterId: this.user.twitterId,
+          description: this.user.description,
+          photoURL: this.user.photoURL,
+          privacy: this.newPrivacy,
+        }
+
+        // ユーザ情報をアップデート
+        this.$store.dispatch('users/update', newUserInfo);
+      }
+
+      // 閲覧モードに戻す
+      this.newPrivacy = 0;
+      this.isEdit = !this.isEdit;
+    },
+    setPrivacy($event) {
+      // プライバシー選択によってpublicかprivateかを保持しておく
+      $event.target.textContent === this.$privacyText.private ? this.newPrivacy = true : this.newPrivacy = false;
     }
   },
   created() {
@@ -251,6 +273,9 @@ export default {
 
 .privacy-btn {
   height: 27px !important;
+}
+.privacy-slash {
+  margin: auto 0;
 }
 
 .ranking {
