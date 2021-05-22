@@ -6,14 +6,12 @@ export default async function(context) {
   if (guest) return; // ゲストの場合認証チェックスキップ
   // Twitter認証済みチェック
   await firebase.auth().onAuthStateChanged((user) => {
-    if (user) {
-      // ユーザ情報をstoreに設定
-      context.store.dispatch("twitter/setUser", user);
-      console.log("onAuthStateChanged : true");
-    } else {
+    if (!user) {
       console.log("onAuthStateChanged : false");
       // ホーム画面にリダイレクト
       if (context.route.path !== "/") context.redirect('/');
+    } else {
+      console.log("onAuthStateChanged : true");
     }
   })
 }

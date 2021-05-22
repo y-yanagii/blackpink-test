@@ -135,15 +135,8 @@ export default {
         // ログイン済み通知
         _this.snackbarText = _this.$signMessages.login;
         _this.snackbar = true;
-
-        // ユーザ情報を取得し、ユーザプライバシー登録
-        let status = {
-          id: _this.$store.getters['twitter/user'].uid,
-          privacy: false,
-        }
-        _this.$store.dispatch('statuses/set', status);
       }
-      
+
       // Twitter認証処理
       this.$store.dispatch('twitter/loginTwitter', auterAuthenticationFunc);
     }
