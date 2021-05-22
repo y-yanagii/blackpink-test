@@ -191,7 +191,7 @@ export default {
       $event.target.textContent === this.$privacyText.private ? this.newPrivacy = true : this.newPrivacy = false;
     },
     updateTwitter() {
-      // Twitterよりユーザの最新情報を取得
+      // Twitterよりユーザの最新情報を取得し保存
     }
   },
   created() {
