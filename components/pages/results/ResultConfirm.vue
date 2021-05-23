@@ -7,15 +7,15 @@
       <div
         v-for="(ansewerIncorrect, index) in newRecord.answerIncorrectsArray"
         :key="index"
-        class="ansewerIncorrect-li"
         :class="getAnswerCheckClass(ansewerIncorrect.isAnswer)"
+        @click.stop="changeModal(tests, index)"
+        class="ansewerIncorrect-li"
       >
         <div><i class="mdi" :class="getAnswerCheckIcon(ansewerIncorrect.isAnswer)"/></div>
         <div class="ansewerIncorrect-number">{{ index + 1 }}</div>
         <div class="ansewerIncorrect-value">{{ ansewerIncorrect.answerContent }}</div>
         <div
           class="confirm-dialog-icon"
-          @click.stop="changeModal(tests, index)"
         ><i class="mdi mdi-comment-search" /></div>
       </div>
     </div>
@@ -130,6 +130,9 @@ export default {
     .ansewerIncorrect-value {
       width: 100%;
       text-align: left;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
     .confirm-dialog-icon {
       margin: auto 0 auto auto;
