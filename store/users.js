@@ -36,13 +36,18 @@ const actions = {
     bindFirestoreRef('users', usersRef);
   }),
   set: firestoreAction((context, userObject) => {
-    usersRef.doc(userObject.id).set({
-      name: userObject.name,
-      twitterId: userObject.twitterId,
-      description: userObject.description,
-      photoURL: userObject.photoURL,
-      privacy: userObject.privacy,
-    }, { merge: false });
+    usersRef.doc(userObject.id).get().then((doc) => {
+      if (!doc.exists) {
+        // ドキュメントが存在しない場合、usersに登録
+        usersRef.doc(userObject.id).set({
+          name: userObject.name,
+          twitterId: userObject.twitterId,
+          description: userObject.description,
+          photoURL: userObject.photoURL,
+          privacy: userObject.privacy,
+        }, { merge: false });
+      }
+    })
 
     context.dispatch('setUser', userObject);
   }),
