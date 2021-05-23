@@ -6,7 +6,7 @@
           <div class="text-center">
             <div class="OtherLogo">
               <span class="title-logo">
-                {{ $route.query.uid === user.uid ? "MY PROFILE" : "PROFILE" }}
+                MY PROFILE
               </span>
             </div>
           </div>
@@ -19,7 +19,7 @@
                   <v-avatar
                     size="56"
                   >
-                    <template v-if="$route.query.uid === user.uid">
+                    <template v-if="route.query.uid === user.uid">
                       <v-img
                         :lazy-src="user.photoURL"
                         max-height="150"
@@ -38,137 +38,116 @@
                   </v-avatar>
                 </div>
                 <div class="user-content">
-                  <div>
-                    {{ $route.query.uid === user.uid ? user.name : showUser.name }}
-                  </div>
+                  <div>{{ user.name }}</div>
                   <div class="twitter-area">
                     <div class="twitter-id">
-                      {{ $route.query.uid === user.uid ? '@' + user.twitterId : '@' + showUser.twitterId }}
+                      {{ '@' + user.twitterId }}
                     </div>
-                    <template v-if="$route.query.uid === user.uid">
-                      <v-btn
-                        :href="'https://twitter.com/' + user.twitterId"
-                        color="skyblue"
-                        icon
-                      >
-                        <v-icon class="twitter">
-                          mdi-twitter
-                        </v-icon>
-                      </v-btn>
-                    </template>
-                    <template v-else>
-                      <v-btn
-                        :href="'https://twitter.com/' + showUser.twitterId"
-                        color="skyblue"
-                        icon
-                      >
-                        <v-icon class="twitter">
-                          mdi-twitter
-                        </v-icon>
-                      </v-btn>
-                    </template>
+                    <v-btn
+                      :href="'https://twitter.com/' + user.twitterId"
+                      color="skyblue"
+                      icon
+                    >
+                      <v-icon class="twitter">
+                        mdi-twitter
+                      </v-icon>
+                    </v-btn>
                   </div>
                 </div>
-                <template v-if="$route.query.uid === user.uid">
-                  <div class="edit">
-                    <v-btn
-                      v-if="isEdit === false"
-                      @click="isEdit = !isEdit;"
-                      icon
-                      color="#f4a6b8"
-                      class="edit-icon-btn"
-                    >
-                      <v-icon>mdi-pencil-outline</v-icon>
-                    </v-btn>
-                    <v-btn
-                      v-else
-                      @click="update()"
-                      icon
-                      color="#87ceeb"
-                      class="send-icon-btn"
-                    >
-                      <v-icon>mdi-send-outline</v-icon>
-                    </v-btn>
-                  </div>
-                </template>
+                <div class="edit">
+                  <v-btn
+                    v-if="isEdit === false"
+                    @click="edit()"
+                    icon
+                    color="#f4a6b8"
+                    class="edit-icon-btn"
+                  >
+                    <v-icon>mdi-pencil-outline</v-icon>
+                  </v-btn>
+                  <v-btn
+                    v-else
+                    @click="update()"
+                    icon
+                    color="#87ceeb"
+                    class="send-icon-btn"
+                  >
+                    <v-icon>mdi-send-outline</v-icon>
+                  </v-btn>
+                </div>
               </div>
               <!-- 紹介文 -->
               <div class="description">
                 <div>
-                  {{ $route.query.uid === user.uid ? user.description : showUser.description }}
+                  {{ user.description }}
                 </div>
               </div>
               <!-- ステータス(プライバシー) -->
-              <template v-if="$route.query.uid === user.uid">
-                <div class="privacy-area">
-                  <div class="privacy-title">
-                    STATUS
-                  </div>
-                  <div class="privacy">
-                    <!-- 閲覧モード -->
-                    <template v-if="isEdit === false">
-                      <div v-if="!user.privacy">
-                        <v-icon class="privacy-icon">mdi-earth</v-icon>{{ $privacyText.public }}
-                      </div>
-                      <div v-else-if="user.privacy">
-                        <v-icon class="privacy-icon">mdi-lock-outline</v-icon>{{ $privacyText.private }}
-                      </div>
-                    </template>
-                    <!-- 編集モード -->
-                    <template v-else>
-                      <!-- public, privateトグルボタン -->
-                      <v-btn-toggle
-                        v-model="privacyToggle"
-                        tile
-                        color="#f4a6b8"
-                        group
-                      >
-                        <v-btn
-                          @click="setPrivacy($event)"
-                          value="false"
-                          class="privacy-btn"
-                        >{{ $privacyText.public }}</v-btn>
-                        <span class="privacy-slash">/</span>
-                        <v-btn
-                          @click="setPrivacy($event)"
-                          value="true"
-                          class="privacy-btn"
-                        >{{ $privacyText.private }}</v-btn>
-                      </v-btn-toggle>
-                    </template>
-                  </div>
+              <div class="privacy-area">
+                <div class="privacy-title">
+                  STATUS
                 </div>
-                <div class="rank-area">
-                  <div class="rank-title">
-                    RANK
-                  </div>
-                  <div class="rank">
-                    <div v-if="true" :class="rankClass">
-                      <v-icon class="rank-icon">mdi-crown</v-icon>MASTER
+                <div class="privacy">
+                  <!-- 閲覧モード -->
+                  <template v-if="isEdit === false">
+                    <div v-if="!user.privacy">
+                      <v-icon class="privacy-icon">mdi-earth</v-icon>{{ $privacyText.public }}
                     </div>
+                    <div v-else-if="user.privacy">
+                      <v-icon class="privacy-icon">mdi-lock-outline</v-icon>{{ $privacyText.private }}
+                    </div>
+                  </template>
+                  <!-- 編集モード -->
+                  <template v-else>
+                    <!-- public, privateトグルボタン -->
+                    <v-btn-toggle
+                      v-model="privacyToggle"
+                      tile
+                      color="#f4a6b8"
+                      group
+                    >
+                      <v-btn
+                        @click="setPrivacy($event)"
+                        value="false"
+                        class="privacy-btn"
+                      >{{ $privacyText.public }}</v-btn>
+                      <span class="privacy-slash">/</span>
+                      <v-btn
+                        @click="setPrivacy($event)"
+                        value="true"
+                        class="privacy-btn"
+                      >{{ $privacyText.private }}</v-btn>
+                    </v-btn-toggle>
+                  </template>
+                </div>
+              </div>
+              <div class="rank-area">
+                <div class="rank-title">
+                  RANK
+                </div>
+                <div class="rank">
+                  <div v-if="true" :class="rankClass">
+                    <v-icon class="rank-icon">mdi-crown</v-icon>MASTER
                   </div>
                 </div>
-              </template>
+              </div>
             </div>
           </div>
           <!-- Twitter情報アップデートボタン -->
-          <template v-if="$route.query.uid === user.uid">
-            <div class="profile-footer-area">
-              <div class="update-twitter-and-logout">
-                <v-btn
-                  @click="logout()"
-                  class="logout-btn"
-                ><i class="mdi mdi-logout" />LOGOUT
-                </v-btn>
-                <v-btn
-                  @click="updateTwitter()"
-                  target="_blank"
-                  class="up-twitter-btn"
-                ><i class="mdi mdi-twitter"/>UPDATE
-                </v-btn>
-              </div>
+          <div class="profile-footer-area">
+            <div class="update-twitter-and-logout">
+              <v-btn
+                @click="logout()"
+                class="logout-btn"
+              ><i class="mdi mdi-logout" />LOGOUT
+              </v-btn>
+              <v-btn
+                @click="updateTwitter()"
+                target="_blank"
+                class="up-twitter-btn"
+              ><i class="mdi mdi-twitter"/>UPDATE
+              </v-btn>
             </div>
-          </template>
+          </div>
           <!-- ランク領域 -->
           <div class="text-left ranking">
             <div class="ranking-title">
@@ -200,6 +179,9 @@ export default {
     ...mapGetters({ user: "users/getCurrentUser" }),
   },
   methods: {
+    edit() {
+      this.isEdit = !this.isEdit;
+    },
     update() {
       if (!Number.isInteger(this.newPrivacy)) {
         // ステータスが0以外処理アップデート処理

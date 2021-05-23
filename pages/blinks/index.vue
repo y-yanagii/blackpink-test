@@ -15,6 +15,7 @@
               <div
                 v-for="user in users"
                 :key="user.id"
+                @click="showBlink(user)"
                 class="blink"
               >
                 <div class="user-common">
@@ -65,7 +66,10 @@ export default {
     users: db.collection("users").where('privacy', '==', false),
   },
   methods: {
-
+    showBlink(user) {
+      // ユーザ詳細画面に遷移
+      this.$router.push({ path: '/blinks/profile', query: {uid: user.id} })
+    }
   },
   created() {
     this.$store.dispatch('users/init');
