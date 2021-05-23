@@ -1,6 +1,7 @@
 // ローカルストレージ用store
 const state = () => ({
   userName: "",
+  twitterId: "",
   modeType: 0,
   modeValue: "",
   playType: 0,
@@ -15,6 +16,7 @@ const getters = {
     return { modeType: state.modeType, modeValue: state.modeValue }
   },
   getUserName: state => { return state.userName },
+  getTwitterId: state => { return state.twitterId },
   getPlayType: state => { return state.playType },
   getGuestPlay: state => { return state.guestPlayFlag },
   getNewRecord: state => { return state.newRecord },
@@ -28,8 +30,9 @@ const mutations = {
     state.modeValue = choiceMode.modeValue;
     state.playType = choiceMode.playType;
   },
-  setUserName(state, newUserName) {
-    state.userName = newUserName;
+  setUserNameTwitterId(state, payload) {
+    state.userName = payload.name;
+    state.twitterId = payload.twitterId;
   },
   setPlayType(state, showNumber) {
     state.playType = showNumber;
@@ -50,8 +53,8 @@ const actions = {
   selectMode(context, choiceMode) {
     context.commit('selectMode', choiceMode);
   },
-  setUserName(context, newUserName) {
-    context.commit('setUserName', newUserName);
+  setUserNameTwitterId(context, payload) {
+    context.commit('setUserNameTwitterId', payload);
   },
   setPlayType(context, showNumber) {
     context.commit('setPlayType', showNumber);

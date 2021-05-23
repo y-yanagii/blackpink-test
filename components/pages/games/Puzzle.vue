@@ -70,6 +70,7 @@ export default {
       },
       newRecord: {
         name: "",
+        twitterId: "",
         score: 0,
         modeType: "",
         clearTime: 0,
@@ -164,6 +165,7 @@ export default {
     addPuzzleRanking() {
       // ランキング登録
       this.newRecord.name = this.$store.getters['localStorages/getUserName'] ? this.$store.getters['localStorages/getUserName'] : this.$user.defaultName;
+      this.newRecord.twitterId = this.$store.getters['localStorages/getTwitterId'] ? this.$store.getters['localStorages/getTwitterId'] : ""; // ローカルストレージよりTwitterId取得
       this.newRecord.modeType = this.$store.getters['localStorages/choiceMode'].modeType;
       this.newRecord.clearTime = this.$options.filters.replaceClearTimeWithNumber(document.getElementById("time").textContent.trim());
       this.$store.dispatch('rankings/add', this.newRecord);

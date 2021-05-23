@@ -27,6 +27,7 @@ const actions = {
     // ランキングをFirestoreへ登録
     rankingsRef.add({
       name: rankingObject.name,
+      twitterId: rankingObject.twitterId,
       score: rankingObject.score,
       clearTime: rankingObject.clearTime,
       modeType: rankingObject.modeType,
