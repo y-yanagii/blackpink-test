@@ -23,6 +23,7 @@ const actions = {
           privacy: false,
         }
         context.dispatch('users/set', userObject, { root: true }); // twitterアクションからusersアクションを呼ぶ
+        context.dispatch('localStorages/setUserName', result.additionalUserInfo.profile.name, { root: true }); // twitterアクションからlocalStoragesアクションを呼ぶ
 
         // 第二引数のコールバック関数呼び出し（認証したユーザ情報を元に、スナックバー通知とステータス登録）
         auterAuthenticationFunc();
@@ -36,6 +37,7 @@ const actions = {
     firebase.auth().signOut()
       .then(()=> {
         console.log('logout');
+        context.dispatch('localStorages/setUserName', "", { root: true }); // twitterアクションからlocalStoragesアクションを呼ぶ
       })
       .catch((error) => {
         console.log(error);

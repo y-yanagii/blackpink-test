@@ -30,19 +30,6 @@
       </div>
       <!-- 初期登録領域 -->
       <div class="text-center">
-        <!-- USERNAME領域 -->
-        <div>
-          <v-text-field
-            class="username-text"
-            label="USERNANE"
-            v-model="userName"
-            :rules="rules"
-            @blur="setUserName"
-            maxlength="50"
-            hide-details="auto"
-            color="#f4a6b8"
-          ></v-text-field>
-        </div>
         <br>
         <!-- PLAY -->
         <v-btn
@@ -85,11 +72,11 @@ export default {
   data: function() {
     return {
       termsOfUseDisplay: false,
-      userName: this.$store.getters['localStorages/getUserName'],
-      rules: [
-        value => !!value || 'USERNAME is Required.',
-        value => (value && value.length <= 15) || 'Max 15 characters',
-      ],
+      // userName: this.$store.getters['localStorages/getUserName'],
+      // rules: [
+      //   value => !!value || 'USERNAME is Required.',
+      //   value => (value && value.length <= 15) || 'Max 15 characters',
+      // ],
       colorThema: false,
       isDisplay: false,
       message: `You may not be able to play
@@ -99,9 +86,6 @@ export default {
     }
   },
   methods: {
-    setUserName() {
-      this.$store.dispatch('localStorages/setUserName', this.userName)
-    },
     fromGuestToMode() {
       this.$refs.dlg.isDisplay = true;
     },
@@ -157,11 +141,11 @@ export default {
   opacity: 0;
 }
 
-.username-text {
-  display: inline-block;
-  margin: auto;
-  width: 53%;
-}
+// .username-text {
+//   display: inline-block;
+//   margin: auto;
+//   width: 53%;
+// }
 
 .base-text-color {
   display: inline-block;
