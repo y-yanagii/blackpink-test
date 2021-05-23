@@ -17,7 +17,8 @@ const getters = {
   myRanking: state => twitterId => { return state.rankings.filter(r => r.twitterId === twitterId) },
   // ランキング情報をタイプごと取得
   rankingsByModeType: state => modeType => { return state.rankings.filter(r => r.modeType == modeType) },
-  serverTime: () => { return firebase.firestore.FieldValue.serverTimestamp() }
+  serverTime: () => { return firebase.firestore.FieldValue.serverTimestamp() },
+  getRankings: state => { return state.rankings }
 };
 
 const actions = {

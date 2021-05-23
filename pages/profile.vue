@@ -148,7 +148,12 @@
               :key="index"
             >
               <div :class="ranking.class">{{ ranking.modeText }}</div>
-              <div class="rank-no">Rank. {{ ranking.no }}</div>
+              <div class="rank-no">
+                <!-- 1位の場合王冠付与 -->
+                <template v-if="ranking.no === 1">
+                  <v-icon :class="ranking.class">mdi-crown-outline</v-icon>
+                </template>
+                Rank. {{ ranking.no }}</div>
             </div>
           </div>
         </div>
@@ -198,14 +203,24 @@ export default {
       }
 
       // sortし終えたモードタイプ別のランキングを取得
-      const easyRankings = sortRankings(this.$store.getters['rankings/rankingsByModeType'](this.$mode.easy));
-      const normalRankings = sortRankings(this.$store.getters['rankings/rankingsByModeType'](this.$mode.normal));
-      const hardRankings = sortRankings(this.$store.getters['rankings/rankingsByModeType'](this.$mode.hard));
-      const musicRankings = sortRankings(this.$store.getters['rankings/rankingsByModeType'](this.$mode.music));
-      const masterRankings = sortRankings(this.$store.getters['rankings/rankingsByModeType'](this.$mode.master));
-      const suddendeathRankings = sortRankings(this.$store.getters['rankings/rankingsByModeType'](this.$mode.suddendeath));
-      const bubbleRankings = sortRankings(this.$store.getters['rankings/rankingsByModeType'](this.$mode.bubble));
-      const puzzleRankings = sortRankings(this.$store.getters['rankings/rankingsByModeType'](this.$mode.puzzle));
+      const allRankings = this.$store.getters['rankings/getRankings']; // firestoreへの読み込みを減少させるため一旦全て取得する
+      const easyRankings = sortRankings(allRankings.filter(r => r.modeType == this.$mode.easy));
+      const normalRankings = sortRankings(allRankings.filter(r => r.modeType == this.$mode.normal));
+      const hardRankings = sortRankings(allRankings.filter(r => r.modeType == this.$mode.hard));
+      const musicRankings = sortRankings(allRankings.filter(r => r.modeType == this.$mode.music));
+      const masterRankings = sortRankings(allRankings.filter(r => r.modeType == this.$mode.master));
+      const suddendeathRankings = sortRankings(allRankings.filter(r => r.modeType == this.$mode.suddendeath));
+      const bubbleRankings = sortRankings(allRankings.filter(r => r.modeType == this.$mode.bubble));
+      const puzzleRankings = sortRankings(allRankings.filter(r => r.modeType == this.$mode.puzzle));
+
+      // const easyRankings = sortRankings(this.$store.getters['rankings/rankingsByModeType'](this.$mode.easy));
+      // const normalRankings = sortRankings(this.$store.getters['rankings/rankingsByModeType'](this.$mode.normal));
+      // const hardRankings = sortRankings(this.$store.getters['rankings/rankingsByModeType'](this.$mode.hard));
+      // const musicRankings = sortRankings(this.$store.getters['rankings/rankingsByModeType'](this.$mode.music));
+      // const masterRankings = sortRankings(this.$store.getters['rankings/rankingsByModeType'](this.$mode.master));
+      // const suddendeathRankings = sortRankings(this.$store.getters['rankings/rankingsByModeType'](this.$mode.suddendeath));
+      // const bubbleRankings = sortRankings(this.$store.getters['rankings/rankingsByModeType'](this.$mode.bubble));
+      // const puzzleRankings = sortRankings(this.$store.getters['rankings/rankingsByModeType'](this.$mode.puzzle));
       // 順位取得(sortし終えているためfindの最初のレコード)
       const easyRank = easyRankings.indexOf(easyRankings.find(easyRanking => easyRanking.twitterId === twitterId)) + 1;
       const normalRank = normalRankings.indexOf(normalRankings.find(normalRanking => normalRanking.twitterId === twitterId)) + 1;
@@ -215,7 +230,6 @@ export default {
       const suddendeathRank = suddendeathRankings.indexOf(suddendeathRankings.find(suddendeathRanking => suddendeathRanking.twitterId === twitterId)) + 1;
       const bubbleRank = bubbleRankings.indexOf(bubbleRankings.find(bubbleRanking => bubbleRanking.twitterId === twitterId)) + 1;
       const puzzleRank = puzzleRankings.indexOf(puzzleRankings.find(puzzleRanking => puzzleRanking.twitterId === twitterId)) + 1;
-      debugger
       
       return [
         { class: "mode-title", modeText: "EASY", no: easyRank },
@@ -393,7 +407,7 @@ export default {
     font-size: 20px;
   }
   .ranking-area {
-    padding-left: 10px;
+    padding: 0px 10px;
     display: flex;
     width: 65%;
     border-bottom: solid 2px $base-text-color;
