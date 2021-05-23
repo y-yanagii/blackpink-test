@@ -37,7 +37,6 @@ const actions = {
   }),
   set: firestoreAction((context, userObject) => {
     usersRef.doc(userObject.id).get().then((doc) => {
-      debugger
       if (!doc.exists) {
         // ドキュメントが存在しない場合、usersに登録
         usersRef.doc(userObject.id).set({

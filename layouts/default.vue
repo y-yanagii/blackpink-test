@@ -91,6 +91,12 @@ export default {
           left: 'left: -38px;',
         },
         {
+          icon: 'mdi-account-group',
+          title: 'BLINKS',
+          to: '/blinks',
+          left: 'left: -48px;',
+        },
+        {
           icon: 'mdi-email-edit-outline',
           title: 'CONTACT',
           to: '/contact',
