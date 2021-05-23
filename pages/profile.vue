@@ -143,6 +143,13 @@
             <div class="ranking-title">
               RECORD RANKING
             </div>
+            <div class="ranking-area"
+              v-for="(ranking, index) in rankingsDivs"
+              :key="index"
+            >
+              <div :class="ranking.class">{{ ranking.modeText }}</div>
+              <div class="rank-no">No. {{ ranking.no }}</div>
+            </div>
           </div>
         </div>
       </v-col>
@@ -165,6 +172,31 @@ export default {
   computed: {
     // users/getCurrentUserで取得するstoreのuserが取得できたタイミングで、リアクティブに反映させる
     ...mapGetters({ user: "users/getCurrentUser" }),
+    rankingsDivs() {
+      // ランキングレコードのdiv要素をセット
+      // ログインしているユーザのランキングを取得
+      const myRanking = this.$store.getters['rankings/myRanking'](this.$store.getters['localStorages/getTwitterId']);
+      // const easy = myRanking;
+      // const normal =;
+      // const hard =;
+      // const music =;
+      // const master =;
+      // const suddendeath =;
+      // const bubble =;
+      // const puzzle =;
+      // this.$bind('rankings', db.collection("rankings").where('modeType', '==', value.modeType).orderBy('score', 'desc').orderBy('clearTime').orderBy('createdAt', 'desc'))
+      
+      return [
+        { class: "mode-title", modeText: "EASY", no: 1 },
+        { class: "mode-title", modeText: "NORMAL", no: 1 },
+        { class: "mode-title", modeText: "HARD", no: 1 },
+        { class: "music-title", modeText: "MUSIC", no: 1 },
+        { class: "master-title", modeText: "MASTER", no: 1 },
+        { class: "suddendeath-title", modeText: "SUDDEN DEATH", no: 1 },
+        { class: "bubble-title", modeText: "BUBBLE", no: 1 },
+        { class: "puzzle-title", modeText: "PUZZLE", no: 1 },
+      ]
+    }
   },
   methods: {
     edit() {
@@ -328,6 +360,36 @@ export default {
   .ranking-title {
     color: $base-text-color;
     font-size: 20px;
+  }
+  .ranking-area {
+    padding-left: 10px;
+    display: flex;
+    width: 65%;
+    border-bottom: solid 2px $base-text-color;
+    .mode-title {
+      color: $base-text-color;
+    }
+    .music-title {
+      color: $music-color;
+    }
+    .master-title {
+      color: $music-color;
+    }
+    .master-title {
+      color: $master-color;
+    }
+    .suddendeath-title {
+      color: $suddendeath-color;
+    }
+    .bubble-title {
+      color: $bubble-color;
+    }
+    .puzzle-title {
+      color: $puzzle-color;
+    }
+    .rank-no {
+      margin: 0 0 0 auto;
+    }
   }
 }
 </style>

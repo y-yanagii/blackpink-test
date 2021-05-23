@@ -13,6 +13,8 @@ const getters = {
     // ランキング情報をスコアの降順、クリアタイムの昇順、検定日の降順で取得
     return _.orderBy(state.rankings, ['score', 'clearTime', 'createdAt'], ['desc', 'asc', 'desc'])
   },
+  // ログインユーザに紐づくランキングを全て取得
+  myRanking: state => twitterId => { return state.rankings.filter(r => r.twitterId === twitterId) },
   // ランキング情報をタイプごと取得
   rankingsByModeType: state => modeType => { return state.rankings.filter(r => r.modeType == modeType) },
   serverTime: () => { return firebase.firestore.FieldValue.serverTimestamp() }
