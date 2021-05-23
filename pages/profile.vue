@@ -148,7 +148,7 @@
               :key="index"
             >
               <div :class="ranking.class">{{ ranking.modeText }}</div>
-              <div class="rank-no">No. {{ ranking.no }}</div>
+              <div class="rank-no">Rank. {{ ranking.no }}</div>
             </div>
           </div>
         </div>
@@ -174,27 +174,58 @@ export default {
     ...mapGetters({ user: "users/getCurrentUser" }),
     rankingsDivs() {
       // ランキングレコードのdiv要素をセット
-      // ログインしているユーザのランキングを取得
-      const myRanking = this.$store.getters['rankings/myRanking'](this.$store.getters['localStorages/getTwitterId']);
-      // const easy = myRanking;
-      // const normal =;
-      // const hard =;
-      // const music =;
-      // const master =;
-      // const suddendeath =;
-      // const bubble =;
-      // const puzzle =;
-      // this.$bind('rankings', db.collection("rankings").where('modeType', '==', value.modeType).orderBy('score', 'desc').orderBy('clearTime').orderBy('createdAt', 'desc'))
+      const twitterId = this.$store.getters['localStorages/getTwitterId'];
+      // ランキングsort関数
+      const sortRankings = function(rankings) {
+        rankings.sort(function(a, b) {
+          // scoreの降順
+          if (a.score !== b.score) {
+            return (a.score - b.score) * -1
+          }
+
+          // clearTimeの昇順
+          if (a.clearTime !== b.clearTime) {
+            return a.clearTime - b.clearTime
+          }
+
+          // createdAtの降順
+          if (a.createdAt !== b.createdAt) {
+            return (a.createdAt - b.createdAt) * -1
+          }
+        });
+
+        return rankings;
+      }
+
+      // sortし終えたモードタイプ別のランキングを取得
+      const easyRankings = sortRankings(this.$store.getters['rankings/rankingsByModeType'](this.$mode.easy));
+      const normalRankings = sortRankings(this.$store.getters['rankings/rankingsByModeType'](this.$mode.normal));
+      const hardRankings = sortRankings(this.$store.getters['rankings/rankingsByModeType'](this.$mode.hard));
+      const musicRankings = sortRankings(this.$store.getters['rankings/rankingsByModeType'](this.$mode.music));
+      const masterRankings = sortRankings(this.$store.getters['rankings/rankingsByModeType'](this.$mode.master));
+      const suddendeathRankings = sortRankings(this.$store.getters['rankings/rankingsByModeType'](this.$mode.suddendeath));
+      const bubbleRankings = sortRankings(this.$store.getters['rankings/rankingsByModeType'](this.$mode.bubble));
+      const puzzleRankings = sortRankings(this.$store.getters['rankings/rankingsByModeType'](this.$mode.puzzle));
+      // 順位取得(sortし終えているためfindの最初のレコード)
+      const easyRank = easyRankings.indexOf(easyRankings.find(easyRanking => easyRanking.twitterId === twitterId)) + 1;
+      const normalRank = normalRankings.indexOf(normalRankings.find(normalRanking => normalRanking.twitterId === twitterId)) + 1;
+      const hardRank = hardRankings.indexOf(hardRankings.find(hardRanking => hardRanking.twitterId === twitterId)) + 1;
+      const musicRank = musicRankings.indexOf(musicRankings.find(musicRanking => musicRanking.twitterId === twitterId)) + 1;
+      const masterRank = masterRankings.indexOf(masterRankings.find(masterRanking => masterRanking.twitterId === twitterId)) + 1;
+      const suddendeathRank = suddendeathRankings.indexOf(suddendeathRankings.find(suddendeathRanking => suddendeathRanking.twitterId === twitterId)) + 1;
+      const bubbleRank = bubbleRankings.indexOf(bubbleRankings.find(bubbleRanking => bubbleRanking.twitterId === twitterId)) + 1;
+      const puzzleRank = puzzleRankings.indexOf(puzzleRankings.find(puzzleRanking => puzzleRanking.twitterId === twitterId)) + 1;
+      debugger
       
       return [
-        { class: "mode-title", modeText: "EASY", no: 1 },
-        { class: "mode-title", modeText: "NORMAL", no: 1 },
-        { class: "mode-title", modeText: "HARD", no: 1 },
-        { class: "music-title", modeText: "MUSIC", no: 1 },
-        { class: "master-title", modeText: "MASTER", no: 1 },
-        { class: "suddendeath-title", modeText: "SUDDEN DEATH", no: 1 },
-        { class: "bubble-title", modeText: "BUBBLE", no: 1 },
-        { class: "puzzle-title", modeText: "PUZZLE", no: 1 },
+        { class: "mode-title", modeText: "EASY", no: easyRank },
+        { class: "mode-title", modeText: "NORMAL", no: normalRank },
+        { class: "mode-title", modeText: "HARD", no: hardRank },
+        { class: "music-title", modeText: "MUSIC", no: musicRank },
+        { class: "master-title", modeText: "MASTER", no: masterRank },
+        { class: "suddendeath-title", modeText: "SUDDEN DEATH", no: suddendeathRank },
+        { class: "bubble-title", modeText: "BUBBLE", no: bubbleRank },
+        { class: "puzzle-title", modeText: "PUZZLE", no: puzzleRank },
       ]
     }
   },
