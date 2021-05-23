@@ -40,6 +40,9 @@
             class="fab-icon"
           >
             <v-icon>{{ item.icon }}</v-icon>
+            <div>
+              <span class="fab-span" :style="item.left">{{ item.title }}</span>
+            </div>
           </v-btn>
       </v-speed-dial>
     </v-app-bar>
@@ -73,31 +76,37 @@ export default {
           icon: 'mdi-account-outline',
           title: 'User',
           to: '/profile',
+          left: 'left: -33px;',
         },
         {
           icon: 'mdi-crown-outline',
           title: 'RANKING',
-          to: '/ranking'
+          to: '/ranking',
+          left: 'left: -59px;',
         },
         {
           icon: 'mdi-gamepad-variant-outline',
           title: 'MODE',
-          to: '/mode'
+          to: '/mode',
+          left: 'left: -38px;',
         },
         {
           icon: 'mdi-email-edit-outline',
           title: 'CONTACT',
-          to: '/contact'
+          to: '/contact',
+          left: 'left: -61px;',
         },
         {
           icon: 'mdi-note-outline',
-          title: 'TERMS OF USE',
-          to: '/terms'
+          title: 'TERMS',
+          to: '/terms',
+          left: 'left: -45px;',
         },
         {
           icon: 'mdi-bell-outline',
           title: 'NOTICES',
-          to: '/notice'
+          to: '/notice',
+          left: 'left: -57px;',
         }
       ],
       miniVariant: false,
@@ -121,6 +130,15 @@ export default {
 <style scoped lang="scss">
 .fab-icon {
   color: $base-bg-color;
+}
+
+.fab-span {
+  position: absolute;
+  margin: 40% 2% 2% 2%;
+  padding: 4%;
+  background-color: $base-glay;
+  color: $base-text-color;
+  float: right;
 }
 
 .default-header {
