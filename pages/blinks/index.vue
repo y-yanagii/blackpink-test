@@ -35,6 +35,7 @@
                 </div>
                 <v-btn
                   :href="'https://twitter.com/' + user.twitterId"
+                  v-on:click.stop
                   color="skyblue"
                   icon
                   class="user-common twitter-btn"
