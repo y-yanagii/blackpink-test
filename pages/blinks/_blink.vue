@@ -2,6 +2,7 @@
   <div>
     <v-row justify="center" align="center">
       <v-col cols="12" md="6">
+        <HistoryBackBtn></HistoryBackBtn>
         <div class="text-center">
           <div class="text-center">
             <div class="OtherLogo">
@@ -182,6 +183,7 @@
 </template>
 
 <script>
+import HistoryBackBtn from '~/components/ui/HistoryBackBtn.vue';
 import { mapGetters } from 'vuex';
 import { db } from "~/plugins/firebase";
 
@@ -244,9 +246,11 @@ export default {
     const _this = this;
     docUser.get().then(function(doc) {
       _this.showUser = doc.data();
-      console.log(_this.showUser);
     });
   },
+  components: {
+    HistoryBackBtn,
+  }
 }
 </script>
 
