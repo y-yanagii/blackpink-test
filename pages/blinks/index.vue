@@ -17,7 +17,7 @@
                 :key="user.id"
                 class="blink"
               >
-                <div>
+                <div class="user-common">
                   <v-avatar
                     size="56"
                   >
@@ -29,7 +29,19 @@
                     ></v-img>
                   </v-avatar>
                 </div>
-                <div>{{ user.name }}</div>
+                <div class="user-name user-common">
+                  {{ user.name }}
+                </div>
+                <v-btn
+                  :href="'https://twitter.com/' + user.twitterId"
+                  color="skyblue"
+                  icon
+                  class="user-common twitter-btn"
+                >
+                  <v-icon class="twitter">
+                    mdi-twitter
+                  </v-icon>
+                </v-btn>
               </div>
             </div>
           </div>
@@ -62,5 +74,27 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.blink {
+  margin: 2% 4%;
+  text-align: left;
+}
 
+.user-common {
+  display: inline-block;
+}
+
+.user-name {
+  vertical-align: middle;
+  max-width: 68%;
+  min-width: 68%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  color: $base-text-color;
+}
+
+.twitter-btn {
+  padding: 6px;
+  color: skyblue !important;
+}
 </style>
