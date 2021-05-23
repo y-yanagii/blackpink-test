@@ -295,6 +295,7 @@ export default {
 
 // Twitter情報アップデート領域
   .profile-footer-area {
+    text-align: right;
     // Twiiterシェア領域
     .update-twitter {
       .up-twitter-btn {
