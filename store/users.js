@@ -37,6 +37,7 @@ const actions = {
   }),
   set: firestoreAction((context, userObject) => {
     usersRef.doc(userObject.id).get().then((doc) => {
+      debugger
       if (!doc.exists) {
         // ドキュメントが存在しない場合、usersに登録
         usersRef.doc(userObject.id).set({
@@ -47,9 +48,9 @@ const actions = {
           privacy: userObject.privacy,
         }, { merge: false });
       }
-    })
 
-    context.dispatch('setUser', userObject);
+      context.dispatch('setUser', userObject);
+    })
   }),
   update: firestoreAction((context, userObject) => {
     usersRef.doc(userObject.id).update({

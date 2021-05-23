@@ -1,7 +1,6 @@
 <!-- モード選択領域 -->
 <template>
   <div>
-    <v-btn @click="logout()">logout</v-btn>
     <v-row justify="center" align="center">
       <v-col cols="12" sm="8" md="6">
         <!-- タイトルロゴ -->
@@ -38,12 +37,6 @@ export default {
       // 選択したモード画面に遷移
       this.$emit('change-show-number', showNumber)
     },
-    logout() {
-      // ログアウト処理(ホーム画面遷移)
-      this.$store.dispatch('localStorages/setGuestPlay', false);
-      this.$store.dispatch('twitter/logoutTwitter');
-      this.$router.push({ path: "/" });
-    }
   },
   computed: {
     modeButtons() {

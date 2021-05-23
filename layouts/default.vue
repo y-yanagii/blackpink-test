@@ -74,9 +74,9 @@ export default {
       items: [
         {
           icon: 'mdi-account-outline',
-          title: 'User',
+          title: 'PROFILE',
           to: '/profile',
-          left: 'left: -33px;',
+          left: 'left: -54px;',
         },
         {
           icon: 'mdi-crown-outline',

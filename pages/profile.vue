@@ -124,7 +124,12 @@
           </div>
           <!-- Twitter情報アップデートボタン -->
           <div class="profile-footer-area">
-            <div class="update-twitter">
+            <div class="update-twitter-and-logout">
+              <v-btn
+                @click="logout()"
+                class="logout-btn"
+              ><i class="mdi mdi-logout" />LOGOUT
+              </v-btn>
               <v-btn
                 @click="updateTwitter()"
                 target="_blank"
@@ -192,6 +197,12 @@ export default {
     },
     updateTwitter() {
       // Twitterよりユーザの最新情報を取得し保存
+    },
+    logout() {
+      // ログアウト処理(ホーム画面遷移)
+      this.$store.dispatch('localStorages/setGuestPlay', false);
+      this.$store.dispatch('twitter/logoutTwitter');
+      this.$router.push({ path: "/" });
     }
   },
   created() {
@@ -297,12 +308,18 @@ export default {
   .profile-footer-area {
     text-align: right;
     // Twiiterシェア領域
-    .update-twitter {
+    .update-twitter-and-logout {
       .up-twitter-btn {
         margin: auto auto 5% auto;
         background-color: black !important;
         color: skyblue !important;
         border: solid 2px skyblue;
+      }
+      .logout-btn {
+        margin: auto 3% 5% auto;
+        background-color: black !important;
+        color: $logout-color !important;
+        border: solid 2px $logout-color;
       }
     }
   }
