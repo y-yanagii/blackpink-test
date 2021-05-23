@@ -127,6 +127,10 @@ export default {
         color: red;
       }
     }
+    .ansewerIncorrect-value {
+      width: 100%;
+      text-align: left;
+    }
     .confirm-dialog-icon {
       margin: auto 0 auto auto;
       padding-right: 3%;

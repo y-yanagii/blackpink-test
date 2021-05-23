@@ -1,41 +1,33 @@
 import firebase from "~/plugins/firebase";
 
-const state = () => ({
-  user: {
-    uid: "",
-    name: "",
-    isLogin: false,
-  },
-})
+const state = () => ({});
 
-const getters = {
-  user: state => { return state.user },
-}
+const getters = {}
 
-const mutations = {
-  setUser(state, user) {
-    state.user.uid = user.uid
-    state.user.name = user.name
-    state.user.isLogin = true
-  },
-  logout(state) {
-    state.user = {
-      uid: "",
-      name: "",
-      isLogin: false,
-    };
-  }
-}
+const mutations = {}
 
 const actions = {
-  loginTwitter(context) {
+  loginTwitter(context, auterAuthenticationFunc) {
     // Twitter認証処理(ログイン。未登録の場合登録してログイン)
     let provider = new firebase.auth.TwitterAuthProvider();
-    firebase.auth().signInWithRedirect(provider)
+    firebase.auth().signInWithPopup(provider)
       .then(function (result) {
         // Twitter連携認証。未登録の場合登録されuser情報が返る。登録済みの場合もuser情報が返る
-        // storeにユーザ情報を格納
-        context.commit('setUser', result.user);
+        // ユーザ情報を取得し、ユーザ情報登録
+        let userObject = {
+          id: result.user.uid,
+          name: result.additionalUserInfo.profile.name,
+          twitterId: result.additionalUserInfo.username,
+          description: result.additionalUserInfo.profile.description,
+          photoURL: result.user.photoURL,
+          privacy: false,
+        }
+        context.dispatch('users/set', userObject, { root: true }); // twitterアクションからusersアクションを呼ぶ
+
+        // 第二引数のコールバック関数呼び出し（認証したユーザ情報を元に、スナックバー通知とステータス登録）
+        auterAuthenticationFunc();
+
+        console.log("login");
       }).catch(function (error) {
         console.log(error)
       })
@@ -43,17 +35,12 @@ const actions = {
   logoutTwitter(context) {
     firebase.auth().signOut()
       .then(()=> {
-        console.log('ログアウト');
-        context.commit('logout');
+        console.log('logout');
       })
       .catch((error) => {
-        console.log(error)
+        console.log(error);
       })
   },
-  setUser(context, user) {
-    // storeにuser情報を設定
-    context.commit('setUser', user);
-  }
 }
 
 export default {

@@ -52,7 +52,7 @@ export default {
 
 <style scoped lang="scss">
 .confirm-card {
-  background-color: $base-glay;
+  background-color: $base-bg-color;
   border: solid 2px $base-text-color;
   border-radius: 7px;
   i {
@@ -70,11 +70,11 @@ export default {
 }
 
 .cancel-btn {
-  background-color: $base-glay;
+  background-color: $base-bg-color !important;
   color: $base-text-color;
 }
 .ok-btn {
-  background-color: $base-glay;
+  background-color: $base-bg-color !important;
   color: $base-text-color;
 }
 </style>

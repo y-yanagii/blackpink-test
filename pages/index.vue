@@ -13,7 +13,7 @@
         :right="true"
       >{{ snackbarText }}</v-snackbar>
       <!-- スウィッチ領域 -->
-      <div class="text-right">
+      <!-- <div class="text-right">
         <v-switch
           v-model="colorThema"
           inset
@@ -21,7 +21,7 @@
           color="#f4a6b8"
           dark
         ></v-switch>
-      </div>
+      </div> -->
       <!-- タイトルロゴ -->
       <div class="text-center">
         <transition name="fadeLogo" appear>
@@ -123,19 +123,24 @@ export default {
       this.$refs.termsdlg.check = false;
     },
     oauthTwitter() {
-      // Twitter認証処理
-      this.$store.dispatch('twitter/loginTwitter');
-      // 利用規約ダイアログを閉じる
-      console.log("oauthTwitter");
-      this.$refs.termsdlg.termsOfUseDisplay = false;
-      this.$refs.termsdlg.check = false;
-      // ゲストモードをoff
-      this.$store.dispatch('localStorages/setGuestPlay', false);
-      this.snackbarText = this.$signMessages.login;
-      this.snackbar = true;
+      let _this = this;
+      // ユーザ登録後に呼び出すコールバック関数（ダイアログを閉じる、スナックバー通知、ステータス登録）
+      const auterAuthenticationFunc = function() {
+        // 利用規約ダイアログを閉じる
+        console.log("oauthTwitter");
+        _this.$refs.termsdlg.termsOfUseDisplay = false;
+        _this.$refs.termsdlg.check = false;
+        // ゲストモードをoff
+        _this.$store.dispatch('localStorages/setGuestPlay', false);
+        // ログイン済み通知
+        _this.snackbarText = _this.$signMessages.login;
+        _this.snackbar = true;
+      }
+
+      // Twitter認証処理(ユーザ情報登録も担う)
+      this.$store.dispatch('twitter/loginTwitter', auterAuthenticationFunc);
     }
   },
-  
   components: {
     Logo,
     Confirm,

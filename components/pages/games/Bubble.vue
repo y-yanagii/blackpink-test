@@ -353,19 +353,19 @@ export default {
   display: flex;
   width: 100%;
   .score {
-    padding-top: 2%;
-    margin: 1% 0;
-    width: 30%;
+    padding-top: 1%;
+    margin: 0% 0;
+    width: 33%;
     color: $base-text-color;
   }
   .bubble-title {
     width: 33%;
-    margin: 1% auto;
+    margin: 0% auto;
     font-size: 25px;
     color: $base-text-color;
   }
   .replay {
-    margin: 1% 1% 1% auto;
+    margin: 0% 1% 0% auto;
     width: 4%;
     button {
       width: 100%;
@@ -392,7 +392,7 @@ export default {
     grid-template-columns: repeat(var(--grid-width),1fr);
     grid-template-rows: repeat(var(--grid-height),1fr);
     grid-gap: 1px;
-    margin-top: 15px;
+    margin-top: 0px;
     flex: 1;
     padding: 3px;
     border-radius: 8px;
