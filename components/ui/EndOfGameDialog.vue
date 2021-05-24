@@ -29,11 +29,12 @@
         <div class="end-of-game-text">END OF {{ gameName }} GAME</div>
         <div
           v-if="selectedMode.modeType === $mode.bubble"
+          id="random-balls"
           class="ball-area">
-          <div class="ball jennie"></div>
-          <div class="ball jisoo"></div>
-          <div class="ball rose"></div>
-          <div class="ball lisa"></div>
+          <div class="ball jennie" :class="ballFontSize">🐻</div>
+          <div class="ball jisoo" :class="ballFontSize">🐰</div>
+          <div class="ball rose" :class="ballFontSize">🌹</div>
+          <div class="ball lisa" :class="ballFontSize">🐱</div>
         </div>
         <div
           v-else-if="selectedMode.modeType === $mode.puzzle"
@@ -82,6 +83,7 @@ export default {
         twitter:'https://twitter.com/intent/tweet?url=https://yahoo.co.jp&text=GAME結果は&hashtags=BLACKPINK,ブラックピンク,BLINK,BLACKPINKTEST',
       },
       selectedMode: this.$store.getters['localStorages/choiceMode'],
+      ballFontSize: this.$vuetify.breakpoint.xs ? "xs-font" : "font",
     }
   },
   props: ["message", "resultStr", "gameName"],
@@ -94,8 +96,9 @@ export default {
     isDisplay(flag) {
       // ダイアログ外を押下した場合のリプレイ処理は一旦コメントアウト
       // if (!flag) this.$emit('retry');
-    }
-  }
+      debugger
+    },
+  },
 }
 </script>
 
@@ -141,11 +144,17 @@ export default {
       height: 40px;
 
       .ball {
-        display: -webkit-inline-box;
+        display: inline-grid;
         margin: 0.5%;
         width: 10%;
         height: 71%;
         border-radius: 100%;
+      }
+      .xs-font {
+        font-size: 17px;
+      }
+      .font {
+        font-size: 21px;
       }
       .lisa {
         background-color: $ball-green-color;
