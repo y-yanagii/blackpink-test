@@ -40,16 +40,16 @@
           v-else-if="selectedMode.modeType === $mode.puzzle"
           class="puzzle-area"
         >
-          <div>
+          <div class="puzzle-peace">
             <v-icon class="jennie-puzzle">mdi-puzzle</v-icon>
           </div>
-          <div>
+          <div class="puzzle-peace">
             <v-icon class="jisoo-puzzle">mdi-puzzle</v-icon>
           </div>
-          <div>
+          <div class="puzzle-peace">
             <v-icon class="rose-puzzle">mdi-puzzle</v-icon>
           </div>
-          <div>
+          <div class="puzzle-peace">
             <v-icon class="lisa-puzzle">mdi-puzzle</v-icon>
           </div>
         </div>
