@@ -96,7 +96,6 @@ export default {
     isDisplay(flag) {
       // ダイアログ外を押下した場合のリプレイ処理は一旦コメントアウト
       // if (!flag) this.$emit('retry');
-      debugger
     },
   },
 }

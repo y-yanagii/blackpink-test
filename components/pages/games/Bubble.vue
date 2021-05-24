@@ -312,9 +312,14 @@ export default {
             // appendChildで並び替え
             document.getElementById('random-balls').appendChild(ballList[r]);
           }
+
+          if (timer !== null && !this.$refs.dlg.isDisplay) {
+            // ダイアログを閉じたらストップ
+            clearInterval(timer);
+          }
         };
         // タイマー開始
-        let timer = null;
+        let timer = null; // セットインターバル関数を初期化
         timer = setInterval(randomBalls, 500);
       });
     },
