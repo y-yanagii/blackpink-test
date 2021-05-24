@@ -211,8 +211,6 @@ export default {
     this.$store.dispatch('tests/init');
     // rankingsコレクションの初期化
     this.$store.dispatch('rankings/init');
-    // messagesコレクションの初期化
-    this.$store.dispatch('messages/init');
   },
 }
 </script>
