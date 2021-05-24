@@ -69,7 +69,7 @@ export default {
   methods: {
     showBlink(user) {
       // ユーザ詳細画面に遷移
-      this.$router.push({ path: '/blinks/profile', query: {uid: user.id} })
+      this.$router.push({ path: '/blinks/profile', query: {uid: user.id, twitterId: user.twitterId} })
     }
   },
   created() {

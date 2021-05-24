@@ -175,6 +175,18 @@
             <div class="ranking-title">
               RECORD RANKING
             </div>
+            <div class="ranking-area"
+              v-for="(ranking, index) in rankingsDivs"
+              :key="index"
+            >
+              <div :class="ranking.class">{{ ranking.modeText }}</div>
+              <div class="rank-no">
+                <!-- 1位の場合王冠付与 -->
+                <template v-if="ranking.no === 1">
+                  <v-icon :class="ranking.class">mdi-crown-outline</v-icon>
+                </template>
+                Rank. {{ ranking.no }}</div>
+            </div>
           </div>
         </div>
       </v-col>
@@ -200,6 +212,71 @@ export default {
   computed: {
     // users/getCurrentUserで取得するstoreのuserが取得できたタイミングで、リアクティブに反映させる
     ...mapGetters({ user: "users/getCurrentUser" }),
+    rankingsDivs() {
+      // ランキングレコードのdiv要素をセット
+      const twitterId = this.$route.query.twitterId;
+      // ランキングsort関数
+      const sortRankings = function(rankings) {
+        rankings.sort(function(a, b) {
+          // scoreの降順
+          if (a.score !== b.score) {
+            return (a.score - b.score) * -1
+          }
+
+          // clearTimeの昇順
+          if (a.clearTime !== b.clearTime) {
+            return a.clearTime - b.clearTime
+          }
+
+          // createdAtの降順
+          if (a.createdAt !== b.createdAt) {
+            return (a.createdAt - b.createdAt) * -1
+          }
+        });
+
+        return rankings;
+      }
+
+      // sortし終えたモードタイプ別のランキングを取得
+      const allRankings = this.$store.getters['rankings/getRankings']; // firestoreへの読み込みを減少させるため一旦全て取得する
+      const easyRankings = sortRankings(allRankings.filter(r => r.modeType == this.$mode.easy));
+      const normalRankings = sortRankings(allRankings.filter(r => r.modeType == this.$mode.normal));
+      const hardRankings = sortRankings(allRankings.filter(r => r.modeType == this.$mode.hard));
+      const musicRankings = sortRankings(allRankings.filter(r => r.modeType == this.$mode.music));
+      const masterRankings = sortRankings(allRankings.filter(r => r.modeType == this.$mode.master));
+      const suddendeathRankings = sortRankings(allRankings.filter(r => r.modeType == this.$mode.suddendeath));
+      const bubbleRankings = sortRankings(allRankings.filter(r => r.modeType == this.$mode.bubble));
+      const puzzleRankings = sortRankings(allRankings.filter(r => r.modeType == this.$mode.puzzle));
+
+      // const easyRankings = sortRankings(this.$store.getters['rankings/rankingsByModeType'](this.$mode.easy));
+      // const normalRankings = sortRankings(this.$store.getters['rankings/rankingsByModeType'](this.$mode.normal));
+      // const hardRankings = sortRankings(this.$store.getters['rankings/rankingsByModeType'](this.$mode.hard));
+      // const musicRankings = sortRankings(this.$store.getters['rankings/rankingsByModeType'](this.$mode.music));
+      // const masterRankings = sortRankings(this.$store.getters['rankings/rankingsByModeType'](this.$mode.master));
+      // const suddendeathRankings = sortRankings(this.$store.getters['rankings/rankingsByModeType'](this.$mode.suddendeath));
+      // const bubbleRankings = sortRankings(this.$store.getters['rankings/rankingsByModeType'](this.$mode.bubble));
+      // const puzzleRankings = sortRankings(this.$store.getters['rankings/rankingsByModeType'](this.$mode.puzzle));
+      // 順位取得(sortし終えているためfindの最初のレコード)
+      const easyRank = easyRankings.indexOf(easyRankings.find(easyRanking => easyRanking.twitterId === twitterId)) + 1;
+      const normalRank = normalRankings.indexOf(normalRankings.find(normalRanking => normalRanking.twitterId === twitterId)) + 1;
+      const hardRank = hardRankings.indexOf(hardRankings.find(hardRanking => hardRanking.twitterId === twitterId)) + 1;
+      const musicRank = musicRankings.indexOf(musicRankings.find(musicRanking => musicRanking.twitterId === twitterId)) + 1;
+      const masterRank = masterRankings.indexOf(masterRankings.find(masterRanking => masterRanking.twitterId === twitterId)) + 1;
+      const suddendeathRank = suddendeathRankings.indexOf(suddendeathRankings.find(suddendeathRanking => suddendeathRanking.twitterId === twitterId)) + 1;
+      const bubbleRank = bubbleRankings.indexOf(bubbleRankings.find(bubbleRanking => bubbleRanking.twitterId === twitterId)) + 1;
+      const puzzleRank = puzzleRankings.indexOf(puzzleRankings.find(puzzleRanking => puzzleRanking.twitterId === twitterId)) + 1;
+      
+      return [
+        { class: "mode-title", modeText: "EASY", no: easyRank },
+        { class: "mode-title", modeText: "NORMAL", no: normalRank },
+        { class: "mode-title", modeText: "HARD", no: hardRank },
+        { class: "music-title", modeText: "MUSIC", no: musicRank },
+        { class: "master-title", modeText: "MASTER", no: masterRank },
+        { class: "suddendeath-title", modeText: "SUDDEN DEATH", no: suddendeathRank },
+        { class: "bubble-title", modeText: "BUBBLE", no: bubbleRank },
+        { class: "puzzle-title", modeText: "PUZZLE", no: puzzleRank },
+      ]
+    }
   },
   methods: {
     update() {
@@ -370,6 +447,36 @@ export default {
   .ranking-title {
     color: $base-text-color;
     font-size: 20px;
+  }
+  .ranking-area {
+    padding: 0px 10px;
+    display: flex;
+    width: 65%;
+    border-bottom: solid 2px $base-text-color;
+    .mode-title {
+      color: $base-text-color;
+    }
+    .music-title {
+      color: $music-color;
+    }
+    .master-title {
+      color: $music-color;
+    }
+    .master-title {
+      color: $master-color;
+    }
+    .suddendeath-title {
+      color: $suddendeath-color;
+    }
+    .bubble-title {
+      color: $bubble-color;
+    }
+    .puzzle-title {
+      color: $puzzle-color;
+    }
+    .rank-no {
+      margin: 0 0 0 auto;
+    }
   }
 }
 </style>

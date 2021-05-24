@@ -32,6 +32,7 @@ export default {
       tests: this.$store.getters['tests/getTestsByMode'](this.$store.getters['localStorages/choiceMode'].modeType),
       newRecord: {
         name: "",
+        twitterId: "",
         answerIncorrectsArray: [],
         score: 0,
         modeType: "",
@@ -125,6 +126,7 @@ export default {
     // Newレコード情報をセット
     setNewRecord() {
       this.newRecord.name = this.$store.getters['localStorages/getUserName'] ? this.$store.getters['localStorages/getUserName'] : this.$user.defaultName; // ブラウザのローカルストレージより取得
+      this.newRecord.twitterId = this.$store.getters['localStorages/getTwitterId'] ? this.$store.getters['localStorages/getTwitterId'] : ""; // ローカルストレージよりTwitterId取得
       this.newRecord.score = this.newRecord.answerIncorrectsArray.filter(n => n.isAnswer !== false).length * 10; // 正解数 * 10
       this.newRecord.modeType = this.selectedMode.modeType;
       this.newRecord.modeValue = this.selectedMode.modeValue;

@@ -74,6 +74,7 @@ export default {
       gameName: "BUBBLE",
       newRecord: {
         name: "",
+        twitterId: "",
         score: 0,
         modeType: "",
         clearTime: 0,
@@ -302,6 +303,7 @@ export default {
     addBubbleRanking() {
       // ランキング登録
       this.newRecord.name = this.$store.getters['localStorages/getUserName'] ? this.$store.getters['localStorages/getUserName'] : this.$user.defaultName;
+      this.newRecord.twitterId = this.$store.getters['localStorages/getTwitterId'] ? this.$store.getters['localStorages/getTwitterId'] : ""; // ローカルストレージよりTwitterId取得
       this.newRecord.score = this.score;
       this.newRecord.modeType = this.$store.getters['localStorages/choiceMode'].modeType;
       this.$store.dispatch('rankings/add', this.newRecord);
