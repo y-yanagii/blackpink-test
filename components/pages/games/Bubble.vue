@@ -34,7 +34,7 @@
               @click="ballBreak(ball)"
               class="ball"
               :style="ball.gridArea"
-            ></div>
+            >{{ ball.ideograph }}</div>
           </transition-group>
         </div>
         <!-- EndOfGameダイアログ -->
@@ -53,14 +53,14 @@
 <script>
 import AnimatedNumber from "animated-number-vue";
 import EndOfGameDialog from "~/components/ui/EndOfGameDialog.vue";
-import bubble23 from '~/assets/images/bubble/bubble2-3.mp3'
-import bubble45 from '~/assets/images/bubble/bubble4-5.mp3'
-import bubble69 from '~/assets/images/bubble/bubble6-9.mp3'
-import bubble10 from '~/assets/images/bubble/bubble10.mp3'
-const bubbleSound2_3 = new Audio(bubble23)
-const bubbleSound4_5 = new Audio(bubble45)
-const bubbleSound6_9 = new Audio(bubble69)
-const bubbleSound10 = new Audio(bubble10)
+import bubble23 from '~/assets/images/bubble/bubble2-3.mp3';
+import bubble45 from '~/assets/images/bubble/bubble4-5.mp3';
+import bubble69 from '~/assets/images/bubble/bubble6-9.mp3';
+import bubble10 from '~/assets/images/bubble/bubble10.mp3';
+const bubbleSound2_3 = new Audio(bubble23);
+const bubbleSound4_5 = new Audio(bubble45);
+const bubbleSound6_9 = new Audio(bubble69);
+const bubbleSound10 = new Audio(bubble10);
 
 export default {
   data: function() {
@@ -68,6 +68,7 @@ export default {
       score: 0,
       balls: [],
       ballClass: ["lisa", "jennie", "rose", "jisoo"],
+      ideographs: ["🐱", "🐻", "🌹", "🐰"],
       xAxis: 10,
       yAxis: 16,
       message: "",
@@ -354,8 +355,10 @@ export default {
       for (let i = 0; i < this.yAxis; i++) {
         // x座標
         for (let j = 0; j < this.xAxis; j++) {
+          const num = Math.floor(Math.random() * this.ballClass.length);
           let ballInfo = {
-            className: this.ballClass[Math.floor(Math.random() * this.ballClass.length)],
+            className: this.$vuetify.breakpoint.xs ? this.ballClass[num] + " ball-font-size-xs" : this.ballClass[num] + " ball-font-size", // スマホ表示とそれ以外でフォントサイズを変更（絵文字を綺麗に見せるため）
+            ideograph: this.ideographs[num],
             x: j,
             y: i,
             serialNumber: serialNumber,
@@ -442,9 +445,16 @@ export default {
       position: relative;
       margin: 0.5%;
       height: 4vh;
+      text-align: center;
       background-color: $base-bg-color;
       border: 2px solid $base-text-color;
       border-radius: 100%;
+    }
+    .ball-font-size-xs {
+      font-size: 17px;
+    }
+    .ball-font-size {
+      font-size: 25px;
     }
     .lisa {
       background-color: $ball-green-color;
