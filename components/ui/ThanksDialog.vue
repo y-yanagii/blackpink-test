@@ -8,8 +8,24 @@
         🖤💖👑THANKS TO BLINK👑🖤💖
       </div>
       <div class="thank-you-image-area">
-        <img :src="imageSrc" class="blackpink-image">
+        <!-- <img :src="imageSrc" class="blackpink-image"> -->
+        <iframe
+          src="https://giphy.com/embed/F9fDwm72StUsWeVMgc"
+          frameBorder="0"
+          class="giphy-embed blackpink-image"
+          allowFullScreen
+        ></iframe>
       </div>
+      <v-card-actions>
+        <v-spacer></v-spacer>
+        <v-btn
+          elevation="2"
+          class="close-btn"
+          @click="isDisplay = !isDisplay"
+        >
+          <v-icon>mdi-close</v-icon> CLOSE
+        </v-btn>
+      </v-card-actions>
     </v-card>
   </v-dialog>
 </template>
@@ -18,7 +34,7 @@
 export default {
   data() {
     return {
-      isDisplay: false,
+      isDisplay: true,
       imageSrc: require("~/assets/images/thanks.jpeg")
     }
   }
@@ -27,7 +43,7 @@ export default {
 
 <style scoped lang="scss">
 .thank-card {
-  background-color: $base-text-color;
+  background-color: $base-bg-color;
   height: 100%;
   border: solid 2px $base-text-color;
   border-radius: 7px !important;
@@ -35,7 +51,7 @@ export default {
     font-size: 19px;
     padding: 3%;
     margin: auto;
-    color: $text-color-black;
+    color: $base-text-color;
   }
   .thank-you-image-area {
     text-align: center;
@@ -47,5 +63,9 @@ export default {
       border-style: none;
     }
   }
+}
+.close-btn {
+  color: $base-text-color;
+  background-color: $base-bg-color !important;
 }
 </style>
