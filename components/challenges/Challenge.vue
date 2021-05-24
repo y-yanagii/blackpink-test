@@ -27,7 +27,7 @@
 import ModeTitle from '~/components/ui/ModeTitle.vue';
 import Time from '~/components/ui/Time.vue';
 import TestCard from '~/components/tests/TestCard.vue';
-import Life from '~/components/Life.vue';
+import Life from '~/components/ui/Life.vue';
 import { db } from "~/plugins/firebase";
 
 export default {
@@ -174,8 +174,8 @@ export default {
 
       // 今回のランクをセット
       this.newRecord.myRank = rankings.indexOf(rankings.find(ranking => ranking.id === this.$user.defaultRankId)) + 1;
-        // 20位以内の場合のみ、ランキングを登録
-      if (this.newRecord.myRank <= 20) this.addRanking();
+        // 20位以内の場合のみかつゲストモードでない場合、ランキングを登録
+      if (this.newRecord.myRank <= 20 && !this.$store.getters["localStorages/getGuestPlay"]) this.addRanking();
     },
     // ランキング情報を登録、取得
     addRanking() {

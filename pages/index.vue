@@ -94,6 +94,8 @@ export default {
       this.$refs.dlg.isDisplay = false;
       if (dialogFlag) {
         // 確認ダイアログのOKの場合true、キャンセルの場合false
+        // ログアウト処理もしておく。
+        this.$store.dispatch('twitter/logoutTwitter');
         this.$store.dispatch('localStorages/setGuestPlay', dialogFlag);
         this.$router.push({ path: "/mode" });
       }

@@ -48,7 +48,7 @@
                   <i class="mdi mdi-crown-outline"></i>
                   {{ index + 1 }}
                 </td>
-                <td :class="breakpointClass.header" class="text-left">{{ ranking.name }}</td>
+                <td :class="breakpointClass.header" class="text-left ranking-name">{{ ranking.name }}</td>
                 <td :class="breakpointClass.header" class="text-left">{{ ranking.score === 0 ? "-" : ranking.score }}</td>
                 <td :class="breakpointClass.header" class="text-left">{{ ranking.clearTime | zeroPadAndFormat }}</td>
                 <td :class="breakpointClass.header" class="text-center"><v-btn :href="'https://twitter.com/' + ranking.twitterId" icon class="ranking-twitter-btn"><v-icon>mdi-twitter</v-icon></v-btn></td>
@@ -63,7 +63,7 @@
                   <i class="mdi mdi-chess-king"></i>
                   {{ index + 2 }}
                 </td>
-                <td :class="breakpointClass.header" class="text-left">{{ ranking.name }}</td>
+                <td :class="breakpointClass.header" class="text-left ranking-name">{{ ranking.name }}</td>
                 <td :class="breakpointClass.header" class="text-left">{{ ranking.score === 0 ? "-" : ranking.score }}</td>
                 <td :class="breakpointClass.header" class="text-left">{{ ranking.clearTime | zeroPadAndFormat }}</td>
                 <td :class="breakpointClass.header" class="text-center"><v-btn :href="'https://twitter.com/' + ranking.twitterId" icon class="ranking-twitter-btn"><v-icon>mdi-twitter</v-icon></v-btn></td>
@@ -78,7 +78,7 @@
                   <i class="mdi mdi-diamond-stone"></i>
                   {{ index + 3 }}
                 </td>
-                <td :class="breakpointClass.header" class="text-left">{{ ranking.name }}</td>
+                <td :class="breakpointClass.header" class="text-left ranking-name">{{ ranking.name }}</td>
                 <td :class="breakpointClass.header" class="text-left">{{ ranking.score === 0 ? "-" : ranking.score }}</td>
                 <td :class="breakpointClass.header" class="text-left">{{ ranking.clearTime | zeroPadAndFormat }}</td>
                 <td :class="breakpointClass.header" class="text-center"><v-btn :href="'https://twitter.com/' + ranking.twitterId" icon class="ranking-twitter-btn"><v-icon>mdi-twitter</v-icon></v-btn></td>
@@ -90,7 +90,7 @@
                 class="ranking-tr"
               >
                 <td :class="breakpointClass.header" class="text-center">{{ index + 4 }}</td>
-                <td :class="breakpointClass.header" class="text-left">{{ ranking.name }}</td>
+                <td :class="breakpointClass.header" class="text-left ranking-name">{{ ranking.name }}</td>
                 <td :class="breakpointClass.header" class="text-left">{{ ranking.score === 0 ? "-" : ranking.score }}</td>
                 <td :class="breakpointClass.header" class="text-left">{{ ranking.clearTime | zeroPadAndFormat }}</td>
                 <td :class="breakpointClass.header" class="text-center"><v-btn :href="'https://twitter.com/' + ranking.twitterId" icon class="ranking-twitter-btn"><v-icon>mdi-twitter</v-icon></v-btn></td>
@@ -242,5 +242,12 @@ export default {
 
 .ranking-tr {
   height: 55px;
+}
+
+.ranking-name {
+  max-width: 142px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 </style>

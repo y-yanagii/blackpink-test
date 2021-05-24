@@ -204,8 +204,8 @@ export default {
 
       // 今回のランクをセット
       this.newRecord.myRank = rankings.indexOf(rankings.find(ranking => ranking.id === this.$user.defaultRankId)) + 1;
-      // 20位以内の場合のみ、ランキングを登録
-      if (this.newRecord.myRank <= 20) this.$store.dispatch('rankings/add', this.newRecord);
+      // 20位以内の場合のみかつゲストモードでない場合、ランキングを登録
+      if (this.newRecord.myRank <= 20 && !this.$store.getters["localStorages/getGuestPlay"]) this.$store.dispatch('rankings/add', this.newRecord);
     },
     displayLastPiece() {
       // DOM更新されるのを待ってから実行（nextTick）

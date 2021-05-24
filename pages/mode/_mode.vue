@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import Start from '~/components/Start.vue';
+import Start from '~/components/ui/Start.vue';
 import Test from '~/components/tests/Test.vue';
 import Game from '~/components/games/Game.vue';
 import Challenge from '~/components/challenges/Challenge.vue';
