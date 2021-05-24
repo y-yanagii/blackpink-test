@@ -13,7 +13,7 @@
 
 <script>
 import { db } from "~/plugins/firebase";
-import Ranking from '~/components/pages/rankings/Ranking.vue';
+import Ranking from '~/components/rankings/Ranking.vue';
 
 export default {
   data() {

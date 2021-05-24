@@ -18,9 +18,9 @@
 
 <script>
 import Start from '~/components/Start.vue';
-import Test from '~/components/pages/tests/Test.vue';
-import Game from '~/components/pages/games/Game.vue';
-import Challenge from '~/components/pages/challenges/Challenge.vue';
+import Test from '~/components/tests/Test.vue';
+import Game from '~/components/games/Game.vue';
+import Challenge from '~/components/challenges/Challenge.vue';
 
 export default {
   data: function() {

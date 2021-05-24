@@ -7,10 +7,6 @@
           v-show="selectedMode.modeType !== $mode.suddendeath"
           :timerObject="timerObject"
         ></Time>
-        <Life
-          v-show="selectedMode.modeType === $mode.suddendeath"
-          :lives="lives"
-        ></Life>
         <TestCard
           :currentTest="currentTest"
           :test="tests[currentTest]"
@@ -26,8 +22,7 @@
 <script>
 import ModeTitle from '~/components/ui/ModeTitle.vue';
 import Time from '~/components/ui/Time.vue';
-import TestCard from '~/components/pages/tests/TestCard.vue';
-import Life from '~/components/Life.vue';
+import TestCard from '~/components/tests/TestCard.vue';
 import { db } from "~/plugins/firebase";
 
 export default {
@@ -52,38 +47,34 @@ export default {
         startTime: 0, // スタートボタンを押した時刻
         isRunning: false // 計測中の状態保持
       },
-      remainingLife: 3, // 残ライフ
-      lives: [ // ライフオブジェクト
-        {
-          life: true,
-          icon: "mdi-heart-outline",
-          color: "#f4a6b8",
-        },
-        {
-          life: true,
-          icon: "mdi-heart-outline",
-          color: "#f4a6b8",
-        },
-        {
-          life: true,
-          icon: "mdi-heart-outline",
-          color: "#f4a6b8",
-        },
-      ],
       selectedMode: this.$store.getters['localStorages/choiceMode'],
     }
   },
   computed: {
-    // 難易度別にテスト情報取得
-    getTests: function() {
-      return this.$store.getters['tests/getTestsByMode'](this.selectedMode.modeType);
+    // 取得したテストコレクションをシャッフルかつ10件にする
+    processingTests: function() {
+      // 問題をシャッフル
+      for (let i = (this.tests.length - 1); 0 < i; i--) {
+        // ランダムで要素数1つを取得
+        let r = Math.floor(Math.random() * (i + 1));
+
+        // 並び替え
+        let tmp = this.tests[i];
+        this.tests[i] = this.tests[r];
+        this.tests[r] = tmp
+      }
+
+      // サドンデスの場合はシャッフルのみ
+      if (this.selectedMode.modeType === this.$mode.suddendeath) return
+
+      // シャッフル後、最初の10件をテスト問題とする
+      this.tests = this.tests.slice(0, 10);
     },
   },
   components: {
     ModeTitle,
     Time,
     TestCard,
-    Life
   },
   methods: {
     // 選択肢押下時処理(解答時)
@@ -94,9 +85,6 @@ export default {
       if (this.currentTest === this.tests.length - 1) {
         // 最終問題の場合終了処理
         this.testEndProcessing();
-      } else if (this.selectedMode.modeType === this.$mode.suddendeath) {
-        // sudden deathの場合ライフの判定
-        this.judgmentLife(value);
       } else {
         // 次の問題に移行
         this.currentTest++
@@ -174,7 +162,7 @@ export default {
 
       // 今回のランクをセット
       this.newRecord.myRank = rankings.indexOf(rankings.find(ranking => ranking.id === this.$user.defaultRankId)) + 1;
-        // 20位以内の場合のみ、ランキングを登録
+      // 20位以内の場合のみ、ランキングを登録
       if (this.newRecord.myRank <= 20) this.addRanking();
     },
     // ランキング情報を登録、取得
@@ -185,17 +173,6 @@ export default {
     setMessage() {
       // ランクごとのメッセージをセット
       this.newRecord.message = this.$store.getters['messages/getMessage'](this.newRecord.myRank)
-    },
-    judgmentLife(answer) {
-      if (!answer.isAnswer) {
-        // 不正解の場合、ライフを１削る
-        this.lives.filter(l => l.life)[this.lives.filter(l => l.life).length - 1].icon = "mdi-heart-broken-outline"
-        this.lives.filter(l => l.life)[this.lives.filter(l => l.life).length - 1].life = false
-        this.remainingLife--;
-      }
-      
-      // 残ライフが0の場合、検定終了(最終問題の場合はaddAnswerメソッドのif文で処理される)それ以外、次の問題に移行
-      this.remainingLife === 0 ? this.testEndProcessing() : this.currentTest++
     },
   },
   filters: {
@@ -210,6 +187,9 @@ export default {
     this.$store.dispatch('tests/init');
     // rankingsコレクションの初期化
     this.$store.dispatch('rankings/init');
+
+    // 取得したテストコレクションをシャッフルかつ10件にする
+    this.processingTests;
   },
 }
 </script>
