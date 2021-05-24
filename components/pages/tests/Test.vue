@@ -98,9 +98,6 @@ export default {
       // 検定結果レコード作成
       this.setNewRecord();
 
-      // ランキング情報を取得
-      this.addRanking();
-
       // 自分のランクをセット
       this.setMyRank();
 
@@ -131,11 +128,6 @@ export default {
       this.newRecord.modeType = this.selectedMode.modeType;
       this.newRecord.modeValue = this.selectedMode.modeValue;
       this.newRecord.clearTime = this.$options.filters.replaceClearTimeWithNumber(document.getElementById("time").textContent.trim()); // クリアタイム(mm:ss.fff)をフォーマットし、オブジェクトにセット
-    },
-    // ランキング情報を登録、取得
-    addRanking() {
-      // ランキング登録
-      this.$store.dispatch('rankings/add', this.newRecord);
     },
     setMyRank() {
       // モード種別ごとのランキングを取得
@@ -169,7 +161,14 @@ export default {
       });
 
       // 今回のランクをセット
-      this.newRecord.myRank = rankings.indexOf(rankings.find(ranking => ranking.id === this.$user.defaultRankId)) + 1
+      this.newRecord.myRank = rankings.indexOf(rankings.find(ranking => ranking.id === this.$user.defaultRankId)) + 1;
+      // 20位以内の場合のみ、ランキングを登録
+      if (this.newRecord.myRank <= 20) this.addRanking();
+    },
+    // ランキング情報を登録、取得
+    addRanking() {
+      // ランキング登録
+      this.$store.dispatch('rankings/add', this.newRecord);
     },
     setMessage() {
       // ランクごとのメッセージをセット
@@ -188,8 +187,6 @@ export default {
     this.$store.dispatch('tests/init');
     // rankingsコレクションの初期化
     this.$store.dispatch('rankings/init');
-    // messagesコレクションの初期化
-    this.$store.dispatch('messages/init');
 
     // 取得したテストコレクションをシャッフルかつ10件にする
     this.processingTests;

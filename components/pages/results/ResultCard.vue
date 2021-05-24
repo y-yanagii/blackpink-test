@@ -13,21 +13,21 @@
     <div class="result-card">
       <!-- タイトル領域 -->
       <div class="text-center result-card-title">
-        <p>CONGRATULATIONS！<br>BLACKPINK TEST({{ this.newRecord.modeValue }})</p>
+        <p>CONGRATULATIONS！<br>BLACKPINK TEST({{ newRecord.modeValue }})</p>
       </div>
       <!-- 結果情報領域 -->
       <div class="text-center result-area">
         <div class="result-inline-area record-0" key="rank">
           <div class="result-label">RANK</div>
-          <div class="result-value">{{ this.newRecord.myRank }}</div>
+          <div class="result-value">{{ 20 >= newRecord.myRank ? newRecord.myRank : "ー" }}</div>
         </div>
         <div class="result-inline-area record-1" key="score">
           <div class="result-label">SCORE</div>
-          <div class="result-value">{{ this.newRecord.score }}</div>
+          <div class="result-value">{{ newRecord.score }}</div>
         </div>
         <div class="result-inline-area record-2" key="clearTime">
           <div class="result-label">CLEAR TIME</div>
-          <div class="result-value">{{ this.newRecord.clearTime | zeroPadAndFormat }}</div>
+          <div class="result-value">{{ newRecord.clearTime | zeroPadAndFormat }}</div>
         </div>
       </div>
       <!-- メッセージ領域 -->

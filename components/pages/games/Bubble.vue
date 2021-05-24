@@ -78,6 +78,7 @@ export default {
         score: 0,
         modeType: "",
         clearTime: 0,
+        myRank: "",
       },
       resultStr: "",
     }
@@ -301,12 +302,48 @@ export default {
       this.$refs.dlg.isDisplay = true
     },
     addBubbleRanking() {
-      // ランキング登録
+      // ランキング登録処理
       this.newRecord.name = this.$store.getters['localStorages/getUserName'] ? this.$store.getters['localStorages/getUserName'] : this.$user.defaultName;
       this.newRecord.twitterId = this.$store.getters['localStorages/getTwitterId'] ? this.$store.getters['localStorages/getTwitterId'] : ""; // ローカルストレージよりTwitterId取得
       this.newRecord.score = this.score;
       this.newRecord.modeType = this.$store.getters['localStorages/choiceMode'].modeType;
-      this.$store.dispatch('rankings/add', this.newRecord);
+      this.setMyRank();
+    },
+    setMyRank() {
+      // モード種別ごとのランキングを取得
+      let rankings = this.$store.getters['rankings/rankingsByModeType'](this.$store.getters['localStorages/choiceMode'].modeType);
+      
+      // 今回の結果のオブジェクトをランキング配列に追加
+      const myRankObject = {
+        id: this.$user.defaultRankId,
+        score: this.newRecord.score,
+        clearTime: 0,
+        createdAt: this.$store.getters['rankings/serverTime']
+      }
+      rankings.push(myRankObject);
+
+      // ランキングソート
+      rankings.sort(function(a, b) {
+        // scoreの降順
+        if (a.score !== b.score) {
+          return (a.score - b.score) * -1
+        }
+
+        // clearTimeの昇順
+        if (a.clearTime !== b.clearTime) {
+          return a.clearTime - b.clearTime
+        }
+
+        // createdAtの降順
+        if (a.createdAt !== b.createdAt) {
+          return (a.createdAt - b.createdAt) * -1
+        }
+      });
+
+      // 今回のランクをセット
+      this.newRecord.myRank = rankings.indexOf(rankings.find(ranking => ranking.id === this.$user.defaultRankId)) + 1;
+      // 20位以内の場合のみ、ランキングを登録
+      if (this.newRecord.myRank <= 20) this.$store.dispatch('rankings/add', this.newRecord);
     },
   },
   computed: {
