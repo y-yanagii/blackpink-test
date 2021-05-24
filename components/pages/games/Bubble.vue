@@ -266,8 +266,9 @@ export default {
     },
     endOfGameCheck() {
       if (this.balls.length === 0) {
-        // 終了処理
-        this.message = this.$gameMessage.perfect;
+        // 終了処理(パーフェクトの場合＋3000)
+        this.score += 3000;
+        this.message = this.$gameMessage.perfect + "（+3000）";
         this.endOfGame();
         return
       }
