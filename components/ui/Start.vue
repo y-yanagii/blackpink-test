@@ -30,9 +30,9 @@
           <!-- musicテストの場合注意書き -->
           <template v-if="selectedMode.modeType === $mode.music">
             <div class="music-precautionary text-center">
-              <p>＊音量注意。毎回出題内容が変わります。</p>
-              <p>＊再生されない場合は、ブラウザを<br>アップデートしてください。</p>
-              <p>使用している音源は、iTunes Storeから<br>提供さている試聴データです。</p>
+              <p>♬音量注意。毎回出題内容が変わります。</p>
+              <p>♬再生されない場合は、ブラウザを<br>アップデートしてください。</p>
+              <p>♬使用している音源は、iTunes Storeから<br>提供さている試聴データです。</p>
             </div>
           </template>
         </div>
