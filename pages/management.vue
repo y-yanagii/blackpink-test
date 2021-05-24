@@ -29,8 +29,8 @@
 </template>
 
 <script>
-import AllTests from "~/components/pages/managements/AllTests.vue";
-import TestCrud from "~/components/pages/managements/TestCrud.vue";
+import AllTests from "~/components/managements/AllTests.vue";
+import TestCrud from "~/components/managements/TestCrud.vue";
 import { db } from "~/plugins/firebase";
 
 export default {

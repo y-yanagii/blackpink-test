@@ -12,8 +12,8 @@
 </template>
 
 <script>
-import Mode from '~/components/pages/modes/Mode.vue';
-import ModeSelect from '~/components/pages/modes/ModeSelect.vue';
+import Mode from '~/components/modes/Mode.vue';
+import ModeSelect from '~/components/modes/ModeSelect.vue';
 
 export default {
   data: function() {

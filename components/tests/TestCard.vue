@@ -88,7 +88,7 @@
 </template>
 
 <script>
-import MusicTest from '~/components/pages/tests/MusicTest.vue';
+import MusicTest from '~/components/tests/MusicTest.vue';
 
 export default {
   data: function() {

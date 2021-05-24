@@ -4,8 +4,8 @@
 </template>
 
 <script>
-import Bubble from '~/components/pages/games/Bubble.vue'
-import Puzzle from '~/components/pages/games/Puzzle.vue'
+import Bubble from '~/components/games/Bubble.vue'
+import Puzzle from '~/components/games/Puzzle.vue'
 
 export default {
   data: function() {
