@@ -266,8 +266,9 @@ export default {
     },
     endOfGameCheck() {
       if (this.balls.length === 0) {
-        // 終了処理
-        this.message = this.$gameMessage.perfect;
+        // 終了処理(パーフェクトの場合＋3000)
+        this.score += 3000;
+        this.message = this.$gameMessage.perfect + "（+3000）";
         this.endOfGame();
         return
       }
@@ -300,7 +301,28 @@ export default {
 
       // ゲーム終了ダイアログ表示
       this.resultStr = "SCORE： " + this.score;
-      this.$refs.dlg.isDisplay = true
+      this.$refs.dlg.isDisplay = true;
+      // $nextTickでv-if内の要素が表示されたときにDOM操作したい場合
+      this.$nextTick(() => {
+        // ダイアログにある4つの泡divをランダム表示させる
+        let ballList = document.getElementById('random-balls').getElementsByClassName('ball'); // ダイアログの4つの泡divを取得
+        const randomBalls = () => {
+          for (let i = (ballList.length - 1); 0 < i; i--) {
+            // ランダムで要素数1つを取得
+            let r = Math.floor(Math.random() * (i + 1));
+            // appendChildで並び替え
+            document.getElementById('random-balls').appendChild(ballList[r]);
+          }
+
+          if (timer !== null && !this.$refs.dlg.isDisplay) {
+            // ダイアログを閉じたらストップ
+            clearInterval(timer);
+          }
+        };
+        // タイマー開始
+        let timer = null; // セットインターバル関数を初期化
+        timer = setInterval(randomBalls, 500);
+      });
     },
     addBubbleRanking() {
       // ランキング登録処理
@@ -351,13 +373,15 @@ export default {
     getBalls() {
       // 通し番号
       let serialNumber = 0;
+      // 泡divクラス(スマホ表示とそれ以外でフォントサイズを変更（絵文字を綺麗に見せるため）)
+      let ballFontSize = this.$vuetify.breakpoint.xs ? " ball-font-size-xs" : " ball-font-size";
       // y座標
       for (let i = 0; i < this.yAxis; i++) {
         // x座標
         for (let j = 0; j < this.xAxis; j++) {
           const num = Math.floor(Math.random() * this.ballClass.length);
           let ballInfo = {
-            className: this.$vuetify.breakpoint.xs ? this.ballClass[num] + " ball-font-size-xs" : this.ballClass[num] + " ball-font-size", // スマホ表示とそれ以外でフォントサイズを変更（絵文字を綺麗に見せるため）
+            className: this.ballClass[num] + ballFontSize,
             ideograph: this.ideographs[num],
             x: j,
             y: i,

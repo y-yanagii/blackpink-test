@@ -89,7 +89,7 @@
 
 <script>
 import { db } from "~/plugins/firebase";
-import ThanksDialog from "~/components/ThanksDialog.vue";
+import ThanksDialog from "~/components/ui/ThanksDialog.vue";
 
 export default {
   data() {

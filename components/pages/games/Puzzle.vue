@@ -205,7 +205,6 @@ export default {
       // 今回のランクをセット
       this.newRecord.myRank = rankings.indexOf(rankings.find(ranking => ranking.id === this.$user.defaultRankId)) + 1;
       // 20位以内の場合のみ、ランキングを登録
-      debugger
       if (this.newRecord.myRank <= 20) this.$store.dispatch('rankings/add', this.newRecord);
     },
     displayLastPiece() {
@@ -228,6 +227,28 @@ export default {
               _this.resultStr = "CLEAR TIME： " + document.getElementById("time").textContent.trim();
               _this.message = _this.$gameMessage.perfect;
               _this.$refs.dlg.isDisplay = true;
+
+              // $nextTickでv-if内の要素が表示されたときにDOM操作したい場合
+              _this.$nextTick(() => {
+                // ダイアログにある4つの泡divをランダム表示させる
+                let peaceList = document.getElementsByClassName('puzzle-area')[0].getElementsByClassName('puzzle-peace'); // ダイアログの4つのピースdivを取得
+                const randomBalls = () => {
+                  for (let i = (peaceList.length - 1); 0 < i; i--) {
+                    // ランダムで要素数1つを取得
+                    let r = Math.floor(Math.random() * (i + 1));
+                    // appendChildで並び替え
+                    document.getElementsByClassName('puzzle-area')[0].appendChild(peaceList[r]);
+                  }
+
+                  if (timer !== null && !_this.$refs.dlg.isDisplay) {
+                    // ダイアログを閉じたらストップ
+                    clearInterval(timer);
+                  }
+                };
+                // タイマー開始
+                let timer = null; // セットインターバル関数を初期化
+                timer = setInterval(randomBalls, 500);
+              });
             });
           }
         }, 100)
