@@ -34,7 +34,7 @@
 export default {
   data() {
     return {
-      isDisplay: true,
+      isDisplay: false,
       imageSrc: require("~/assets/images/thanks.jpeg")
     }
   }

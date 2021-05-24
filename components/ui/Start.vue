@@ -26,7 +26,16 @@
             nuxt
           >TEST START!</v-btn>
         </div>
-        <div></div>
+        <div class="text-center">
+          <!-- musicテストの場合注意書き -->
+          <template v-if="selectedMode.modeType === $mode.music">
+            <div class="music-precautionary text-center">
+              <p>♬音量注意。毎回出題内容が変わります。</p>
+              <p>♬再生されない場合は、ブラウザを<br>アップデートしてください。</p>
+              <p>♬使用している音源は、iTunes Storeから<br>提供さている試聴データです。</p>
+            </div>
+          </template>
+        </div>
       </v-col>
     </v-row>
   </div>
@@ -129,5 +138,12 @@ export default {
 }
 .title-logo-puzzle {
   color: $puzzle-color !important;
+}
+
+.music-precautionary {
+  margin: 40px auto auto auto;
+  width: 80%;
+  font-size: 14px;
+  color: $music-color;
 }
 </style>
