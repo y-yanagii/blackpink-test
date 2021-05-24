@@ -25,17 +25,16 @@
         <v-simple-table
           dense
           fixed-header
-          height="319px"
           :class="breakpointClass.rankingArea"
         >
           <template v-slot:default>
             <thead>
-              <tr>
-                <th :class="breakpointClass.header" class="text-left">RANK</th>
+              <tr class="ranking-tr">
+                <th :class="breakpointClass.header" class="text-center">RANK</th>
                 <th :class="breakpointClass.header" class="text-left">NAME</th>
                 <th :class="breakpointClass.header" class="text-left">SCORE</th>
                 <th :class="breakpointClass.header" class="text-left">CLEAR TIME</th>
-                <th :class="breakpointClass.header" class="text-left">DATE</th>
+                <th :class="breakpointClass.header" class="text-center">SNS</th>
               </tr>
             </thead>
             <tbody>
@@ -43,54 +42,58 @@
               <tr
                 v-for="(ranking, index) in get1stRankings"
                 :key="index + 1"
+                class="ranking-tr"
               >
-                <td :class="breakpointClass.header" class="text-left">
+                <td :class="breakpointClass.header" class="text-center">
                   <i class="mdi mdi-crown-outline"></i>
                   {{ index + 1 }}
                 </td>
                 <td :class="breakpointClass.header" class="text-left">{{ ranking.name }}</td>
                 <td :class="breakpointClass.header" class="text-left">{{ ranking.score === 0 ? "-" : ranking.score }}</td>
                 <td :class="breakpointClass.header" class="text-left">{{ ranking.clearTime | zeroPadAndFormat }}</td>
-                <td :class="breakpointClass.header" class="text-left">{{ ranking.createdAt.toDate() | dateFormat }}</td>
+                <td :class="breakpointClass.header" class="text-center"><v-btn :href="'https://twitter.com/' + ranking.twitterId" icon class="ranking-twitter-btn"><v-icon>mdi-twitter</v-icon></v-btn></td>
               </tr>
               <!-- 2位 -->
               <tr
                 v-for="(ranking, index) in get2stRankings"
                 :key="index + 2"
+                class="ranking-tr"
               >
-                <td :class="breakpointClass.header" class="text-left">
+                <td :class="breakpointClass.header" class="text-center">
                   <i class="mdi mdi-chess-king"></i>
                   {{ index + 2 }}
                 </td>
                 <td :class="breakpointClass.header" class="text-left">{{ ranking.name }}</td>
                 <td :class="breakpointClass.header" class="text-left">{{ ranking.score === 0 ? "-" : ranking.score }}</td>
                 <td :class="breakpointClass.header" class="text-left">{{ ranking.clearTime | zeroPadAndFormat }}</td>
-                <td :class="breakpointClass.header" class="text-left">{{ ranking.createdAt.toDate() | dateFormat }}</td>
+                <td :class="breakpointClass.header" class="text-center"><v-btn :href="'https://twitter.com/' + ranking.twitterId" icon class="ranking-twitter-btn"><v-icon>mdi-twitter</v-icon></v-btn></td>
               </tr>
               <!-- 3位 -->
               <tr
                 v-for="(ranking, index) in get3stRankings"
                 :key="index + 3"
+                class="ranking-tr"
               >
-                <td :class="breakpointClass.header" class="text-left">
+                <td :class="breakpointClass.header" class="text-center">
                   <i class="mdi mdi-diamond-stone"></i>
                   {{ index + 3 }}
                 </td>
                 <td :class="breakpointClass.header" class="text-left">{{ ranking.name }}</td>
                 <td :class="breakpointClass.header" class="text-left">{{ ranking.score === 0 ? "-" : ranking.score }}</td>
                 <td :class="breakpointClass.header" class="text-left">{{ ranking.clearTime | zeroPadAndFormat }}</td>
-                <td :class="breakpointClass.header" class="text-left">{{ ranking.createdAt.toDate() | dateFormat }}</td>
+                <td :class="breakpointClass.header" class="text-center"><v-btn :href="'https://twitter.com/' + ranking.twitterId" icon class="ranking-twitter-btn"><v-icon>mdi-twitter</v-icon></v-btn></td>
               </tr>
               <!-- 4位以下 -->
               <tr
                 v-for="(ranking, index) in getOtherRankings"
                 :key="index + 4"
+                class="ranking-tr"
               >
-                <td :class="breakpointClass.header" class="text-left">{{ index + 4 }}</td>
+                <td :class="breakpointClass.header" class="text-center">{{ index + 4 }}</td>
                 <td :class="breakpointClass.header" class="text-left">{{ ranking.name }}</td>
                 <td :class="breakpointClass.header" class="text-left">{{ ranking.score === 0 ? "-" : ranking.score }}</td>
                 <td :class="breakpointClass.header" class="text-left">{{ ranking.clearTime | zeroPadAndFormat }}</td>
-                <td :class="breakpointClass.header" class="text-left">{{ ranking.createdAt.toDate() | dateFormat }}</td>
+                <td :class="breakpointClass.header" class="text-center"><v-btn :href="'https://twitter.com/' + ranking.twitterId" icon class="ranking-twitter-btn"><v-icon>mdi-twitter</v-icon></v-btn></td>
               </tr>
             </tbody>
           </template>
@@ -200,13 +203,11 @@ export default {
 .rankings-xs {
   width: 100%;
   background-color: $base-bg-color;
-  border: solid 2px $base-text-color;
 }
 
 .rankings {
   width: 100%;
   background-color: $base-bg-color;
-  border: solid 2px $base-text-color;
 }
 
 // スマホ用ヘッダーとランキング情報
@@ -233,5 +234,13 @@ export default {
 .ranking-value {
   padding: 0% 6px !important;
   color: $base-text-color !important;
+}
+
+.ranking-twitter-btn {
+  color: skyblue !important;
+}
+
+.ranking-tr {
+  height: 55px;
 }
 </style>
