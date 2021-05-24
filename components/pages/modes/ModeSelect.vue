@@ -36,19 +36,14 @@
 
 <script>
 import HistoryBackBtn from "~/components/ui/HistoryBackBtn.vue";
-import { db } from "~/plugins/firebase";
 
 export default {
   data: function() {
     return {
-      modes: [],
+      modes: this.$store.getters['modes/getModes'],
     }
   },
   props: ["showNumber", "playModeText"],
-  firestore: {
-    // 初期表示firestoreのmodesコレクションをモードタイプの昇順で取得
-    modes: db.collection("modes").orderBy('modeType')
-  },
   methods: {
     selectMode(mode) {
       // 空白除去
@@ -93,10 +88,6 @@ export default {
       // 選択したプレイタイプ別にモードの情報をフィルタリングする（TEST or GAME）
       return this.modes.filter(mode => mode.playType === this.showNumber)
     }
-  },
-  created() {
-    // modesコレクションの初期化
-    this.$store.dispatch('modes/init');
   },
   components: {
     HistoryBackBtn,

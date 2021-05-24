@@ -1,17 +1,22 @@
-import { db } from "~/plugins/firebase";
-import { firestoreAction } from 'vuexfire';
-
-const modesRef = db.collection('modes');
-
 const state = () => ({
   // グローバルなデータをここで定義
-  modes: [],
+  modes: [
+    { playType: 1, modeType: 0, modeText: "E A S Y" },
+    { playType: 1, modeType: 1, modeText: "N O R M A L" },
+    { playType: 1, modeType: 2, modeText: "H A R D" },
+    { playType: 2, modeType: 3, modeText: "M A S T E R" },
+    { playType: 2, modeType: 4, modeText: "SUDDEN DEATH" },
+    { playType: 1, modeType: 5, modeText: "M U S I C" },
+    { playType: 3, modeType: 6, modeText: "B U B B L E" },
+    { playType: 3, modeType: 7, modeText: "P U Z Z L E" },
+  ],
   modeType: 0,
   modeValue: ""
 });
 
 const getters = {
   // コンポーネントから参照時gettersから参照する
+  getModes: state => { return state.modes },
   choiceMode: state => {
     // ローカルストレージ保存のモード種別とモード値をオブジェクトで返す
     return {
@@ -33,9 +38,6 @@ const mutations = {
 
 const actions = {
   // ここからmutaionsを呼んだり、バックエンドのAPIと連携したり
-  init: firestoreAction(({ bindFirestoreRef }) => {
-    bindFirestoreRef('modes', modesRef)
-  }),
   selectMode(context, choiceMode) {
     context.commit('selectMode', choiceMode);
   }

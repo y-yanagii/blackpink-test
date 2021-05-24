@@ -106,13 +106,10 @@ import { db } from "~/plugins/firebase";
 export default {
   data: function() {
     return {
-      modes: [],
+      modes: this.$store.getters['modes/getModes'],
       modeSelect: { modeType: 0, modeText: 'E A S Y' },
       breakpointClass: this.getBreakPoint()
     }
-  },
-  firestore: {
-    modes: db.collection("modes").orderBy('modeType')
   },
   props: ["rankings"],
   methods: {
@@ -196,10 +193,6 @@ export default {
       return date.getFullYear() + '/' + (date.getMonth() + 1) + '/' + date.getDate();
     }
   },
-  created() {
-    // modesコレクションの初期化
-    this.$store.dispatch('modes/init')
-  }
 }
 </script>
 

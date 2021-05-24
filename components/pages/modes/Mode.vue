@@ -42,8 +42,8 @@ export default {
     modeButtons() {
       return [
         { showNumber: this.$modeNumber.test, modeText: "T E S T" },
-        { showNumber: this.$modeNumber.game, modeText: "G A M E" },
         { showNumber: this.$modeNumber.challenge, modeText: "C H A L L E N G E" },
+        { showNumber: this.$modeNumber.game, modeText: "G A M E" },
       ]
     }
   },
