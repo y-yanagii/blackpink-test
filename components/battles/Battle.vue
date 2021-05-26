@@ -1,7 +1,9 @@
 <template>
   <div>
     <v-row justify="center" align="center">
-      <ProgressLinear></ProgressLinear>
+      <v-col cols="12" sm="8">
+        <ProgressLinear v-if="isDisplayNum === 0"></ProgressLinear>
+      </v-col>
     </v-row>
   </div>
 </template>
@@ -10,6 +12,11 @@
 import ProgressLinear from '~/components/ui/ProgressLinear.vue';
 
 export default {
+  data: function() {
+    return {
+      isDisplayNum: 0,
+    }
+  },
   components: {
     ProgressLinear,
   }

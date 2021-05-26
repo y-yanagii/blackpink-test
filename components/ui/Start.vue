@@ -35,6 +35,13 @@
               <p>♬使用している音源は、iTunes Storeから<br>提供さている試聴データです。</p>
             </div>
           </template>
+          <template v-if="selectedMode.modeType === $mode.oneonone">
+            <div class="oneonone-precautionary text-center">
+              <p>＊通信環境が良い場所で対戦を行ってください。</p>
+              <p>＊対戦中は画面のリロードやブラウザを閉じる行為は行わないでください。</p>
+              <p>＊一定時間経過しても応答がない場合は、不戦負扱いとなるため注意してください。</p>
+            </div>
+          </template>
         </div>
       </v-col>
     </v-row>
@@ -155,5 +162,11 @@ export default {
   width: 80%;
   font-size: 14px;
   color: $music-color;
+}
+.oneonone-precautionary {
+  margin: 40px auto auto auto;
+  width: 80%;
+  font-size: 14px;
+  color: $oneonone-color;
 }
 </style>

@@ -1,24 +1,39 @@
 <template>
   <div class="wait-bar">
-    <div class="wait-text">＊Waiting for an opponent...</div>
-    <v-progress-linear
-      color="#f4a6b8"
-      indeterminate
-      rounded
-      height="6"
-    ></v-progress-linear>
+    <div class="wait-bar-area">
+      <div class="wait-text">
+        ＊対戦相手を待っています...
+      </div>
+      <v-progress-linear
+        color="#f4a6b8"
+        indeterminate
+        rounded
+        height="6"
+      ></v-progress-linear>
+    </div>
+    <div class="danger-message">
+      ＊リロードしないでください。
+    </div>
   </div>
 </template>
 
 <style scoped lang="scss">
-.wait-text {
-  color: $base-text-color;
-  text-align: center;
-}
-
 .wait-bar {
-  position: absolute;
-  top: 50%;
-  width: 60%;
+  width: 100%;
+  .wait-bar-area {
+    margin: 45% auto;
+    width: 65%;
+    .wait-text {
+      color: $base-text-color;
+      text-align: center;
+    }
+  }
+  .danger-message {
+    position: absolute;
+    top: 300%;
+    text-align: center;
+    width: 100%;
+    color: red;
+  }
 }
 </style>
