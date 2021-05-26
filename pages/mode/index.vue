@@ -4,7 +4,7 @@
     @change-show-number="changeShowNumber"
   ></Mode>
   <ModeSelect
-    v-else-if="showNumber === $modeNumber.test || showNumber === $modeNumber.game || showNumber === $modeNumber.challenge"
+    v-else-if="showNumber === $modeNumber.test || showNumber === $modeNumber.game || showNumber === $modeNumber.challenge || showNumber === $modeNumber.battle"
     @change-show-number="changeShowNumber"
     :showNumber="showNumber"
     :playModeText="playModeText"
@@ -26,11 +26,13 @@ export default {
     // 選択したモードに対応して画面を切り替える
     changeShowNumber(newNumber) {
       if (newNumber === this.$modeNumber.test) {
-        this.playModeText = this.$playModeText.test
+        this.playModeText = this.$playModeText.test;
       } else if (newNumber === this.$modeNumber.game) {
-        this.playModeText = this.$playModeText.game
+        this.playModeText = this.$playModeText.game;
       } else if (newNumber === this.$modeNumber.challenge) {
-        this.playModeText = this.$playModeText.challenge
+        this.playModeText = this.$playModeText.challenge;
+      } else if (newNumber === this.$modeNumber.battle) {
+        this.playModeText = this.$playModeText.battle;
       } else {
         this.playModeText = "";
       }

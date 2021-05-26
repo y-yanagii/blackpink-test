@@ -23,6 +23,8 @@ Vue.prototype.$mode = {
   bubble: 6,
   // puzzleモード
   puzzle: 7,
+  // 1on1モード
+  oneonone: 8,
 }
 
 Vue.prototype.$path = {
@@ -49,6 +51,8 @@ Vue.prototype.$playModeText = {
   game: "GAME",
   // チャレンジ画面タイトル
   challenge: "CHALLENGE",
+  // バトル画面タイトル
+  battle: "BATTLE",
 }
 
 Vue.prototype.$deleteFlag = {

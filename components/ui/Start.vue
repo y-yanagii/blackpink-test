@@ -103,6 +103,12 @@ export default {
           modeTypeTitleClass: 'title-logo-puzzle',
           modeTypeButtonClass: 'start-button-puzzle',
         }
+      } else if (modeType === this.$mode.oneonone) {
+        // 1ON1の場合、黄緑
+        return {
+          modeTypeTitleClass: 'title-logo-oneonone',
+          modeTypeButtonClass: 'start-button-oneonone',
+        }
       } else {
         // 難易度EASY, NORMAL, HARDの場合、デフォルト色
         return {
@@ -139,6 +145,12 @@ export default {
 .title-logo-puzzle {
   color: $puzzle-color !important;
 }
+.title-logo-oneonone {
+  background: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
 
 .music-precautionary {
   margin: 40px auto auto auto;

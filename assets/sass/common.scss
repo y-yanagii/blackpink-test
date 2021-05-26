@@ -151,6 +151,17 @@ body {
     }
   }
 
+  // ONEONONEボタン
+  .oneonone-mode-button {
+    border-image: linear-gradient(to right bottom, red, orange, yellow, green, blue, indigo, violet) 2 / 2 / 0;
+    span {
+      font-size: 20px;
+      background: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+  }
+
   // TEST START!ボタン
   .start-button-master {
     border: solid 2px $master-color;
@@ -180,6 +191,14 @@ body {
     border: solid 2px $puzzle-color;
     span {
       color: $puzzle-color !important;
+    }
+  }
+  .start-button-oneonone {
+    border-image: linear-gradient(to right bottom, red, orange, yellow, green, blue, indigo, violet) 2 / 2 / 0;
+    span {
+      background: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
     }
   }
 
