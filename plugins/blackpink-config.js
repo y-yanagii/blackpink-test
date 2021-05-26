@@ -27,10 +27,6 @@ Vue.prototype.$mode = {
   oneonone: 8,
 }
 
-Vue.prototype.$path = {
-  modes: ["easy", "normal", "hard", "master", "suddendeath", "music", "bubble"]
-}
-
 Vue.prototype.$modeNumber = {
   // モード選択画面
   mode: 0,

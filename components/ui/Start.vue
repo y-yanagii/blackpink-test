@@ -60,15 +60,15 @@ export default {
       this.$emit('change-show');
     }
   },
-  firestore: {
-    // firestoreのtestsコレクションを取得
-    // tests: db.collection("tests")
-  },
+  // firestore: {
+  //   // firestoreのtestsコレクションを取得
+  //   // tests: db.collection("tests")
+  // },
   computed: {
     // 難易度別にテスト情報取得
-    getTests: function() {
-      return this.$store.getters['tests/getTestsByMode'];
-    },
+    // getTests: function() {
+    //   return this.$store.getters['tests/getTestsByMode'];
+    // },
     // 難易度による色の設定(easy,normal,hardの場合デフォルト色)
     getModeTypeClass: function() {
       const modeType = this.$data.selectedMode.modeType;
@@ -120,7 +120,7 @@ export default {
   },
   created() {
     // tests情報の初期化
-    this.$store.dispatch('tests/init');
+    // this.$store.dispatch('tests/init');
   },
   components: {
     HistoryBackBtn
@@ -146,9 +146,7 @@ export default {
   color: $puzzle-color !important;
 }
 .title-logo-oneonone {
-  background: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: $oneonone-color !important;
 }
 
 

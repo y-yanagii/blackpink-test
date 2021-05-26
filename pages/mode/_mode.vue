@@ -39,7 +39,6 @@ export default {
   validate(context) {
     // urlチェック
     const modePath = ["easy", "normal", "hard", "master", "suddendeath", "music", "bubble", "puzzle", "1on1"]
-    debugger
     if (modePath.includes(context.params.mode)) return true
     
     // エラーページ（404）

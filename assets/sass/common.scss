@@ -153,12 +153,11 @@ body {
 
   // ONEONONEボタン
   .oneonone-mode-button {
-    border-image: linear-gradient(to right bottom, red, orange, yellow, green, blue, indigo, violet) 2 / 2 / 0;
+    border: solid 2px $oneonone-color;
+    color: $oneonone-color;
     span {
       font-size: 20px;
-      background: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      color: $oneonone-color;
     }
   }
 
@@ -194,11 +193,9 @@ body {
     }
   }
   .start-button-oneonone {
-    border-image: linear-gradient(to right bottom, red, orange, yellow, green, blue, indigo, violet) 2 / 2 / 0;
+    border: solid 2px $oneonone-color;
     span {
-      background: linear-gradient(to right, red, orange, yellow, green, blue, indigo, violet);
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
+      color: $oneonone-color !important;
     }
   }
 
