@@ -36,8 +36,10 @@ Vue.prototype.$modeNumber = {
   test: 1,
   // challengeモード画面(playTypeにも使用)
   challenge: 2, 
+  // battleモード画面（playTypeにも使用）
+  battle: 3,
   // gameモード画面(playTypeにも使用)
-  game: 3,
+  game: 4,
 }
 
 Vue.prototype.$playModeText = {
