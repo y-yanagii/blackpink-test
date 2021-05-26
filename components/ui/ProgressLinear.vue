@@ -1,5 +1,6 @@
 <template>
   <div class="wait-bar">
+    <div class="wait-text">＊Waiting for an opponent...</div>
     <v-progress-linear
       color="#f4a6b8"
       indeterminate
@@ -9,14 +10,15 @@
   </div>
 </template>
 
-<script>
-export default {
-  
-}
-</script>
-
 <style scoped lang="scss">
-.wait-bar {
+.wait-text {
+  color: $base-text-color;
+  text-align: center;
+}
 
+.wait-bar {
+  position: absolute;
+  top: 50%;
+  width: 60%;
 }
 </style>
