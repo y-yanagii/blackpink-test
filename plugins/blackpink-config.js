@@ -84,3 +84,10 @@ Vue.prototype.$privacyText = {
   // private
   private: "PRIVATE",
 }
+
+Vue.prototype.$waitingStatus = {
+  // 待ち
+  wait: 0,
+  // マッチ
+  matched: 1,
+}

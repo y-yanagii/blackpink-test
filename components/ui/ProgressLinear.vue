@@ -17,6 +17,16 @@
   </div>
 </template>
 
+<script>
+export default {
+  created() {
+    debugger
+    this.$store.dispatch('waitings/set', this.$store.getters['localStorages/getTwitterId']);
+  }
+}
+</script>
+
+
 <style scoped lang="scss">
 .wait-bar {
   width: 100%;
