@@ -3,6 +3,7 @@ import { firestorePlugin } from 'vuefire';
 import firebase from 'firebase/app';
 import 'firebase/firestore';
 import 'firebase/auth';
+import 'firebase/functions';
 
 Vue.use(firestorePlugin)
 
@@ -20,6 +21,17 @@ const firebaseConfig = {
 // 二重に初期化が行われないようチェック
 if (!firebase.apps.length) {
   firebase.initializeApp(firebaseConfig)
+}
+
+// firebase エミュレータの有効化
+if (process.env.NODE_ENV !== 'production') {
+  // Cloud Functions用の設定
+  debugger
+  const functions = firebase.app().functions("asia-northeast1");
+  functions.useEmulator("localhost", 5001);
+
+  // Firestore用の設定
+  firebase.firestore().settings({ host: "localhost:8080", ssl: false });
 }
 
 // Twitter認証PROVIDER_ID
