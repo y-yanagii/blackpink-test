@@ -26,14 +26,14 @@ const actions = {
   init: firestoreAction(({ bindFirestoreRef }) => {
     bindFirestoreRef('rankings', rankingsRef)
   }),
-  add: firestoreAction((context, rankingObject) => {
+  add: firestoreAction((context, ranking) => {
     // ランキングをFirestoreへ登録
     rankingsRef.add({
-      name: rankingObject.name,
-      twitterId: rankingObject.twitterId,
-      score: rankingObject.score,
-      clearTime: rankingObject.clearTime,
-      modeType: rankingObject.modeType,
+      name: ranking.name,
+      twitterId: ranking.twitterId,
+      score: ranking.score,
+      clearTime: ranking.clearTime,
+      modeType: ranking.modeType,
       createdAt: firebase.firestore.FieldValue.serverTimestamp()
     })
   }),
