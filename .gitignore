@@ -94,3 +94,6 @@ scraping/
 
 # サービスアカウント（firebase admin sdk）
 serviceAccount.json
+
+# firebaseエミュレータのfirestore等のデータ
+/data

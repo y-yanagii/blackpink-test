@@ -24,6 +24,7 @@ const actions = {
       updateAt: firebase.firestore.FieldValue.serverTimestamp(),
     }, { merge: false });
   }),
+  
 }
 
 const mutations = {

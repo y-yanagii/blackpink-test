@@ -26,7 +26,6 @@ if (!firebase.apps.length) {
 // firebase エミュレータの有効化
 if (process.env.NODE_ENV !== 'production') {
   // Cloud Functions用の設定
-  debugger
   const functions = firebase.app().functions("asia-northeast1");
   functions.useEmulator("localhost", 5001);
 

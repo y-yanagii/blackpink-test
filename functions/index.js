@@ -15,6 +15,9 @@ const db = admin.firestore();
 
 exports.updatedStatus = functions.region('asia-northeast1').firestore.document('waitings/{docId}').onWrite((change, context) => {
   // waitingsのステータスが待ちの状態で登録された場合
-  console.log("Hello Trigger！");
+  // 他の待ち状態のステータスを検索
+  console.log(context.params.docId);
+  let waitingUsers = db.collection('waitings').where("status", "==", 0).limit(5);
+  console.log(waitingUsers);
   return 0;
 });
