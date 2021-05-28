@@ -35,11 +35,15 @@ export default {
       console.log(snapshot.data());
 
       // マッチした時点で監視を止めるため関数実行させる
-      if (snapshot.data().status === this.$waitingStatus.matched) this.unsubscribe();
+      if (snapshot.data().status === this.$waitingStatus.matched) {
+        debugger
+        this.unsubscribe();
+      }
     });
   },
   beforeDestroy() {
     // 監視を止めるため関数実行させる
+    debugger
     this.unsubscribe();
   },
   components: {
