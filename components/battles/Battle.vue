@@ -22,18 +22,22 @@ export default {
     return {
       isDisplayNum: 0,
       cancelVal: this.$mode.oneonone,
+      unsubscribe: null,
     }
   },
   mounted() {
     const twitterId = this.$store.getters['localStorages/getTwitterId'];
-    // ユーザ待ち状態に登録
-    this.$store.dispatch('waitings/set', twitterId);
+    // ユーザ待ち状態に登録(画面遷移時監視を止めるため関数実行させる)
+    // this.$store.dispatch('waitings/set', twitterId);
     // スナップショットでwaitingsの自身のレコードを監視
-    db.collection('waitings').doc(twitterId).onSnapshot(snapshot => {
+    this.unsubscribe = db.collection('waitings').doc(twitterId).onSnapshot(snapshot => {
       debugger
       // waitingsにroomIdが入ってくるので、マッチング成功。部屋移動
       console.log(snapshot.data());
     });
+  },
+  beforeDestroy() {
+    this.unsubscribe();
   },
   components: {
     ProgressLinear,
