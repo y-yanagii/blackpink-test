@@ -31,7 +31,6 @@ export default {
     // this.$store.dispatch('waitings/set', twitterId);
     // スナップショットでwaitingsの自身のレコードを監視
     this.unsubscribe = db.collection('waitings').doc(twitterId).onSnapshot(snapshot => {
-      debugger
       // waitingsにroomIdが入ってくるので、マッチング成功。部屋移動
       console.log(snapshot.data());
     });

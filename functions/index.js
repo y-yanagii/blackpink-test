@@ -19,23 +19,38 @@ exports.updatedStatus = functions.region('asia-northeast1').firestore.document('
   // waitingsのステータスが待ちの状態で登録された場合
   // 他の待ち状態のステータスを検索
   //let waitingUsers = db.collection('waitings').where("status", "==", 0).limit(5);
+  // 自身のdocment idを保持
+  let docIds = [];
+  docIds.push(context.params.docId);
   
-  // ステータスが待ち状態かつ更新日時が1分前のユーザを5件取得
-  let query = waitingsRef.where("status", "==", 0).limit(5);
-
-  query.get().then((querySnapshot) => {
-    let i = 1;
-    const tagetDocCount = Math.floor(Math.random() * (querySnapshot.size + 1 - 1)) + 1; // 1~ドキュメント数の中からランダムにindexを取得
-    querySnapshot.forEach((doc) => {
-      if (i === tagetDocCount) {
-        console.log(doc.id, " => ", doc.data());
-        console.log("i : ", i);
-        console.log("tagetDocCount : ", tagetDocCount);
-      }
-      i++;
+  // 対戦相手取得
+  getTargetUserFunc = () => {
+    return new Promise(resolve => {
+      // ステータスが待ち状態かつ更新日時が1分前のユーザを5件取得
+      let query = waitingsRef.where("status", "==", 0).limit(5);
+      query.get().then((querySnapshot) => {
+        let i = 1;
+        const tagetDocCount = Math.floor(Math.random() * (querySnapshot.size + 1 - 1)) + 1; // 1~ドキュメント数の中からランダムにindexを取得
+        querySnapshot.forEach(async (doc) => {
+          if (i === tagetDocCount && doc.id !== context.params.docId) {
+            // 自身以外のステータス待ちユーザのID取得
+            docIds.push(doc.id);
+            console.log(doc.id, " => ", doc.data());
+            resolve();
+          }
+          i++;
+        });
+      });
     });
-  })
+  }
 
-  console.log(change.after.data());
+  // 自分と対戦相手をマッチング
+  matchUsersFunc = async () => {
+    await getTargetUserFunc();
+    console.log(docIds);
+  };
+
+  matchUsersFunc();
+
   return 0;
 });
