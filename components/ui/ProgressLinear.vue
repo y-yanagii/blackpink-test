@@ -19,10 +19,7 @@
 
 <script>
 export default {
-  created() {
-    // ユーザ待ち状態に登録
-    this.$store.dispatch('waitings/set', this.$store.getters['localStorages/getTwitterId']);
-  }
+  
 }
 </script>
 
