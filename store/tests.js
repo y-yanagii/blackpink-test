@@ -16,7 +16,7 @@ const getters = {
   },
   getTestsAtRandom: state => serialNums => {
     // ランダムで5件取得
-    return _.intersectionWith(state.tests, serialNums, (o, n) => o.serialNums === n);
+    return _.intersectionWith(state.tests, serialNums, (t, s) => t.serialNumber === s);
   }
 };
 

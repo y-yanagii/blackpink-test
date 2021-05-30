@@ -18,14 +18,10 @@
               v-else-if="isDisplayNum === $battleDisplayNum.start"
               @display-control="displayControl"
             ></Start>
-            <QuestionNo
-              v-else-if="isDisplayNum === $battleDisplayNum.questionNo"
-              @display-control="displayControl"
-              :questionNo="questionNo"
-            ></QuestionNo>
             <BattleTest
               v-else-if="isDisplayNum === $battleDisplayNum.test"
-              :test="tests[questionNo]"
+              :questionNo="questionNo"
+              :test="setTests[questionNo]"
             ></BattleTest>
           </transition>
         </div>
@@ -37,7 +33,6 @@
 <script>
 import Vs from '~/components/battles/Vs.vue';
 import Start from '~/components/battles/Start.vue';
-import QuestionNo from '~/components/battles/QuestionNo.vue';
 import BattleTest from '~/components/battles/BattleTest.vue';
 
 export default {
@@ -46,7 +41,7 @@ export default {
       tests: [],
       isDisplayNum: 0,
       userNames: ["柳澤_RUNTEQ17期生", "COM"],
-      questionNo: 1,
+      questionNo: 0,
       transitionName: "vs",
     }
   },
@@ -57,25 +52,37 @@ export default {
         this.isDisplayNum = this.$battleDisplayNum.start;
         this.transitionName = "start";
       } else if (this.isDisplayNum === this.$battleDisplayNum.start) {
-        // START画面を非表示とし、Question No.〇〇を表示
-          this.isDisplayNum = this.$battleDisplayNum.questionNo;
-        setTimeout(() => {
-          this.transitionName = "question";
-        }, 1000)
-      } else if (this.isDisplayNum === this.$battleDisplayNum.questionNo) {
         // Question No.画面を非表示とし、問題表示
         this.isDisplayNum = this.$battleDisplayNum.test;
+        setTimeout(() => {
+          this.transitionName = "test";
+        }, 1000)
       }
     }
   },
-  mounted() {
-    this.$store.watch(
-      (state, getters) => getters["tests/getTestsAtRandom"](this.setRandomSerialNumbers),
-      (newTests) => {
-        debugger
-        this.tests = newTests;
+  computed: {
+    setTests() {
+      let nums = [];
+      // テストの総数を配列化
+      for (let i=0;i<this.$testInfo.testLength;i++) {
+        nums.push(i);
       }
-    )
+
+      // ランダムでテスト番号を5件取得
+      let serialNums = [];
+      for (let j=0;j<5;j++) {
+        serialNums.push(nums[Math.floor(Math.random() * nums.length)]);
+      }
+
+      // TODO
+      serialNums = [1,2,3,4,5];
+      this.tests = this.$store.getters["tests/getTestsAtRandom"](serialNums);
+      return this.tests;
+    }
+  },
+  created() {
+    // testsコレクションの初期化
+    this.$store.dispatch('tests/init');
   },
   validate(context) {
     if (context.params.id) return true;
@@ -85,7 +92,6 @@ export default {
   components: {
     Vs,
     Start,
-    QuestionNo,
     BattleTest,
   }
 }
@@ -116,14 +122,6 @@ export default {
     transition: .3s ease-in;
 }
 .question-enter, .question-leave-to{
-    opacity: 0;
-}
-
-// テスト画面アニメーション
-.test-enter-active, .test-leave-active{
-    transition: opacity 1s
-}
-.test-enter, .test-leave-to{
     opacity: 0;
 }
 </style>

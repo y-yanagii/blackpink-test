@@ -3,7 +3,17 @@ import Vue from 'vue';
 
 Vue.prototype.$testInfo = {
   // テスト数
-  max: 300,
+  testLength: 300,
+  // easyのserialNumber範囲
+  easy: [0, 100],
+  // normalのserialNumber範囲
+  normal: [101, 200],
+  // hardのserialNumber範囲
+  hard: [201, 300],
+  // masterのserialNumber範囲
+  master: [301, 400],
+  // musicのserialNumber範囲
+  music: [401, 500],
 }
 
 Vue.prototype.$user = {
