@@ -4,17 +4,10 @@
       <div class="text-left test-number-area">
         {{ currentTest + 1 + " / " + testTotal }}
       </div>
-      <div class="question-area">
-        <!-- 問題文を1文字ずつ表示させるためv-forでかつspanタグ -->
-        {{ q }}
-        <span
-          v-for="(q, index) in test.question"
-          :key="index + Math.random()"
-          v-text="q"
-          class="question-item"
-          :style="{animationDelay: index*100+'ms'}"
-        />
-      </div>
+      <!-- 問題エリア -->
+      <Question
+        :test="test"
+      ></Question>
       <div class="content-area">
         <!-- コンテンツ領域 -->
         <!-- gifの場合 -->
@@ -40,7 +33,7 @@
         <MusicTest
           v-if="test.modeType === 5"
           :test="test"
-          :audio="audio"
+          :audio="getAudio"
         ></MusicTest>
       </div>
       <div class="options-area">
@@ -88,14 +81,14 @@
 </template>
 
 <script>
+import Question from '~/components/ui/Question.vue';
 import MusicTest from '~/components/tests/MusicTest.vue';
 
 export default {
   data: function() {
     return {
-      q: "Q. ",
       abcd: ["A. ", "B. ", "C. ", "D. "],
-      audio: this.test.modeType === 5 ? new Audio(this.test.embedInfo.embedCode) : false,
+      audio: false,
     }
   },
   props: ["test", "currentTest", "testTotal"],
@@ -108,6 +101,12 @@ export default {
       this.$emit('option-click', sendAnswerInfo);
     }
   },
+  computed: {
+    getAudio() {
+      this.audio = this.test.modeType === 5 ? new Audio(this.test.embedInfo.embedCode) : false;
+      return this.audio;
+    }
+  },
   watch: {
     test(newTest) {
       if (newTest.modeType === 5) {
@@ -118,7 +117,8 @@ export default {
     }
   },
   components: {
-    MusicTest
+    Question,
+    MusicTest,
   }
 }
 </script>

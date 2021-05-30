@@ -64,7 +64,7 @@ export default {
   methods: {
     testStart() {
       // 検定画面に遷移（テスト開始）
-      this.$emit('change-show');
+      this.$emit('change-show', 'start');
     }
   },
   // firestore: {

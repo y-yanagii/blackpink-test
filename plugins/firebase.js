@@ -25,12 +25,12 @@ if (!firebase.apps.length) {
 
 // firebase エミュレータの有効化
 if (process.env.NODE_ENV !== 'production') {
-  // Cloud Functions用の設定
-  const functions = firebase.app().functions("asia-northeast1");
-  functions.useEmulator("localhost", 5001);
+  // // Cloud Functions用の設定
+  // const functions = firebase.app().functions("asia-northeast1");
+  // functions.useEmulator("localhost", 5001);
 
-  // Firestore用の設定
-  firebase.firestore().settings({ host: "localhost:8080", ssl: false });
+  // // Firestore用の設定
+  // firebase.firestore().settings({ host: "localhost:8080", ssl: false });
 }
 
 // Twitter認証PROVIDER_ID

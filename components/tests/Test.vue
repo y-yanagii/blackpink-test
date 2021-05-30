@@ -23,13 +23,12 @@
 import ModeTitle from '~/components/ui/ModeTitle.vue';
 import Time from '~/components/ui/Time.vue';
 import TestCard from '~/components/tests/TestCard.vue';
-import { db } from "~/plugins/firebase";
+// import { db } from "~/plugins/firebase";
 
 export default {
   data: function() {
     return {
       currentTest: 0,
-      tests: this.$store.getters['tests/getTestsByMode'](this.$store.getters['localStorages/choiceMode'].modeType),
       newRecord: {
         name: "",
         twitterId: "",
@@ -50,6 +49,7 @@ export default {
       selectedMode: this.$store.getters['localStorages/choiceMode'],
     }
   },
+  props: ["tests"],
   computed: {
     // 取得したテストコレクションをシャッフルかつ10件にする
     processingTests: function() {
@@ -105,7 +105,7 @@ export default {
       this.setMessage();
 
       // VuexのnewRecordに登録処理
-        // メッセージ取得処理
+      // メッセージ取得処理
       // Vuexに解答結果と今回のテスト内容を送信し保持
       this.$store.dispatch('localStorages/setNewRecord', { newRecord: this.newRecord });
       this.$store.dispatch('localStorages/setTargetTests', this.tests);
@@ -183,13 +183,8 @@ export default {
     }
   },
   mounted() {
-    // testsコレクションの初期化
-    this.$store.dispatch('tests/init');
     // rankingsコレクションの初期化
     this.$store.dispatch('rankings/init');
-
-    // 取得したテストコレクションをシャッフルかつ10件にする
-    this.processingTests;
   },
 }
 </script>
