@@ -36,30 +36,11 @@
           :audio="getAudio"
         ></MusicTest>
       </div>
-      <div class="options-area">
-        <!-- 選択肢領域 -->
-        <div
-          v-for="(optionBtnInfo, index) in test.options"
-          :key="index"
-        >
-          <v-btn
-            outlined
-            class="option-btn"
-            nuxt
-            @click="sendAnswer(abcd[index], optionBtnInfo)"
-          >
-            {{abcd[index]}}
-            <span
-              v-for="(t, index) in optionBtnInfo.optionContent"
-              :key="index + Math.random()"
-              v-text="t"
-              class="option-item"
-              :style="{animationDelay: index*100+'ms'}"
-              ref="test_card"
-            />
-          </v-btn>
-        </div>
-      </div>
+      <Options
+        :test="test"
+        :abcd="abcd"
+        @option-click="sendAnswer"
+      ></Options>
     </div>
     <div
       v-if="test.embedInfo.detail"
@@ -82,6 +63,7 @@
 
 <script>
 import Question from '~/components/ui/Question.vue';
+import Options from '~/components/ui/Options.vue';
 import MusicTest from '~/components/tests/MusicTest.vue';
 
 export default {
@@ -118,6 +100,7 @@ export default {
   },
   components: {
     Question,
+    Options,
     MusicTest,
   }
 }
