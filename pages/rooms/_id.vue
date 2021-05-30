@@ -23,6 +23,10 @@
               @display-control="displayControl"
               :questionNo="questionNo"
             ></QuestionNo>
+            <BattleTest
+              v-else-if="isDisplayNum === $battleDisplayNum.test"
+              :test="tests[questionNo]"
+            ></BattleTest>
           </transition>
         </div>
       </v-col>
@@ -34,13 +38,14 @@
 import Vs from '~/components/battles/Vs.vue';
 import Start from '~/components/battles/Start.vue';
 import QuestionNo from '~/components/battles/QuestionNo.vue';
+import BattleTest from '~/components/battles/BattleTest.vue';
 
 export default {
   data: function() {
     return {
       tests: [],
       isDisplayNum: 0,
-      userNames: ["柳澤_RUNTEQ17期生", "山田 太郎"],
+      userNames: ["柳澤_RUNTEQ17期生", "COM"],
       questionNo: 1,
       transitionName: "vs",
     }
@@ -63,6 +68,15 @@ export default {
       }
     }
   },
+  mounted() {
+    this.$store.watch(
+      (state, getters) => getters["tests/getTestsAtRandom"](this.setRandomSerialNumbers),
+      (newTests) => {
+        debugger
+        this.tests = newTests;
+      }
+    )
+  },
   validate(context) {
     if (context.params.id) return true;
 
@@ -72,6 +86,7 @@ export default {
     Vs,
     Start,
     QuestionNo,
+    BattleTest,
   }
 }
 </script>
@@ -101,6 +116,14 @@ export default {
     transition: .3s ease-in;
 }
 .question-enter, .question-leave-to{
+    opacity: 0;
+}
+
+// テスト画面アニメーション
+.test-enter-active, .test-leave-active{
+    transition: opacity 1s
+}
+.test-enter, .test-leave-to{
     opacity: 0;
 }
 </style>

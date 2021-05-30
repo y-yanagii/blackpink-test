@@ -1,6 +1,11 @@
 // 定数管理ファイル
 import Vue from 'vue';
 
+Vue.prototype.$testInfo = {
+  // テスト数
+  max: 300,
+}
+
 Vue.prototype.$user = {
   defaultName: "NO NAME",
   defaultRankId: "new",
