@@ -38,6 +38,7 @@ import QuestionNo from '~/components/battles/QuestionNo.vue';
 export default {
   data: function() {
     return {
+      tests: [],
       isDisplayNum: 0,
       userNames: ["柳澤_RUNTEQ17期生", "山田 太郎"],
       questionNo: 1,
