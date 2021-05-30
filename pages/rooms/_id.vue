@@ -1,7 +1,7 @@
 <template>
   <div>
     <v-row justify="center" align="center">
-      <v-col cols="12" sm="12">
+      <v-col cols="12" sm="8">
         <div v-cloak>
           <transition
             :name="transitionName"
