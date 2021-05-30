@@ -17,13 +17,11 @@ const roomsRef = db.collection('rooms');
 // });
 
 exports.updatedStatus = functions.region('asia-northeast1').firestore.document('waitings/{docId}').onWrite((change, context) => {
-
   // cloud functionsの無限ループ対策
   if (change.after.data().status === 1) return 0;
-
   // waitingsのステータスが待ちの状態で登録された場合
   // 他の待ち状態のステータスを検索
-  //let waitingUsers = db.collection('waitings').where("status", "==", 0).limit(5);
+
   // 自身のdocment idを保持
   let docIds = [];
   docIds.push(context.params.docId);
@@ -34,6 +32,11 @@ exports.updatedStatus = functions.region('asia-northeast1').firestore.document('
       // ステータスが待ち状態かつ更新日時が1分前のユーザを5件取得
       let query = waitingsRef.where("status", "==", 0).limit(5);
       query.get().then((querySnapshot) => {
+        if (querySnapshot.size === 1) {
+          // 自分以外待ちなし
+          console.log("自分以外待ちなし");
+          return 0;
+        }
         let i = 1;
         const tagetDocCount = Math.floor(Math.random() * (querySnapshot.size + 1 - 1)) + 1; // 1~ドキュメント数の中からランダムにindexを取得
         querySnapshot.forEach(async (doc) => {
@@ -53,35 +56,49 @@ exports.updatedStatus = functions.region('asia-northeast1').firestore.document('
   registRoomId = (targetUsers, newRoomId) => {
     return new Promise(resolve => {
       db.runTransaction(async transaction => {
-      return transaction.getAll(targetUsers.doc(docIds[0]), targetUsers.doc(docIds[1]))
-        .then(docs => {
-          console.log("aet room succeeded");
-          // ルームを作成（ステータス監視しているため）
+      return transaction.getAll(targetUsers.doc(docIds[0]), targetUsers.doc(docIds[1])).then(docs => {
+        console.log("aet room succeeded");
+        // ルームを作成（ステータス監視しているため）
+        new Promise(resolve => {
           roomsRef.doc(newRoomId).set({
             userIds: [docIds[0], docIds[1]],
             battleResults: [],
             tests: [],
           });
-          console.log("aet room succeeded");
-
-          // 自身と対戦相手のステータスをマッチにし、ルームIDを付与
-          transaction.set(targetUsers.doc(docIds[0]), {
-            roomId: newRoomId,
-            status: 1,
-            updateAt: admin.firestore.FieldValue.serverTimestamp(),
-          });
-          transaction.set(targetUsers.doc(docIds[1]), {
-            roomId: newRoomId,
-            status: 1,
-            updateAt: admin.firestore.FieldValue.serverTimestamp(),
-          });
-
-          console.log("aet targetUsers succeeded");
-
           resolve();
-        }).catch((error) => {
-          console.log("transactionのcatch", error);
-        });
+        }).then(() => {
+          return new Promise(resolve => {
+            // 自身と対戦相手のステータスをマッチにし、ルームIDを付与
+            transaction.set(targetUsers.doc(docIds[0]), {
+              roomId: newRoomId,
+              status: 1,
+              updateAt: admin.firestore.FieldValue.serverTimestamp(),
+            });
+            transaction.set(targetUsers.doc(docIds[1]), {
+              roomId: newRoomId,
+              status: 1,
+              updateAt: admin.firestore.FieldValue.serverTimestamp(),
+            });
+            resolve();
+          })
+        })
+
+        // docs.forEach((doc) => {
+        //   if (doc.data().status === 0) {
+        //     transaction.set(targetUsers.doc(docIds[0]), {
+        //       roomId: newRoomId,
+        //       status: 1,
+        //       updateAt: admin.firestore.FieldValue.serverTimestamp(),
+        //     });
+        //   } else {
+        //     throw "既にマッチ済み"
+        //   }
+        // });
+
+        resolve();
+      }).catch((error) => {
+        console.log("transactionのcatch", error);
+      });
       });
     })
   }
@@ -95,7 +112,6 @@ exports.updatedStatus = functions.region('asia-northeast1').firestore.document('
     const newRoomId = Math.random().toString(32).substring(2);
     // マッチしたユーザをトランザクション処理で更新させる、ルームドキュメント作成
     await registRoomId(waitingsRef, newRoomId);
-    console.log("endendendendendendendendendendendendend");
 
     // db.runTransaction(async (transaction) => {
     //   transaction.get(targetUsers).then((querySnapshot) => {
