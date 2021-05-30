@@ -20,6 +20,7 @@ export default {
 .start {
   margin: 10% auto;
   width: 100%;
+  font-size: 30px;
   color: $base-text-color;
 }
 </style>

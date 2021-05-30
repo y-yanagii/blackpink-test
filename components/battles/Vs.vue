@@ -29,7 +29,7 @@ export default {
     setTimeout(() => {
       // 表示制御
       this.$emit('display-control');
-    }, 3000)
+    }, 2500)
   },
   props: ["userNames"],
 }

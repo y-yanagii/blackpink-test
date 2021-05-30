@@ -41,7 +41,11 @@ export default {
   methods: {
     displayControl() {
       if (this.isDisplayNum === this.$battleDisplayNum.battle) {
+        // VS画面を非表示とし、START画面に切り替え
         this.isDisplayNum = this.$battleDisplayNum.start;
+      } else if (this.isDisplayNum === this.$battleDisplayNum.start) {
+        // START画面を非表示とし、Question No.〇〇を表示
+        this.isDisplayNum = this.$battleDisplayNum.questionNo;
       }
     }
   },
