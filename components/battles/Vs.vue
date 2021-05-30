@@ -31,7 +31,7 @@ export default {
       this.$emit('display-control');
     }, 3000)
   },
-  props: ["isDisplayNum", "userNames"],
+  props: ["userNames"],
 }
 </script>
 
