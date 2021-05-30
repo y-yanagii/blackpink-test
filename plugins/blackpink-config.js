@@ -91,3 +91,14 @@ Vue.prototype.$waitingStatus = {
   // マッチ
   matched: 1,
 }
+
+Vue.prototype.$battleDisplayNum = {
+  // バトル開始
+  battle: 0,
+  // START!
+  start: 1,
+  // question No.◯◯
+  questionNo: 2,
+  // テストカード
+  test: 3,
+}
