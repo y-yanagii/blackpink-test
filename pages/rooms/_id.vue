@@ -113,7 +113,7 @@ export default {
 
 // START!画面アニメーション
 .start-enter-active, .start-leave-active{
-    transition: opacity 2s
+    transition: opacity 1s
 }
 .start-enter, .start-leave-to{
     opacity: 0;

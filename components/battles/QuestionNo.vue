@@ -1,6 +1,6 @@
 <template>
   <div class="text-center">
-    <div class="question-no">Q. {{ questionNo }}</div>
+    <div class="question-no">Q. {{ questionNo + 1 }}</div>
   </div>
 </template>
 

@@ -74,6 +74,7 @@ export default {
       unsubscribe: null, // 5問終了した時点で監視終了
       myCorrect: 0, // 1:不正解、2:正解
       othermyCorrect: 0, // 1:不正解、2:正解
+      numOfAnswers: 0, // 現在の回答数
     }
   },
   props: ["test", "questionNo"],
@@ -92,43 +93,216 @@ export default {
     },
     speedSendAnswer(abcdStr, optionBtnInfo) {
       // 解答送信
-      this.myCorrect = 2
-      correctEffects.volume = 0.7;
-      correctEffects.play();
-      if (optionBtnInfo.answer.isAnswer) {
-        // 正解の場合
+      const twitterId = this.$store.getters["localStorages/getTwitterId"];
+      const isAnswerVal = optionBtnInfo.answer.isAnswer ? this.$answerJudgment.correct : this.$answerJudgment.incorrect;
+      if (this.numOfAnswers === 0) {
+        // 他に回答者がいない場合
+        this.setFirstUserAnswer(twitterId, isAnswerVal);
       } else {
-        // 不正解の場合
+        // 他に回答者がいた場合
+        this.setSecondUserAnswer(twitterId, isAnswerVal);
       }
     },
-    setCorrectMark() {
+    setCorrectMark(correction) {
       // 正解者に丸を付与
+      correction = this.$answerJudgment.correctMark;
+      correctEffects.volume = 0.7;
+      correctEffects.play();
+      correctEffects.currentTime = 0;
     },
-    setIncorrectMark() {
+    setIncorrectMark(correction) {
       // 不正解者にバツを付与
-    }
+      correction = this.$answerJudgment.incorrectMark;
+      incorrectEffects.volume = 0.7;
+      incorrectEffects.play();
+      incorrectEffects.currentTime = 0;
+    },
+    setFirstUserAnswer(twitterId, isAnswerVal) {
+      // ファースト回答者として登録
+      if (this.questionNo === 0) {
+        // 1問目
+        db.collection('rooms').doc(this.$route.params.id).update({
+          'battleResult.result1.firstId': twitterId,
+          'battleResult.result1.firstResult': isAnswerVal,
+        }).catch(error => {
+          // 楽観ロックのエラーの場合かつ相手が不正解の場合、secondとして登録
+        });
+      } else if (this.questionNo === 1) {
+        // 2問目
+        db.collection('rooms').doc(this.$route.params.id).update({
+          'battleResult.result2.firstId': twitterId,
+          'battleResult.result2.firstResult': isAnswerVal,
+        }).catch(error => {
+          // 楽観ロックのエラーの場合かつ相手が不正解の場合、secondとして登録
+        });
+      } else if (this.questionNo === 2) {
+        // 3問目
+        db.collection('rooms').doc(this.$route.params.id).update({
+          'battleResult.result3.firstId': twitterId,
+          'battleResult.result3.firstResult': isAnswerVal,
+        }).catch(error => {
+          // 楽観ロックのエラーの場合かつ相手が不正解の場合、secondとして登録
+        });
+      } else if (this.questionNo === 3) {
+        // 4問目
+        db.collection('rooms').doc(this.$route.params.id).update({
+          'battleResult.result4.firstId': twitterId,
+          'battleResult.result4.firstResult': isAnswerVal,
+        }).catch(error => {
+          // 楽観ロックのエラーの場合かつ相手が不正解の場合、secondとして登録
+        });
+      } else if (this.questionNo === 4) {
+        // 5問目
+        db.collection('rooms').doc(this.$route.params.id).update({
+          'battleResult.result5.firstId': twitterId,
+          'battleResult.result5.firstResult': isAnswerVal,
+        }).catch(error => {
+          // 楽観ロックのエラーの場合かつ相手が不正解の場合、secondとして登録
+        });
+      }
+    },
+    setSecondUserAnswer(twitterId, isAnswerVal) {
+      // セカンド回答者として登録
+      if (this.questionNo === 0) {
+        // 1問目
+        db.collection('rooms').doc(this.$route.params.id).update({
+          'battleResult.result1.secondId': twitterId,
+          'battleResult.result1.secondResult': isAnswerVal,
+        }).catch(error => {
+          // 楽観ロックのエラーの場合かつ相手が不正解の場合、secondとして登録
+        });
+      } else if (this.questionNo === 1) {
+        // 2問目
+        db.collection('rooms').doc(this.$route.params.id).update({
+          'battleResult.result2.secondId': twitterId,
+          'battleResult.result2.secondResult': isAnswerVal,
+        }).catch(error => {
+          // 楽観ロックのエラーの場合かつ相手が不正解の場合、secondとして登録
+        });
+      } else if (this.questionNo === 2) {
+        // 3問目
+        db.collection('rooms').doc(this.$route.params.id).update({
+          'battleResult.result3.secondId': twitterId,
+          'battleResult.result3.secondResult': isAnswerVal,
+        }).catch(error => {
+          // 楽観ロックのエラーの場合かつ相手が不正解の場合、secondとして登録
+        });
+      } else if (this.questionNo === 3) {
+        // 4問目
+        db.collection('rooms').doc(this.$route.params.id).update({
+          'battleResult.result4.secondId': twitterId,
+          'battleResult.result4.secondResult': isAnswerVal,
+        }).catch(error => {
+          // 楽観ロックのエラーの場合かつ相手が不正解の場合、secondとして登録
+        });
+      } else if (this.questionNo === 4) {
+        // 5問目
+        db.collection('rooms').doc(this.$route.params.id).update({
+          'battleResult.result5.secondId': twitterId,
+          'battleResult.result5.secondResult': isAnswerVal,
+        }).catch(error => {
+          // 楽観ロックのエラーの場合かつ相手が不正解の場合、secondとして登録
+        });
+      }
+    },
   },
   mounted() {
     // スナップショットでrooms監視
     this.unsubscribe = db.collection('rooms').doc(this.$route.params.id).onSnapshot(snapshot => {
-      if (snapshot.data().battleResults[this.questionNo].secondUser === this.$store.getters["localStorages/getTwitterId"]) {
-        // 最後の回答者が自分自身の場合
-        // 正誤判定
-        if (snapshot.data().battleResults[this.questionNo].secondUserAnswer === this.$answerJudgment.correct) {
-          // 正解の場合、丸を付与
-        }
-      } else {
-        // 最後の回答者が相手の場合
+      let battleRes = {};
+      switch (this.questionNo) {
+        case 0:
+          battleRes = snapshot.data().battleResult.result1; // 1問目の解答
+          break;
+        case 1:
+          battleRes = snapshot.data().battleResult.result2; // 2問目の解答
+          break;
+        case 2:
+          battleRes = snapshot.data().battleResult.result3; // 3問目の解答
+          break;
+        case 3:
+          battleRes = snapshot.data().battleResult.result4; // 4問目の解答
+          break;
       }
-      
-      if (snapshot.data().battleResults[this.questionNo].firstUser === this.$store.getters["localStorages/getTwitterId"]) {
-        // 最初の回答者が自分自身の場合
-        // 正誤判定
-        if (snapshot.data().battleResults[this.questionNo].firstUserAnswer === this.$answerJudgment.correct) {
-          // 正解の場合丸を付与
+      this.othermyCorrect = this.$answerJudgment.correctMark;
+
+      if (battleRes.firstId) {
+        // 最初の回答者の正誤判定
+        if (battleRes.firstResult === this.$answerJudgment.correct) {
+          // 正解の場合丸を付与(回答者が自分と相手の場合で引数分ける)
+          this.setCorrectMark(battleRes.firstId === this.$store.getters["localStorages/getTwitterId"] ? this.myCorrect : this.othermyCorrect);
+          // 正解者に丸を付与
+          if (battleRes.firstId === this.$store.getters["localStorages/getTwitterId"]) {
+            this.myCorrect = this.$answerJudgment.correctMark;
+          } else {
+            this.othermyCorrect = this.$answerJudgment.correctMark;
+          }
+          
+          // 効果音再生
+          correctEffects.volume = 0.7;
+          correctEffects.play();
+          correctEffects.currentTime = 0;
+
+          // 次の問題へ
+          this.numOfAnswers = 0;
+        } else {
+          // 不正解の場合
+          this.setIncorrectMark(battleRes.firstId === this.$store.getters["localStorages/getTwitterId"] ? this.myCorrect : this.othermyCorrect);
+          
+          // 不正解者にバツを付与
+          if (battleRes.firstId === this.$store.getters["localStorages/getTwitterId"]) {
+            this.myCorrect = this.$answerJudgment.incorrectMark;
+          } else {
+            this.othermyCorrect = this.$answerJudgment.incorrectMark;
+          }
+
+          // 効果音再生
+          incorrectEffects.volume = 0.7;
+          incorrectEffects.play();
+          incorrectEffects.currentTime = 0;
+
+          // 相手の解答を待つ
+          this.numOfAnswers++;
         }
-      } else {
-        // 最初の回答者が相手の場合
+      } else if (battleRes.secondId) {
+        // 最後の回答者の正誤判定
+        if (battleRes.secondResult === this.$answerJudgment.correct) {
+          // 正解の場合丸を付与(回答者が自分と相手の場合で引数分ける)
+          this.setCorrectMark(battleRes.secondId === this.$store.getters["localStorages/getTwitterId"] ? this.myCorrect : this.othermyCorrect);
+
+          // 正解者に丸を付与
+          if (battleRes.secondId === this.$store.getters["localStorages/getTwitterId"]) {
+            this.myCorrect = this.$answerJudgment.correctMark;
+          } else {
+            this.othermyCorrect = this.$answerJudgment.correctMark;
+          }
+          
+          // 効果音再生
+          correctEffects.volume = 0.7;
+          correctEffects.play();
+          correctEffects.currentTime = 0;
+
+          // 次の問題へ
+          this.numOfAnswers = 0;
+        } else {
+          // 不正解の場合
+          this.setIncorrectMark(battleRes.secondId === this.$store.getters["localStorages/getTwitterId"] ? this.myCorrect : this.othermyCorrect);
+
+          // 不正解者にバツを付与
+          if (battleRes.secondId === this.$store.getters["localStorages/getTwitterId"]) {
+            this.myCorrect = this.$answerJudgment.incorrectMark;
+          } else {
+            this.othermyCorrect = this.$answerJudgment.incorrectMark;
+          }
+
+          // 効果音再生
+          incorrectEffects.volume = 0.7;
+          incorrectEffects.play();
+          incorrectEffects.currentTime = 0;
+
+          // 次の問題へ
+          this.numOfAnswers = 0;
+        }
       }
     });
   },

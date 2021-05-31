@@ -197,18 +197,22 @@ export default {
         // 10以上
         bubbleSound10.volume = 1.0;
         bubbleSound10.play();
+        bubbleSound10.currentTime = 0;
       } else if (breakCount >= 6 && breakCount <= 9) {
         // 6以上9以下
         bubbleSound6_9.volume = 1.0;
         bubbleSound6_9.play();
+        bubbleSound6_9.currentTime = 0;
       } else if (breakCount >= 4 && breakCount <= 5) {
         // 4以上5以下
         bubbleSound4_5.volume = 1.0;
         bubbleSound4_5.play();
+        bubbleSound4_5.currentTime = 0;
       } else if (breakCount >= 2 && breakCount <= 3) {
         // 2以上3以下
         bubbleSound2_3.volume = 1.0;
         bubbleSound2_3.play();
+        bubbleSound2_3.currentTime = 0;
       }
     },
     rightJustified() {
