@@ -124,5 +124,8 @@ Vue.prototype.$answerJudgment = {
   correct: "correct",
   // 不正解
   incorrect: "incorrect",
-
+  // ◯
+  correctMark: 2,
+  // ×
+  incorrectMark: 1,
 }

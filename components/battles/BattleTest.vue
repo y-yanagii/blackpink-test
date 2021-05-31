@@ -8,8 +8,8 @@
         >
           <v-icon dark>mdi-account-circle</v-icon>
         </v-avatar>
-        <div v-if="myCorrect == 2" class="mark correct-mark"></div>
-        <div v-else-if="myCorrect === 1" class="mark incorrect-mark">❌</div>
+        <div v-if="myCorrect == $answerJudgment.correctMark" class="mark correct-mark"></div>
+        <div v-else-if="myCorrect === $answerJudgment.incorrectMark" class="mark incorrect-mark">❌</div>
       </div>
       <div class="avatar-circle">
         <v-avatar
@@ -18,8 +18,8 @@
         >
           <v-icon dark>mdi-account-circle</v-icon>
         </v-avatar>
-        <div v-if="othermyCorrect === 2" class="mark correct-mark"></div>
-        <div v-else-if="othermyCorrect === 1" class="mark incorrect-mark">❌</div>
+        <div v-if="othermyCorrect === $answerJudgment.correctMark" class="mark correct-mark"></div>
+        <div v-else-if="othermyCorrect === $answerJudgment.incorrectMark" class="mark incorrect-mark">❌</div>
       </div>
     </div>
     <transition
@@ -59,7 +59,10 @@ import QuestionNo from '~/components/battles/QuestionNo.vue';
 import Question from '~/components/ui/Question.vue';
 import Options from '~/components/ui/Options.vue';
 import { db } from '~/plugins/firebase.js';
-
+import correctMp3 from '~/assets/images/battle/correct.mp3';
+import incorrectMp3 from '~/assets/images/battle/incorrect.mp3';
+const correctEffects = new Audio(correctMp3);
+const incorrectEffects = new Audio(incorrectMp3);
 
 export default {
   data: function() {
@@ -89,7 +92,9 @@ export default {
     },
     speedSendAnswer(abcdStr, optionBtnInfo) {
       // 解答送信
-      debugger
+      this.myCorrect = 2
+      correctEffects.volume = 0.7;
+      correctEffects.play();
       if (optionBtnInfo.answer.isAnswer) {
         // 正解の場合
       } else {
@@ -129,7 +134,6 @@ export default {
   },
   watch: {
     myCorrect() {
-      debugger
       setTimeout(() => {
         this.myCorrect = 0; // 初期化
       }, 1000)
