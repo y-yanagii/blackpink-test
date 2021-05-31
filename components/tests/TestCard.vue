@@ -110,7 +110,6 @@ export default {
   .test-card {
     margin: auto;
     width: 90%;
-    height: 510px;
     border: solid 2px $base-text-color;
     background-color: $card-background-color;
     border-radius: 9px;
@@ -155,7 +154,7 @@ export default {
 
 // gif領域
 .gif {
-  padding: 4%;
+  height: 110px;
 }
 
 // サブコード領域（テストカードの下のリンクや埋め込み部分）

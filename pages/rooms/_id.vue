@@ -2,7 +2,7 @@
   <div>
     <v-row justify="center" align="center">
       <v-col cols="12" sm="8">
-        <div v-cloak>
+        <div class="cloak-width" v-cloak>
           <transition
             :name="transitionName"
             mode="out-in"
@@ -98,6 +98,11 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.cloak-width {
+  margin: auto;
+  max-width: 550px;
+}
+
 // vs画面アニメーション
 .vs-enter-active, .vs-leave-active{
     transition: opacity 2s

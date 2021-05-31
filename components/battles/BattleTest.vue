@@ -32,11 +32,14 @@
       ></QuestionNo>
       <div
         v-else-if="isDisplayNum === $battleDisplayNum.test"
-        class="test-card"
+        class="battle-card"
       >
         <Question
           :test="test"
         ></Question>
+        <div class="content-battle-area">
+
+        </div>
         <Options
           :test="test"
           :abcd="abcd"
@@ -99,8 +102,9 @@ export default {
 }
 
 // テスト領域
-.test-card {
+.battle-card {
   margin: auto;
+  padding: 5% 0;
   width: 100%;
   border: solid 2px $base-text-color;
   background-color: $card-background-color;
@@ -113,5 +117,9 @@ export default {
 }
 .test-enter, .test-leave-to{
     opacity: 0;
+}
+
+.content-battle-area {
+  margin-bottom: 50%;
 }
 </style>
