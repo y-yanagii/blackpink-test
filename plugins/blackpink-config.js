@@ -117,3 +117,12 @@ Vue.prototype.$battleDisplayNum = {
   // テストカード
   test: 3,
 }
+
+// 1対1の正誤判定
+Vue.prototype.$answerJudgment = {
+  // 正解
+  correct: "correct",
+  // 不正解
+  incorrect: "incorrect",
+
+}

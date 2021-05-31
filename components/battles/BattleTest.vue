@@ -1,21 +1,25 @@
 <template>
   <div class="text-center">
     <div class="users-area">
-      <div>
+      <div class="avatar-circle">
         <v-avatar
           size="40"
           color="#f4a6b8"
         >
           <v-icon dark>mdi-account-circle</v-icon>
         </v-avatar>
+        <div v-if="myCorrect == 2" class="mark correct-mark"></div>
+        <div v-else-if="myCorrect === 1" class="mark incorrect-mark">❌</div>
       </div>
-      <div>
+      <div class="avatar-circle">
         <v-avatar
           size="40"
           color="#f4a6b8"
         >
           <v-icon dark>mdi-account-circle</v-icon>
         </v-avatar>
+        <div v-if="othermyCorrect === 2" class="mark correct-mark"></div>
+        <div v-else-if="othermyCorrect === 1" class="mark incorrect-mark">❌</div>
       </div>
     </div>
     <transition
@@ -56,6 +60,7 @@ import Question from '~/components/ui/Question.vue';
 import Options from '~/components/ui/Options.vue';
 import { db } from '~/plugins/firebase.js';
 
+
 export default {
   data: function() {
     return {
@@ -64,6 +69,8 @@ export default {
       abcd: ["A. ", "B. ", "C. ", "D. "],
       opponentStatus: 0, // 相手の正答状況
       unsubscribe: null, // 5問終了した時点で監視終了
+      myCorrect: 0, // 1:不正解、2:正解
+      othermyCorrect: 0, // 1:不正解、2:正解
     }
   },
   props: ["test", "questionNo"],
@@ -89,12 +96,49 @@ export default {
         // 不正解の場合
       }
     },
+    setCorrectMark() {
+      // 正解者に丸を付与
+    },
+    setIncorrectMark() {
+      // 不正解者にバツを付与
+    }
   },
   mounted() {
     // スナップショットでrooms監視
     this.unsubscribe = db.collection('rooms').doc(this.$route.params.id).onSnapshot(snapshot => {
-      // if (snapshot.data().battleResults[])
+      if (snapshot.data().battleResults[this.questionNo].secondUser === this.$store.getters["localStorages/getTwitterId"]) {
+        // 最後の回答者が自分自身の場合
+        // 正誤判定
+        if (snapshot.data().battleResults[this.questionNo].secondUserAnswer === this.$answerJudgment.correct) {
+          // 正解の場合、丸を付与
+        }
+      } else {
+        // 最後の回答者が相手の場合
+      }
+      
+      if (snapshot.data().battleResults[this.questionNo].firstUser === this.$store.getters["localStorages/getTwitterId"]) {
+        // 最初の回答者が自分自身の場合
+        // 正誤判定
+        if (snapshot.data().battleResults[this.questionNo].firstUserAnswer === this.$answerJudgment.correct) {
+          // 正解の場合丸を付与
+        }
+      } else {
+        // 最初の回答者が相手の場合
+      }
     });
+  },
+  watch: {
+    myCorrect() {
+      debugger
+      setTimeout(() => {
+        this.myCorrect = 0; // 初期化
+      }, 1000)
+    },
+    othermyCorrect() {
+      setTimeout(() => {
+        this.othermyCorrect = 0; // 初期化
+      }, 1000)
+    },
   },
   components: {
     QuestionNo,
@@ -136,5 +180,28 @@ export default {
 
 .content-battle-area {
   margin-bottom: 50%;
+}
+
+.avatar-circle {
+  position: relative;
+}
+
+// ◯×
+.mark {
+  position: absolute;
+  top: 24px;
+  left: 22px;
+  width: 60%;
+  height: 60%;
+}
+// ◯
+.correct-mark {
+  border: solid 4px green;
+  border-radius: 50%;
+}
+
+// ×
+.incorrect-mark {
+
 }
 </style>
