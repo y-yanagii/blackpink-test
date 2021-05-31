@@ -54,6 +54,7 @@
 import QuestionNo from '~/components/battles/QuestionNo.vue';
 import Question from '~/components/ui/Question.vue';
 import Options from '~/components/ui/Options.vue';
+import { db } from '~/plugins/firebase.js';
 
 export default {
   data: function() {
@@ -61,6 +62,8 @@ export default {
       isDisplayNum: 2,
       transitionName: "question-no",
       abcd: ["A. ", "B. ", "C. ", "D. "],
+      opponentStatus: 0, // 相手の正答状況
+      unsubscribe: null, // 5問終了した時点で監視終了
     }
   },
   props: ["test", "questionNo"],
@@ -77,9 +80,21 @@ export default {
         this.transitionName = "question";
       }
     },
-    speedSendAnswer() {
+    speedSendAnswer(abcdStr, optionBtnInfo) {
       // 解答送信
+      debugger
+      if (optionBtnInfo.answer.isAnswer) {
+        // 正解の場合
+      } else {
+        // 不正解の場合
+      }
     },
+  },
+  mounted() {
+    // スナップショットでrooms監視
+    this.unsubscribe = db.collection('rooms').doc(this.$route.params.id).onSnapshot(snapshot => {
+      // if (snapshot.data().battleResults[])
+    });
   },
   components: {
     QuestionNo,
