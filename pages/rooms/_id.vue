@@ -20,8 +20,7 @@
             ></Start>
             <BattleTest
               v-else-if="isDisplayNum === $battleDisplayNum.test"
-              :questionNo="questionNo"
-              :test="setTests[questionNo]"
+              :tests="setTests"
             ></BattleTest>
           </transition>
         </div>
@@ -41,7 +40,6 @@ export default {
       tests: [],
       isDisplayNum: 0,
       userNames: ["柳澤_RUNTEQ17期生", "COM"],
-      questionNo: 0,
       transitionName: "vs",
     }
   },
@@ -105,28 +103,28 @@ export default {
 
 // vs画面アニメーション
 .vs-enter-active, .vs-leave-active{
-    transition: opacity 2s
+  transition: opacity 2s
 }
 .vs-enter, .vs-leave-to{
-    opacity: 0;
+  opacity: 0;
 }
 
 // START!画面アニメーション
-.start-enter-active, .start-leave-active{
-    transition: opacity 1s
+.start-enter-active {
+  transition: opacity 1s
 }
 .start-enter, .start-leave-to{
-    opacity: 0;
+  opacity: 0;
 }
 
 // Questionナンバー画面アニメーション
 .question-enter-active, .question-leave-active{
-    -webkit-transform: scale(0.5);
-    transform: scale(1);
-    -webkit-transition: .3s ease-in;
-    transition: .3s ease-in;
+  -webkit-transform: scale(0.5);
+  transform: scale(1);
+  -webkit-transition: .3s ease-in;
+  transition: .3s ease-in;
 }
 .question-enter, .question-leave-to{
-    opacity: 0;
+  opacity: 0;
 }
 </style>

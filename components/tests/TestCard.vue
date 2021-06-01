@@ -39,6 +39,7 @@
       <Options
         :test="test"
         :abcd="abcd"
+        :isProcessing="false"
         @option-click="sendAnswer"
       ></Options>
     </div>

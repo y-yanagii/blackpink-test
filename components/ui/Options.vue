@@ -9,6 +9,7 @@
         outlined
         class="option-btn"
         nuxt
+        :disabled="isProcessing"
         @click="$emit('option-click', abcd[index], optionBtnInfo)"
       >
         {{abcd[index]}}
@@ -28,7 +29,7 @@
 <script>
 
 export default {
-  props: ["test", "abcd"],
+  props: ["test", "abcd", "isProcessing"],
 }
 </script>
 

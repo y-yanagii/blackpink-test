@@ -39,14 +39,15 @@
         class="battle-card"
       >
         <Question
-          :test="test"
+          :test="tests[questionNo]"
         ></Question>
         <div class="content-battle-area">
 
         </div>
         <Options
-          :test="test"
+          :test="tests[questionNo]"
           :abcd="abcd"
+          :isProcessing="isProcessing"
           @option-click="speedSendAnswer"
         ></Options>
       </div>
@@ -65,7 +66,7 @@ const correctEffects = new Audio(correctMp3);
 const incorrectEffects = new Audio(incorrectMp3);
 
 export default {
-  data: function() {
+  data() {
     return {
       isDisplayNum: 2,
       transitionName: "question-no",
@@ -75,9 +76,11 @@ export default {
       myCorrect: 0, // 1:不正解、2:正解
       othermyCorrect: 0, // 1:不正解、2:正解
       numOfAnswers: 0, // 現在の回答数
+      questionNo: 0, // クエッションナンバー
+      isProcessing: false, // 選択値ボタンの制御
     }
   },
-  props: ["test", "questionNo"],
+  props: ["tests"],
   methods: {
     displayControl() {
       // No.と問題表示の切り替え
@@ -85,7 +88,7 @@ export default {
         // 問題表示
         this.isDisplayNum = this.$battleDisplayNum.test;
         this.transitionName = "test";
-      } else if (this.isDisplayNum === this.$battleDisplayNum.questionNo) {
+      } else if (this.isDisplayNum === this.$battleDisplayNum.test) {
         // Question No.〇〇を表示
         this.isDisplayNum = this.$battleDisplayNum.questionNo;
         this.transitionName = "question";
@@ -224,13 +227,10 @@ export default {
           battleRes = snapshot.data().battleResult.result4; // 4問目の解答
           break;
       }
-      this.othermyCorrect = this.$answerJudgment.correctMark;
 
       if (battleRes.firstId) {
         // 最初の回答者の正誤判定
         if (battleRes.firstResult === this.$answerJudgment.correct) {
-          // 正解の場合丸を付与(回答者が自分と相手の場合で引数分ける)
-          this.setCorrectMark(battleRes.firstId === this.$store.getters["localStorages/getTwitterId"] ? this.myCorrect : this.othermyCorrect);
           // 正解者に丸を付与
           if (battleRes.firstId === this.$store.getters["localStorages/getTwitterId"]) {
             this.myCorrect = this.$answerJudgment.correctMark;
@@ -245,13 +245,16 @@ export default {
 
           // 次の問題へ
           this.numOfAnswers = 0;
+          this.isProcessing = false;
+          this.questionNo++;
+          this.displayControl();
         } else {
           // 不正解の場合
-          this.setIncorrectMark(battleRes.firstId === this.$store.getters["localStorages/getTwitterId"] ? this.myCorrect : this.othermyCorrect);
-          
           // 不正解者にバツを付与
           if (battleRes.firstId === this.$store.getters["localStorages/getTwitterId"]) {
             this.myCorrect = this.$answerJudgment.incorrectMark;
+            // 不正解者が自分の場合、相手の回答を待つためボタンを日活性
+            this.isProcessing = true;
           } else {
             this.othermyCorrect = this.$answerJudgment.incorrectMark;
           }
@@ -267,9 +270,6 @@ export default {
       } else if (battleRes.secondId) {
         // 最後の回答者の正誤判定
         if (battleRes.secondResult === this.$answerJudgment.correct) {
-          // 正解の場合丸を付与(回答者が自分と相手の場合で引数分ける)
-          this.setCorrectMark(battleRes.secondId === this.$store.getters["localStorages/getTwitterId"] ? this.myCorrect : this.othermyCorrect);
-
           // 正解者に丸を付与
           if (battleRes.secondId === this.$store.getters["localStorages/getTwitterId"]) {
             this.myCorrect = this.$answerJudgment.correctMark;
@@ -284,10 +284,11 @@ export default {
 
           // 次の問題へ
           this.numOfAnswers = 0;
+          this.isProcessing = false;
+          this.questionNo++;
+          this.displayControl();
         } else {
           // 不正解の場合
-          this.setIncorrectMark(battleRes.secondId === this.$store.getters["localStorages/getTwitterId"] ? this.myCorrect : this.othermyCorrect);
-
           // 不正解者にバツを付与
           if (battleRes.secondId === this.$store.getters["localStorages/getTwitterId"]) {
             this.myCorrect = this.$answerJudgment.incorrectMark;
@@ -302,6 +303,9 @@ export default {
 
           // 次の問題へ
           this.numOfAnswers = 0;
+          this.isProcessing = false;
+          this.questionNo++;
+          this.displayControl();
         }
       }
     });
