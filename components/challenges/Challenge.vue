@@ -11,13 +11,22 @@
           v-show="selectedMode.modeType === $mode.suddendeath"
           :lives="lives"
         ></Life>
-        <TestCard
-          :currentTest="currentTest"
-          :test="tests[currentTest]"
-          :testTotal="tests.length"
-          ref="test_card"
-          @option-click="addAnswer"
-        ></TestCard>
+        <transition
+          name="test-card"
+          enter-active-class="animated flipInX"
+          leave-active-class="animated fadeOut"
+          mode="out-in"
+          appear
+        >
+          <TestCard
+            v-if="isDisplayTestCard"
+            :currentTest="currentTest"
+            :test="tests[currentTest]"
+            :testTotal="tests.length"
+            ref="test_card"
+            @option-click="addAnswer"
+          ></TestCard>
+        </transition>
       </v-col>
     </v-row>
   </div>
@@ -71,6 +80,7 @@ export default {
         },
       ],
       selectedMode: this.$store.getters['localStorages/choiceMode'],
+      isDisplayTestCard: true,
     }
   },
   computed: {
@@ -88,6 +98,7 @@ export default {
   methods: {
     // 選択肢押下時処理(解答時)
     addAnswer(value) {
+      this.isDisplayTestCard = false;
       // 選択した解答を配列に保持（正誤かをtrue、falseで判断）
       this.newRecord.answerIncorrectsArray.push(value);
 
@@ -212,5 +223,12 @@ export default {
     // rankingsコレクションの初期化
     this.$store.dispatch('rankings/init');
   },
+  watch: {
+    isDisplayTestCard() {
+      setTimeout(() => {
+        this.isDisplayTestCard = true; // 1秒後にテストカード表示
+      }, 1000)
+    }
+  }
 }
 </script>
