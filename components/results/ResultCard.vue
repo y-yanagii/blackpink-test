@@ -13,7 +13,7 @@
     <div class="result-card">
       <!-- タイトル領域 -->
       <div class="text-center result-card-title">
-        <p>CONGRATULATIONS！<br>BLACKPINK TEST({{ newRecord.modeValue }})</p>
+        <p>CONGRATULATIONS！<br>BLINK GAMES({{ newRecord.modeValue }})</p>
       </div>
       <!-- 結果情報領域 -->
       <div class="text-center result-area">

@@ -118,7 +118,7 @@ export default {
       miniVariant: false,
       right: true,
       rightDrawer: false,
-      title: 'BLAↃKPINK TEST',
+      title: 'BLINK GAMES',
       direction: 'bottom',
       fab: false,
       transition: 'scale-transition',
