@@ -29,7 +29,7 @@
         </transition>
       </div>
       <!-- 初期登録領域 -->
-      <div class="text-center">
+      <div class="text-center play-btn-area">
         <br>
         <!-- PLAY -->
         <v-btn
@@ -141,6 +141,10 @@ export default {
 }
 .fadeLogo-enter, .fade-leave-to {
   opacity: 0;
+}
+
+.play-btn-area {
+  margin-top: 45%;
 }
 
 // .username-text {
