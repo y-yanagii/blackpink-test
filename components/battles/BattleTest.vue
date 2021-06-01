@@ -487,7 +487,7 @@ export default {
 }
 
 // ×
-.incorrect-mark {
+// .incorrect-mark {
 
-}
+// }
 </style>

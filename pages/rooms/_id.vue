@@ -72,7 +72,7 @@ export default {
         serialNums.push(nums[Math.floor(Math.random() * nums.length)]);
       }
 
-      // TODO
+      // TODO消す
       serialNums = [1,2,3,4,5];
       this.tests = this.$store.getters["tests/getTestsAtRandom"](serialNums);
       return this.tests;

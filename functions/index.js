@@ -113,6 +113,7 @@ exports.updatedStatus = functions.region('asia-northeast1').firestore.document('
     // マッチしたユーザをトランザクション処理で更新させる、ルームドキュメント作成
     await registRoomId(waitingsRef, newRoomId);
 
+    // TODO 前のコード(不要)
     // db.runTransaction(async (transaction) => {
     //   transaction.get(targetUsers).then((querySnapshot) => {
     //     querySnapshot.forEach(async (doc) => {
