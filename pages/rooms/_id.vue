@@ -35,11 +35,11 @@ import Start from '~/components/battles/Start.vue';
 import BattleTest from '~/components/battles/BattleTest.vue';
 
 export default {
-  data: function() {
+  data() {
     return {
       tests: [],
       isDisplayNum: 0,
-      userNames: ["柳澤_RUNTEQ17期生", "COM"],
+      userNames: [this.$store.getters['localStorages/getUserName'], "COM"],
       transitionName: "vs",
     }
   },
