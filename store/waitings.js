@@ -24,6 +24,14 @@ const actions = {
       updateAt: firebase.firestore.FieldValue.serverTimestamp(),
     }, { merge: false });
   }),
+  setCom: firestoreAction((context, twitterId) => {
+    // マッチ済みに登録しCOMと対戦
+    waitingsRef.doc(twitterId).set({
+      roomId: Math.random().toString(32).substring(2),
+      status: 1,
+      updateAt: firebase.firestore.FieldValue.serverTimestamp(),
+    }, { merge: false })
+  }),
 }
 
 const mutations = {

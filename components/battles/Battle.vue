@@ -27,15 +27,18 @@ export default {
   },
   mounted() {
     const twitterId = this.$store.getters['localStorages/getTwitterId'];
-    // ユーザ待ち状態に登録
-    this.$store.dispatch('waitings/set', twitterId);
+    // TODOユーザ待ち状態に登録
+    // this.$store.dispatch('waitings/set', twitterId);
+    // COM対戦
+    this.$store.dispatch('waitings/setCom', twitterId);
+
     // スナップショットでwaitingsの自身のレコードを監視
     this.unsubscribe = db.collection('waitings').doc(twitterId).onSnapshot(snapshot => {
       // waitingsにroomIdが入ってくるので、マッチング成功。部屋移動
-      console.log(snapshot.data());
-
       // マッチした時点で監視を止めるため関数実行させる
       if (snapshot.data().status === this.$waitingStatus.matched) {
+        // ルームドキュメントの作成
+        this.$store.dispatch('rooms/createCom', { twitterId: twitterId, roomId: snapshot.data().roomId });
         this.$router.push({ path: `/rooms/${snapshot.data().roomId}`});
         this.unsubscribe();
       }
