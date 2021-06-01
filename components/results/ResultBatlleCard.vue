@@ -1,14 +1,14 @@
 <template>
   <div class="text-center">
     <div class="text-center game-title">
-      1ON1
+      BLINK GAMES(1ON1)
     </div>
     <div class="result-card">
       <!-- タイトル領域 -->
       <div class="text-center result-card-title">
         <p v-if="battleResult == $answerJudgment.win">CONGRATULATIONS！</p>
         <p v-else-if="battleResult == $answerJudgment.lose">Oh...</p>
-        <p v-else>RETRY?</p>
+        <p v-else>One more time?</p>
       </div>
       <!-- 結果情報領域 -->
       <div class="text-center result-area">
