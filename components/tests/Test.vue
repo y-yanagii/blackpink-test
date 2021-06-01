@@ -108,6 +108,7 @@ export default {
       // メッセージ取得処理
       // Vuexに解答結果と今回のテスト内容を送信し保持
       this.$store.dispatch('localStorages/setNewRecord', { newRecord: this.newRecord });
+      this.$store.dispatch('localStorages/setBattleResult', ""); // 1on1の結果を初期化
       this.$store.dispatch('localStorages/setTargetTests', this.tests);
       // 検定結果画面に遷移
       this.$router.push({ path: "/result" })
