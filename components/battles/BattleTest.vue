@@ -197,6 +197,85 @@ export default {
         });
       }
     },
+    endGame(data) {
+      // 終了処理
+      // roomsの監視終了
+      this.unsubscribe();
+
+      // COM操作を止める
+      clearTimeout(this.comOperation);
+
+      // 勝敗判定とローカルストレージに結果をセット
+      this.winOrLose(data);
+
+      // 結果画面へリダイレクト
+      this.$router.push({ path: "/result" });
+    },
+    winOrLose(data) {
+      // 勝敗判定(true: Win, false: Lose)
+      let res = [];
+      const twitterId = this.$store.getters["localStorages/getTwitterId"];
+      res.push(this.checkResult(data.battleResult.result1, twitterId)); // 1問目の結果
+      res.push(this.checkResult(data.battleResult.result2, twitterId)); // 2問目の結果
+      res.push(this.checkResult(data.battleResult.result3, twitterId)); // 3問目の結果
+      res.push(this.checkResult(data.battleResult.result4, twitterId)); // 4問目の結果
+      res.push(this.checkResult(data.battleResult.result5, twitterId)); // 5問目の結果
+
+      // win,loseの数を比較して勝敗判定を行う
+      const wins = res.filter(r => r === this.$answerJudgment.win);
+      const loses = res.filter(r => r === this.$answerJudgment.lose);
+      if (wins.length > loses.length) {
+        // winの数が多い場合
+        this.$store.dispatch('localStorages/setNewRecord', this.$answerJudgment.win);
+      } else if (wins.length === loses.length) {
+        // draw(win, loseの数が同じ場合)
+        this.$store.dispatch('localStorages/setNewRecord', this.$answerJudgment.draw);
+      } else if (wins.length < loses.length) {
+        // loseの数が多い場合
+        this.$store.dispatch('localStorages/setNewRecord', this.$answerJudgment.lose);
+      }
+    },
+    checkResult(dataResult, twitterId) {
+      // １問ずつ結果発表
+      let  myCorrectCount = 0; // 自分
+      let  opponentCorrectCount = 0; // 相手
+
+      // 正解パターン
+      if ((dataResult.firstId === twitterId && dataResult.firstResult === this.$answerJudgment.correct)
+      || (dataResult.secondId === twitterId && dataResult.secondResult === this.$answerJudgment.correct)) {
+        // 先または後に自分が答えて正解した場合
+        myCorrectCount++;
+      }
+      if ((dataResult.firstId === this.$com.comId && dataResult.firstResult === this.$answerJudgment.correct)
+      || (dataResult.secondId === this.$com.comId && dataResult.secondResult === this.$answerJudgment.correct)) {
+        // COMが先に答えて正解した場合
+        opponentCorrectCount++;
+      }
+
+      // 不正解パターン
+      if ((dataResult.firstId === twitterId && dataResult.firstResult === this.$answerJudgment.incorrect)
+      || (dataResult.secondId === twitterId && dataResult.secondResult === this.$answerJudgment.incorrect)) {
+        // 先または後に自分が答えて不正解だった場合
+        myCorrectCount--;
+      }
+      if ((dataResult.firstId === this.$com.comId && dataResult.firstResult === this.$answerJudgment.incorrect)
+      || (dataResult.secondId === this.$com.comId && dataResult.secondResult === this.$answerJudgment.incorrect)) {
+        // COMが先または後に答えて不正解だった場合
+        opponentCorrectCount--;
+      }
+
+      // 判定
+      if (myCorrectCount > 0) {
+        // win
+        return this.$answerJudgment.win;
+      } else if (myCorrectCount === opponentCorrectCount) {
+        // draw
+        return this.$answerJudgment.draw;
+      } else {
+        // lose
+        return this.$answerJudgment.lose;
+      }
+    }
   },
   mounted() {
     // スナップショットでrooms監視
@@ -240,7 +319,7 @@ export default {
 
           this.numOfAnswers = 0; // 解答人数を初期化
           this.isProcessing = false; // 不正解時の選択値ボタン非活性の初期化
-          this.questionNo++; // 次の問題へ
+          (this.questionNo === 4) ? this.endGame(snapshot.data()) : this.questionNo++ // 最終問題の場合終了処理、それ以外次の問題へ;
           this.displayControl(); // Q. ◯を表示してから問題カードを表示
         } else {
           // 不正解の場合
@@ -258,7 +337,7 @@ export default {
 
           this.numOfAnswers = 0; // 解答人数を初期化
           this.isProcessing = false; // 不正解時の選択値ボタン非活性の初期化
-          this.questionNo++; // 次の問題へ
+          (this.questionNo === 4) ? this.endGame(snapshot.data()) : this.questionNo++ // 最終問題の場合終了処理、それ以外次の問題へ;
           this.displayControl(); // Q. ◯を表示してから問題カードを表示
         }
       } else if (battleRes.firstId) {
@@ -280,14 +359,14 @@ export default {
 
           this.numOfAnswers = 0; // 解答人数を初期化
           this.isProcessing = false; // 不正解時の選択値ボタン非活性の初期化
-          this.questionNo++; // 次の問題へ
+          (this.questionNo === 4) ? this.endGame(snapshot.data()) : this.questionNo++ // 最終問題の場合終了処理、それ以外次の問題へ;
           this.displayControl(); // Q. ◯を表示してから問題カードを表示
         } else {
           // 不正解の場合
           // 不正解者にバツを付与
           if (battleRes.firstId === this.$store.getters["localStorages/getTwitterId"]) {
             this.myCorrect = this.$answerJudgment.incorrectMark;
-            // 不正解者が自分の場合、相手の回答を待つためボタンを日活性
+            // 不正解者が自分の場合、相手の回答を待つためボタンを非活性
             this.isProcessing = true;
           } else {
             this.othermyCorrect = this.$answerJudgment.incorrectMark;

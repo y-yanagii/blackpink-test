@@ -128,6 +128,12 @@ Vue.prototype.$answerJudgment = {
   correctMark: 2,
   // ×
   incorrectMark: 1,
+  // win
+  win: "win",
+  // draw
+  draw: "draw",
+  // lose
+  lose: "lose",
 }
 
 // COM情報
