@@ -226,13 +226,13 @@ export default {
       const loses = res.filter(r => r === this.$answerJudgment.lose);
       if (wins.length > loses.length) {
         // winの数が多い場合
-        this.$store.dispatch('localStorages/setNewRecord', this.$answerJudgment.win);
+        this.$store.dispatch('localStorages/setBattleResult', this.$answerJudgment.win);
       } else if (wins.length === loses.length) {
         // draw(win, loseの数が同じ場合)
-        this.$store.dispatch('localStorages/setNewRecord', this.$answerJudgment.draw);
+        this.$store.dispatch('localStorages/setBattleResult', this.$answerJudgment.draw);
       } else if (wins.length < loses.length) {
         // loseの数が多い場合
-        this.$store.dispatch('localStorages/setNewRecord', this.$answerJudgment.lose);
+        this.$store.dispatch('localStorages/setBattleResult', this.$answerJudgment.lose);
       }
     },
     checkResult(dataResult, twitterId) {

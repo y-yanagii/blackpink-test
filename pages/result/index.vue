@@ -3,13 +3,19 @@
     <v-row justify="center" align="center">
       <v-col cols="12" sm="8" md="6">
         <transition name="fadeResultCard" appear>
+          <ResultBatlleCard
+            v-if="battleResult"
+            :battleResult="battleResult"
+          ></ResultBatlleCard>
           <ResultCard
+            v-else
             :newRecord="newRecord"
           ></ResultCard>
         </transition>
         <ResultSns></ResultSns>
         <ResultFooter></ResultFooter>
         <ResultConfirm
+          v-if="!battleResult"
           :newRecord="newRecord"
           :tests="tests"
         ></ResultConfirm>
@@ -22,6 +28,7 @@
 </template>
 
 <script>
+import ResultBatlleCard from '~/components/results/ResultBatlleCard.vue';
 import ResultCard from '~/components/results/ResultCard.vue';
 import ResultFooter from '~/components/results/ResultFooter.vue';
 import ResultSns from '~/components/results/ResultSns.vue';
@@ -33,6 +40,7 @@ export default {
     return {
       newRecord: this.$store.getters['localStorages/getNewRecord'].newRecord,
       tests: this.$store.getters['localStorages/getTargetTests'],
+      battleResult: this.$store.getters['localStorages/getBattleResult']
     }
   },
   async asyncData(context) {
@@ -44,6 +52,7 @@ export default {
     return { items: response["items"] }
   },
   components: {
+    ResultBatlleCard,
     ResultCard,
     ResultFooter,
     ResultSns,

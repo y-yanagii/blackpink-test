@@ -8,6 +8,7 @@ const state = () => ({
   guestPlayFlag: false,
   newRecord: {},
   targetTests: [],
+  battleResult: "",
 });
 
 const getters = {
@@ -21,6 +22,7 @@ const getters = {
   getGuestPlay: state => { return state.guestPlayFlag },
   getNewRecord: state => { return state.newRecord },
   getTargetTests: state => { return state.targetTests },
+  getBattleResult: state => { return state.battleResult },
 };
 
 const mutations = {
@@ -46,7 +48,10 @@ const mutations = {
   },
   setTargetTests(state, targetTests) {
     state.targetTests = targetTests;
-  }
+  },
+  setBattleResult(state, battleResult) {
+    state.battleResult = battleResult;
+  },
 };
 
 const actions = {
@@ -68,7 +73,10 @@ const actions = {
   },
   setTargetTests(context, targetTests) {
     context.commit('setTargetTests', targetTests);
-  }
+  },
+  setBattleResult(context, battleResult) {
+    context.commit('setBattleResult', battleResult);
+  },
 };
 
 // 上記のオブジェクトをexport
