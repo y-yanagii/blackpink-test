@@ -129,3 +129,9 @@ Vue.prototype.$answerJudgment = {
   // ×
   incorrectMark: 1,
 }
+
+// COM情報
+Vue.prototype.$com = {
+  // COMのTwitterId
+  comId: "account",
+}

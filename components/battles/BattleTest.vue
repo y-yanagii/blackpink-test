@@ -78,6 +78,9 @@ export default {
       numOfAnswers: 0, // 現在の回答数
       questionNo: 0, // クエッションナンバー
       isProcessing: false, // 選択値ボタンの制御
+      comRandomCorrect: [true, false], // ランダムでcomの正解、不正解を決定
+      comAnswerTimes: [5000, 7000, 7000, 8000, 10000], // ランダムでcomの回答時間を決定
+      comOperation: null,
     }
   },
   props: ["tests"],
@@ -105,20 +108,6 @@ export default {
         // 他に回答者がいた場合
         this.setSecondUserAnswer(twitterId, isAnswerVal);
       }
-    },
-    setCorrectMark(correction) {
-      // 正解者に丸を付与
-      correction = this.$answerJudgment.correctMark;
-      correctEffects.volume = 0.7;
-      correctEffects.play();
-      correctEffects.currentTime = 0;
-    },
-    setIncorrectMark(correction) {
-      // 不正解者にバツを付与
-      correction = this.$answerJudgment.incorrectMark;
-      incorrectEffects.volume = 0.7;
-      incorrectEffects.play();
-      incorrectEffects.currentTime = 0;
     },
     setFirstUserAnswer(twitterId, isAnswerVal) {
       // ファースト回答者として登録
@@ -226,28 +215,73 @@ export default {
         case 3:
           battleRes = snapshot.data().battleResult.result4; // 4問目の解答
           break;
+        case 4:
+          battleRes = snapshot.data().battleResult.result5; // 5問目の解答
+          break;
       }
 
-      if (battleRes.firstId) {
+      // 先に最後の回答者を見る
+      if (battleRes.secondId) {
+        // 最後の回答者の正誤判定
+        if (battleRes.secondResult === this.$answerJudgment.correct) {
+          // 正解者に丸を付与
+          if (battleRes.secondId === this.$store.getters["localStorages/getTwitterId"]) {
+            this.myCorrect = this.$answerJudgment.correctMark;
+            // COM操作を止める
+            clearTimeout(this.comOperation);
+          } else {
+            this.othermyCorrect = this.$answerJudgment.correctMark;
+          }
+          
+          // 効果音再生(正解)
+          correctEffects.volume = 0.7;
+          correctEffects.play();
+          correctEffects.currentTime = 0;
+
+          this.numOfAnswers = 0; // 解答人数を初期化
+          this.isProcessing = false; // 不正解時の選択値ボタン非活性の初期化
+          this.questionNo++; // 次の問題へ
+          this.displayControl(); // Q. ◯を表示してから問題カードを表示
+        } else {
+          // 不正解の場合
+          // 不正解者にバツを付与
+          if (battleRes.secondId === this.$store.getters["localStorages/getTwitterId"]) {
+            this.myCorrect = this.$answerJudgment.incorrectMark;
+          } else {
+            this.othermyCorrect = this.$answerJudgment.incorrectMark;
+          }
+
+          // 効果音再生(不正解)
+          incorrectEffects.volume = 0.7;
+          incorrectEffects.play();
+          incorrectEffects.currentTime = 0;
+
+          this.numOfAnswers = 0; // 解答人数を初期化
+          this.isProcessing = false; // 不正解時の選択値ボタン非活性の初期化
+          this.questionNo++; // 次の問題へ
+          this.displayControl(); // Q. ◯を表示してから問題カードを表示
+        }
+      } else if (battleRes.firstId) {
         // 最初の回答者の正誤判定
         if (battleRes.firstResult === this.$answerJudgment.correct) {
           // 正解者に丸を付与
           if (battleRes.firstId === this.$store.getters["localStorages/getTwitterId"]) {
+            // COM操作を止める
+            clearTimeout(this.comOperation);
             this.myCorrect = this.$answerJudgment.correctMark;
           } else {
             this.othermyCorrect = this.$answerJudgment.correctMark;
           }
           
-          // 効果音再生
+          // 効果音再生(正解)
           correctEffects.volume = 0.7;
           correctEffects.play();
           correctEffects.currentTime = 0;
 
-          // 次の問題へ
-          this.numOfAnswers = 0;
-          this.isProcessing = false;
-          this.questionNo++;
-          this.displayControl();
+          this.numOfAnswers = 0; // 解答人数を初期化
+          this.isProcessing = false; // 不正解時の選択値ボタン非活性の初期化
+          this.questionNo++; // 次の問題へ
+          this.displayControl(); // Q. ◯を表示してから問題カードを表示
         } else {
           // 不正解の場合
           // 不正解者にバツを付与
@@ -259,7 +293,7 @@ export default {
             this.othermyCorrect = this.$answerJudgment.incorrectMark;
           }
 
-          // 効果音再生
+          // 効果音再生(不正解)
           incorrectEffects.volume = 0.7;
           incorrectEffects.play();
           incorrectEffects.currentTime = 0;
@@ -267,60 +301,44 @@ export default {
           // 相手の解答を待つ
           this.numOfAnswers++;
         }
-      } else if (battleRes.secondId) {
-        // 最後の回答者の正誤判定
-        if (battleRes.secondResult === this.$answerJudgment.correct) {
-          // 正解者に丸を付与
-          if (battleRes.secondId === this.$store.getters["localStorages/getTwitterId"]) {
-            this.myCorrect = this.$answerJudgment.correctMark;
-          } else {
-            this.othermyCorrect = this.$answerJudgment.correctMark;
-          }
-          
-          // 効果音再生
-          correctEffects.volume = 0.7;
-          correctEffects.play();
-          correctEffects.currentTime = 0;
-
-          // 次の問題へ
-          this.numOfAnswers = 0;
-          this.isProcessing = false;
-          this.questionNo++;
-          this.displayControl();
-        } else {
-          // 不正解の場合
-          // 不正解者にバツを付与
-          if (battleRes.secondId === this.$store.getters["localStorages/getTwitterId"]) {
-            this.myCorrect = this.$answerJudgment.incorrectMark;
-          } else {
-            this.othermyCorrect = this.$answerJudgment.incorrectMark;
-          }
-
-          // 効果音再生
-          incorrectEffects.volume = 0.7;
-          incorrectEffects.play();
-          incorrectEffects.currentTime = 0;
-
-          // 次の問題へ
-          this.numOfAnswers = 0;
-          this.isProcessing = false;
-          this.questionNo++;
-          this.displayControl();
-        }
       }
+
+      // COM操作を止める
+      if (!battleRes.firstId === this.$store.getters["localStorages/getTwitterId"]) clearTimeout(this.comOperation);
     });
   },
   watch: {
     myCorrect() {
+      // ◯を１秒間表示
       setTimeout(() => {
         this.myCorrect = 0; // 初期化
       }, 1000)
     },
     othermyCorrect() {
+      // ×を１秒間表示
       setTimeout(() => {
         this.othermyCorrect = 0; // 初期化
       }, 1000)
     },
+    questionNo: {
+      // com側の操作
+      immediate: true, // 初回起動のオプション
+      handler(newTime, oldTime) { // handlerの中に実処理を書く（お決まり）
+        // com操作
+        let comAnswerTime = this.comAnswerTimes[Math.floor(Math.random() * this.comAnswerTimes.length)];
+        this.comOperation = setTimeout(() => {
+          let isAnswerVal = this.comRandomCorrect[Math.floor(Math.random() * this.comRandomCorrect.length)] ? this.$answerJudgment.correct : this.$answerJudgment.incorrect;
+          // comが回答する
+          if (this.numOfAnswers === 0) {
+            // 他に回答者がいない場合
+            this.setFirstUserAnswer("account", isAnswerVal);
+          } else {
+            // 他に回答者がいた場合
+            this.setSecondUserAnswer("account", isAnswerVal);
+          }
+        }, comAnswerTime);
+      }
+    }
   },
   components: {
     QuestionNo,
