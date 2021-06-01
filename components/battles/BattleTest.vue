@@ -6,7 +6,10 @@
           size="40"
           color="#f4a6b8"
         >
-          <v-icon dark>mdi-account-circle</v-icon>
+          <v-img
+            :lazy-src="user.photoURL"
+            :src="user.photoURL"
+          ></v-img>
         </v-avatar>
         <div v-if="myCorrect == $answerJudgment.correctMark" class="mark correct-mark"></div>
         <div v-else-if="myCorrect === $answerJudgment.incorrectMark" class="mark incorrect-mark">❌</div>
@@ -59,6 +62,7 @@
 import QuestionNo from '~/components/battles/QuestionNo.vue';
 import Question from '~/components/ui/Question.vue';
 import Options from '~/components/ui/Options.vue';
+import { mapGetters } from 'vuex';
 import { db } from '~/plugins/firebase.js';
 import correctMp3 from '~/assets/images/battle/correct.mp3';
 import incorrectMp3 from '~/assets/images/battle/incorrect.mp3';
@@ -276,6 +280,9 @@ export default {
         return this.$answerJudgment.lose;
       }
     }
+  },
+  computed: {
+    ...mapGetters({ user: "users/getCurrentUser" }),
   },
   mounted() {
     // スナップショットでrooms監視

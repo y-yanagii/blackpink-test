@@ -17,7 +17,6 @@
   <Battle
     v-else-if="show && playType === $modeNumber.battle"
   ></Battle>
-  
 </template>
 
 <script>
