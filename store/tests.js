@@ -14,6 +14,10 @@ const getters = {
     // 選択したモード種別でテストを取得する
     return state.tests.filter(t => t.modeType === Number(modeType))
   },
+  getTestsAtRandom: state => serialNums => {
+    // ランダムで5件取得
+    return _.intersectionWith(state.tests, serialNums, (t, s) => t.serialNumber === s);
+  }
 };
 
 const actions = {

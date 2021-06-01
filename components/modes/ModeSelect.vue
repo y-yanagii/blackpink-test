@@ -73,6 +73,9 @@ export default {
       } else if (type === this.$mode.puzzle) {
         // PUZZLE
         return "puzzle-mode-button"
+      }  else if (type === this.$mode.oneonone) {
+        // BATTLE
+        return "oneonone-mode-button"
       } else {
         // EASY, NORMAL, HARD
         return "mode-button"

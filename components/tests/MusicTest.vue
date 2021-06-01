@@ -59,4 +59,8 @@ export default {
   background-color: $base-text-color !important;
   border: solid 2px $base-text-color;
 }
+
+.music-icon {
+  width: 25%;
+}
 </style>

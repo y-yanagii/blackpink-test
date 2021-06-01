@@ -35,6 +35,13 @@
               <p>♬使用している音源は、iTunes Storeから<br>提供さている試聴データです。</p>
             </div>
           </template>
+          <template v-if="selectedMode.modeType === $mode.oneonone">
+            <div class="oneonone-precautionary text-center">
+              <p>＊通信環境が良い場所で対戦を行ってください。</p>
+              <p>＊対戦中は画面のリロードやブラウザを閉じる行為は行わないでください。</p>
+              <p>＊一定時間経過しても応答がない場合は、不戦負扱いとなるため注意してください。</p>
+            </div>
+          </template>
         </div>
       </v-col>
     </v-row>
@@ -57,18 +64,18 @@ export default {
   methods: {
     testStart() {
       // 検定画面に遷移（テスト開始）
-      this.$emit('change-show');
+      this.$emit('change-show', 'start');
     }
   },
-  firestore: {
-    // firestoreのtestsコレクションを取得
-    // tests: db.collection("tests")
-  },
+  // firestore: {
+  //   // firestoreのtestsコレクションを取得
+  //   // tests: db.collection("tests")
+  // },
   computed: {
     // 難易度別にテスト情報取得
-    getTests: function() {
-      return this.$store.getters['tests/getTestsByMode'];
-    },
+    // getTests: function() {
+    //   return this.$store.getters['tests/getTestsByMode'];
+    // },
     // 難易度による色の設定(easy,normal,hardの場合デフォルト色)
     getModeTypeClass: function() {
       const modeType = this.$data.selectedMode.modeType;
@@ -103,6 +110,12 @@ export default {
           modeTypeTitleClass: 'title-logo-puzzle',
           modeTypeButtonClass: 'start-button-puzzle',
         }
+      } else if (modeType === this.$mode.oneonone) {
+        // 1ON1の場合、黄緑
+        return {
+          modeTypeTitleClass: 'title-logo-oneonone',
+          modeTypeButtonClass: 'start-button-oneonone',
+        }
       } else {
         // 難易度EASY, NORMAL, HARDの場合、デフォルト色
         return {
@@ -114,7 +127,7 @@ export default {
   },
   created() {
     // tests情報の初期化
-    this.$store.dispatch('tests/init');
+    // this.$store.dispatch('tests/init');
   },
   components: {
     HistoryBackBtn
@@ -139,11 +152,21 @@ export default {
 .title-logo-puzzle {
   color: $puzzle-color !important;
 }
+.title-logo-oneonone {
+  color: $oneonone-color !important;
+}
+
 
 .music-precautionary {
   margin: 40px auto auto auto;
   width: 80%;
   font-size: 14px;
   color: $music-color;
+}
+.oneonone-precautionary {
+  margin: 40px auto auto auto;
+  width: 80%;
+  font-size: 14px;
+  color: $oneonone-color;
 }
 </style>

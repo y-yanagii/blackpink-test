@@ -7,8 +7,9 @@ const state = () => ({
     { playType: 2, modeType: 3, modeText: "M A S T E R" },
     { playType: 2, modeType: 4, modeText: "SUDDEN DEATH" },
     { playType: 1, modeType: 5, modeText: "M U S I C" },
-    { playType: 3, modeType: 6, modeText: "B U B B L E" },
-    { playType: 3, modeType: 7, modeText: "P U Z Z L E" },
+    { playType: 4, modeType: 6, modeText: "B U B B L E" },
+    { playType: 4, modeType: 7, modeText: "P U Z Z L E" },
+    { playType: 3, modeType: 8, modeText: "1 ON 1" },
   ],
   modeType: 0,
   modeValue: ""
