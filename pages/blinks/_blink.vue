@@ -2,7 +2,9 @@
   <div>
     <v-row justify="center" align="center">
       <v-col cols="12" md="6">
-        <HistoryBackBtn></HistoryBackBtn>
+        <HistoryBackBtn
+          @back-click="back"
+        ></HistoryBackBtn>
         <div class="text-center">
           <div class="text-center">
             <div class="OtherLogo">
@@ -321,6 +323,10 @@ export default {
       this.$store.dispatch('localStorages/setGuestPlay', false);
       this.$store.dispatch('twitter/logoutTwitter');
       this.$router.push({ path: "/" });
+    },
+    back() {
+      // ユーザ一覧画面に戻る
+      this.$router.push({ path: "/blinks" });
     }
   },
   created() {

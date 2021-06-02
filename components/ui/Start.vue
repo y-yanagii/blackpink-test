@@ -4,7 +4,7 @@
     <v-row justify="center" align="center">
       <v-col cols="12" sm="8" md="6">
         <HistoryBackBtn
-          :startPoint="true"
+          @back-click="back"
         ></HistoryBackBtn>
         <!-- タイトルロゴ -->
         <div class="text-center">
@@ -50,7 +50,7 @@
 
 <script>
 //import { db } from "~/plugins/firebase";
-import HistoryBackBtn from "~/components/ui/HistoryBackBtn.vue";
+import HistoryBackBtn from '~/components/ui/HistoryBackBtn.vue';
 
 export default {
   data: function() {
@@ -65,7 +65,10 @@ export default {
     testStart() {
       // 検定画面に遷移（テスト開始）
       this.$emit('change-show', 'start');
-    }
+    },
+    back() {
+      this.$router.push({ path: "/mode" });
+    },
   },
   // firestore: {
   //   // firestoreのtestsコレクションを取得

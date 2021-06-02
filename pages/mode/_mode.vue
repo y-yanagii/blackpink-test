@@ -4,19 +4,19 @@
     v-if="!show"
     @change-show="changeShow"
   ></Start>
+  <Battle
+    v-else-if="show && playType === $modeNumber.battle"
+  ></Battle>
   <Test
     v-else-if="show && playType === $modeNumber.test"
     :tests="tests"
   ></Test>
-  <Game
-    v-else-if="show && playType === $modeNumber.game"
-  ></Game>
   <Challenge
     v-else-if="show && playType === $modeNumber.challenge"
   ></Challenge>
-  <Battle
-    v-else-if="show && playType === $modeNumber.battle"
-  ></Battle>
+  <Game
+    v-else-if="show && playType === $modeNumber.game"
+  ></Game>
 </template>
 
 <script>
