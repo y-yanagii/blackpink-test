@@ -79,8 +79,9 @@ export default {
       // ],
       colorThema: false,
       isDisplay: false,
-      message: `You may not be able to play
-      some games. Is that OK?`,
+      message: `一部機能が使用できません。
+      よろしいですか?
+      （1ON1、ランキング登録）`,
       snackbar: false,
       snackbarText: "",
     }
