@@ -79,9 +79,8 @@ export default {
       // ],
       colorThema: false,
       isDisplay: false,
-      message: `一部機能が使用できません。
-      よろしいですか?
-      （1ON1、ランキング登録）`,
+      message: `ランキング登録が行われません。
+      よろしいですか?`,
       snackbar: false,
       snackbarText: "",
     }
