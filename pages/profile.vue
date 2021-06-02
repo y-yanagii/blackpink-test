@@ -110,13 +110,13 @@
                   </template>
                 </div>
               </div>
-              <div class="rank-area">
-                <div class="rank-title">
-                  RANK
+              <div class="wins-loss-draw-area">
+                <div class="wins-loss-draw-title">
+                  WINS / LOSS / DRAW
                 </div>
-                <div class="rank">
-                  <div v-if="true" :class="rankClass">
-                    <v-icon class="rank-icon">mdi-crown</v-icon>MASTER
+                <div class="wins-loss-draw">
+                  <div>
+                    {{  }}
                   </div>
                 </div>
               </div>
@@ -164,12 +164,10 @@
 
 <script>
 import { mapGetters } from 'vuex';
-
 export default {
   data: function() {
     return {
       isEdit: false,
-      rankClass: "master",
       privacyToggle: this.$privacyText.public,
       newPrivacy: 0,
     }
@@ -355,20 +353,22 @@ export default {
       }
     }
   }
-  .rank-area {
-    .rank-title {
+  .wins-loss-draw-area {
+    .wins-loss-draw-title {
       text-align: left;
       color: $base-text-color;
     }
-    .rank {
+    .wins-loss-draw {
       margin: 4px 0px 0px 15px;
       text-align: left;
-      .master {
-        color: $master-color;
-        .rank-icon {
-          color: $master-color;
-          margin-right: 17px;
-        }
+      .win {
+        color: skyblue;
+      }
+      .lose {
+        color: crimson;
+      }
+      .draw {
+        color: $base-text-color;
       }
     }
   }

@@ -63,7 +63,7 @@ import QuestionNo from '~/components/battles/QuestionNo.vue';
 import Question from '~/components/ui/Question.vue';
 import Options from '~/components/ui/Options.vue';
 import { mapGetters } from 'vuex';
-import { db } from '~/plugins/firebase.js';
+import firebase, { db } from '~/plugins/firebase.js';
 import correctMp3 from '~/assets/images/battle/correct.mp3';
 import incorrectMp3 from '~/assets/images/battle/incorrect.mp3';
 const correctEffects = new Audio(correctMp3);
@@ -231,12 +231,15 @@ export default {
       if (wins.length > loses.length) {
         // winの数が多い場合
         this.$store.dispatch('localStorages/setBattleResult', this.$answerJudgment.win);
+        this.$store.dispatch('battles/winUpdate', twitterId);
       } else if (wins.length === loses.length) {
         // draw(win, loseの数が同じ場合)
         this.$store.dispatch('localStorages/setBattleResult', this.$answerJudgment.draw);
+        this.$store.dispatch('battles/drawUpdate', twitterId);
       } else if (wins.length < loses.length) {
         // loseの数が多い場合
         this.$store.dispatch('localStorages/setBattleResult', this.$answerJudgment.lose);
+        this.$store.dispatch('battles/loseUpdate', twitterId);
       }
     },
     checkResult(dataResult, twitterId) {
