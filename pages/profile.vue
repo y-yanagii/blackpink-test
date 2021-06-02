@@ -112,12 +112,12 @@
               </div>
               <div class="wins-loss-draw-area">
                 <div class="wins-loss-draw-title">
-                  WINS / LOSS / DRAW
+                  MATCH RESULTS
                 </div>
-                <div class="wins-loss-draw">
-                  <div>
-                    {{  }}
-                  </div>
+                <div class="wins-loss-draw-title">
+                  <span class="win">{{ typeof battleInfo(twitterId) === "undefined" ? 0 : typeof battleInfo(twitterId).win === "undefined" ? 0 + " WINS " : battleInfo(twitterId).win + " WINS " }}</span>/&nbsp;
+                  <span class="lose">{{ typeof battleInfo(twitterId) === "undefined" ? 0 : typeof battleInfo(twitterId).lose === "undefined" ? 0 + " LOSS " : battleInfo(twitterId).lose + " LOSS " }}</span>/&nbsp;
+                  <span class="draw">{{ typeof battleInfo(twitterId) === "undefined" ? 0 : typeof battleInfo(twitterId).draw === "undefined" ? 0 + " DRAW " : battleInfo(twitterId).draw + " DRAW " }}</span>
                 </div>
               </div>
             </div>
@@ -170,11 +170,12 @@ export default {
       isEdit: false,
       privacyToggle: this.$privacyText.public,
       newPrivacy: 0,
+      twitterId: this.$store.getters['localStorages/getTwitterId'],
     }
   },
   computed: {
     // users/getCurrentUserで取得するstoreのuserが取得できたタイミングで、リアクティブに反映させる
-    ...mapGetters({ user: "users/getCurrentUser" }),
+    ...mapGetters({ user: "users/getCurrentUser", battleInfo: "battles/getBattle" }),
     rankingsDivs() {
       // ランキングレコードのdiv要素をセット
       const twitterId = this.$store.getters['localStorages/getTwitterId'];
@@ -228,7 +229,6 @@ export default {
       const suddendeathRank = suddendeathRankings.indexOf(suddendeathRankings.find(suddendeathRanking => suddendeathRanking.twitterId === twitterId)) + 1;
       const bubbleRank = bubbleRankings.indexOf(bubbleRankings.find(bubbleRanking => bubbleRanking.twitterId === twitterId)) + 1;
       const puzzleRank = puzzleRankings.indexOf(puzzleRankings.find(puzzleRanking => puzzleRanking.twitterId === twitterId)) + 1;
-      
       return [
         { class: "mode-title", modeText: "EASY", no: easyRank },
         { class: "mode-title", modeText: "NORMAL", no: normalRank },
@@ -282,6 +282,7 @@ export default {
   },
   created() {
     this.$store.dispatch('users/init');
+    this.$store.dispatch('battles/init');
     this.$store.dispatch('rankings/init');
   },
 }
@@ -357,6 +358,15 @@ export default {
     .wins-loss-draw-title {
       text-align: left;
       color: $base-text-color;
+      .win {
+        color: $bubble-color;
+      }
+      .lose {
+        color: crimson;
+      }
+      .draw {
+        color: $puzzle-color;
+      }
     }
     .wins-loss-draw {
       margin: 4px 0px 0px 15px;
