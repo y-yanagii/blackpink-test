@@ -101,8 +101,11 @@ export default {
       }
     },
     showTermsOfUse() {
-      // 認証済みの場合、そのまま画面遷移。それ以外利用規約画面表示(リロード対応)
-      this.$router.push({ path: "/mode" });
+      if (!this.$store.getters["localStorages/getGuestPlay"]) {
+        // ゲストモード時は利用規約を表示させる
+        // 認証済みの場合、そのまま画面遷移。それ以外利用規約画面表示(リロード対応)
+        this.$router.push({ path: "/mode" });
+      }
 
       // ログイン前の利用規約を表示する
       this.$refs.termsdlg.termsOfUseDisplay = true;

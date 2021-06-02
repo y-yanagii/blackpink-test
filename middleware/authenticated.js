@@ -9,7 +9,7 @@ export default async function(context) {
       // プロフィール画面へは遷移しない
       context.redirect('/');
     }
-    
+
     return; // ゲストの場合認証チェックスキップ
   }
   // Twitter認証済みチェック

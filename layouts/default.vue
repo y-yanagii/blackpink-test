@@ -79,12 +79,6 @@ export default {
           left: 'left: -54px;',
         },
         {
-          icon: 'mdi-crown-outline',
-          title: 'RANKING',
-          to: '/ranking',
-          left: 'left: -59px;',
-        },
-        {
           icon: 'mdi-gamepad-variant-outline',
           title: 'MODE',
           to: '/mode',
@@ -95,6 +89,12 @@ export default {
           title: 'BLINKS',
           to: '/blinks',
           left: 'left: -48px;',
+        },
+        {
+          icon: 'mdi-crown-outline',
+          title: 'RANKING',
+          to: '/ranking',
+          left: 'left: -59px;',
         },
         {
           icon: 'mdi-email-edit-outline',
