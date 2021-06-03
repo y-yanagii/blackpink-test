@@ -195,7 +195,6 @@ export default {
     padding: 3%;
     text-align: center;
     div {
-      color: $base-text-color;
       margin-bottom: 3%;
     }
   }

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-row justify="center" align="center">
+    <v-row justify="center" align="center" class="puzzle">
       <v-col cols="12" sm="8">
         <ModeTitle></ModeTitle>
         <div class="puzzle-header">

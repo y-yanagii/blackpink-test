@@ -158,7 +158,6 @@ export default {
     font-size: 15px;
     margin: 5%;
     padding: 2%;
-    color: $base-text-color;
     border: solid 2px $base-text-color;
     border-radius: 7px;
   }
