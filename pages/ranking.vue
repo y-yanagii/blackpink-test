@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-row justify="center" align="center">
+    <v-row justify="center" align="center" class="ranking">
       <v-col cols="12" sm="8" md="6">
         <Ranking
           :rankings="rankings"
@@ -40,3 +40,10 @@ export default {
   },
 }
 </script>
+
+<style scoped lang="scss">
+.ranking {
+  height: 100%;
+  background: linear-gradient(63deg,pink 50%,pink 50%,black 50%,black 50%) !important;
+}
+</style>

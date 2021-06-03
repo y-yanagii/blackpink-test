@@ -1,5 +1,5 @@
 <template>
-  <v-row justify="center" align="center">
+  <v-row justify="center" align="center" class="first-view">
     <v-col cols="12" sm="8" md="6">
       <!-- 通知のスナックバー -->
       <v-snackbar
@@ -7,7 +7,7 @@
         :timeout="2000"
         absolute
         centered
-        color="#f4a6b8"
+        color="#ff7594"
         elevation="24"
         :top="true"
         :right="true"
@@ -18,7 +18,7 @@
           v-model="colorThema"
           inset
           right
-          color="#f4a6b8"
+          color="#ff7594"
           dark
         ></v-switch>
       </div> -->
@@ -139,6 +139,10 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.first-view {
+  height: 100%;
+}
+
 .fadeLogo-enter-active, .fade-leave-active {
   transition: opacity 3.5s;
 }
@@ -166,7 +170,8 @@ export default {
 .link {
   width: 60%;
   font-weight: bold;
-  background-color: #121212 !important;
+  background-color: rgba(255,0,0,0.0) !important;
+  box-shadow: none;
   color: $base-text-color;
   text-decoration: underline !important;
 }

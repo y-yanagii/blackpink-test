@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-row justify="center" align="center">
+    <v-row justify="center" align="center" class="profile">
       <v-col cols="12" md="6">
         <div class="text-center">
           <div class="text-center">
@@ -49,7 +49,7 @@
                     v-if="isEdit === false"
                     @click="edit()"
                     icon
-                    color="#f4a6b8"
+                    color="#ff7594"
                     class="edit-icon-btn"
                   >
                     <v-icon>mdi-pencil-outline</v-icon>
@@ -92,7 +92,7 @@
                     <v-btn-toggle
                       v-model="privacyToggle"
                       tile
-                      color="#f4a6b8"
+                      color="#ff7594"
                       group
                     >
                       <v-btn
@@ -289,6 +289,10 @@ export default {
 </script>
 
 <style scoped lang="scss">
+// .profile {
+//   background: linear-gradient(284deg,pink 50%,pink 50%,black 50%,black 50%) !important;
+// }
+
 .profile-template {
   margin-bottom: 6%;
   padding: 4%;

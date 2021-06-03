@@ -1,7 +1,7 @@
 <template>
-  <div>
-    <v-row justify="center" align="center">
-      <v-col cols="12" md="6">
+  <div style="height: 100%;">
+    <v-row justify="center" align="center" class="contact">
+      <v-col cols="12" md="6" class="contact-child">
         <div class="text-center">
           <div class="text-center">
             <div class="OtherLogo">
@@ -130,6 +130,14 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.contact {
+  height: 100%;
+  background: linear-gradient(218deg,pink 50%,pink 50%,black 50%,black 50%) !important;
+  .contact-child {
+    height: 100%;
+  }
+}
+
 .contact-card {
   margin: auto;
   width: 90%;

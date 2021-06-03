@@ -18,7 +18,7 @@
             v-model="check"
             label="ACCEPT"
             class="terms-check-box"
-            color="#f4a6b8"
+            color="#ff7594"
           ></v-checkbox>
         </div>
         <div class="terms-btn">

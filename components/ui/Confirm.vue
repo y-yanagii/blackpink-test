@@ -63,7 +63,6 @@ export default {
   }
   .confirm-message {
     padding: 0 !important;
-    color: $base-text-color;
     white-space: pre-wrap;
     word-wrap: break-word;
   }

@@ -1,7 +1,7 @@
 <template>
-  <div>
-    <v-row justify="center" align="center">
-      <v-col cols="12" md="6">
+  <div class="notice-parent">
+    <v-row justify="center" align="center" class="notice">
+      <v-col cols="12" md="6" style="height: 100%;">
         <div class="text-center">
           <div class="text-center">
             <div class="OtherLogo">
@@ -45,7 +45,7 @@
               v-model="page"
               :length="pageLength"
               class="pagenation-btn"
-              color="#f4a6b8"
+              color="#ff7594"
               @input="pageChange"
             ></v-pagination>
           </div>
@@ -102,6 +102,14 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.notice-parent {
+  height: 100%;
+}
+.notice {
+  height: 100%;
+  background: linear-gradient(247deg,pink 50%,pink 50%,black 50%,black 50%) !important;
+}
+
 // テーブル
 .notices-table {
   width: 100%;
@@ -117,7 +125,6 @@ export default {
 
 // テーブルのupdate, content領域
 .notice-created-at, .notice-content {
-  color: $base-text-color !important;
   border-bottom: solid 1px $base-text-color !important;
 }
 

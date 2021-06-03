@@ -67,17 +67,17 @@ export default {
         {
           life: true,
           icon: "mdi-heart",
-          color: "#f4a6b8",
+          color: "#ff7594",
         },
         {
           life: true,
           icon: "mdi-heart",
-          color: "#f4a6b8",
+          color: "#ff7594",
         },
         {
           life: true,
           icon: "mdi-heart",
-          color: "#f4a6b8",
+          color: "#ff7594",
         },
       ],
       selectedMode: this.$store.getters['localStorages/choiceMode'],

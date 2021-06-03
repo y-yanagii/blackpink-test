@@ -1,6 +1,6 @@
 <!-- 難易度選択領域 -->
 <template>
-  <div>
+  <div class="mode-select">
     <v-row justify="center" align="center">
       <v-col cols="12" sm="8" md="6">
         <HistoryBackBtn
@@ -99,6 +99,11 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.mode-select {
+  height: 100%;
+  background: linear-gradient(110deg,pink 50%,pink 50%,black 50%,black 50%) !important;
+}
+
 .fade-enter-active, .fade-leave-active {
   transition: opacity 1.5s;
 }

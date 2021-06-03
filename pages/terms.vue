@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-row justify="center" align="center">
+    <v-row justify="center" align="center" class="terms">
       <v-col cols="12" md="6">
         <div class="text-center">
           <div class="text-center">
@@ -35,6 +35,10 @@ export default {
 
 
 <style scoped lang="scss">
+.terms {
+  background: linear-gradient(270deg,pink 50%,pink 50%,black 50%,black 50%) !important;
+}
+
 .terms-card {
   margin: auto;
   padding: 2%;

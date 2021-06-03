@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="rooms">
     <v-row justify="center" align="center">
       <v-col cols="12" sm="8">
         <div class="cloak-width" v-cloak>
@@ -109,6 +109,11 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.rooms {
+  height: 100%;
+  background: linear-gradient(284deg,pink 50%,pink 50%,black 50%,black 50%) !important;
+}
+
 .cloak-width {
   margin: auto;
   max-width: 550px;

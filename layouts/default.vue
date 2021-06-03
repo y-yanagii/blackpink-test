@@ -21,10 +21,10 @@
             color="#272727"
             fab
           >
-            <v-icon v-if="fab" color="#f4a6b8">
+            <v-icon v-if="fab" color="#ff7594">
               mdi-close
             </v-icon>
-            <v-icon v-else color="#f4a6b8">
+            <v-icon v-else color="#ff7594">
               mdi-yin-yang
             </v-icon>
           </v-btn>
@@ -36,7 +36,7 @@
             fab
             dark
             small
-            color="#f4a6b8"
+            color="#ff7594"
             class="fab-icon"
           >
             <v-icon>{{ item.icon }}</v-icon>
@@ -49,7 +49,7 @@
 
     <!-- ボディ領域の呼び出し元 -->
     <v-main>
-      <v-container>
+      <v-container style="height: 100%;">
         <nuxt />
       </v-container>
     </v-main>

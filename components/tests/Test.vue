@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-row justify="center" align="center">
+    <v-row justify="center" align="center" class="test">
       <v-col cols="12" sm="8" md="6">
         <ModeTitle></ModeTitle>
         <Time
@@ -186,3 +186,10 @@ export default {
   }
 }
 </script>
+
+<style scoped lang="scss">
+.test {
+  height: 100%;
+  background: linear-gradient(284deg,pink 50%,pink 50%,black 50%,black 50%) !important;
+}
+</style>
