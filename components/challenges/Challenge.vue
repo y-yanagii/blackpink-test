@@ -43,7 +43,6 @@ export default {
   data: function() {
     return {
       currentTest: 0,
-      tests: this.$store.getters['tests/getTestsByMode'](this.$store.getters['localStorages/choiceMode'].modeType),
       newRecord: {
         name: "",
         twitterId: "",
@@ -83,12 +82,7 @@ export default {
       isDisplayTestCard: true,
     }
   },
-  computed: {
-    // 難易度別にテスト情報取得
-    getTests: function() {
-      return this.$store.getters['tests/getTestsByMode'](this.selectedMode.modeType);
-    },
-  },
+  props: ["tests"],
   components: {
     ModeTitle,
     Time,

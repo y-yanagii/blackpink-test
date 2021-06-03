@@ -75,6 +75,19 @@ export default {
       // TODO消す
       serialNums = [1,2,3,4,5];
       this.tests = this.$store.getters["tests/getTestsAtRandom"](serialNums);
+
+      // 選択値をランダムに
+      this.tests.map(function(test) {
+        // 選択値をシャッフル
+        for (let i = (test.options.length - 1); 0 < i; i--) {
+          // ランダムで要素数1つを取得
+          let r = Math.floor(Math.random() * (i + 1));
+          // 並び替え
+          let tmp = test.options[i];
+          test.options[i] = test.options[r];
+          test.options[r] = tmp;
+        }
+      });
       return this.tests;
     }
   },
