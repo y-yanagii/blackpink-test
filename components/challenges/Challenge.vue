@@ -38,6 +38,8 @@ import Time from '~/components/ui/Time.vue';
 import TestCard from '~/components/tests/TestCard.vue';
 import Life from '~/components/ui/Life.vue';
 import { db } from "~/plugins/firebase";
+import hartbreakMp3 from '~/assets/images/test/hartbreak.mp3';
+const hartbreakEffects = new Audio(hartbreakMp3);
 
 export default {
   data: function() {
@@ -64,17 +66,17 @@ export default {
       lives: [ // ライフオブジェクト
         {
           life: true,
-          icon: "mdi-heart-outline",
+          icon: "mdi-heart",
           color: "#f4a6b8",
         },
         {
           life: true,
-          icon: "mdi-heart-outline",
+          icon: "mdi-heart",
           color: "#f4a6b8",
         },
         {
           life: true,
-          icon: "mdi-heart-outline",
+          icon: "mdi-heart",
           color: "#f4a6b8",
         },
       ],
@@ -198,6 +200,11 @@ export default {
         this.lives.filter(l => l.life)[this.lives.filter(l => l.life).length - 1].icon = "mdi-heart-broken-outline"
         this.lives.filter(l => l.life)[this.lives.filter(l => l.life).length - 1].life = false
         this.remainingLife--;
+
+        // ハートが割れる効果音
+        hartbreakEffects.volume = 0.7;
+        hartbreakEffects.play();
+        hartbreakEffects.currentTime = 0;
       }
       
       // 残ライフが0の場合、検定終了(最終問題の場合はaddAnswerメソッドのif文で処理される)それ以外、次の問題に移行
