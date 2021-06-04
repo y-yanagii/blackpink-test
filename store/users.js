@@ -79,7 +79,7 @@ const actions = {
   setUser(context, userObject) {
     // storeのuserにユーザ情報保持
     context.commit('setUser', userObject);
-  }
+  },
 };
 
 export default {

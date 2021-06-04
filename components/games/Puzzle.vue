@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-row justify="center" align="center">
+    <v-row justify="center" align="center" class="puzzle">
       <v-col cols="12" sm="8">
         <ModeTitle></ModeTitle>
         <div class="puzzle-header">
@@ -43,6 +43,7 @@
           :resultStr="resultStr"
           :gameName="gameName"
           @retry="retry"
+          @to-mode="toMode"
         ></EndOfGameDialog>
       </v-col>
     </v-row>
@@ -78,6 +79,7 @@ export default {
       },
       message: "",
       resultStr: "",
+      timer: null,
     }
   },
   methods: {
@@ -248,6 +250,7 @@ export default {
                 // タイマー開始
                 let timer = null; // セットインターバル関数を初期化
                 timer = setInterval(randomBalls, 500);
+                _this.timer = timer;
               });
             });
           }
@@ -272,6 +275,10 @@ export default {
           if (callbackFunc) callbackFunc();
         }
       }, 1000); // 1秒間隔
+    },
+    toMode() {
+      clearInterval(this.timer);
+      this.$router.push({ path: "/mode" });
     }
   },
   computed: {

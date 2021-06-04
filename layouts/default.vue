@@ -49,7 +49,7 @@
 
     <!-- ボディ領域の呼び出し元 -->
     <v-main>
-      <v-container>
+      <v-container style="height: 100%;">
         <nuxt />
       </v-container>
     </v-main>
@@ -60,6 +60,23 @@
       app
     >
       <span class="copyright">&copy; {{ new Date().getFullYear() + ' ' + title }}</span>
+
+      <div class="fotter-btns">
+        <div
+          v-for="(item, index) in footerItems"
+          :key="index"
+        >
+          <v-btn
+            :to="item.to"
+            fab
+            dark
+            small
+            class="fab-icon"
+          >
+            <v-icon>{{ item.icon }}</v-icon>
+          </v-btn>
+        </div>
+      </div>
     </v-footer>
   </v-app>
 </template>
@@ -73,10 +90,22 @@ export default {
       fixed: false,
       items: [
         {
+          icon: 'mdi-gamepad-variant-outline',
+          title: 'MODE',
+          to: '/mode',
+          left: 'left: -38px;',
+        },
+        {
           icon: 'mdi-account-outline',
           title: 'PROFILE',
           to: '/profile',
           left: 'left: -54px;',
+        },
+        {
+          icon: 'mdi-account-group',
+          title: 'BLINKS',
+          to: '/blinks',
+          left: 'left: -48px;',
         },
         {
           icon: 'mdi-crown-outline',
@@ -85,17 +114,13 @@ export default {
           left: 'left: -59px;',
         },
         {
-          icon: 'mdi-gamepad-variant-outline',
-          title: 'MODE',
-          to: '/mode',
-          left: 'left: -38px;',
-        },
-        {
-          icon: 'mdi-account-group',
-          title: 'BLINKS',
-          to: '/blinks',
-          left: 'left: -48px;',
-        },
+          icon: 'mdi-bell-outline',
+          title: 'NOTICES',
+          to: '/notice',
+          left: 'left: -57px;',
+        }
+      ],
+      footerItems: [
         {
           icon: 'mdi-email-edit-outline',
           title: 'CONTACT',
@@ -108,17 +133,11 @@ export default {
           to: '/terms',
           left: 'left: -45px;',
         },
-        {
-          icon: 'mdi-bell-outline',
-          title: 'NOTICES',
-          to: '/notice',
-          left: 'left: -57px;',
-        }
       ],
       miniVariant: false,
       right: true,
       rightDrawer: false,
-      title: 'BLAↃKPINK TEST',
+      title: 'BLINK GAMES',
       direction: 'bottom',
       fab: false,
       transition: 'scale-transition',
@@ -158,5 +177,19 @@ export default {
 
 .copyright {
   opacity: 0.4;
+}
+
+.fotter-btns {
+  margin: auto 0 auto auto;
+  display: flex;
+  div {
+    margin-right: 10px;
+    a {
+      color: $base-text-color;
+    }
+  }
+  div:nth-of-type(2) {
+    margin-right: 1px;
+  }
 }
 </style>

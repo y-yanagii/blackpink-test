@@ -48,4 +48,13 @@ export default {
   animation-direction: normal;
   animation: text-in 0.8s cubic-bezier(0.22, 0.15, 0.25, 1.43) 0s backwards;
 }
+
+.option-btn {
+  span {
+    max-width: 99%;
+    // overflow: hidden;
+    text-overflow: ellipsis;
+    // white-space: nowrap;
+  }
+}
 </style>

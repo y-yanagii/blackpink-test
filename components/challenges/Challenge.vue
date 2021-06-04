@@ -11,13 +11,22 @@
           v-show="selectedMode.modeType === $mode.suddendeath"
           :lives="lives"
         ></Life>
-        <TestCard
-          :currentTest="currentTest"
-          :test="tests[currentTest]"
-          :testTotal="tests.length"
-          ref="test_card"
-          @option-click="addAnswer"
-        ></TestCard>
+        <transition
+          name="test-card"
+          enter-active-class="animated flipInX"
+          leave-active-class="animated fadeOut"
+          mode="out-in"
+          appear
+        >
+          <TestCard
+            v-if="isDisplayTestCard"
+            :currentTest="currentTest"
+            :test="tests[currentTest]"
+            :testTotal="tests.length"
+            ref="test_card"
+            @option-click="addAnswer"
+          ></TestCard>
+        </transition>
       </v-col>
     </v-row>
   </div>
@@ -29,12 +38,13 @@ import Time from '~/components/ui/Time.vue';
 import TestCard from '~/components/tests/TestCard.vue';
 import Life from '~/components/ui/Life.vue';
 import { db } from "~/plugins/firebase";
+import hartbreakMp3 from '~/assets/images/test/hartbreak.mp3';
+const hartbreakEffects = new Audio(hartbreakMp3);
 
 export default {
   data: function() {
     return {
       currentTest: 0,
-      tests: this.$store.getters['tests/getTestsByMode'](this.$store.getters['localStorages/choiceMode'].modeType),
       newRecord: {
         name: "",
         twitterId: "",
@@ -56,29 +66,25 @@ export default {
       lives: [ // ライフオブジェクト
         {
           life: true,
-          icon: "mdi-heart-outline",
+          icon: "mdi-heart",
           color: "#f4a6b8",
         },
         {
           life: true,
-          icon: "mdi-heart-outline",
+          icon: "mdi-heart",
           color: "#f4a6b8",
         },
         {
           life: true,
-          icon: "mdi-heart-outline",
+          icon: "mdi-heart",
           color: "#f4a6b8",
         },
       ],
       selectedMode: this.$store.getters['localStorages/choiceMode'],
+      isDisplayTestCard: true,
     }
   },
-  computed: {
-    // 難易度別にテスト情報取得
-    getTests: function() {
-      return this.$store.getters['tests/getTestsByMode'](this.selectedMode.modeType);
-    },
-  },
+  props: ["tests"],
   components: {
     ModeTitle,
     Time,
@@ -88,6 +94,7 @@ export default {
   methods: {
     // 選択肢押下時処理(解答時)
     addAnswer(value) {
+      this.isDisplayTestCard = false;
       // 選択した解答を配列に保持（正誤かをtrue、falseで判断）
       this.newRecord.answerIncorrectsArray.push(value);
 
@@ -193,6 +200,11 @@ export default {
         this.lives.filter(l => l.life)[this.lives.filter(l => l.life).length - 1].icon = "mdi-heart-broken-outline"
         this.lives.filter(l => l.life)[this.lives.filter(l => l.life).length - 1].life = false
         this.remainingLife--;
+
+        // ハートが割れる効果音
+        hartbreakEffects.volume = 0.7;
+        hartbreakEffects.play();
+        hartbreakEffects.currentTime = 0;
       }
       
       // 残ライフが0の場合、検定終了(最終問題の場合はaddAnswerメソッドのif文で処理される)それ以外、次の問題に移行
@@ -212,5 +224,12 @@ export default {
     // rankingsコレクションの初期化
     this.$store.dispatch('rankings/init');
   },
+  watch: {
+    isDisplayTestCard() {
+      setTimeout(() => {
+        this.isDisplayTestCard = true; // 1秒後にテストカード表示
+      }, 1000)
+    }
+  }
 }
 </script>

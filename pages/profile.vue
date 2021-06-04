@@ -1,6 +1,6 @@
 <template>
   <div>
-    <v-row justify="center" align="center">
+    <v-row justify="center" align="center" class="profile">
       <v-col cols="12" md="6">
         <div class="text-center">
           <div class="text-center">
@@ -110,14 +110,14 @@
                   </template>
                 </div>
               </div>
-              <div class="rank-area">
-                <div class="rank-title">
-                  RANK
+              <div class="wins-loss-draw-area">
+                <div class="wins-loss-draw-title">
+                  MATCH RESULTS
                 </div>
-                <div class="rank">
-                  <div v-if="true" :class="rankClass">
-                    <v-icon class="rank-icon">mdi-crown</v-icon>MASTER
-                  </div>
+                <div class="wins-loss-draw-title">
+                  <span class="win">{{ typeof battleInfo(twitterId) === "undefined" ? 0 : typeof battleInfo(twitterId).win === "undefined" ? 0 + " WINS " : battleInfo(twitterId).win + " WINS " }}</span>/&nbsp;
+                  <span class="lose">{{ typeof battleInfo(twitterId) === "undefined" ? 0 : typeof battleInfo(twitterId).lose === "undefined" ? 0 + " LOSS " : battleInfo(twitterId).lose + " LOSS " }}</span>/&nbsp;
+                  <span class="draw">{{ typeof battleInfo(twitterId) === "undefined" ? 0 : typeof battleInfo(twitterId).draw === "undefined" ? 0 + " DRAW " : battleInfo(twitterId).draw + " DRAW " }}</span>
                 </div>
               </div>
             </div>
@@ -164,19 +164,19 @@
 
 <script>
 import { mapGetters } from 'vuex';
-
 export default {
   data: function() {
     return {
       isEdit: false,
-      rankClass: "master",
       privacyToggle: this.$privacyText.public,
       newPrivacy: 0,
+      twitterId: this.$store.getters['localStorages/getTwitterId'],
+      twitterDisplay: false,
     }
   },
   computed: {
     // users/getCurrentUserで取得するstoreのuserが取得できたタイミングで、リアクティブに反映させる
-    ...mapGetters({ user: "users/getCurrentUser" }),
+    ...mapGetters({ user: "users/getCurrentUser", battleInfo: "battles/getBattle" }),
     rankingsDivs() {
       // ランキングレコードのdiv要素をセット
       const twitterId = this.$store.getters['localStorages/getTwitterId'];
@@ -230,7 +230,6 @@ export default {
       const suddendeathRank = suddendeathRankings.indexOf(suddendeathRankings.find(suddendeathRanking => suddendeathRanking.twitterId === twitterId)) + 1;
       const bubbleRank = bubbleRankings.indexOf(bubbleRankings.find(bubbleRanking => bubbleRanking.twitterId === twitterId)) + 1;
       const puzzleRank = puzzleRankings.indexOf(puzzleRankings.find(puzzleRanking => puzzleRanking.twitterId === twitterId)) + 1;
-      
       return [
         { class: "mode-title", modeText: "EASY", no: easyRank },
         { class: "mode-title", modeText: "NORMAL", no: normalRank },
@@ -274,6 +273,7 @@ export default {
     },
     updateTwitter() {
       // Twitterよりユーザの最新情報を取得し保存
+
     },
     logout() {
       // ログアウト処理(ホーム画面遷移)
@@ -284,12 +284,17 @@ export default {
   },
   created() {
     this.$store.dispatch('users/init');
+    this.$store.dispatch('battles/init');
     this.$store.dispatch('rankings/init');
   },
 }
 </script>
 
 <style scoped lang="scss">
+// .profile {
+//   background: linear-gradient(284deg,pink 50%,pink 50%,black 50%,black 50%) !important;
+// }
+
 .profile-template {
   margin-bottom: 6%;
   padding: 4%;
@@ -355,20 +360,31 @@ export default {
       }
     }
   }
-  .rank-area {
-    .rank-title {
+  .wins-loss-draw-area {
+    .wins-loss-draw-title {
       text-align: left;
       color: $base-text-color;
+      .win {
+        color: $bubble-color;
+      }
+      .lose {
+        color: crimson;
+      }
+      .draw {
+        color: $puzzle-color;
+      }
     }
-    .rank {
+    .wins-loss-draw {
       margin: 4px 0px 0px 15px;
       text-align: left;
-      .master {
-        color: $master-color;
-        .rank-icon {
-          color: $master-color;
-          margin-right: 17px;
-        }
+      .win {
+        color: skyblue;
+      }
+      .lose {
+        color: crimson;
+      }
+      .draw {
+        color: $base-text-color;
       }
     }
   }

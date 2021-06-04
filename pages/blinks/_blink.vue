@@ -2,7 +2,9 @@
   <div>
     <v-row justify="center" align="center">
       <v-col cols="12" md="6">
-        <HistoryBackBtn></HistoryBackBtn>
+        <HistoryBackBtn
+          @back-click="back"
+        ></HistoryBackBtn>
         <div class="text-center">
           <div class="text-center">
             <div class="OtherLogo">
@@ -139,17 +141,26 @@
                     </template>
                   </div>
                 </div>
-                <div class="rank-area">
-                  <div class="rank-title">
-                    RANK
-                  </div>
-                  <div class="rank">
-                    <div v-if="true" :class="rankClass">
-                      <v-icon class="rank-icon">mdi-crown</v-icon>MASTER
-                    </div>
-                  </div>
-                </div>
               </template>
+              <div class="wins-loss-draw-area">
+                <div class="wins-loss-draw-title">
+                  MATCH RESULTS
+                </div>
+                <template v-if="$route.query.uid === user.uid">
+                  <div class="wins-loss-draw-title">
+                    <span class="win">{{ typeof battleInfo(user.twitterId) === "undefined" ? 0 + " WINS " : typeof battleInfo(user.twitterId).win === "undefined" ? 0 + " WINS " : battleInfo(user.twitterId).win + " WINS " }}</span>/&nbsp;
+                    <span class="lose">{{ typeof battleInfo(user.twitterId) === "undefined" ? 0 + " LOSS " : typeof battleInfo(user.twitterId).lose === "undefined" ? 0 + " LOSS " : battleInfo(user.twitterId).lose + " LOSS " }}</span>/&nbsp;
+                    <span class="draw">{{ typeof battleInfo(user.twitterId) === "undefined" ? 0 + " DRAW " : typeof battleInfo(user.twitterId).draw === "undefined" ? 0 + " DRAW " : battleInfo(user.twitterId).draw + " DRAW " }}</span>
+                  </div>
+                </template>
+                <template v-else>
+                  <div class="wins-loss-draw-title">
+                    <span class="win">{{ typeof battleInfo(showUser.twitterId) === "undefined" ? 0 + " WINS " : typeof battleInfo(showUser.twitterId).win === "undefined" ? 0 + " WINS " : battleInfo(showUser.twitterId).win + " WINS " }}</span>/&nbsp;
+                    <span class="lose">{{ typeof battleInfo(showUser.twitterId) === "undefined" ? 0 + " LOSS " : typeof battleInfo(showUser.twitterId).lose === "undefined" ? 0 + " LOSS " : battleInfo(showUser.twitterId).lose + " LOSS " }}</span>/&nbsp;
+                    <span class="draw">{{ typeof battleInfo(showUser.twitterId) === "undefined" ? 0 + " DRAW " : typeof battleInfo(showUser.twitterId).draw === "undefined" ? 0 + " DRAW " : battleInfo(showUser.twitterId).draw + " DRAW " }}</span>
+                  </div>
+                </template>
+              </div>
             </div>
           </div>
           <!-- Twitter情報アップデートボタン -->
@@ -211,7 +222,7 @@ export default {
   },
   computed: {
     // users/getCurrentUserで取得するstoreのuserが取得できたタイミングで、リアクティブに反映させる
-    ...mapGetters({ user: "users/getCurrentUser" }),
+    ...mapGetters({ user: "users/getCurrentUser", battleInfo: "battles/getBattle" }),
     rankingsDivs() {
       // ランキングレコードのdiv要素をセット
       const twitterId = this.$route.query.twitterId;
@@ -312,6 +323,10 @@ export default {
       this.$store.dispatch('localStorages/setGuestPlay', false);
       this.$store.dispatch('twitter/logoutTwitter');
       this.$router.push({ path: "/" });
+    },
+    back() {
+      // ユーザ一覧画面に戻る
+      this.$router.push({ path: "/blinks" });
     }
   },
   created() {
@@ -397,20 +412,31 @@ export default {
       }
     }
   }
-  .rank-area {
-    .rank-title {
+  .wins-loss-draw-area {
+    .wins-loss-draw-title {
       text-align: left;
       color: $base-text-color;
+      .win {
+        color: $bubble-color;
+      }
+      .lose {
+        color: crimson;
+      }
+      .draw {
+        color: $puzzle-color;
+      }
     }
-    .rank {
+    .wins-loss-draw {
       margin: 4px 0px 0px 15px;
       text-align: left;
-      .master {
-        color: $master-color;
-        .rank-icon {
-          color: $master-color;
-          margin-right: 17px;
-        }
+      .win {
+        color: skyblue;
+      }
+      .lose {
+        color: crimson;
+      }
+      .draw {
+        color: $base-text-color;
       }
     }
   }

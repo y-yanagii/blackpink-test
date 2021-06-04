@@ -1,19 +1,28 @@
 <template>
   <div>
-    <v-row justify="center" align="center">
+    <v-row justify="center" align="center" class="test">
       <v-col cols="12" sm="8" md="6">
         <ModeTitle></ModeTitle>
         <Time
           v-show="selectedMode.modeType !== $mode.suddendeath"
           :timerObject="timerObject"
         ></Time>
-        <TestCard
-          :currentTest="currentTest"
-          :test="tests[currentTest]"
-          :testTotal="tests.length"
-          ref="test_card"
-          @option-click="addAnswer"
-        ></TestCard>
+        <transition
+          name="test-card"
+          enter-active-class="animated flipInX"
+          leave-active-class="animated fadeOut"
+          mode="out-in"
+          appear
+        >
+          <TestCard
+            v-if="isDisplayTestCard"
+            :currentTest="currentTest"
+            :test="tests[currentTest]"
+            :testTotal="tests.length"
+            ref="test_card"
+            @option-click="addAnswer"
+          ></TestCard>
+        </transition>
       </v-col>
     </v-row>
   </div>
@@ -47,30 +56,10 @@ export default {
         isRunning: false // 計測中の状態保持
       },
       selectedMode: this.$store.getters['localStorages/choiceMode'],
+      isDisplayTestCard: true,
     }
   },
   props: ["tests"],
-  computed: {
-    // 取得したテストコレクションをシャッフルかつ10件にする
-    processingTests: function() {
-      // 問題をシャッフル
-      for (let i = (this.tests.length - 1); 0 < i; i--) {
-        // ランダムで要素数1つを取得
-        let r = Math.floor(Math.random() * (i + 1));
-
-        // 並び替え
-        let tmp = this.tests[i];
-        this.tests[i] = this.tests[r];
-        this.tests[r] = tmp
-      }
-
-      // サドンデスの場合はシャッフルのみ
-      if (this.selectedMode.modeType === this.$mode.suddendeath) return
-
-      // シャッフル後、最初の10件をテスト問題とする
-      this.tests = this.tests.slice(0, 10);
-    },
-  },
   components: {
     ModeTitle,
     Time,
@@ -79,6 +68,7 @@ export default {
   methods: {
     // 選択肢押下時処理(解答時)
     addAnswer(value) {
+      this.isDisplayTestCard = false;
       // 選択した解答を配列に保持（正誤かをtrue、falseで判断）
       this.newRecord.answerIncorrectsArray.push(value);
 
@@ -187,5 +177,19 @@ export default {
     // rankingsコレクションの初期化
     this.$store.dispatch('rankings/init');
   },
+  watch: {
+    isDisplayTestCard() {
+      setTimeout(() => {
+        this.isDisplayTestCard = true; // 1秒後にテストカード表示
+      }, 1000)
+    }
+  }
 }
 </script>
+
+<style scoped lang="scss">
+.test {
+  height: 100%;
+  // background: linear-gradient(284deg,pink 50%,pink 50%,black 50%,black 50%) !important;
+}
+</style>

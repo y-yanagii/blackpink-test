@@ -1,5 +1,5 @@
 <template>
-  <v-row justify="center" align="center">
+  <v-row justify="center" align="center" class="first-view" style="height: 104%; background: linear-gradient(289deg,#ffc5cf 50%,#ffc5cf 50%,black 50%,black 50%) !important;">
     <v-col cols="12" sm="8" md="6">
       <!-- 通知のスナックバー -->
       <v-snackbar
@@ -29,7 +29,7 @@
         </transition>
       </div>
       <!-- 初期登録領域 -->
-      <div class="text-center">
+      <div class="text-center play-btn-area">
         <br>
         <!-- PLAY -->
         <v-btn
@@ -79,8 +79,8 @@ export default {
       // ],
       colorThema: false,
       isDisplay: false,
-      message: `You may not be able to play
-      some games. Is that OK?`,
+      message: `ランキング登録が行われません。
+      よろしいですか?`,
       snackbar: false,
       snackbarText: "",
     }
@@ -101,8 +101,11 @@ export default {
       }
     },
     showTermsOfUse() {
-      // 認証済みの場合、そのまま画面遷移。それ以外利用規約画面表示(リロード対応)
-      this.$router.push({ path: "/mode" });
+      if (!this.$store.getters["localStorages/getGuestPlay"]) {
+        // ゲストモード時は利用規約を表示させる
+        // 認証済みの場合、そのまま画面遷移。それ以外利用規約画面表示(リロード対応)
+        this.$router.push({ path: "/mode" });
+      }
 
       // ログイン前の利用規約を表示する
       this.$refs.termsdlg.termsOfUseDisplay = true;
@@ -136,11 +139,19 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.first-view {
+  height: 100%;
+}
+
 .fadeLogo-enter-active, .fade-leave-active {
   transition: opacity 3.5s;
 }
 .fadeLogo-enter, .fade-leave-to {
   opacity: 0;
+}
+
+.play-btn-area {
+  margin-top: 45%;
 }
 
 // .username-text {
@@ -153,14 +164,15 @@ export default {
   display: inline-block;
   margin: auto;
   width: 60%;
-  color: $base-text-color;
+  color: #272727;
 }
 
 .link {
   width: 60%;
   font-weight: bold;
-  background-color: #121212 !important;
-  color: $base-text-color;
+  background-color: rgba(255,0,0,0.0) !important;
+  box-shadow: none;
+  color: #272727;
   text-decoration: underline !important;
 }
 </style>

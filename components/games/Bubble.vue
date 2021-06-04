@@ -44,6 +44,7 @@
           :resultStr="resultStr"
           :gameName="gameName"
           @retry="retry"
+          @to-mode="toMode"
         ></EndOfGameDialog>
       </v-col>
     </v-row>
@@ -82,6 +83,7 @@ export default {
         myRank: "",
       },
       resultStr: "",
+      timer: null,
     }
   },
   methods: {
@@ -326,6 +328,7 @@ export default {
         // タイマー開始
         let timer = null; // セットインターバル関数を初期化
         timer = setInterval(randomBalls, 500);
+        this.timer = timer;
       });
     },
     addBubbleRanking() {
@@ -372,6 +375,10 @@ export default {
       // 20位以内の場合のみかつゲストモードでない場合、ランキングを登録
       if (this.newRecord.myRank <= 20 && !this.$store.getters["localStorages/getGuestPlay"]) this.$store.dispatch('rankings/add', this.newRecord);
     },
+    toMode() {
+      clearInterval(this.timer);
+      this.$router.push({ path: "/mode" });
+    }
   },
   computed: {
     getBalls() {

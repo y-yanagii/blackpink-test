@@ -2,7 +2,7 @@
 <template>
   <div class="BlackPinkTestLogo">
     <span class="title-logo">
-      BLAↃKPINK TEST
+      BLINK GAMES
     </span>
   </div>
 </template>

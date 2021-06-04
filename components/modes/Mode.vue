@@ -1,6 +1,6 @@
 <!-- モード選択領域 -->
 <template>
-  <div>
+  <div class="mode">
     <v-row justify="center" align="center">
       <v-col cols="12" sm="8" md="6">
         <!-- タイトルロゴ -->
@@ -41,9 +41,9 @@ export default {
   computed: {
     modeButtons() {
       return [
+        { showNumber: this.$modeNumber.battle, modeText: "B A T T L E" },
         { showNumber: this.$modeNumber.test, modeText: "T E S T" },
         { showNumber: this.$modeNumber.challenge, modeText: "C H A L L E N G E" },
-        { showNumber: this.$modeNumber.battle, modeText: "B A T T L E" },
         { showNumber: this.$modeNumber.game, modeText: "G A M E" },
       ]
     }
@@ -52,6 +52,11 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.mode {
+  height: 100%;
+  // background: linear-gradient(288deg,pink 50%,pink 50%,black 50%,black 50%) !important;
+}
+
 .fade-enter-active, .fade-leave-active {
   transition: opacity 1.5s;
 }

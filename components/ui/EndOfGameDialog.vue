@@ -9,7 +9,7 @@
         <div class="to-mode">
           <v-btn
             class="to-header-btn"
-            @click="toMode()"
+            @click="$emit('to-mode')"
             icon
           >
             <v-icon>mdi-gamepad-variant-outline</v-icon>
@@ -87,11 +87,6 @@ export default {
     }
   },
   props: ["message", "resultStr", "gameName"],
-  methods: {
-    toMode() {
-      this.$router.push({ path: "/mode" })
-    }
-  },
   watch: {
     isDisplay(flag) {
       // ダイアログ外を押下した場合のリプレイ処理は一旦コメントアウト
@@ -200,7 +195,6 @@ export default {
     padding: 3%;
     text-align: center;
     div {
-      color: $base-text-color;
       margin-bottom: 3%;
     }
   }

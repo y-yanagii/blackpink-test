@@ -142,7 +142,9 @@ export default {
     setModeItems: function() {
       let modeItems = [];
       this.modes.map(mode => {
-        modeItems.push({ modeType: mode.modeType, modeText: mode.modeText })
+        if (mode.modeType !== this.$mode.oneonone) {
+          modeItems.push({ modeType: mode.modeType, modeText: mode.modeText })
+        }
       });
       return modeItems
     },

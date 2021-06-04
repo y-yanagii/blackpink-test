@@ -4,7 +4,7 @@
     <v-row justify="center" align="center">
       <v-col cols="12" sm="8" md="6">
         <HistoryBackBtn
-          :startPoint="true"
+          @back-click="back"
         ></HistoryBackBtn>
         <!-- タイトルロゴ -->
         <div class="text-center">
@@ -27,15 +27,64 @@
           >TEST START!</v-btn>
         </div>
         <div class="text-center">
-          <!-- musicテストの場合注意書き -->
-          <template v-if="selectedMode.modeType === $mode.music">
+          <template v-if="selectedMode.modeType === $mode.easy">
+            <!-- easyテストの場合注意書き -->
+            <div class="test-precautionary text-center">
+              <p>＊毎回出題内容が変わります。</p>
+              <p>＊最も簡単な難易度です。</p>
+            </div>
+          </template>
+          <template v-else-if="selectedMode.modeType === $mode.normal">
+            <!-- normalテストの場合注意書き -->
+            <div class="test-precautionary text-center">
+              <p>＊毎回出題内容が変わります。</p>
+              <p>＊EASYの１つ上の難易度です。</p>
+            </div>
+          </template>
+          <template v-else-if="selectedMode.modeType === $mode.hard">
+            <!-- hardテストの場合注意書き -->
+            <div class="test-precautionary text-center">
+              <p>＊毎回出題内容が変わります。</p>
+              <p>＊HARDの１つ上の難易度です。</p>
+            </div>
+          </template>
+          <template v-else-if="selectedMode.modeType === $mode.music">
+            <!-- musicテストの場合注意書き -->
             <div class="music-precautionary text-center">
               <p>♬音量注意。毎回出題内容が変わります。</p>
               <p>♬再生されない場合は、ブラウザを<br>アップデートしてください。</p>
               <p>♬使用している音源は、iTunes Storeから<br>提供さている試聴データです。</p>
             </div>
           </template>
-          <template v-if="selectedMode.modeType === $mode.oneonone">
+          <template v-else-if="selectedMode.modeType === $mode.master">
+            <!-- masterテストの場合注意書き -->
+            <div class="master-precautionary text-center">
+              <p>＊毎回出題内容が変わります。</p>
+              <p>＊最も高い難易度です。</p>
+            </div>
+          </template>
+          <template v-else-if="selectedMode.modeType === $mode.suddendeath">
+            <!-- suddendeathテストの場合注意書き -->
+            <div class="suddendeath-precautionary text-center">
+              <p>＊全てのテストが出題されます。</p>
+              <p>＊毎回出題内容が変わります。</p>
+              <p>＊3回間違えた時点で終了です。</p>
+            </div>
+          </template>
+          <template v-else-if="selectedMode.modeType === $mode.bubble">
+            <!-- bubbleテストの場合注意書き -->
+            <div class="bubble-precautionary text-center">
+              <p>＊隣接する同じ色の泡を消しポイントを稼ぐゲームです。</p>
+            </div>
+          </template>
+          <template v-else-if="selectedMode.modeType === $mode.puzzle">
+            <!-- puzzleテストの場合注意書き -->
+            <div class="puzzle-precautionary text-center">
+              <p>＊9マスのパズルゲームです。</p>
+            </div>
+          </template>
+          <template v-else-if="selectedMode.modeType === $mode.oneonone">
+            <!-- 1on1の場合注意書き -->
             <div class="oneonone-precautionary text-center">
               <p>＊通信環境が良い場所で対戦を行ってください。</p>
               <p>＊対戦中は画面のリロードやブラウザを閉じる行為は行わないでください。</p>
@@ -50,7 +99,7 @@
 
 <script>
 //import { db } from "~/plugins/firebase";
-import HistoryBackBtn from "~/components/ui/HistoryBackBtn.vue";
+import HistoryBackBtn from '~/components/ui/HistoryBackBtn.vue';
 
 export default {
   data: function() {
@@ -65,7 +114,10 @@ export default {
     testStart() {
       // 検定画面に遷移（テスト開始）
       this.$emit('change-show', 'start');
-    }
+    },
+    back() {
+      this.$router.push({ path: "/mode" });
+    },
   },
   // firestore: {
   //   // firestoreのtestsコレクションを取得
@@ -156,6 +208,26 @@ export default {
   color: $oneonone-color !important;
 }
 
+.test-precautionary {
+  margin: 40px auto auto auto;
+  width: 80%;
+  font-size: 14px;
+  color: $base-text-color;
+}
+
+.master-precautionary {
+  margin: 40px auto auto auto;
+  width: 80%;
+  font-size: 14px;
+  color: $master-color;
+}
+
+.suddendeath-precautionary {
+  margin: 40px auto auto auto;
+  width: 80%;
+  font-size: 14px;
+  color: $suddendeath-color;
+}
 
 .music-precautionary {
   margin: 40px auto auto auto;
@@ -168,5 +240,17 @@ export default {
   width: 80%;
   font-size: 14px;
   color: $oneonone-color;
+}
+.bubble-precautionary {
+  margin: 40px auto auto auto;
+  width: 80%;
+  font-size: 14px;
+  color: $bubble-color;
+}
+.puzzle-precautionary {
+  margin: 40px auto auto auto;
+  width: 80%;
+  font-size: 14px;
+  color: $puzzle-color;
 }
 </style>

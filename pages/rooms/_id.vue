@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="rooms">
     <v-row justify="center" align="center">
       <v-col cols="12" sm="8">
         <div class="cloak-width" v-cloak>
@@ -35,11 +35,11 @@ import Start from '~/components/battles/Start.vue';
 import BattleTest from '~/components/battles/BattleTest.vue';
 
 export default {
-  data: function() {
+  data() {
     return {
       tests: [],
       isDisplayNum: 0,
-      userNames: ["柳澤_RUNTEQ17期生", "COM"],
+      userNames: [this.$store.getters['localStorages/getUserName'], "COM"],
       transitionName: "vs",
     }
   },
@@ -75,6 +75,19 @@ export default {
       // TODO消す
       serialNums = [1,2,3,4,5];
       this.tests = this.$store.getters["tests/getTestsAtRandom"](serialNums);
+
+      // 選択値をランダムに
+      this.tests.map(function(test) {
+        // 選択値をシャッフル
+        for (let i = (test.options.length - 1); 0 < i; i--) {
+          // ランダムで要素数1つを取得
+          let r = Math.floor(Math.random() * (i + 1));
+          // 並び替え
+          let tmp = test.options[i];
+          test.options[i] = test.options[r];
+          test.options[r] = tmp;
+        }
+      });
       return this.tests;
     }
   },
@@ -96,6 +109,11 @@ export default {
 </script>
 
 <style scoped lang="scss">
+.rooms {
+  height: 100%;
+  // background: linear-gradient(284deg,pink 50%,pink 50%,black 50%,black 50%) !important;
+}
+
 .cloak-width {
   margin: auto;
   max-width: 550px;

@@ -33,6 +33,7 @@ export default {
     { src: '~/plugins/vee-validate.js' },
     { src: '~/plugins/blackpink-config.js' },
     { src: '~/plugins/persistedState.client.js', ssr: false },
+    { src: '~/plugins/utils.js', ssr: false },
   ],
 
   // Auto import components: https://go.nuxtjs.dev/config-components

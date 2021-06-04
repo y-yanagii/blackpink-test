@@ -4,19 +4,20 @@
     v-if="!show"
     @change-show="changeShow"
   ></Start>
+  <Battle
+    v-else-if="show && playType === $modeNumber.battle"
+  ></Battle>
   <Test
     v-else-if="show && playType === $modeNumber.test"
     :tests="tests"
   ></Test>
+  <Challenge
+    v-else-if="show && playType === $modeNumber.challenge"
+    :tests="tests"
+  ></Challenge>
   <Game
     v-else-if="show && playType === $modeNumber.game"
   ></Game>
-  <Challenge
-    v-else-if="show && playType === $modeNumber.challenge"
-  ></Challenge>
-  <Battle
-    v-else-if="show && playType === $modeNumber.battle"
-  ></Battle>
 </template>
 
 <script>
@@ -37,7 +38,7 @@ export default {
   },
   methods: {
     changeShow(value) {
-      if (this.playType === this.$modeNumber.test) {
+      if (this.playType === this.$modeNumber.test || this.playType === this.$modeNumber.challenge) {
         // テスト取得
         this.tests = this.$store.getters['tests/getTestsByMode'](this.$store.getters['localStorages/choiceMode'].modeType);
         this.processingTests();
@@ -57,6 +58,18 @@ export default {
         this.tests[i] = this.tests[r];
         this.tests[r] = tmp
       }
+
+      this.tests.map(function(test) {
+        // 選択値をシャッフル
+        for (let i = (test.options.length - 1); 0 < i; i--) {
+          // ランダムで要素数1つを取得
+          let r = Math.floor(Math.random() * (i + 1));
+          // 並び替え
+          let tmp = test.options[i];
+          test.options[i] = test.options[r];
+          test.options[r] = tmp;
+        }
+      });
 
       // サドンデスの場合はシャッフルのみ
       if (this.$store.getters['localStorages/choiceMode'].modeType === this.$mode.suddendeath) return

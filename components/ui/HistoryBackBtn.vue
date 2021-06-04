@@ -17,8 +17,8 @@ export default {
     historyBack() {
       // 戻る処理
       if (typeof this.showNumber === "undefined") {
-        // ブラウザバック処理
-        this.$router.back();
+        // バック処理
+        this.$emit('back-click');
       } else {
         this.$emit('change-show-number', this.showNumber)
       }
