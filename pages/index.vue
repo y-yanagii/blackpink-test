@@ -164,7 +164,7 @@ export default {
   display: inline-block;
   margin: auto;
   width: 60%;
-  color: $base-text-color;
+  color: #272727;
 }
 
 .link {
@@ -172,7 +172,7 @@ export default {
   font-weight: bold;
   background-color: rgba(255,0,0,0.0) !important;
   box-shadow: none;
-  color: $base-text-color;
+  color: #272727;
   text-decoration: underline !important;
 }
 </style>

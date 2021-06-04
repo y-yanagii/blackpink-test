@@ -171,6 +171,7 @@ export default {
       privacyToggle: this.$privacyText.public,
       newPrivacy: 0,
       twitterId: this.$store.getters['localStorages/getTwitterId'],
+      twitterDisplay: false,
     }
   },
   computed: {
@@ -272,6 +273,7 @@ export default {
     },
     updateTwitter() {
       // Twitterよりユーザの最新情報を取得し保存
+
     },
     logout() {
       // ログアウト処理(ホーム画面遷移)
