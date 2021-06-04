@@ -36,7 +36,7 @@ export default {
 
 <style scoped lang="scss">
 .terms {
-  background: linear-gradient(270deg,pink 50%,pink 50%,black 50%,black 50%) !important;
+  // background: linear-gradient(270deg,pink 50%,pink 50%,black 50%,black 50%) !important;
 }
 
 .terms-card {

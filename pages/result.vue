@@ -65,7 +65,7 @@ export default {
 <style scoped lang="scss">
 // 全体の背景色
 .row.align-center.justify-center {
-  background: linear-gradient(80deg,pink 50%,pink 50%,black 50%,black 50%) !important;
+  // background: linear-gradient(80deg,pink 50%,pink 50%,black 50%,black 50%) !important;
 }
 
 .fadeResultCard-enter-active, .fade-leave-active {

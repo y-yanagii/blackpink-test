@@ -45,7 +45,7 @@
               v-model="page"
               :length="pageLength"
               class="pagenation-btn"
-              color="#ff7594"
+              color="#f4a6b8"
               @input="pageChange"
             ></v-pagination>
           </div>
@@ -107,7 +107,7 @@ export default {
 }
 .notice {
   height: 100%;
-  background: linear-gradient(247deg,pink 50%,pink 50%,black 50%,black 50%) !important;
+  // background: linear-gradient(247deg,pink 50%,pink 50%,black 50%,black 50%) !important;
 }
 
 // テーブル

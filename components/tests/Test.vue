@@ -190,6 +190,6 @@ export default {
 <style scoped lang="scss">
 .test {
   height: 100%;
-  background: linear-gradient(284deg,pink 50%,pink 50%,black 50%,black 50%) !important;
+  // background: linear-gradient(284deg,pink 50%,pink 50%,black 50%,black 50%) !important;
 }
 </style>

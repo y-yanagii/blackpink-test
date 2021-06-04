@@ -1,5 +1,5 @@
 <template>
-  <v-row justify="center" align="center" class="first-view">
+  <v-row justify="center" align="center" class="first-view" style="height: 104%; background: linear-gradient(289deg,#ffc5cf 50%,#ffc5cf 50%,black 50%,black 50%) !important;">
     <v-col cols="12" sm="8" md="6">
       <!-- 通知のスナックバー -->
       <v-snackbar
@@ -7,7 +7,7 @@
         :timeout="2000"
         absolute
         centered
-        color="#ff7594"
+        color="#f4a6b8"
         elevation="24"
         :top="true"
         :right="true"
@@ -18,7 +18,7 @@
           v-model="colorThema"
           inset
           right
-          color="#ff7594"
+          color="#f4a6b8"
           dark
         ></v-switch>
       </div> -->

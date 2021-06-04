@@ -21,10 +21,10 @@
             color="#272727"
             fab
           >
-            <v-icon v-if="fab" color="#ff7594">
+            <v-icon v-if="fab" color="#f4a6b8">
               mdi-close
             </v-icon>
-            <v-icon v-else color="#ff7594">
+            <v-icon v-else color="#f4a6b8">
               mdi-yin-yang
             </v-icon>
           </v-btn>
@@ -36,7 +36,7 @@
             fab
             dark
             small
-            color="#ff7594"
+            color="#f4a6b8"
             class="fab-icon"
           >
             <v-icon>{{ item.icon }}</v-icon>
@@ -60,6 +60,23 @@
       app
     >
       <span class="copyright">&copy; {{ new Date().getFullYear() + ' ' + title }}</span>
+
+      <div class="fotter-btns">
+        <div
+          v-for="(item, index) in footerItems"
+          :key="index"
+        >
+          <v-btn
+            :to="item.to"
+            fab
+            dark
+            small
+            class="fab-icon"
+          >
+            <v-icon>{{ item.icon }}</v-icon>
+          </v-btn>
+        </div>
+      </div>
     </v-footer>
   </v-app>
 </template>
@@ -73,16 +90,16 @@ export default {
       fixed: false,
       items: [
         {
-          icon: 'mdi-account-outline',
-          title: 'PROFILE',
-          to: '/profile',
-          left: 'left: -54px;',
-        },
-        {
           icon: 'mdi-gamepad-variant-outline',
           title: 'MODE',
           to: '/mode',
           left: 'left: -38px;',
+        },
+        {
+          icon: 'mdi-account-outline',
+          title: 'PROFILE',
+          to: '/profile',
+          left: 'left: -54px;',
         },
         {
           icon: 'mdi-account-group',
@@ -97,6 +114,14 @@ export default {
           left: 'left: -59px;',
         },
         {
+          icon: 'mdi-bell-outline',
+          title: 'NOTICES',
+          to: '/notice',
+          left: 'left: -57px;',
+        }
+      ],
+      footerItems: [
+        {
           icon: 'mdi-email-edit-outline',
           title: 'CONTACT',
           to: '/contact',
@@ -108,12 +133,6 @@ export default {
           to: '/terms',
           left: 'left: -45px;',
         },
-        {
-          icon: 'mdi-bell-outline',
-          title: 'NOTICES',
-          to: '/notice',
-          left: 'left: -57px;',
-        }
       ],
       miniVariant: false,
       right: true,
@@ -158,5 +177,19 @@ export default {
 
 .copyright {
   opacity: 0.4;
+}
+
+.fotter-btns {
+  margin: auto 0 auto auto;
+  display: flex;
+  div {
+    margin-right: 10px;
+    a {
+      color: $base-text-color;
+    }
+  }
+  div:nth-of-type(2) {
+    margin-right: 1px;
+  }
 }
 </style>

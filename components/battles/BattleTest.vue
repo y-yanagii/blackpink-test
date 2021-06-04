@@ -4,7 +4,7 @@
       <div class="avatar-circle">
         <v-avatar
           size="40"
-          color="#ff7594"
+          color="#f4a6b8"
         >
           <v-img
             :lazy-src="user.photoURL"
@@ -17,7 +17,7 @@
       <div class="avatar-circle">
         <v-avatar
           size="40"
-          color="#ff7594"
+          color="#f4a6b8"
         >
           <v-icon dark>mdi-account-circle</v-icon>
         </v-avatar>

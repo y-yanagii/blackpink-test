@@ -49,7 +49,7 @@
                     v-if="isEdit === false"
                     @click="edit()"
                     icon
-                    color="#ff7594"
+                    color="#f4a6b8"
                     class="edit-icon-btn"
                   >
                     <v-icon>mdi-pencil-outline</v-icon>
@@ -92,7 +92,7 @@
                     <v-btn-toggle
                       v-model="privacyToggle"
                       tile
-                      color="#ff7594"
+                      color="#f4a6b8"
                       group
                     >
                       <v-btn

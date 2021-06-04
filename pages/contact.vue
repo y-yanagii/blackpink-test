@@ -132,7 +132,7 @@ export default {
 <style scoped lang="scss">
 .contact {
   height: 100%;
-  background: linear-gradient(218deg,pink 50%,pink 50%,black 50%,black 50%) !important;
+  // background: linear-gradient(218deg,pink 50%,pink 50%,black 50%,black 50%) !important;
   .contact-child {
     height: 100%;
   }

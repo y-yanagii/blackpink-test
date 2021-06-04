@@ -101,7 +101,7 @@ export default {
 <style scoped lang="scss">
 .mode-select {
   height: 100%;
-  background: linear-gradient(110deg,pink 50%,pink 50%,black 50%,black 50%) !important;
+  // background: linear-gradient(43deg,pink 50%,pink 50%,black 50%,black 50%) !important;
 }
 
 .fade-enter-active, .fade-leave-active {

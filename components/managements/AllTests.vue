@@ -10,13 +10,13 @@
             >
               <thead>
                 <tr>
-                  <th style="border-right: solid 1px #ff7594; border-bottom: solid 1px #ff7594 !important;">No.</th>
-                  <th class="text-center" style="border-bottom: solid 1px #ff7594 !important;">Q</th>
-                  <th class="text-center" style="border-bottom: solid 1px #ff7594 !important;">A</th>
-                  <th class="text-center" style="border-bottom: solid 1px #ff7594 !important;">B</th>
-                  <th class="text-center" style="border-bottom: solid 1px #ff7594 !important;">C</th>
-                  <th class="text-center" style="border-bottom: solid 1px #ff7594 !important;">D</th>
-                  <th class="text-center" style="border-bottom: solid 1px #ff7594 !important;"></th>
+                  <th style="border-right: solid 1px #f4a6b8; border-bottom: solid 1px #f4a6b8 !important;">No.</th>
+                  <th class="text-center" style="border-bottom: solid 1px #f4a6b8 !important;">Q</th>
+                  <th class="text-center" style="border-bottom: solid 1px #f4a6b8 !important;">A</th>
+                  <th class="text-center" style="border-bottom: solid 1px #f4a6b8 !important;">B</th>
+                  <th class="text-center" style="border-bottom: solid 1px #f4a6b8 !important;">C</th>
+                  <th class="text-center" style="border-bottom: solid 1px #f4a6b8 !important;">D</th>
+                  <th class="text-center" style="border-bottom: solid 1px #f4a6b8 !important;"></th>
                 </tr>
               </thead>
               <tbody>

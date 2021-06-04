@@ -44,6 +44,6 @@ export default {
 <style scoped lang="scss">
 .ranking {
   height: 100%;
-  background: linear-gradient(63deg,pink 50%,pink 50%,black 50%,black 50%) !important;
+  // background: linear-gradient(63deg,pink 50%,pink 50%,black 50%,black 50%) !important;
 }
 </style>

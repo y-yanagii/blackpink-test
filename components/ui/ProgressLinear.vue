@@ -5,7 +5,7 @@
         ＊対戦相手を待っています...
       </div>
       <v-progress-linear
-        color="#ff7594"
+        color="#f4a6b8"
         indeterminate
         rounded
         height="6"
