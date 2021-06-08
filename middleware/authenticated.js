@@ -7,6 +7,7 @@ export default async function(context) {
     // ゲストモード時
     if (context.route.name === "profile") {
       // プロフィール画面へは遷移しない
+      context.store.dispatch('messages/setSnackbarText', "ログインしてください");
       context.redirect('/');
     }
 

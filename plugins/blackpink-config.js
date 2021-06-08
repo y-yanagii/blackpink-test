@@ -88,9 +88,13 @@ Vue.prototype.$gameMessage = {
 
 Vue.prototype.$signMessages = {
   // ログインしました。
-  login: "I'm logged in.",
+  login: "ログインしました！",
   // ログアウトしました。
-  logout: "I'm logged out.",
+  logout: "ログアウトしました！",
+  // ログアウトしてください
+  promptToLogout: "マイプロフィールからログアウトしてください",
+  // ログインしてください
+  pleaseLogin: "ログインしてください",
 }
 
 Vue.prototype.$privacyText = {

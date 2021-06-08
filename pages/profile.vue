@@ -277,8 +277,8 @@ export default {
     },
     logout() {
       // ログアウト処理(ホーム画面遷移)
-      this.$store.dispatch('localStorages/setGuestPlay', false);
       this.$store.dispatch('twitter/logoutTwitter');
+      this.$store.dispatch('messages/setSnackbarText', this.$signMessages.logout);
       this.$router.push({ path: "/" });
     }
   },

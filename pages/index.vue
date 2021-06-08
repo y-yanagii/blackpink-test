@@ -4,7 +4,7 @@
       <!-- 通知のスナックバー -->
       <v-snackbar
         :value="snackbar"
-        :timeout="2000"
+        :timeout="3000"
         absolute
         centered
         color="#f4a6b8"
@@ -67,6 +67,7 @@
 import Logo from '~/components/defaults/Logo.vue';
 import Confirm from '~/components/ui/Confirm.vue';
 import TermsDialog from '~/components/ui/TermsDialog.vue';
+import firebase from '~/plugins/firebase';
 
 export default {
   data: function() {
@@ -87,7 +88,17 @@ export default {
   },
   methods: {
     fromGuestToMode() {
-      this.$refs.dlg.isDisplay = true;
+      // 認証チェック
+      firebase.auth().onAuthStateChanged((user) => {
+        if (!user) {
+          // 認証されていない場合ダイアログを表示
+          this.$refs.dlg.isDisplay = true;
+        } else {
+          // 認証済みの場合ログアウトを促す
+          this.snackbar = true;
+          this.snackbarText = this.$signMessages.promptToLogout;
+        }
+      });
     },
     confirm(dialogFlag) {
       // 確認ダイアログのOK、キャンセル判定処理
@@ -95,7 +106,6 @@ export default {
       if (dialogFlag) {
         // 確認ダイアログのOKの場合true、キャンセルの場合false
         // ログアウト処理もしておく。
-        this.$store.dispatch('twitter/logoutTwitter');
         this.$store.dispatch('localStorages/setGuestPlay', dialogFlag);
         this.$router.push({ path: "/mode" });
       }
@@ -128,6 +138,27 @@ export default {
 
       // Twitter認証処理(ユーザ情報登録も担う)
       this.$store.dispatch('twitter/loginTwitter', auterAuthenticationFunc);
+    }
+  },
+  mounted() {
+    // メッセージチェック
+    let message = this.$store.getters['messages/getSnackbarText'];
+    if (message === this.$signMessages.logout
+    || message === this.$signMessages.pleaseLogin) {
+      // 「ログアウトしました」、または「ログインしてください」を表示
+      this.snackbarText = message;
+      this.snackbar = true;
+    }
+  },
+  watch: {
+    snackbar(newBool) {
+      if (newBool) {
+        // 2秒後falseにスナックメッセージを初期化
+        setTimeout(() => {
+          this.snackbar = false; // 初期化
+          this.$store.dispatch('messages/setSnackbarText', "");
+        }, 3000);
+      }
     }
   },
   components: {
