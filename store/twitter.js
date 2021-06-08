@@ -36,7 +36,7 @@ const actions = {
   logoutTwitter(context, afterAuthenticationFunc) {
     firebase.auth().signOut()
       .then(()=> {
-        context.dispatch('localStorages/initializationLocalStorage'); // twitterアクションからlocalStoragesアクションを呼ぶ
+        context.dispatch('localStorages/initializationLocalStorage', '', { root: true }); // twitterアクションからlocalStoragesアクションを呼ぶ
       })
       .catch((error) => {
         console.log(error);
