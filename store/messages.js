@@ -16,19 +16,35 @@ const state = () => ({
     { rankingMax: 20, rankingMin: 19, message: "Have you heard of BLACKPINK???" },
     { rankingMax: 9999999, rankingMin: 21, message: "Oh my God......" },
   ],
+  snackbarText: "",
 });
 
 const getters = {
   // 順位ごとのメッセージを取得
   getMessage: state => rank => {
     return state.messages.find(m => m.rankingMax >= rank && m.rankingMin <= rank).message
-  }
+  },
+  // スナックバーテキストを返却
+  getSnackbarText: state => { return state.snackbarText },
+  
 };
 
-const actions = {};
+const mutations = {
+  setSnackbarText(state, newText) {
+    state.snackbarText = newText;
+  },
+};
+
+const actions = {
+  setSnackbarText(context, newText) {
+    // スナックバーメッセージの設定
+    context.commit('setSnackbarText', newText);
+  },
+};
 
 export default {
   state,
   getters,
+  mutations,
   actions,
 };

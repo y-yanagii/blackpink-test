@@ -7,7 +7,7 @@ const getters = {}
 const mutations = {}
 
 const actions = {
-  loginTwitter(context, auterAuthenticationFunc) {
+  loginTwitter(context, afterAuthenticationFunc) {
     // Twitter認証処理(ログイン。未登録の場合登録してログイン)
     let provider = new firebase.auth.TwitterAuthProvider();
     firebase.auth().signInWithPopup(provider)
@@ -26,18 +26,17 @@ const actions = {
         context.dispatch('localStorages/setUserNameTwitterId', { name: result.additionalUserInfo.profile.name, twitterId: result.additionalUserInfo.username }, { root: true }); // twitterアクションからlocalStoragesアクションを呼ぶ
 
         // 第二引数のコールバック関数呼び出し（認証したユーザ情報を元に、スナックバー通知とステータス登録）
-        auterAuthenticationFunc();
+        afterAuthenticationFunc();
 
         console.log("login");
       }).catch(function (error) {
         console.log(error)
       })
   },
-  logoutTwitter(context) {
+  logoutTwitter(context, afterAuthenticationFunc) {
     firebase.auth().signOut()
       .then(()=> {
-        console.log('logout');
-        context.dispatch('localStorages/setUserNameTwitterId', { name: "", twitterId: "" }, { root: true }); // twitterアクションからlocalStoragesアクションを呼ぶ
+        context.dispatch('localStorages/initializationLocalStorage', '', { root: true }); // twitterアクションからlocalStoragesアクションを呼ぶ
       })
       .catch((error) => {
         console.log(error);

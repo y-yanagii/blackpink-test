@@ -52,6 +52,17 @@ const mutations = {
   setBattleResult(state, battleResult) {
     state.battleResult = battleResult;
   },
+  initializationLocalStorage(state) {
+    state.userName = "";
+    state.twitterId = "";
+    state.modeType = 0;
+    state.modeValue = "";
+    state.playType = 0;
+    state.guestPlayFlag = false;
+    state.newRecord = {};
+    state.targetTests = [];
+    state.battleResult = "";
+  }
 };
 
 const actions = {
@@ -77,6 +88,10 @@ const actions = {
   setBattleResult(context, battleResult) {
     context.commit('setBattleResult', battleResult);
   },
+  initializationLocalStorage(context) {
+    // ローカルストレージの内容を初期化
+    context.commit('initializationLocalStorage');
+  }
 };
 
 // 上記のオブジェクトをexport
