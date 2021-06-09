@@ -3,6 +3,7 @@
     <div class="users-area">
       <div class="avatar-circle">
         <v-avatar
+          v-if="!$store.getters['localStorages/getGuestPlay']"
           size="40"
           color="#f4a6b8"
         >
@@ -10,6 +11,14 @@
             :lazy-src="user.photoURL"
             :src="user.photoURL"
           ></v-img>
+        </v-avatar>
+        <!-- ゲストモード時 -->
+        <v-avatar
+          v-else
+          size="40"
+          color="#f4a6b8"
+        >
+          <v-icon dark>mdi-account-circle</v-icon>
         </v-avatar>
         <div v-if="myCorrect == $answerJudgment.correctMark" class="mark correct-mark"></div>
         <div v-else-if="myCorrect === $answerJudgment.incorrectMark" class="mark incorrect-mark">❌</div>

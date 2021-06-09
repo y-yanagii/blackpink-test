@@ -17,6 +17,7 @@
       <!-- vs領域 -->
       <div class="vs">
         <v-avatar
+          v-if="!$store.getters['localStorages/getGuestPlay']"
           size="56"
         >
           <v-img
@@ -25,6 +26,14 @@
             max-width="250"
             :src="user.photoURL"
           ></v-img>
+        </v-avatar>
+        <!-- ゲストモード時 -->
+        <v-avatar
+          v-else
+          size="56"
+          color="#f4a6b8"
+        >
+          <v-icon dark>mdi-account-circle</v-icon>
         </v-avatar>
         <div>VS</div>
         <v-avatar
