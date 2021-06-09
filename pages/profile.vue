@@ -273,7 +273,7 @@ export default {
     },
     updateTwitter() {
       // Twitterよりユーザの最新情報を取得し保存
-
+      
     },
     logout() {
       // ログアウト処理(ホーム画面遷移)
