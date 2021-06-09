@@ -107,6 +107,7 @@ export default {
         // 確認ダイアログのOKの場合true、キャンセルの場合false
         // ログアウト処理もしておく。
         this.$store.dispatch('localStorages/setGuestPlay', dialogFlag);
+        this.$store.dispatch('localStorages/setUserNameTwitterId', { name: this.$guest.userName, twitterId: this.$guest.twitterId });
         this.$router.push({ path: "/mode" });
       }
     },

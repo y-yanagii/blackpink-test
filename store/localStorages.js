@@ -42,6 +42,9 @@ const mutations = {
   setGuestPlay(state, guestPlayFlag) {
     state.guestPlayFlag = guestPlayFlag;
   },
+  setTwitterId(state, twitterId) {
+    state.twitterId = twitterId;
+  },
   // 解答結果オブジェクトをセット
   setNewRecord(state, newRecord) {
     state.newRecord = newRecord;
@@ -91,7 +94,10 @@ const actions = {
   initializationLocalStorage(context) {
     // ローカルストレージの内容を初期化
     context.commit('initializationLocalStorage');
-  }
+  },
+  setTwitterId(context, twitterId) {
+    context.commit('setTwitterId', twitterId);
+  },
 };
 
 // 上記のオブジェクトをexport

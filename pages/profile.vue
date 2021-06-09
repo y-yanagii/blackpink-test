@@ -291,10 +291,6 @@ export default {
 </script>
 
 <style scoped lang="scss">
-// .profile {
-//   background: linear-gradient(284deg,pink 50%,pink 50%,black 50%,black 50%) !important;
-// }
-
 .profile-template {
   margin-bottom: 6%;
   padding: 4%;
