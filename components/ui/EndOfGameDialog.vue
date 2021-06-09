@@ -79,9 +79,6 @@ export default {
   data: function() {
     return {
       isDisplay: false,
-      sns:{
-        twitter:'https://twitter.com/intent/tweet?url=https://blackpink-test.web.app&text=GAME%0a結果は&hashtags=BLACKPINK,ブラックピンク,BLINK,BLACKPINKTEST',
-      },
       selectedMode: this.$store.getters['localStorages/choiceMode'],
       ballFontSize: this.$vuetify.breakpoint.xs ? "xs-font" : "font",
     }
@@ -89,8 +86,9 @@ export default {
   props: ["message", "resultStr", "gameName"],
   computed: {
     snsTwitter() {
+      // Twitterシェアの文言を設定
       const urlStr = "https://twitter.com/intent/tweet?url=https://blackpink-test.web.app%0a";
-      const textStr = "&text=BLINK " + this.gameName + " GAME結果は...%0a" + this.resultStr + "%0a" + this.message + "%0a%0a" + '&hashtags=BLINKGAMES%0a,BLACKPINK,ブラックピンク%0a,BLINK,ブリンク';
+      const textStr = "&text=BLINK GAMES (" + this.gameName + ") 結果は...%0a" + this.resultStr + "%0a" + this.message + "%0a%0a" + '&hashtags=BLINKGAMES%0a,BLACKPINK,ブラックピンク%0a,BLINK,ブリンク';
       return urlStr + textStr;
     }
   },
