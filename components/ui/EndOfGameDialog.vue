@@ -55,7 +55,7 @@
         </div>
       </div>
       <div class="game-record">
-        <div>
+        <div class="message">
           {{ message }}
         </div>
         <div>
@@ -65,7 +65,7 @@
       <div class="end-game-footer">
         <div class="sns-share-area">
           <v-btn
-            :href="sns.twitter"
+            :href="snsTwitter"
             target="_blank"
           ><i class="mdi mdi-twitter" />Share</v-btn>
         </div>
@@ -80,13 +80,20 @@ export default {
     return {
       isDisplay: false,
       sns:{
-        twitter:'https://twitter.com/intent/tweet?url=https://yahoo.co.jp&text=GAME結果は&hashtags=BLACKPINK,ブラックピンク,BLINK,BLACKPINKTEST',
+        twitter:'https://twitter.com/intent/tweet?url=https://blackpink-test.web.app&text=GAME%0a結果は&hashtags=BLACKPINK,ブラックピンク,BLINK,BLACKPINKTEST',
       },
       selectedMode: this.$store.getters['localStorages/choiceMode'],
       ballFontSize: this.$vuetify.breakpoint.xs ? "xs-font" : "font",
     }
   },
   props: ["message", "resultStr", "gameName"],
+  computed: {
+    snsTwitter() {
+      const urlStr = "https://twitter.com/intent/tweet?url=https://blackpink-test.web.app%0a";
+      const textStr = "&text=BLINK " + this.gameName + " GAME結果は...%0a" + this.resultStr + "%0a" + this.message + "%0a%0a" + '&hashtags=BLINKGAMES%0a,BLACKPINK,ブラックピンク%0a,BLINK,ブリンク';
+      return urlStr + textStr;
+    }
+  },
   watch: {
     isDisplay(flag) {
       // ダイアログ外を押下した場合のリプレイ処理は一旦コメントアウト
@@ -212,5 +219,9 @@ export default {
       }
     }
   }
+}
+
+.message {
+  white-space: pre-line;
 }
 </style>
