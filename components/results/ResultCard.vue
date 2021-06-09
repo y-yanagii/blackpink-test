@@ -32,13 +32,13 @@
       </div>
       <!-- メッセージ領域 -->
       <div class="result-message-area">
-        <p>{{ this.newRecord.message }}</p>
+        <p>{{ newRecord.message }}</p>
       </div>
       <!-- フッター領域 -->
       <div class="result-footer-area">
         <div class="sns-share-area">
           <v-btn
-            :href=sns.twitter
+            :href=snsTwitter
             target="_blank"
           ><i class="mdi mdi-twitter"/>Share
           </v-btn>
@@ -52,9 +52,6 @@
 export default {
   data() {
     return {
-      sns:{
-        twitter:'https://twitter.com/intent/tweet?url=https://yahoo.co.jp&text=TEST結果は&hashtags=BLACKPINK,ブラックピンク,BLINK,BLACKPINKTEST,BLINKTEST',
-      },
       crownGif: {
         src: "https://giphy.com/embed/AV7jFEFlWSUl8oEwH8",
         width: "90%",
@@ -65,6 +62,16 @@ export default {
     }
   },
   props: ["newRecord"],
+  computed: {
+    snsTwitter() {
+      // Twitterシェアの文言を設定
+      const rankStr = 20 >= this.newRecord.myRank ? this.newRecord.myRank + "位" : + "ランク外";
+      const clearTime = this.$options.filters.zeroPadAndFormat(this.newRecord.clearTime);
+      const urlStr = "https://twitter.com/intent/tweet?url=https://blackpink-test.web.app%0a";
+      const textStr = "&text=BLINK GAMES(" + this.newRecord.modeValue + ") 結果は...%0a" + "RANK: " + rankStr + "%0a" + "SCORE: " + this.newRecord.score + "%0a" + "CLEAR TIME: " + clearTime + "%0a" + this.newRecord.message + "%0a%0a" + '&hashtags=BLINKGAMES%0a,BLACKPINK,ブラックピンク%0a,BLINK,ブリンク';
+      return urlStr + textStr;
+    }
+  },
   filters: {
     // フォーマット整形
     zeroPadAndFormat: function(value) {
