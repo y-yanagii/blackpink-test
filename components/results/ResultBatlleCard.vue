@@ -38,7 +38,7 @@
       <div class="result-footer-area">
         <div class="sns-share-area">
           <v-btn
-            :href=sns.twitter
+            :href=snsTwitter
             target="_blank"
           ><i class="mdi mdi-twitter"/>Share
           </v-btn>
@@ -54,13 +54,26 @@ import { mapGetters } from 'vuex';
 export default {
   data() {
     return {
-      sns:{
-        twitter:'https://twitter.com/intent/tweet?url=https://yahoo.co.jp&text=TEST結果は&hashtags=BLACKPINK,ブラックピンク,BLINK,BLACKPINKTEST,BLINKTEST',
-      },
     }
   },
   computed: {
     ...mapGetters({ user: "users/getCurrentUser" }),
+    snsTwitter() {
+      // Twitterシェアの文言を設定
+      const resStr = (this.battleResult === this.$answerJudgment.lose) ? 'YOU ' + this.battleResult.toUpperCase() + '...' : 'YOU ' + this.battleResult.toUpperCase() + '！';
+      let message = "";
+      if (this.battleResult == this.$answerJudgment.win) {
+        message = "CONGRATULATIONS！💖🖤👑";
+      } else if (this.battleResult == this.$answerJudgment.lose) {
+        message = "Oh...";
+      } else {
+        message = "One more time?";
+      }
+
+      const urlStr = "https://twitter.com/intent/tweet?url=https://blackpink-test.web.app%0a";
+      const textStr = "&text=BLINK GAMES(1ON1) 結果は...%0a" + resStr + "%0a" + message + "%0a%0a" + '&hashtags=BLINKGAMES%0a,BLACKPINK,ブラックピンク%0a,BLINK,ブリンク';
+      return urlStr + textStr;
+    }
   },
   props: ["battleResult"],
 }
