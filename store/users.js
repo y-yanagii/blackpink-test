@@ -28,6 +28,10 @@ const mutations = {
     state.user.description = userObject.description;
     state.user.photoURL = userObject.photoURL;
     state.user.privacy = userObject.privacy;
+  },
+  updateTwitterInfo(state, userObject) {
+    state.user.name = userObject.name;
+    state.user.photoURL = userObject.photoURL;
   }
 }
 
@@ -61,6 +65,14 @@ const actions = {
     });
 
     context.dispatch('setUser', userObject);
+  }),
+  updateTwitter: firestoreAction((context, userObject) => {
+    usersRef.doc(userObject.id).update({
+      name: userObject.name,
+      photoURL: userObject.photoURL,
+    });
+
+    context.commit('updateTwitterInfo', userObject);
   }),
   get: firestoreAction((context, id) => {
     usersRef.doc(id).get().then((doc)=>{

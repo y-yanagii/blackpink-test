@@ -42,6 +42,9 @@ const mutations = {
   setGuestPlay(state, guestPlayFlag) {
     state.guestPlayFlag = guestPlayFlag;
   },
+  setTwitterId(state, twitterId) {
+    state.twitterId = twitterId;
+  },
   // 解答結果オブジェクトをセット
   setNewRecord(state, newRecord) {
     state.newRecord = newRecord;
@@ -62,7 +65,10 @@ const mutations = {
     state.newRecord = {};
     state.targetTests = [];
     state.battleResult = "";
-  }
+  },
+  setUserName(state, newName) {
+    state.userName = newName;
+  },
 };
 
 const actions = {
@@ -91,7 +97,13 @@ const actions = {
   initializationLocalStorage(context) {
     // ローカルストレージの内容を初期化
     context.commit('initializationLocalStorage');
-  }
+  },
+  setTwitterId(context, twitterId) {
+    context.commit('setTwitterId', twitterId);
+  },
+  setUserName(context, newName) {
+    context.commit('setUserName', newName);
+  },
 };
 
 // 上記のオブジェクトをexport

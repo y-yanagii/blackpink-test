@@ -145,3 +145,11 @@ Vue.prototype.$com = {
   // COMのTwitterId
   comId: "account",
 }
+
+// GUEST
+Vue.prototype.$guest = {
+  // guestのTwitterId
+  twitterId: "home",
+  // guestのユーザ名
+  userName: "GUEST",
+}

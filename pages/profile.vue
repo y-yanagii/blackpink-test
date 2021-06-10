@@ -159,11 +159,17 @@
         </div>
       </v-col>
     </v-row>
+    <TwitterUpdateDialog
+      ref="dlg"
+      @agreement-update="updateUser"
+    ></TwitterUpdateDialog>
   </div>
 </template>
 
 <script>
+import TwitterUpdateDialog from '~/components/ui/TwitterUpdateDialog.vue';
 import { mapGetters } from 'vuex';
+
 export default {
   data: function() {
     return {
@@ -171,7 +177,6 @@ export default {
       privacyToggle: this.$privacyText.public,
       newPrivacy: 0,
       twitterId: this.$store.getters['localStorages/getTwitterId'],
-      twitterDisplay: false,
     }
   },
   computed: {
@@ -272,8 +277,13 @@ export default {
       $event.target.textContent === this.$privacyText.private ? this.newPrivacy = true : this.newPrivacy = false;
     },
     updateTwitter() {
+      // 同意ダイアログ表示
+      this.$refs.dlg.twitterDisplay = true;
+    },
+    updateUser() {
       // Twitterよりユーザの最新情報を取得し保存
-
+      // this.$store.dispatch('twitter/updateTwitter');
+      this.$refs.dlg.twitterDisplay = false;
     },
     logout() {
       // ログアウト処理(ホーム画面遷移)
@@ -287,14 +297,13 @@ export default {
     this.$store.dispatch('battles/init');
     this.$store.dispatch('rankings/init');
   },
+  components: {
+    TwitterUpdateDialog,
+  },
 }
 </script>
 
 <style scoped lang="scss">
-// .profile {
-//   background: linear-gradient(284deg,pink 50%,pink 50%,black 50%,black 50%) !important;
-// }
-
 .profile-template {
   margin-bottom: 6%;
   padding: 4%;
