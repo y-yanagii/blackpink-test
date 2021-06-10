@@ -37,7 +37,7 @@ import ModeTitle from '~/components/ui/ModeTitle.vue';
 import Time from '~/components/ui/Time.vue';
 import TestCard from '~/components/tests/TestCard.vue';
 import Life from '~/components/ui/Life.vue';
-import { db } from "~/plugins/firebase";
+import firebase, { db } from "~/plugins/firebase";
 import hartbreakMp3 from '~/assets/images/test/hartbreak.mp3';
 const hartbreakEffects = new Audio(hartbreakMp3);
 
@@ -127,6 +127,8 @@ export default {
         // メッセージ取得処理
       // Vuexに解答結果と今回のテスト内容を送信し保持
       this.$store.dispatch('localStorages/setNewRecord', { newRecord: this.newRecord });
+      // resultsコレクションに登録
+      this.addResult();
       this.$store.dispatch('localStorages/setBattleResult', ""); // 1on1の結果を初期化
       this.$store.dispatch('localStorages/setTargetTests', this.tests);
       // 検定結果画面に遷移
@@ -210,6 +212,23 @@ export default {
       // 残ライフが0の場合、検定終了(最終問題の場合はaddAnswerメソッドのif文で処理される)それ以外、次の問題に移行
       this.remainingLife === 0 ? this.testEndProcessing() : this.currentTest++
     },
+    addResult() {
+      // resultsコレクションに追加
+      db.collection('results').doc(this.newRecord.twitterId).set({
+        name: this.newRecord.name,
+        modeType: this.newRecord.modeType,
+        modeValue: this.newRecord.modeValue,
+        card: {
+          rank: this.newRecord.myRank,
+          score: this.newRecord.score,
+          clearTime: this.newRecord.clearTime,
+          message: this.newRecord.message,
+        },
+        myCorrects: this.newRecord.answerIncorrectsArray,
+        tests: this.tests,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+      });
+    }
   },
   filters: {
     // フォーマット整形
