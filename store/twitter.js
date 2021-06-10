@@ -42,6 +42,20 @@ const actions = {
         console.log(error);
       })
   },
+  updateTwitter(context) {
+    // 現在のユーザ情報から最新のユーザ情報を取得
+    let user = firebase.auth().currentUser;
+    
+    // ユーザ情報を取得し、ユーザ情報登録
+    let userObject = {
+      id: user.uid,
+      name: user.providerData[0].displayName,
+      photoURL: user.providerData[0].photoURL,
+    }
+
+    context.dispatch('users/updateTwitter', userObject, { root: true }); // twitterアクションからusersアクションを呼ぶ
+    context.dispatch('localStorages/setUserName', userObject.name, { root: true }); // twitterアクションからlocalStoragesアクションを呼ぶ
+  }
 }
 
 export default {

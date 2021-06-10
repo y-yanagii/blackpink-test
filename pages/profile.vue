@@ -282,7 +282,7 @@ export default {
     },
     updateUser() {
       // Twitterよりユーザの最新情報を取得し保存
-      debugger
+      // this.$store.dispatch('twitter/updateTwitter');
       this.$refs.dlg.twitterDisplay = false;
     },
     logout() {

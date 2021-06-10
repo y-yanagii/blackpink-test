@@ -65,7 +65,10 @@ const mutations = {
     state.newRecord = {};
     state.targetTests = [];
     state.battleResult = "";
-  }
+  },
+  setUserName(state, newName) {
+    state.userName = newName;
+  },
 };
 
 const actions = {
@@ -97,6 +100,9 @@ const actions = {
   },
   setTwitterId(context, twitterId) {
     context.commit('setTwitterId', twitterId);
+  },
+  setUserName(context, newName) {
+    context.commit('setUserName', newName);
   },
 };
 
