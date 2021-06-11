@@ -9,7 +9,6 @@
           ></ResultBatlleCard>
           <ResultCard
             v-else
-            :newRecord="newRecord"
             :res="res"
           ></ResultCard>
         </transition>
@@ -19,6 +18,7 @@
           v-if="!battleResult"
           :newRecord="newRecord"
           :tests="tests"
+          :res="res"
         ></ResultConfirm>
         <YoutubeArea
           :items="items"

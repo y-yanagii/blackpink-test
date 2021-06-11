@@ -5,15 +5,15 @@
     </div>
     <div class="answers-list">
       <div
-        v-for="(ansewerIncorrect, index) in newRecord.answerIncorrectsArray"
+        v-for="(myCorrect, index) in res.myCorrects"
         :key="index"
-        :class="getAnswerCheckClass(ansewerIncorrect.isAnswer)"
-        @click.stop="changeModal(tests, index)"
+        :class="getAnswerCheckClass(myCorrect.isAnswer)"
+        @click.stop="changeModal(res.tests, index)"
         class="ansewerIncorrect-li"
       >
-        <div><i class="mdi" :class="getAnswerCheckIcon(ansewerIncorrect.isAnswer)"/></div>
+        <div><i class="mdi" :class="getAnswerCheckIcon(myCorrect.isAnswer)"/></div>
         <div class="ansewerIncorrect-number">{{ index + 1 }}</div>
-        <div class="ansewerIncorrect-value">{{ ansewerIncorrect.answerContent }}</div>
+        <div class="ansewerIncorrect-value">{{ myCorrect.answerContent }}</div>
         <div
           class="confirm-dialog-icon"
         ><i class="mdi mdi-comment-search" /></div>
@@ -36,7 +36,7 @@
             {{ "A. " + modalAnswerContent }}
           </div>
           <div
-            v-if="newRecord.modeType === $mode.music"
+            v-if="res.modeType === $mode.music"
             class="modal-answer-music-embed"
           >
             <!-- 楽曲テストの場合リンクを表示 -->
@@ -71,7 +71,7 @@ export default {
       embedCode: "",
     }
   },
-  props: ["newRecord", "tests"],
+  props: ["res"],
   methods: {
     getAnswerCheckClass(value) {
       // 正解した問いはベースカラーで塗りつぶす
