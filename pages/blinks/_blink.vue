@@ -202,11 +202,16 @@
         </div>
       </v-col>
     </v-row>
+    <TwitterUpdateDialog
+      ref="dlg"
+      @agreement-update="updateUser"
+    ></TwitterUpdateDialog>
   </div>
 </template>
 
 <script>
 import HistoryBackBtn from '~/components/ui/HistoryBackBtn.vue';
+import TwitterUpdateDialog from '~/components/ui/TwitterUpdateDialog.vue';
 import { mapGetters } from 'vuex';
 import { db } from "~/plugins/firebase";
 
@@ -316,7 +321,13 @@ export default {
       $event.target.textContent === this.$privacyText.private ? this.newPrivacy = true : this.newPrivacy = false;
     },
     updateTwitter() {
+      // 同意ダイアログ表示
+      this.$refs.dlg.twitterDisplay = true;
+    },
+    updateUser() {
       // Twitterよりユーザの最新情報を取得し保存
+      // this.$store.dispatch('twitter/updateTwitter');
+      this.$refs.dlg.twitterDisplay = false;
     },
     logout() {
       // ログアウト処理(ホーム画面遷移)
@@ -342,6 +353,7 @@ export default {
   },
   components: {
     HistoryBackBtn,
+    TwitterUpdateDialog,
   }
 }
 </script>

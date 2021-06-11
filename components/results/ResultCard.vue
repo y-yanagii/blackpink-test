@@ -13,26 +13,26 @@
     <div class="result-card">
       <!-- タイトル領域 -->
       <div class="text-center result-card-title">
-        <p>CONGRATULATIONS！<br>BLINK GAMES({{ newRecord.modeValue }})</p>
+        <p>CONGRATULATIONS！<br>BLINK GAMES({{ res.modeValue }})</p>
       </div>
       <!-- 結果情報領域 -->
       <div class="text-center result-area">
         <div class="result-inline-area record-0" key="rank">
           <div class="result-label">RANK</div>
-          <div class="result-value">{{ 20 >= newRecord.myRank ? newRecord.myRank : "ー" }}</div>
+          <div class="result-value">{{ 20 >= res.card.rank ? res.card.rank : "ー" }}</div>
         </div>
         <div class="result-inline-area record-1" key="score">
           <div class="result-label">SCORE</div>
-          <div class="result-value">{{ newRecord.score }}</div>
+          <div class="result-value">{{ res.card.score }}</div>
         </div>
         <div class="result-inline-area record-2" key="clearTime">
           <div class="result-label">CLEAR TIME</div>
-          <div class="result-value">{{ newRecord.clearTime | zeroPadAndFormat }}</div>
+          <div class="result-value">{{ res.card.clearTime | zeroPadAndFormat }}</div>
         </div>
       </div>
       <!-- メッセージ領域 -->
       <div class="result-message-area">
-        <p>{{ newRecord.message }}</p>
+        <p>{{ res.card.message }}</p>
       </div>
       <!-- フッター領域 -->
       <div class="result-footer-area">
@@ -61,14 +61,14 @@ export default {
       }
     }
   },
-  props: ["newRecord"],
+  props: ["res"],
   computed: {
     snsTwitter() {
       // Twitterシェアの文言を設定
-      const rankStr = 20 >= this.newRecord.myRank ? this.newRecord.myRank + "位" : + "ランク外";
-      const clearTime = this.$options.filters.zeroPadAndFormat(this.newRecord.clearTime);
+      const rankStr = 20 >= this.res.card.rank ? this.res.card.rank + "位" : + "ランク外";
+      const clearTime = this.$options.filters.zeroPadAndFormat(this.res.card.clearTime);
       const urlStr = "https://twitter.com/intent/tweet?url=https://blackpink-test.web.app%0a";
-      const textStr = "&text=BLINK GAMES(" + this.newRecord.modeValue + ") 結果は...%0a" + "RANK: " + rankStr + "%0a" + "SCORE: " + this.newRecord.score + "%0a" + "CLEAR TIME: " + clearTime + "%0a" + this.newRecord.message + "%0a%0a" + '&hashtags=BLINKGAMES%0a,BLACKPINK,ブラックピンク%0a,BLINK,ブリンク';
+      const textStr = "&text=BLINK GAMES(" + this.res.modeValue + ") 結果は...%0a" + "RANK: " + rankStr + "%0a" + "SCORE: " + this.res.card.score + "%0a" + "CLEAR TIME: " + clearTime + "%0a" + this.res.card.message + "%0a%0a" + '&hashtags=BLINKGAMES%0a,BLACKPINK,ブラックピンク%0a,BLINK,ブリンク';
       return urlStr + textStr;
     }
   },

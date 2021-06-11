@@ -130,6 +130,8 @@ export default {
   }
   // 問題文と解答文のアニメーション
   .question-item,.option-item {
+    vertical-align: middle;
+    padding-bottom: 2px;
     display: inline-block;
     min-width: 0.3em;
     animation-direction: normal;
