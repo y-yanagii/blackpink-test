@@ -10,6 +10,7 @@
           <ResultCard
             v-else
             :newRecord="newRecord"
+            :res="res"
           ></ResultCard>
         </transition>
         <ResultSns></ResultSns>
@@ -34,14 +35,41 @@ import ResultFooter from '~/components/results/ResultFooter.vue';
 import ResultSns from '~/components/results/ResultSns.vue';
 import ResultConfirm from '~/components/results/ResultConfirm.vue';
 import YoutubeArea from '~/components/ui/YoutubeArea.vue';
+import { db } from "~/plugins/firebase";
 
 export default {
   data() {
     return {
       newRecord: this.$store.getters['localStorages/getNewRecord'].newRecord,
       tests: this.$store.getters['localStorages/getTargetTests'],
-      battleResult: this.$store.getters['localStorages/getBattleResult']
+      battleResult: this.$store.getters['localStorages/getBattleResult'],
+      res: {
+        name: "",
+        modeType: 0,
+        modeValue: "",
+        card: {
+          rank: 0,
+          score: 0,
+          clearTime: 0,
+          message: "",
+        },
+        myCorrects: [],
+        tests: [],
+        createdAt: 0,
+      },
     }
+  },
+  async created() {
+    debugger
+    // 結果をコレクションより取得
+    const twitterId = this.$store.getters["localStorages/getTwitterId"];
+    const _this = this;
+    await db.collection("results").doc(twitterId).get().then(function(doc) {
+      return new Promise(resolve => {
+        _this.res = doc.data();
+        resolve();
+      });
+    });
   },
   async asyncData(context) {
     // youtube data apiを使用しblackpinkチェンネルから最新のデータを取得
