@@ -24,7 +24,7 @@ export default {
   methods: {
     changeModeType(value) {
       // 難易度別にランキングを取得（）
-      this.$bind('rankings', db.collection("rankings").where('modeType', '==', value.modeType).orderBy('score', 'desc').orderBy('clearTime').orderBy('createdAt', 'desc'))
+      this.$bind('rankings', db.collection("rankings").where('modeType', '==', value.modeType).orderBy('score', 'desc').orderBy('clearTime').orderBy('createdAt', 'desc').limit(20))
     }
   },
   components: {
@@ -32,7 +32,7 @@ export default {
   },
   firestore: {
     // 初期表示時、EASYモードのランキングを取得
-    rankings: db.collection("rankings").where('modeType', '==', 0).orderBy('score', 'desc').orderBy('clearTime').orderBy('createdAt', 'desc'),
+    rankings: db.collection("rankings").where('modeType', '==', 0).orderBy('score', 'desc').orderBy('clearTime').orderBy('createdAt', 'desc').limit(20),
   },
   mounted() {
     // rankingsコレクションの初期化
