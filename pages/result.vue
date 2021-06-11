@@ -4,11 +4,11 @@
       <v-col cols="12" sm="8" md="6">
         <transition name="fadeResultCard" appear>
           <ResultBatlleCard
-            v-if="battleResult"
-            :battleResult="battleResult"
+            v-if="res.battleResult"
+            :battleResult="res.battleResult"
           ></ResultBatlleCard>
           <ResultCard
-            v-else
+            v-else-if="res.battleResult == ''"
             :res="res"
           ></ResultCard>
         </transition>
@@ -16,8 +16,6 @@
         <ResultFooter></ResultFooter>
         <ResultConfirm
           v-if="!battleResult"
-          :newRecord="newRecord"
-          :tests="tests"
           :res="res"
         ></ResultConfirm>
         <YoutubeArea
@@ -60,7 +58,6 @@ export default {
     }
   },
   async created() {
-    debugger
     // 結果をコレクションより取得
     const twitterId = this.$store.getters["localStorages/getTwitterId"];
     const _this = this;

@@ -239,15 +239,15 @@ export default {
       const loses = res.filter(r => r === this.$answerJudgment.lose);
       if (wins.length > loses.length) {
         // winの数が多い場合
-        this.$store.dispatch('localStorages/setBattleResult', this.$answerJudgment.win);
+        this.addResult(this.$answerJudgment.win);
         this.$store.dispatch('battles/winUpdate', twitterId);
       } else if (wins.length === loses.length) {
         // draw(win, loseの数が同じ場合)
-        this.$store.dispatch('localStorages/setBattleResult', this.$answerJudgment.draw);
+        this.addResult(this.$answerJudgment.draw);
         this.$store.dispatch('battles/drawUpdate', twitterId);
       } else if (wins.length < loses.length) {
         // loseの数が多い場合
-        this.$store.dispatch('localStorages/setBattleResult', this.$answerJudgment.lose);
+        this.addResult(this.$answerJudgment.lose);
         this.$store.dispatch('battles/loseUpdate', twitterId);
       }
     },
@@ -291,6 +291,24 @@ export default {
         // lose
         return this.$answerJudgment.lose;
       }
+    },
+    addResult(battleResult) {
+      // resultsコレクションに追加
+      db.collection('results').doc(this.$store.getters["localStorages/getTwitterId"]).set({
+        name: "",
+        modeType: 0,
+        modeValue: "",
+        card: {
+          rank: 0,
+          score: 0,
+          clearTime: 0,
+          message: "",
+        },
+        myCorrects: [],
+        tests: [],
+        battleResult: battleResult,
+        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+      });
     }
   },
   computed: {
