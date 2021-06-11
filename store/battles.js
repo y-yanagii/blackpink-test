@@ -16,21 +16,24 @@ const actions = {
   init: firestoreAction(({ bindFirestoreRef }) => {
     bindFirestoreRef('battles', battlesRef)
   }),
-  winUpdate: firestoreAction((context, twitterId) => {
+  winUpdate: firestoreAction((context, payload) => {
     // set merge trueでなければ登録あれば追加
-    battlesRef.doc(twitterId).set({
+    battlesRef.doc(payload.twitterId).set({
+      name: payload.name,
       win: firebase.firestore.FieldValue.increment(1),
     }, { merge: true });
   }),
-  loseUpdate: firestoreAction((context, twitterId) => {
+  loseUpdate: firestoreAction((context, payload) => {
     // set merge trueでなければ登録あれば追加
-    battlesRef.doc(twitterId).update({
+    battlesRef.doc(payload.twitterId).update({
+      name: payload.name,
       lose: firebase.firestore.FieldValue.increment(1),
     }, { merge: true });
   }),
-  drawUpdate: firestoreAction((context, twitterId) => {
+  drawUpdate: firestoreAction((context, payload) => {
     // set merge trueでなければ登録あれば追加
-    battlesRef.doc(twitterId).update({
+    battlesRef.doc(payload.twitterId).update({
+      name: payload.name,
       draw: firebase.firestore.FieldValue.increment(1),
     });
   }, { merge: true }),

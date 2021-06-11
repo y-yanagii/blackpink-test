@@ -240,15 +240,15 @@ export default {
       if (wins.length > loses.length) {
         // winの数が多い場合
         this.addResult(this.$answerJudgment.win);
-        this.$store.dispatch('battles/winUpdate', twitterId);
+        this.$store.dispatch('battles/winUpdate', { twitterId: twitterId, name: this.$store.getters['localStorages/getUserName'] });
       } else if (wins.length === loses.length) {
         // draw(win, loseの数が同じ場合)
         this.addResult(this.$answerJudgment.draw);
-        this.$store.dispatch('battles/drawUpdate', twitterId);
+        this.$store.dispatch('battles/drawUpdate', { twitterId: twitterId, name: this.$store.getters['localStorages/getUserName'] });
       } else if (wins.length < loses.length) {
         // loseの数が多い場合
         this.addResult(this.$answerJudgment.lose);
-        this.$store.dispatch('battles/loseUpdate', twitterId);
+        this.$store.dispatch('battles/loseUpdate', { twitterId: twitterId, name: this.$store.getters['localStorages/getUserName'] });
       }
     },
     checkResult(dataResult, twitterId) {

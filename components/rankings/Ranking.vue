@@ -19,6 +19,7 @@
         @input="sendModeType"
       ></v-select>
     </div>
+    {{ battles }}
     <!-- ランキング領域 -->
     <div class="text-center">
       <div>
@@ -114,7 +115,7 @@ export default {
       breakpointClass: this.getBreakPoint()
     }
   },
-  props: ["rankings"],
+  props: ["rankings", "battles"],
   methods: {
     sendModeType(value) {
       // valueにmodesのオブジェクトが入ってくる
