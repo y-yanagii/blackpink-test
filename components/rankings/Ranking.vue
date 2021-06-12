@@ -19,7 +19,6 @@
         @input="sendModeType"
       ></v-select>
     </div>
-    {{ battles }}
     <!-- ランキング領域 -->
     <div class="text-center">
       <div>
@@ -33,69 +32,93 @@
               <tr class="ranking-tr">
                 <th :class="breakpointClass.header" class="text-center">RANK</th>
                 <th :class="breakpointClass.header" class="text-left">NAME</th>
-                <th :class="breakpointClass.header" class="text-left">SCORE</th>
-                <th :class="breakpointClass.header" class="text-left">CLEAR TIME</th>
+                <template v-if="!isDisplay">
+                  <th :class="breakpointClass.header" class="text-left">SCORE</th>
+                  <th :class="breakpointClass.header" class="text-left">CLEAR TIME</th>
+                </template>
+                <template v-else>
+                  <th :class="breakpointClass.header" class="text-left">WIN</th>
+                  <th :class="breakpointClass.header" class="text-left">LOSE</th>
+                  <th :class="breakpointClass.header" class="text-left">DRAW</th>
+                </template>
                 <th :class="breakpointClass.header" class="text-center">SNS</th>
               </tr>
             </thead>
             <tbody>
-              <!-- 1位 -->
-              <tr
-                v-for="(ranking, index) in get1stRankings"
-                :key="index + 1"
-                class="ranking-tr"
-              >
-                <td :class="breakpointClass.header" class="text-center">
-                  <i class="mdi mdi-crown-outline"></i>
-                  {{ index + 1 }}
-                </td>
-                <td :class="breakpointClass.header" class="text-left ranking-name">{{ ranking.name }}</td>
-                <td :class="breakpointClass.header" class="text-left">{{ ranking.score === 0 ? "-" : ranking.score }}</td>
-                <td :class="breakpointClass.header" class="text-left">{{ ranking.clearTime | zeroPadAndFormat }}</td>
-                <td :class="breakpointClass.header" class="text-center"><v-btn :href="'https://twitter.com/' + ranking.twitterId" icon class="ranking-twitter-btn"><v-icon>mdi-twitter</v-icon></v-btn></td>
-              </tr>
-              <!-- 2位 -->
-              <tr
-                v-for="(ranking, index) in get2stRankings"
-                :key="index + 2"
-                class="ranking-tr"
-              >
-                <td :class="breakpointClass.header" class="text-center">
-                  <i class="mdi mdi-chess-king"></i>
-                  {{ index + 2 }}
-                </td>
-                <td :class="breakpointClass.header" class="text-left ranking-name">{{ ranking.name }}</td>
-                <td :class="breakpointClass.header" class="text-left">{{ ranking.score === 0 ? "-" : ranking.score }}</td>
-                <td :class="breakpointClass.header" class="text-left">{{ ranking.clearTime | zeroPadAndFormat }}</td>
-                <td :class="breakpointClass.header" class="text-center"><v-btn :href="'https://twitter.com/' + ranking.twitterId" icon class="ranking-twitter-btn"><v-icon>mdi-twitter</v-icon></v-btn></td>
-              </tr>
-              <!-- 3位 -->
-              <tr
-                v-for="(ranking, index) in get3stRankings"
-                :key="index + 3"
-                class="ranking-tr"
-              >
-                <td :class="breakpointClass.header" class="text-center">
-                  <i class="mdi mdi-diamond-stone"></i>
-                  {{ index + 3 }}
-                </td>
-                <td :class="breakpointClass.header" class="text-left ranking-name">{{ ranking.name }}</td>
-                <td :class="breakpointClass.header" class="text-left">{{ ranking.score === 0 ? "-" : ranking.score }}</td>
-                <td :class="breakpointClass.header" class="text-left">{{ ranking.clearTime | zeroPadAndFormat }}</td>
-                <td :class="breakpointClass.header" class="text-center"><v-btn :href="'https://twitter.com/' + ranking.twitterId" icon class="ranking-twitter-btn"><v-icon>mdi-twitter</v-icon></v-btn></td>
-              </tr>
-              <!-- 4位以下 -->
-              <tr
-                v-for="(ranking, index) in getOtherRankings"
-                :key="index + 4"
-                class="ranking-tr"
-              >
-                <td :class="breakpointClass.header" class="text-center">{{ index + 4 }}</td>
-                <td :class="breakpointClass.header" class="text-left ranking-name">{{ ranking.name }}</td>
-                <td :class="breakpointClass.header" class="text-left">{{ ranking.score === 0 ? "-" : ranking.score }}</td>
-                <td :class="breakpointClass.header" class="text-left">{{ ranking.clearTime | zeroPadAndFormat }}</td>
-                <td :class="breakpointClass.header" class="text-center"><v-btn :href="'https://twitter.com/' + ranking.twitterId" icon class="ranking-twitter-btn"><v-icon>mdi-twitter</v-icon></v-btn></td>
-              </tr>
+              <template v-if="!isDisplay">
+                <!-- 1on1以外 -->
+                <!-- 1位 -->
+                <tr
+                  v-for="(ranking, index) in get1stRankings"
+                  :key="index + 1"
+                  class="ranking-tr"
+                >
+                  <td :class="breakpointClass.header" class="text-center">
+                    <i class="mdi mdi-crown-outline"></i>
+                    {{ index + 1 }}
+                  </td>
+                  <td :class="breakpointClass.header" class="text-left ranking-name">{{ ranking.name }}</td>
+                  <td :class="breakpointClass.header" class="text-left">{{ ranking.score === 0 ? "-" : ranking.score }}</td>
+                  <td :class="breakpointClass.header" class="text-left">{{ ranking.clearTime | zeroPadAndFormat }}</td>
+                  <td :class="breakpointClass.header" class="text-center"><v-btn :href="'https://twitter.com/' + ranking.twitterId" icon class="ranking-twitter-btn"><v-icon>mdi-twitter</v-icon></v-btn></td>
+                </tr>
+                <!-- 2位 -->
+                <tr
+                  v-for="(ranking, index) in get2stRankings"
+                  :key="index + 2"
+                  class="ranking-tr"
+                >
+                  <td :class="breakpointClass.header" class="text-center">
+                    <i class="mdi mdi-chess-king"></i>
+                    {{ index + 2 }}
+                  </td>
+                  <td :class="breakpointClass.header" class="text-left ranking-name">{{ ranking.name }}</td>
+                  <td :class="breakpointClass.header" class="text-left">{{ ranking.score === 0 ? "-" : ranking.score }}</td>
+                  <td :class="breakpointClass.header" class="text-left">{{ ranking.clearTime | zeroPadAndFormat }}</td>
+                  <td :class="breakpointClass.header" class="text-center"><v-btn :href="'https://twitter.com/' + ranking.twitterId" icon class="ranking-twitter-btn"><v-icon>mdi-twitter</v-icon></v-btn></td>
+                </tr>
+                <!-- 3位 -->
+                <tr
+                  v-for="(ranking, index) in get3stRankings"
+                  :key="index + 3"
+                  class="ranking-tr"
+                >
+                  <td :class="breakpointClass.header" class="text-center">
+                    <i class="mdi mdi-diamond-stone"></i>
+                    {{ index + 3 }}
+                  </td>
+                  <td :class="breakpointClass.header" class="text-left ranking-name">{{ ranking.name }}</td>
+                  <td :class="breakpointClass.header" class="text-left">{{ ranking.score === 0 ? "-" : ranking.score }}</td>
+                  <td :class="breakpointClass.header" class="text-left">{{ ranking.clearTime | zeroPadAndFormat }}</td>
+                  <td :class="breakpointClass.header" class="text-center"><v-btn :href="'https://twitter.com/' + ranking.twitterId" icon class="ranking-twitter-btn"><v-icon>mdi-twitter</v-icon></v-btn></td>
+                </tr>
+                <!-- 4位以下 -->
+                <tr
+                  v-for="(ranking, index) in getOtherRankings"
+                  :key="index + 4"
+                  class="ranking-tr"
+                >
+                  <td :class="breakpointClass.header" class="text-center">{{ index + 4 }}</td>
+                  <td :class="breakpointClass.header" class="text-left ranking-name">{{ ranking.name }}</td>
+                  <td :class="breakpointClass.header" class="text-left">{{ ranking.score === 0 ? "-" : ranking.score }}</td>
+                  <td :class="breakpointClass.header" class="text-left">{{ ranking.clearTime | zeroPadAndFormat }}</td>
+                  <td :class="breakpointClass.header" class="text-center"><v-btn :href="'https://twitter.com/' + ranking.twitterId" icon class="ranking-twitter-btn"><v-icon>mdi-twitter</v-icon></v-btn></td>
+                </tr>
+              </template>
+              <template v-else>
+                <!-- 1on1 -->
+                <tr
+                  v-for="(battle, index) in getBattles"
+                  :key="index"
+                >
+                  <td :class="breakpointClass.header" class="text-center">{{ index + 1 }}</td>
+                  <td :class="breakpointClass.header" class="text-left battle-name">{{ battle.name }}</td>
+                  <td :class="breakpointClass.header" class="text-center">{{ battle.win }}</td>
+                  <td :class="breakpointClass.header" class="text-center">{{ battle.lose }}</td>
+                  <td :class="breakpointClass.header" class="text-center">{{ battle.draw }}</td>
+                  <td :class="breakpointClass.header" class="text-center"><v-btn :href="'https://twitter.com/' + battle.id" icon class="battle-twitter-btn"><v-icon>mdi-twitter</v-icon></v-btn></td>
+                </tr>
+              </template> 
             </tbody>
           </template>
         </v-simple-table>
@@ -112,14 +135,21 @@ export default {
     return {
       modes: this.$store.getters['modes/getModes'],
       modeSelect: { modeType: 0, modeText: 'E A S Y' },
-      breakpointClass: this.getBreakPoint()
+      breakpointClass: this.getBreakPoint(),
+      isDisplay: false,
     }
   },
   props: ["rankings", "battles"],
   methods: {
     sendModeType(value) {
       // valueにmodesのオブジェクトが入ってくる
-      this.$emit('selected-mode', value)
+      if (value.modeType !== this.$mode.oneonone) {
+        this.isDisplay = false;
+        this.$emit('selected-mode', value)
+      } else {
+        // 1on1の場合true
+        this.isDisplay = true;
+      }
     },
     getBreakPoint() {
       // スマホ表示とそれ以外でテーブルのスタイルを切り分け
@@ -143,9 +173,7 @@ export default {
     setModeItems: function() {
       let modeItems = [];
       this.modes.map(mode => {
-        if (mode.modeType !== this.$mode.oneonone) {
-          modeItems.push({ modeType: mode.modeType, modeText: mode.modeText })
-        }
+        modeItems.push({ modeType: mode.modeType, modeText: mode.modeText })
       });
       return modeItems
     },
@@ -180,7 +208,11 @@ export default {
         return index !== 0 && index !== 1 && index !== 2;
       })
       return otherRanks
-    }
+    },
+    getBattles: function() {
+      const battles = this.battles.filter(b => b.id !== this.$guest.twitterId);
+      return battles;
+    },
   },
   filters: {
     // フォーマット整形
@@ -239,7 +271,7 @@ export default {
   color: $base-text-color !important;
 }
 
-.ranking-twitter-btn {
+.ranking-twitter-btn,.battle-twitter-btn {
   color: skyblue !important;
 }
 
@@ -248,6 +280,12 @@ export default {
 }
 
 .ranking-name {
+  max-width: 142px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.battle-name {
   max-width: 142px;
   overflow: hidden;
   text-overflow: ellipsis;
