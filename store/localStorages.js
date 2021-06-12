@@ -6,8 +6,6 @@ const state = () => ({
   modeValue: "",
   playType: 0,
   guestPlayFlag: false,
-  newRecord: {},
-  targetTests: [],
   battleResult: "",
 });
 
@@ -20,8 +18,6 @@ const getters = {
   getTwitterId: state => { return state.twitterId },
   getPlayType: state => { return state.playType },
   getGuestPlay: state => { return state.guestPlayFlag },
-  getNewRecord: state => { return state.newRecord },
-  getTargetTests: state => { return state.targetTests },
   getBattleResult: state => { return state.battleResult },
 };
 
@@ -45,13 +41,6 @@ const mutations = {
   setTwitterId(state, twitterId) {
     state.twitterId = twitterId;
   },
-  // 解答結果オブジェクトをセット
-  setNewRecord(state, newRecord) {
-    state.newRecord = newRecord;
-  },
-  setTargetTests(state, targetTests) {
-    state.targetTests = targetTests;
-  },
   setBattleResult(state, battleResult) {
     state.battleResult = battleResult;
   },
@@ -62,8 +51,6 @@ const mutations = {
     state.modeValue = "";
     state.playType = 0;
     state.guestPlayFlag = false;
-    state.newRecord = {};
-    state.targetTests = [];
     state.battleResult = "";
   },
   setUserName(state, newName) {
@@ -83,13 +70,6 @@ const actions = {
   },
   setGuestPlay(context, guestPlayFlag) {
     context.commit('setGuestPlay', guestPlayFlag);
-  },
-  // 解答結果オブジェクトをセット
-  setNewRecord(context, newRecord) {
-    context.commit('setNewRecord', newRecord);
-  },
-  setTargetTests(context, targetTests) {
-    context.commit('setTargetTests', targetTests);
   },
   setBattleResult(context, battleResult) {
     context.commit('setBattleResult', battleResult);

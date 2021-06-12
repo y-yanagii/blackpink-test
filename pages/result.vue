@@ -38,8 +38,6 @@ import { db } from "~/plugins/firebase";
 export default {
   data() {
     return {
-      newRecord: this.$store.getters['localStorages/getNewRecord'].newRecord,
-      tests: this.$store.getters['localStorages/getTargetTests'],
       battleResult: this.$store.getters['localStorages/getBattleResult'],
       res: {
         name: "",
