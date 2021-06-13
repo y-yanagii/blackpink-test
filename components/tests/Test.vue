@@ -14,14 +14,31 @@
           mode="out-in"
           appear
         >
-          <TestCard
-            v-if="isDisplayTestCard"
-            :currentTest="currentTest"
-            :test="tests[currentTest]"
-            :testTotal="tests.length"
-            ref="test_card"
-            @option-click="addAnswer"
-          ></TestCard>
+          <template
+            v-if="selectedMode.modeType != $mode.music"
+          >
+            <TestCard
+              v-if="isDisplayTestCard"
+              :currentTest="currentTest"
+              :test="tests[currentTest]"
+              :testTotal="tests.length"
+              ref="test_card"
+              @option-click="addAnswer"
+            ></TestCard>
+          </template>
+          <!-- musicモード時はv-show(音源を流すため) -->
+          <template
+            v-else
+          >
+            <TestCard
+              v-show="isDisplayTestCard"
+              :currentTest="currentTest"
+              :test="tests[currentTest]"
+              :testTotal="tests.length"
+              ref="test_card"
+              @option-click="addAnswer"
+            ></TestCard>
+          </template>
         </transition>
       </v-col>
     </v-row>
@@ -197,9 +214,14 @@ export default {
   },
   watch: {
     isDisplayTestCard() {
-      setTimeout(() => {
-        this.isDisplayTestCard = true; // 1秒後にテストカード表示
-      }, 1000)
+      if (this.selectedMode.modeType !== this.$mode.music) {
+        setTimeout(() => {
+          this.isDisplayTestCard = true; // 1秒後にテストカード表示
+        }, 1000)
+      } else {
+        // musicモード時はすぐ表示
+        this.isDisplayTestCard = true;
+      }
     }
   }
 }
