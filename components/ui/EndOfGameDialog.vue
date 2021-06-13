@@ -6,13 +6,13 @@
   >
     <v-card class="end-game-card">
       <div class="end-game-header">
-        <div class="to-mode">
+        <div class="to-ranking">
           <v-btn
             class="to-header-btn"
-            @click="$emit('to-mode')"
+            @click="$emit('to-ranking')"
             icon
           >
-            <v-icon>mdi-gamepad-variant-outline</v-icon>
+            <v-icon>mdi-crown-outline</v-icon>
           </v-btn>
         </div>
         <div class="to-retry">
@@ -119,7 +119,7 @@ export default {
       }
     }
     // homeボタン領域
-    .to-mode {
+    .to-ranking {
       margin: 0 0 0 3%;
     }
     // retryボタン領域を右寄せ
