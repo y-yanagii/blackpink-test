@@ -60,11 +60,8 @@ export default {
   },
   computed: {
     setTests() {
-      let nums = [];
-      // テストの総数を配列化
-      for (let i=0;i<this.$testInfo.testLength;i++) {
-        nums.push(i);
-      }
+      // テストの総数を配列化(音源テスト以外)
+      let nums = this.$testInfo.serialNumbersArray;
 
       // ランダムでテスト番号を5件取得
       let serialNums = [];
@@ -72,10 +69,7 @@ export default {
         serialNums.push(nums[Math.floor(Math.random() * nums.length)]);
       }
 
-      // TODO消す
-      serialNums = [1,2,3,4,5];
       this.tests = this.$store.getters["tests/getTestsAtRandom"](serialNums);
-
       // 選択値をランダムに
       this.tests.map(function(test) {
         // 選択値をシャッフル

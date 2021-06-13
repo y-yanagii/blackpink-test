@@ -21,9 +21,12 @@
       :allTests="allTests"
       :modeType="modeType"
     ></TestCrud>
+    <!-- 問題、解答閲覧 -->
     <AllTests
       :tests="tests"
       :modeType="modeType"
+      :maxSerialNumber="maxSerialNumber"
+      :maxSerialNumberToType="maxSerialNumberToType"
     ></AllTests>
   </div>
 </template>
@@ -38,17 +41,30 @@ export default {
     return {
       tests: [],
       allTests: [],
+      maxSerialNumber: [
+        { serialNumber: 0, }
+      ],
+      maxSerialNumberToType: [
+        { serialNumberToType: 0 }
+      ],
       modeType: 0,
     }
   },
   firestore: {
-    tests: db.collection("tests").where('modeType', '==', 0),
-    allTests: db.collection("tests").orderBy('modeType', 'asc')
+    tests: db.collection("tests").where('modeType', '==', 0).orderBy('serialNumber', 'asc'),
+    allTests: db.collection("tests").orderBy('modeType', 'asc').orderBy('serialNumber', 'asc'),
+    maxSerialNumber: db.collection("tests").orderBy('serialNumber', 'desc').limit(1),
+    maxSerialNumberToType: db.collection("tests").where('modeType', '==', 0).orderBy('serialNumberToType', 'desc').limit(1),
   },
   methods: {
     getTests(modeType) {
       // テストの種類別に取得
-      this.$bind('tests', db.collection("tests").where('modeType', '==', modeType));
+      if (modeType === this.$mode.music) {
+        this.$bind('tests', db.collection("tests").where('modeType', '==', modeType));
+      } else {
+        this.$bind('tests', db.collection("tests").where('modeType', '==', modeType).orderBy('serialNumber', 'asc'));
+        this.$bind('maxSerialNumberToType', db.collection("tests").where('modeType', '==', modeType).orderBy('serialNumberToType', 'desc').limit(1));
+      }
       this.modeType = modeType;
     },
   },
