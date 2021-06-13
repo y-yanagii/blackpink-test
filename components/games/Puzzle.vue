@@ -43,7 +43,7 @@
           :resultStr="resultStr"
           :gameName="gameName"
           @retry="retry"
-          @to-mode="toMode"
+          @to-ranking="toRanking"
         ></EndOfGameDialog>
       </v-col>
     </v-row>
@@ -276,9 +276,9 @@ export default {
         }
       }, 1000); // 1秒間隔
     },
-    toMode() {
+    toRanking() {
       clearInterval(this.timer);
-      this.$router.push({ path: "/mode" });
+      this.$router.push({ path: "/ranking" });
     }
   },
   computed: {

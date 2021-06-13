@@ -44,7 +44,7 @@
           :resultStr="resultStr"
           :gameName="gameName"
           @retry="retry"
-          @to-mode="toMode"
+          @to-ranking="toRanking"
         ></EndOfGameDialog>
       </v-col>
     </v-row>
@@ -375,9 +375,9 @@ export default {
       // 20位以内の場合のみかつゲストモードでない場合、ランキングを登録
       if (this.newRecord.myRank <= 20 && !this.$store.getters["localStorages/getGuestPlay"]) this.$store.dispatch('rankings/add', this.newRecord);
     },
-    toMode() {
+    toRanking() {
       clearInterval(this.timer);
-      this.$router.push({ path: "/mode" });
+      this.$router.push({ path: "/ranking" });
     }
   },
   computed: {
