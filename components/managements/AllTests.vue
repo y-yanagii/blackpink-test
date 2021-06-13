@@ -60,6 +60,15 @@
                 問題登録
               </v-btn>
             </div>
+            <div v-if="modeType == $mode.music" class="question-add-div">
+              <v-btn
+                class="question-add"
+                outlined
+                @click="addSerialNumber()"
+              >
+                SerialNumber登録
+              </v-btn>
+            </div>
           </div>
         </div>
       </v-col>
@@ -135,6 +144,18 @@ export default {
         this.testInfo.options[3].optionContent = '';
       });
     },
+    addSerialNumber() {
+      // シリアルナンバー付与
+      // db.collection("tests").where("modeType", "==", 5).get().then((docs) => {
+      //   let i = 1;
+      //   docs.forEach((doc) => {
+      //     db.collection("tests").doc(doc.id).update({
+      //       'serialNumberToType': i,
+      //     });
+      //     i++;
+      //   })
+      // });
+    }
   },
   computed: {
     songCount() {
