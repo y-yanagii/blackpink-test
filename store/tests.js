@@ -17,6 +17,14 @@ const getters = {
   getTestsAtRandom: state => serialNums => {
     // ランダムで5件取得
     return _.intersectionWith(state.tests, serialNums, (t, s) => t.serialNumber === s);
+  },
+  getTestsAtRandomToMode: state => payload => {
+    // モード種別ごとランダムで10件取得
+    return _.intersectionWith(state.tests.filter(t => t.modeType === Number(payload.modeType)), payload.serialNumberToTypes, (t, s) => t.serialNumberToType === s)
+  },
+  gettestsToSuddenDeath: state => {
+    // テストを全件取得
+    return state.tests
   }
 };
 

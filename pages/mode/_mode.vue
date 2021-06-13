@@ -39,8 +39,26 @@ export default {
   methods: {
     changeShow(value) {
       if (this.playType === this.$modeNumber.test || this.playType === this.$modeNumber.challenge) {
-        // テスト取得
-        this.tests = this.$store.getters['tests/getTestsByMode'](this.$store.getters['localStorages/choiceMode'].modeType);
+        // 大項目がテスト、またはチャレンジの場合、テスト取得処理
+        let modeType = this.$store.getters['localStorages/choiceMode'].modeType;
+
+        if (modeType !== this.$mode.suddendeath) {
+          // モード種別ごと配列を取得
+          let testToModeArray = this.getModeArray(modeType); // 種別ごとのテスト総数を配列で保持
+          // ランダムでテスト番号を10件取得
+          let randomSerialNums = [];
+          for (let i=0;i<10;i++) {
+            let randomNum = testToModeArray[Math.floor(Math.random() * testToModeArray.length)];
+            randomSerialNums.push(randomNum);
+            testToModeArray = testToModeArray.filter(t => t !== randomNum); // 1度抽出した数字を除外
+          }
+          // テスト取得
+          this.tests = this.$store.getters['tests/getTestsAtRandomToMode']({ serialNumberToTypes: randomSerialNums, modeType: modeType });
+
+        } else {
+          // suuden deathモードの場合music以外のテストを全件取得
+          this.tests = this.$store.getters['tests/gettestsToSuddenDeath'];
+        }
         this.processingTests();
       }
       // テストかゲーム画面に切り替え
@@ -73,10 +91,20 @@ export default {
 
       // サドンデスの場合はシャッフルのみ
       if (this.$store.getters['localStorages/choiceMode'].modeType === this.$mode.suddendeath) return
-
-      // シャッフル後、最初の10件をテスト問題とする
-      this.tests = this.tests.slice(0, 10);
     },
+    getModeArray(modeType) {
+      if (modeType === this.$mode.easy) {
+        return this.$testInfo.easyArray;
+      } else if (modeType === this.$mode.normal) {
+        return this.$testInfo.normalArray;
+      } else if (modeType === this.$mode.hard) {
+        return this.$testInfo.hardArray;
+      } else if (modeType === this.$mode.music) {
+        return this.$testInfo.musicArray;
+      } else if (modeType === this.$mode.master) {
+        return this.$testInfo.masterArray;
+      }
+    }
   },
   created() {
     // testsコレクションの初期化
