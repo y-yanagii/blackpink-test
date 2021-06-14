@@ -2,13 +2,15 @@ import firebase from '~/plugins/firebase';
 
 export default async function(context) {
   const guest = context.store.getters["localStorages/getGuestPlay"];
-  
   if (guest) {
     // ゲストモード時
     if (context.route.name === "profile") {
       // プロフィール画面へは遷移しない
       context.store.dispatch('messages/setSnackbarText', "ログインしてください");
       context.redirect('/');
+    } else if (context.route.name === "management") {
+      // ゲストモード時は問答無用でマネジメント画面に遷移させない
+      context.next(false);
     }
 
     return; // ゲストの場合認証チェックスキップ
