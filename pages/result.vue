@@ -19,7 +19,7 @@
           :res="res"
         ></ResultConfirm>
         <YoutubeArea
-          :items="items"
+          :youtubes="youtubes"
         ></YoutubeArea>
       </v-col>
     </v-row>
@@ -53,6 +53,13 @@ export default {
         tests: [],
         createdAt: 0,
       },
+      youtubes: [
+        { orderNum: 0, videoId: "" },
+        { orderNum: 1, videoId: "" },
+        { orderNum: 2, videoId: "" },
+        { orderNum: 3, videoId: "" },
+        { orderNum: 4, videoId: "" },
+      ]
     }
   },
   async created() {
@@ -65,6 +72,10 @@ export default {
         resolve();
       });
     });
+  },
+  firestore: {
+    // おすすめyoutube動画
+    youtubes: db.collection("youtubes").orderBy('orderNum', 'asc'),
   },
   async asyncData(context) {
     // youtube data apiを使用しblackpinkチェンネルから最新のデータを取得
