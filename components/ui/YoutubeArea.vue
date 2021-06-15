@@ -5,13 +5,13 @@
     </div>
     <div class="youtube-list-area">
       <div
-        v-for="(item, index) in items"
+        v-for="(youtube, index) in youtubes"
         :key="index"
         class="youtube-video"
       >
         <youtube
           ref="youtube"
-          :video-id="item.id.videoId"
+          :video-id="youtube.videoId"
         />
       </div>
     </div>
@@ -21,7 +21,7 @@
 <script>
 export default {
   // youtubeAPIで取得したチャンネル情報の中の動画情報
-  props: ["items"],
+  props: ["youtubes"],
 }
 </script>
 
