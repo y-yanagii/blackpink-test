@@ -84,7 +84,6 @@ const actions = {
       }
       else {
         // ドキュメントが取得できなかった場合
-        console.log("404");
       }
     })
   }),

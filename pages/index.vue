@@ -127,7 +127,6 @@ export default {
       // ユーザ登録後に呼び出すコールバック関数（ダイアログを閉じる、スナックバー通知、ステータス登録）
       const auterAuthenticationFunc = function() {
         // 利用規約ダイアログを閉じる
-        console.log("oauthTwitter");
         _this.$refs.termsdlg.termsOfUseDisplay = false;
         _this.$refs.termsdlg.check = false;
         // ゲストモードをoff

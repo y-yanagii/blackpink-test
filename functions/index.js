@@ -35,7 +35,6 @@ exports.updatedStatus = functions.region('asia-northeast1').firestore.document('
       query.get().then((querySnapshot) => {
         if (querySnapshot.size === 1) {
           // 自分以外待ちなし
-          console.log("自分以外待ちなし");
           return 0;
         }
         let i = 1;
@@ -44,7 +43,6 @@ exports.updatedStatus = functions.region('asia-northeast1').firestore.document('
           if (i === tagetDocCount && doc.id !== context.params.docId) {
             // 自身以外のステータス待ちユーザのID取得
             docIds.push(doc.id);
-            console.log(doc.id, " => ", doc.data());
             resolve();
           }
           i++;

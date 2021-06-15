@@ -35,6 +35,7 @@
 <style scoped lang="scss">
 .error-area {
   background-color: $base-bg-pink;
+  height: 100%;
 }
 
 .error-title {

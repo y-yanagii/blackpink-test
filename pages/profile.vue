@@ -130,12 +130,12 @@
                 class="logout-btn"
               ><i class="mdi mdi-logout" />LOGOUT
               </v-btn>
-              <v-btn
+              <!-- <v-btn
                 @click="updateTwitter()"
                 target="_blank"
                 class="up-twitter-btn"
               ><i class="mdi mdi-twitter"/>UPDATE
-              </v-btn>
+              </v-btn> -->
             </div>
           </div>
           <!-- ランク領域 -->

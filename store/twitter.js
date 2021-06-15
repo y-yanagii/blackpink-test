@@ -27,8 +27,6 @@ const actions = {
 
         // 第二引数のコールバック関数呼び出し（認証したユーザ情報を元に、スナックバー通知とステータス登録）
         afterAuthenticationFunc();
-
-        console.log("login");
       }).catch(function (error) {
         console.log(error)
       })

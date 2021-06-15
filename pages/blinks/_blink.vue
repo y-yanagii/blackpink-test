@@ -2,9 +2,9 @@
   <div>
     <v-row justify="center" align="center">
       <v-col cols="12" md="6">
-        <HistoryBackBtn
+        <!-- <HistoryBackBtn
           @back-click="back"
-        ></HistoryBackBtn>
+        ></HistoryBackBtn> -->
         <div class="text-center">
           <div class="text-center">
             <div class="OtherLogo">
@@ -172,12 +172,12 @@
                   class="logout-btn"
                 ><i class="mdi mdi-logout" />LOGOUT
                 </v-btn>
-                <v-btn
+                <!-- <v-btn
                   @click="updateTwitter()"
                   target="_blank"
                   class="up-twitter-btn"
                 ><i class="mdi mdi-twitter"/>UPDATE
-                </v-btn>
+                </v-btn> -->
               </div>
             </div>
           </template>
