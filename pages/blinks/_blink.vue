@@ -2,9 +2,9 @@
   <div>
     <v-row justify="center" align="center">
       <v-col cols="12" md="6">
-        <HistoryBackBtn
+        <!-- <HistoryBackBtn
           @back-click="back"
-        ></HistoryBackBtn>
+        ></HistoryBackBtn> -->
         <div class="text-center">
           <div class="text-center">
             <div class="OtherLogo">
