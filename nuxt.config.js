@@ -31,7 +31,7 @@ export default {
       { hid: 'og:site_name', property: 'og:site_name', content: 'BLINK GAMES' },
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/cube.ico' }
+      { rel: 'icon', type: 'image/x-icon', href: '/yin-and-yang.ico' }
     ]
   },
 
