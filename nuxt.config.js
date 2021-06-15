@@ -7,8 +7,8 @@ export default {
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    titleTemplate: '%s - blackpink-test',
-    title: 'blackpink-test',
+    titleTemplate: '%s - blink-games',
+    title: 'BLINK GAMES',
     htmlAttrs: {
       lang: 'ja',
       prefix: 'og: http://ogp.me/ns#',
