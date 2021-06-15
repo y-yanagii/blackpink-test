@@ -15,7 +15,7 @@
         <ResultSns></ResultSns>
         <ResultFooter></ResultFooter>
         <ResultConfirm
-          v-if="!battleResult"
+          v-if="res.battleResult == ''"
           :res="res"
         ></ResultConfirm>
         <YoutubeArea
