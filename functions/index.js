@@ -7,6 +7,7 @@ const db = admin.firestore();
 
 const waitingsRef = db.collection('waitings');
 const roomsRef = db.collection('rooms');
+const youtubesRef = db.collection('youtubes');
 
 // // Create and Deploy Your First Cloud Functions
 // // https://firebase.google.com/docs/functions/write-firebase-functions
@@ -159,4 +160,28 @@ exports.updatedStatus = functions.region('asia-northeast1').firestore.document('
   matchUsersFunc();
 
   return 0;
+});
+
+// 3日に1度、YouTubeよりBLACKPINKのチャンネルに対しAPIを叩いて最新の動画を５件取得し、firestoreに格納する(日、火、木の19時に1回ずつ)
+exports.scheduledFunction = functions.region('asia-northeast1').pubsub.schedule('0 19 * * 0,2,4').onRun((context) => {
+  youtubesRef.get().then((res) => {
+    // youtubesコレクションのドキュメントを削除
+    res.forEach(doc => {
+      doc.delete();
+    });
+
+    const url = "https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=UCOmHUn--16B90oW2L6FRR3A&maxResults=5&order=date&type=video&key=AIzaSyD3cpVa0sRfqS3ZYpMXxWYF6Zl2BbV9q8Y";
+    // リクエストGet
+    const response = context.$axios.$get(url);
+
+    for (let i=0;i<response["items"].length;i++) {
+      // youtubesコレクションに追記
+      db.collection('youtubes').add({
+        orderNum: i,
+        videoId: response["items"][i].id.videoId,
+      });
+    };
+  });
+
+  return null;
 });
