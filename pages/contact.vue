@@ -88,7 +88,7 @@
 </template>
 
 <script>
-import { db } from "~/plugins/firebase";
+import firebase, { db } from "~/plugins/firebase";
 import ThanksDialog from "~/components/ui/ThanksDialog.vue";
 
 export default {
@@ -112,7 +112,9 @@ export default {
       // 問い合わせコレクションへ登録
       db.collection('contacts').add({
         content: this.contact.content,
-        device: this.contact.device
+        device: this.contact.device,
+        name: this.$store.getters['localStorages/getUserName'],
+        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
       });
 
       // 値のリセット
