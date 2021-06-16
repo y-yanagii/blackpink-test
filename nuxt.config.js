@@ -56,6 +56,7 @@ export default {
   buildModules: [
     // https://go.nuxtjs.dev/vuetify
     '@nuxtjs/vuetify',
+    '@nuxtjs/google-analytics',
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -64,6 +65,13 @@ export default {
     '@nuxtjs/axios',
     '@nuxtjs/proxy',
   ],
+  
+  // googleアナリティクス設定(debug: trueでデバッグ時にも対応)
+  publicRuntimeConfig: {
+    googleAnalytics: {
+      id: process.env.GOOGLE_ANALYTICS_ID,
+    },
+  },
   
   // apiを使用する場合のCORS policy にブロックされる問題
   // 呼び出し側はapi以下の/v1/jp/itunes-music/hot-tracks/all/10/explicit.jsonを指定
