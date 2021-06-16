@@ -79,7 +79,7 @@ export default {
         message = "One more time?";
       }
 
-      const urlStr = "https://twitter.com/intent/tweet?url=https://blackpink-test.web.app%0a";
+      const urlStr = "https://twitter.com/intent/tweet?url=https://blink-games.app%0a";
       const textStr = "&text=BLINK GAMES(1ON1) 結果は...%0a" + resStr + "%0a" + message + "%0a%0a" + '&hashtags=BLINKGAMES%0a,BLACKPINK,ブラックピンク%0a,BLINK,ブリンク';
       return urlStr + textStr;
     }

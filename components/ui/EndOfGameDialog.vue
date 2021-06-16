@@ -87,7 +87,7 @@ export default {
   computed: {
     snsTwitter() {
       // Twitterシェアの文言を設定
-      const urlStr = "https://twitter.com/intent/tweet?url=https://blackpink-test.web.app%0a";
+      const urlStr = "https://twitter.com/intent/tweet?url=https://blink-games.app%0a";
       const textStr = "&text=BLINK GAMES (" + this.gameName + ") 結果は...%0a" + this.resultStr + "%0a" + this.message + "%0a%0a" + '&hashtags=BLINKGAMES%0a,BLACKPINK,ブラックピンク%0a,BLINK,ブリンク';
       return urlStr + textStr;
     }

@@ -7,8 +7,8 @@ export default {
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    titleTemplate: '%s - blackpink-test',
-    title: 'blackpink-test',
+    titleTemplate: '%s - blink-games',
+    title: 'BLINK GAMES',
     htmlAttrs: {
       lang: 'ja',
       prefix: 'og: http://ogp.me/ns#',
@@ -19,19 +19,19 @@ export default {
       { hid: 'description', name: 'description', content: 'BLACKPINKに関するクイズゲームです。他数のモードでゲームや他のBLINKと競うこともできます。' },
       { hid: 'twitter:card', name: 'twitter:card', content: 'summary_large_image' },
       { hid: 'twitter:site', name: 'twitter:site', content: '@uzr4b' },
-      { hid: 'twitter:image', name: 'twitter:image', content: 'https://blackpink-test.web.app/ogp.png' },
+      { hid: 'twitter:image', name: 'twitter:image', content: 'https://blink-games.app/ogp.png' },
       // { hid: 'twitter:image', name: 'twitter:image', content: 'http://localhost:3000/ogp.png' },
       { hid: 'og:type', property: 'og:type', content: 'website' },
       { hid: 'og:title', property: 'og:title', content: 'BLINK GAMES' },
-      { hid: 'og:url', property: 'og:url', content: 'https://blackpink-test.web.app/' },
+      { hid: 'og:url', property: 'og:url', content: 'https://blink-games.app/' },
       // { hid: 'og:url', property: 'og:url', content: 'http://localhost:3000/' },
       { hid: 'og:description', property: 'og:description', content: 'BLACKPINKに関するクイズゲームです。他数のモードでゲームや他のBLINKと競うこともできます。' },
-      { hid: 'og:image', property: 'og:image', content: 'https://blackpink-test.web.app/ogp.png' },
+      { hid: 'og:image', property: 'og:image', content: 'https://blink-games.app/ogp.png' },
       // { hid: 'og:image', property: 'og:image', content: 'http://localhost:3000/ogp.png' },
       { hid: 'og:site_name', property: 'og:site_name', content: 'BLINK GAMES' },
     ],
     link: [
-      { rel: 'icon', type: 'image/x-icon', href: '/cube.ico' }
+      { rel: 'icon', type: 'image/x-icon', href: '/yin-and-yang.ico' }
     ]
   },
 
@@ -56,6 +56,7 @@ export default {
   buildModules: [
     // https://go.nuxtjs.dev/vuetify
     '@nuxtjs/vuetify',
+    '@nuxtjs/google-analytics',
   ],
 
   // Modules: https://go.nuxtjs.dev/config-modules
@@ -64,6 +65,13 @@ export default {
     '@nuxtjs/axios',
     '@nuxtjs/proxy',
   ],
+  
+  // googleアナリティクス設定(debug: trueでデバッグ時にも対応)
+  publicRuntimeConfig: {
+    googleAnalytics: {
+      id: process.env.GOOGLE_ANALYTICS_ID,
+    },
+  },
   
   // apiを使用する場合のCORS policy にブロックされる問題
   // 呼び出し側はapi以下の/v1/jp/itunes-music/hot-tracks/all/10/explicit.jsonを指定
