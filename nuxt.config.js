@@ -63,9 +63,13 @@ export default {
     '@nuxtjs/dotenv',
     '@nuxtjs/axios',
     '@nuxtjs/proxy',
-    ['@nuxtjs/google-analytics', {
-      id: 'G-Z5VYF7WDFM'
-    }]
+    [
+      '@nuxtjs/google-gtag',
+      {
+        id: 'G-Z5VYF7WDFM',
+        debug: true
+      }
+    ]
   ],
   
   // apiを使用する場合のCORS policy にブロックされる問題
