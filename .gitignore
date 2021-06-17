@@ -97,3 +97,7 @@ serviceAccount.json
 
 # firebaseエミュレータのfirestore等のデータ
 /data
+
+# firebase関連（firestoreルール）
+.firebase
+firestore.rules
