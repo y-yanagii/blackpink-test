@@ -1,4 +1,4 @@
-import { db } from "~/plugins/firebase";
+import firebase, { db } from "~/plugins/firebase";
 import { firestoreAction } from 'vuexfire';
 
 const usersRef = db.collection('users');
@@ -49,6 +49,7 @@ const actions = {
           description: userObject.description,
           photoURL: userObject.photoURL,
           privacy: userObject.privacy,
+          createdAt: firebase.firestore.FieldValue.serverTimestamp(),
         }, { merge: false });
       }
 
@@ -62,6 +63,7 @@ const actions = {
       description: userObject.description,
       photoURL: userObject.photoURL,
       privacy: userObject.privacy,
+      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
     });
 
     context.dispatch('setUser', userObject);
