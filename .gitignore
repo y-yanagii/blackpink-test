@@ -99,5 +99,5 @@ serviceAccount.json
 /data
 
 # firebase関連（firestoreルール）
-.firebase
+.firebase/
 firestore.rules
