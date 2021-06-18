@@ -29,11 +29,13 @@ export default {
     const twitterId = this.$store.getters['localStorages/getTwitterId'];
     // TODOユーザ待ち状態に登録
     // this.$store.dispatch('waitings/set', twitterId);
+    // uidの取得
+      const uid = this.$store.getters['users/getUid'];
     // COM対戦
-    this.$store.dispatch('waitings/setCom', twitterId);
+    this.$store.dispatch('waitings/setCom', uid);
 
     // スナップショットでwaitingsの自身のレコードを監視
-    this.unsubscribe = db.collection('waitings').doc(twitterId).onSnapshot(snapshot => {
+    this.unsubscribe = db.collection('waitings').doc(uid).onSnapshot(snapshot => {
       // waitingsにroomIdが入ってくるので、マッチング成功。部屋移動
       // マッチした時点で監視を止めるため関数実行させる
       if (snapshot.data().status === this.$waitingStatus.matched) {
