@@ -18,6 +18,7 @@ const state = () => ({
 const getters = {
   getUser: state => id => { return state.users.filter(user => user.id === id)[0] },
   getCurrentUser: state => { return state.user },
+  getUid: state => { return state.user.uid ? state.user.uid : "home" },
 };
 
 const mutations = {

@@ -24,9 +24,9 @@ const actions = {
       updateAt: firebase.firestore.FieldValue.serverTimestamp(),
     }, { merge: false });
   }),
-  setCom: firestoreAction((context, twitterId) => {
+  setCom: firestoreAction((context, uid) => {
     // マッチ済みに登録しCOMと対戦
-    waitingsRef.doc(twitterId).set({
+    waitingsRef.doc(uid).set({
       roomId: Math.random().toString(32).substring(2),
       status: 1,
       updateAt: firebase.firestore.FieldValue.serverTimestamp(),

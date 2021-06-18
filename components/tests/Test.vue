@@ -183,8 +183,10 @@ export default {
       this.newRecord.message = this.$store.getters['messages/getMessage'](this.newRecord.myRank)
     },
     addResult() {
+      // uidの取得
+      const uid = this.$store.getters['users/getUid'];
       // resultsコレクションに追加
-      db.collection('results').doc(this.newRecord.twitterId).set({
+      db.collection('results').doc(uid).set({
         name: this.newRecord.name,
         modeType: this.newRecord.modeType,
         modeValue: this.newRecord.modeValue,

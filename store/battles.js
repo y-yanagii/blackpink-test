@@ -17,22 +17,25 @@ const actions = {
     bindFirestoreRef('battles', battlesRef)
   }),
   winUpdate: firestoreAction((context, payload) => {
+    const id = getCurrentUserId(payload.twitterId, firebase.auth().currentUser);
     // set merge trueでなければ登録あれば追加
-    battlesRef.doc(payload.twitterId).set({
+    battlesRef.doc(id).set({
       name: payload.name,
       win: firebase.firestore.FieldValue.increment(1),
     }, { merge: true });
   }),
   loseUpdate: firestoreAction((context, payload) => {
+    const id = getCurrentUserId(payload.twitterId, firebase.auth().currentUser);
     // set merge trueでなければ登録あれば追加
-    battlesRef.doc(payload.twitterId).update({
+    battlesRef.doc(id).update({
       name: payload.name,
       lose: firebase.firestore.FieldValue.increment(1),
     }, { merge: true });
   }),
   drawUpdate: firestoreAction((context, payload) => {
+    const id = getCurrentUserId(payload.twitterId, firebase.auth().currentUser);
     // set merge trueでなければ登録あれば追加
-    battlesRef.doc(payload.twitterId).update({
+    battlesRef.doc(id).update({
       name: payload.name,
       draw: firebase.firestore.FieldValue.increment(1),
     });
@@ -48,4 +51,14 @@ export default {
   getters,
   mutations,
   actions,
+}
+
+function getCurrentUserId(twitterId, currentUser) {
+  if (currentUser !== null) {
+    // 認証済みの場合
+    return currentUser.uid;
+  } else {
+    // ゲストモードの場合
+    return "home";
+  }
 }
