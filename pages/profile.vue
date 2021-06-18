@@ -115,9 +115,9 @@
                   MATCH RESULTS
                 </div>
                 <div class="wins-loss-draw-title">
-                  <span class="win">{{ typeof battleInfo(twitterId) === "undefined" ? 0 : typeof battleInfo(twitterId).win === "undefined" ? 0 + " WINS " : battleInfo(twitterId).win + " WINS " }}</span>/&nbsp;
-                  <span class="lose">{{ typeof battleInfo(twitterId) === "undefined" ? 0 : typeof battleInfo(twitterId).lose === "undefined" ? 0 + " LOSS " : battleInfo(twitterId).lose + " LOSS " }}</span>/&nbsp;
-                  <span class="draw">{{ typeof battleInfo(twitterId) === "undefined" ? 0 : typeof battleInfo(twitterId).draw === "undefined" ? 0 + " DRAW " : battleInfo(twitterId).draw + " DRAW " }}</span>
+                  <span class="win">{{ typeof battleInfo(uid) === "undefined" ? 0 : typeof battleInfo(uid).win === "undefined" ? 0 + " WINS " : battleInfo(uid).win + " WINS " }}</span>/&nbsp;
+                  <span class="lose">{{ typeof battleInfo(uid) === "undefined" ? 0 : typeof battleInfo(uid).lose === "undefined" ? 0 + " LOSS " : battleInfo(uid).lose + " LOSS " }}</span>/&nbsp;
+                  <span class="draw">{{ typeof battleInfo(uid) === "undefined" ? 0 : typeof battleInfo(uid).draw === "undefined" ? 0 + " DRAW " : battleInfo(uid).draw + " DRAW " }}</span>
                 </div>
               </div>
             </div>
@@ -177,6 +177,7 @@ export default {
       privacyToggle: this.$privacyText.public,
       newPrivacy: 0,
       twitterId: this.$store.getters['localStorages/getTwitterId'],
+      uid: this.$store.getters['users/getUid'],
     }
   },
   computed: {

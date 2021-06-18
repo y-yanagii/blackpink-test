@@ -148,16 +148,16 @@
                 </div>
                 <template v-if="$route.query.uid === user.uid">
                   <div class="wins-loss-draw-title">
-                    <span class="win">{{ typeof battleInfo(user.twitterId) === "undefined" ? 0 + " WINS " : typeof battleInfo(user.twitterId).win === "undefined" ? 0 + " WINS " : battleInfo(user.twitterId).win + " WINS " }}</span>/&nbsp;
-                    <span class="lose">{{ typeof battleInfo(user.twitterId) === "undefined" ? 0 + " LOSS " : typeof battleInfo(user.twitterId).lose === "undefined" ? 0 + " LOSS " : battleInfo(user.twitterId).lose + " LOSS " }}</span>/&nbsp;
-                    <span class="draw">{{ typeof battleInfo(user.twitterId) === "undefined" ? 0 + " DRAW " : typeof battleInfo(user.twitterId).draw === "undefined" ? 0 + " DRAW " : battleInfo(user.twitterId).draw + " DRAW " }}</span>
+                    <span class="win">{{ typeof battleInfo(user.uid) === "undefined" ? 0 + " WINS " : typeof battleInfo(user.uid).win === "undefined" ? 0 + " WINS " : battleInfo(user.uid).win + " WINS " }}</span>/&nbsp;
+                    <span class="lose">{{ typeof battleInfo(user.uid) === "undefined" ? 0 + " LOSS " : typeof battleInfo(user.uid).lose === "undefined" ? 0 + " LOSS " : battleInfo(user.uid).lose + " LOSS " }}</span>/&nbsp;
+                    <span class="draw">{{ typeof battleInfo(user.uid) === "undefined" ? 0 + " DRAW " : typeof battleInfo(user.uid).draw === "undefined" ? 0 + " DRAW " : battleInfo(user.uid).draw + " DRAW " }}</span>
                   </div>
                 </template>
                 <template v-else>
                   <div class="wins-loss-draw-title">
-                    <span class="win">{{ typeof battleInfo(showUser.twitterId) === "undefined" ? 0 + " WINS " : typeof battleInfo(showUser.twitterId).win === "undefined" ? 0 + " WINS " : battleInfo(showUser.twitterId).win + " WINS " }}</span>/&nbsp;
-                    <span class="lose">{{ typeof battleInfo(showUser.twitterId) === "undefined" ? 0 + " LOSS " : typeof battleInfo(showUser.twitterId).lose === "undefined" ? 0 + " LOSS " : battleInfo(showUser.twitterId).lose + " LOSS " }}</span>/&nbsp;
-                    <span class="draw">{{ typeof battleInfo(showUser.twitterId) === "undefined" ? 0 + " DRAW " : typeof battleInfo(showUser.twitterId).draw === "undefined" ? 0 + " DRAW " : battleInfo(showUser.twitterId).draw + " DRAW " }}</span>
+                    <span class="win">{{ typeof battleInfo(showUser.uid) === "undefined" ? 0 + " WINS " : typeof battleInfo(showUser.uid).win === "undefined" ? 0 + " WINS " : battleInfo(showUser.uid).win + " WINS " }}</span>/&nbsp;
+                    <span class="lose">{{ typeof battleInfo(showUser.uid) === "undefined" ? 0 + " LOSS " : typeof battleInfo(showUser.uid).lose === "undefined" ? 0 + " LOSS " : battleInfo(showUser.uid).lose + " LOSS " }}</span>/&nbsp;
+                    <span class="draw">{{ typeof battleInfo(showUser.uid) === "undefined" ? 0 + " DRAW " : typeof battleInfo(showUser.uid).draw === "undefined" ? 0 + " DRAW " : battleInfo(showUser.uid).draw + " DRAW " }}</span>
                   </div>
                 </template>
               </div>
