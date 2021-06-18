@@ -64,9 +64,10 @@ export default {
   },
   async created() {
     // 結果をコレクションより取得
-    const twitterId = this.$store.getters["localStorages/getTwitterId"];
+    // uidの取得
+    const uid = this.$store.getters['users/getUid'];
     const _this = this;
-    await db.collection("results").doc(twitterId).get().then(function(doc) {
+    await db.collection("results").doc(uid).get().then(function(doc) {
       return new Promise(resolve => {
         _this.res = doc.data();
         resolve();

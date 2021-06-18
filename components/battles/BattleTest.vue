@@ -293,8 +293,10 @@ export default {
       }
     },
     addResult(battleResult) {
+      // uidの取得
+      const uid = this.$store.getters['users/getUid'];
       // resultsコレクションに追加
-      db.collection('results').doc(this.$store.getters["localStorages/getTwitterId"]).set({
+      db.collection('results').doc(uid).set({
         name: "",
         modeType: 0,
         modeValue: "",
