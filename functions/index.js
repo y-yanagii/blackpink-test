@@ -161,7 +161,7 @@ exports.updatedStatus = functions.region('asia-northeast1').firestore.document('
 });
 
 // 3日に1度、YouTubeよりBLACKPINKのチャンネルに対しAPIを叩いて最新の動画を５件取得し、firestoreに格納する(日、火、木の19時に1回ずつ)
-exports.scheduledFunction = functions.region('asia-northeast1').pubsub.schedule('0 19 * * 0,2,4').onRun((context) => {
+exports.youtubeScheduledFunction = functions.region('asia-northeast1').pubsub.schedule('0 19 * * 0,2,4').onRun((context) => {
   youtubesRef.get().then((res) => {
     // youtubesコレクションのドキュメントを削除
     res.forEach(doc => {
@@ -181,5 +181,12 @@ exports.scheduledFunction = functions.region('asia-northeast1').pubsub.schedule(
     };
   });
 
+  return null;
+});
+
+// 1日に1度、roomsのドキュメントを全件削除(使用済みのroomのみ)
+exports.roomsDeleteScheduledFunction = functions.region('asia-northeast1').pubsub.schedule('0 3 * * *').onRun((context) => {
+  // 
+  console.log('1日に1度、roomsのドキュメントを全件削除(使用済みのroomのみ)');
   return null;
 });
