@@ -185,7 +185,7 @@ exports.youtubeScheduledFunction = functions.region('asia-northeast1').pubsub.sc
 });
 
 // 1日に1度、roomsのドキュメントを全件削除(使用済みのroomのみ)
-exports.roomsDeleteScheduledFunction = functions.region('asia-northeast1').pubsub.schedule('0 3 * * *').onRun((context) => {
+exports.roomsDeleteScheduledFunction = functions.region('asia-northeast1').pubsub.schedule('0 3 * * *').timeZone('Asia/Tokyo').onRun((context) => {
   // 
   console.log('1日に1度、roomsのドキュメントを全件削除(使用済みのroomのみ)');
   return null;

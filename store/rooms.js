@@ -52,7 +52,7 @@ const actions = {
         }
       },
       userIds: [payload.twitterId, "account"],
-      vestion: 0,
+      version: 0,
       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
     }, { merge: false });
   }),

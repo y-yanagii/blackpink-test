@@ -212,6 +212,8 @@ export default {
     },
     endGame(data) {
       // 終了処理
+      // roomsのversion管理
+      this.roomsVersionUp();
       // roomsの監視終了
       this.unsubscribe();
 
@@ -223,6 +225,13 @@ export default {
 
       // 結果画面へリダイレクト
       this.$router.push({ path: "/result" });
+    },
+    roomsVersionUp() {
+      db.collection('rooms').doc(this.$route.params.id).update({
+        'version': firebase.firestore.FieldValue.increment(1),
+      }).catch(error => {
+        // エラーハンドリング
+      });
     },
     winOrLose(data) {
       // 勝敗判定(true: Win, false: Lose)
