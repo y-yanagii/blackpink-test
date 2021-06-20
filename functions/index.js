@@ -161,25 +161,37 @@ exports.updatedStatus = functions.region('asia-northeast1').firestore.document('
 });
 
 // 3日に1度、YouTubeよりBLACKPINKのチャンネルに対しAPIを叩いて最新の動画を５件取得し、firestoreに格納する(日、火、木の19時に1回ずつ)
-exports.scheduledFunction = functions.region('asia-northeast1').pubsub.schedule('0 19 * * 0,2,4').onRun((context) => {
-  youtubesRef.get().then((res) => {
-    // youtubesコレクションのドキュメントを削除
-    res.forEach(doc => {
-      doc.delete();
-    });
+// exports.youtubeScheduledFunction = functions.region('asia-northeast1').pubsub.schedule('0 19 * * 0,2,4').onRun((context) => {
+//   youtubesRef.get().then((res) => {
+//     // youtubesコレクションのドキュメントを削除
+//     res.forEach(doc => {
+//       doc.delete();
+//     });
 
-    const url = "https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=UCOmHUn--16B90oW2L6FRR3A&maxResults=5&order=date&type=video&key=AIzaSyD3cpVa0sRfqS3ZYpMXxWYF6Zl2BbV9q8Y";
-    // リクエストGet
-    const response = context.$axios.$get(url);
+//     const url = "https://www.googleapis.com/youtube/v3/search?part=snippet&channelId=UCOmHUn--16B90oW2L6FRR3A&maxResults=5&order=date&type=video&key=AIzaSyD3cpVa0sRfqS3ZYpMXxWYF6Zl2BbV9q8Y";
+//     // リクエストGet
+//     const response = context.$axios.$get(url);
 
-    for (let i=0;i<response["items"].length;i++) {
-      // youtubesコレクションに追記
-      db.collection('youtubes').add({
-        orderNum: i,
-        videoId: response["items"][i].id.videoId,
-      });
-    };
+//     for (let i=0;i<response["items"].length;i++) {
+//       // youtubesコレクションに追記
+//       db.collection('youtubes').add({
+//         orderNum: i,
+//         videoId: response["items"][i].id.videoId,
+//       });
+//     };
+//   });
+
+//   return null;
+// });
+
+// 1日に1度、roomsのドキュメントを全件削除(使用済みのroomのみ)
+exports.roomsDeleteScheduledFunction = functions.region('asia-northeast1').pubsub.schedule('0 3 * * *').timeZone('Asia/Tokyo').onRun((context) => {
+  // バトルが終了しているroomsを引っ張って全件削除
+  roomsRef.where('version', '==', 1).get().then((docs) => {
+    docs.forEach(doc => doc.ref.delete());
+    console.log("rooms削除成功");
+  }).catch((error) => {
+    console.log("rooms削除の定期実行エラー", error);
   });
-
   return null;
 });
