@@ -57,10 +57,10 @@
                     <i class="mdi mdi-crown-outline"></i>
                     {{ index + 1 }}
                   </td>
-                  <td :class="breakpointClass.header" class="text-left ranking-name">{{ ranking.name }}</td>
+                  <td :class="breakpointClass.header" class="text-left ranking-name">{{ getUserName(ranking) }}</td>
                   <td :class="breakpointClass.header" class="text-left">{{ ranking.score === 0 ? "-" : ranking.score }}</td>
                   <td :class="breakpointClass.header" class="text-left">{{ ranking.clearTime | zeroPadAndFormat }}</td>
-                  <td :class="breakpointClass.header" class="text-center"><v-btn :href="'https://twitter.com/' + ranking.twitterId" icon class="ranking-twitter-btn"><v-icon>mdi-twitter</v-icon></v-btn></td>
+                  <td :class="breakpointClass.header" class="text-center"><v-btn :href="getHref(ranking)" icon class="ranking-twitter-btn"><v-icon>{{ getIcon(ranking) }}</v-icon></v-btn></td>
                 </tr>
                 <!-- 2位 -->
                 <tr
@@ -72,10 +72,10 @@
                     <i class="mdi mdi-chess-king"></i>
                     {{ index + 2 }}
                   </td>
-                  <td :class="breakpointClass.header" class="text-left ranking-name">{{ ranking.name }}</td>
+                  <td :class="breakpointClass.header" class="text-left ranking-name">{{ getUserName(ranking) }}</td>
                   <td :class="breakpointClass.header" class="text-left">{{ ranking.score === 0 ? "-" : ranking.score }}</td>
                   <td :class="breakpointClass.header" class="text-left">{{ ranking.clearTime | zeroPadAndFormat }}</td>
-                  <td :class="breakpointClass.header" class="text-center"><v-btn :href="'https://twitter.com/' + ranking.twitterId" icon class="ranking-twitter-btn"><v-icon>mdi-twitter</v-icon></v-btn></td>
+                  <td :class="breakpointClass.header" class="text-center"><v-btn :href="getHref(ranking)" icon class="ranking-twitter-btn"><v-icon>{{ getIcon(ranking) }}</v-icon></v-btn></td>
                 </tr>
                 <!-- 3位 -->
                 <tr
@@ -87,10 +87,10 @@
                     <i class="mdi mdi-diamond-stone"></i>
                     {{ index + 3 }}
                   </td>
-                  <td :class="breakpointClass.header" class="text-left ranking-name">{{ ranking.name }}</td>
+                  <td :class="breakpointClass.header" class="text-left ranking-name">{{ getUserName(ranking) }}</td>
                   <td :class="breakpointClass.header" class="text-left">{{ ranking.score === 0 ? "-" : ranking.score }}</td>
                   <td :class="breakpointClass.header" class="text-left">{{ ranking.clearTime | zeroPadAndFormat }}</td>
-                  <td :class="breakpointClass.header" class="text-center"><v-btn :href="'https://twitter.com/' + ranking.twitterId" icon class="ranking-twitter-btn"><v-icon>mdi-twitter</v-icon></v-btn></td>
+                  <td :class="breakpointClass.header" class="text-center"><v-btn :href="getHref(ranking)" icon class="ranking-twitter-btn"><v-icon>{{ getIcon(ranking) }}</v-icon></v-btn></td>
                 </tr>
                 <!-- 4位以下 -->
                 <tr
@@ -99,10 +99,10 @@
                   class="ranking-tr"
                 >
                   <td :class="breakpointClass.header" class="text-center">{{ index + 4 }}</td>
-                  <td :class="breakpointClass.header" class="text-left ranking-name">{{ ranking.name }}</td>
+                  <td :class="breakpointClass.header" class="text-left ranking-name">{{ getUserName(ranking) }}</td>
                   <td :class="breakpointClass.header" class="text-left">{{ ranking.score === 0 ? "-" : ranking.score }}</td>
                   <td :class="breakpointClass.header" class="text-left">{{ ranking.clearTime | zeroPadAndFormat }}</td>
-                  <td :class="breakpointClass.header" class="text-center"><v-btn :href="'https://twitter.com/' + ranking.twitterId" icon class="ranking-twitter-btn"><v-icon>mdi-twitter</v-icon></v-btn></td>
+                  <td :class="breakpointClass.header" class="text-center"><v-btn :href="getHref(ranking)" icon class="ranking-twitter-btn"><v-icon>{{ getIcon(ranking) }}</v-icon></v-btn></td>
                 </tr>
               </template>
               <template v-else>
@@ -112,11 +112,11 @@
                   :key="index"
                 >
                   <td :class="breakpointClass.header" class="text-center">{{ index + 1 }}</td>
-                  <td :class="breakpointClass.header" class="text-left battle-name">{{ battle.name }}</td>
+                  <td :class="breakpointClass.header" class="text-left battle-name">{{ getUserName(battle) }}</td>
                   <td :class="breakpointClass.header" class="text-center">{{ battle.win }}</td>
                   <td :class="breakpointClass.header" class="text-center">{{ battle.lose }}</td>
                   <td :class="breakpointClass.header" class="text-center">{{ battle.draw }}</td>
-                  <td :class="breakpointClass.header" class="text-center"><v-btn :href="'https://twitter.com/' + battle.id" icon class="battle-twitter-btn"><v-icon>mdi-twitter</v-icon></v-btn></td>
+                  <td :class="breakpointClass.header" class="text-center"><v-btn :href="getHref(battle)" icon class="battle-twitter-btn"><v-icon>{{ getIcon(battle) }}</v-icon></v-btn></td>
                 </tr>
               </template> 
             </tbody>
@@ -166,6 +166,40 @@ export default {
           rankingValue: "ranking-value"
         }
       }
+    },
+    getUserName(value) {
+      // ユーザ情報のプライバシーチェックをし、trueであればUser名を隠す
+      if (typeof value.user.privacy !== "undefined") {
+        if (value.user.privacy) {
+          // プライベートモード時はnameを返さない
+          return this.$user.secretUserName;
+        } else {
+          return value.name;
+        }
+      }
+    },
+    getHref(value) {
+      // ユーザ情報のプライバシーチェックをし、trueであればTwitterUrlを隠す
+      if (typeof value.user.privacy !== "undefined") {
+        if (value.user.privacy) {
+          // プライベートモード時はtwitter urlを返さない
+          return "";
+        } else {
+          return 'https://twitter.com/' + value.twitterId;
+        }
+      }
+    },
+    getIcon(value) {
+      // ユーザ情報のプライバシーチェックをし、trueであればTwitterアイコンを隠す
+      if (typeof value.user.privacy !== "undefined") {
+        if (value.user.privacy) {
+          // プライベートモード時はtwitterIconを返さない
+          return "mdi-help";
+        } else {
+          return "mdi-twitter";
+        }
+      }
+      // help
     }
   },
   computed: {

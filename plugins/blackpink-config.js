@@ -21,6 +21,7 @@ Vue.prototype.$testInfo = {
 Vue.prototype.$user = {
   defaultName: "NO NAME",
   defaultRankId: "new",
+  secretUserName: "???",
 }
 
 Vue.prototype.$mode = {
