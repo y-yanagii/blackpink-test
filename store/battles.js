@@ -53,6 +53,7 @@ export default {
   actions,
 }
 
+// 自分のユーザIDを取得
 function getCurrentUserId(twitterId, currentUser) {
   if (currentUser !== null) {
     // 認証済みの場合

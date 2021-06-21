@@ -26,7 +26,9 @@ const actions = {
   init: firestoreAction(({ bindFirestoreRef }) => {
     bindFirestoreRef('rankings', rankingsRef)
   }),
-  add: firestoreAction((context, ranking) => {
+  add: firestoreAction(async (context, ranking) => {
+    // 自身のユーザ情報とランキング情報を紐づける(reference)
+    const userDocSnapshot = await db.collection('users').doc(firebase.auth().currentUser.uid);
     // ランキングをFirestoreへ登録
     rankingsRef.add({
       name: ranking.name,
@@ -34,7 +36,8 @@ const actions = {
       score: ranking.score,
       clearTime: ranking.clearTime,
       modeType: ranking.modeType,
-      createdAt: firebase.firestore.FieldValue.serverTimestamp()
+      createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+      user: userDocSnapshot,
     })
   }),
 };
