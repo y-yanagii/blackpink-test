@@ -45,7 +45,7 @@
             <!-- hardテストの場合注意書き -->
             <div class="test-precautionary text-center">
               <p>＊毎回出題内容が変わります。</p>
-              <p>＊HARDの１つ上の難易度です。</p>
+              <p>＊NORMALの１つ上の難易度です。</p>
             </div>
           </template>
           <template v-else-if="selectedMode.modeType === $mode.music">
