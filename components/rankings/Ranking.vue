@@ -60,7 +60,7 @@
                   <td :class="breakpointClass.header" class="text-left ranking-name">{{ getUserName(ranking) }}</td>
                   <td :class="breakpointClass.header" class="text-left">{{ ranking.score === 0 ? "-" : ranking.score }}</td>
                   <td :class="breakpointClass.header" class="text-left">{{ ranking.clearTime | zeroPadAndFormat }}</td>
-                  <td :class="breakpointClass.header" class="text-center"><v-btn :href="getHref(ranking)" icon class="ranking-twitter-btn"><v-icon>{{ getIcon(ranking) }}</v-icon></v-btn></td>
+                  <td :class="breakpointClass.header" class="text-center"><v-btn :href="getHref(ranking)" icon class="ranking-twitter-btn" :disabled="getDisabled(ranking)"><v-icon>{{ getIcon(ranking) }}</v-icon></v-btn></td>
                 </tr>
                 <!-- 2位 -->
                 <tr
@@ -75,7 +75,7 @@
                   <td :class="breakpointClass.header" class="text-left ranking-name">{{ getUserName(ranking) }}</td>
                   <td :class="breakpointClass.header" class="text-left">{{ ranking.score === 0 ? "-" : ranking.score }}</td>
                   <td :class="breakpointClass.header" class="text-left">{{ ranking.clearTime | zeroPadAndFormat }}</td>
-                  <td :class="breakpointClass.header" class="text-center"><v-btn :href="getHref(ranking)" icon class="ranking-twitter-btn"><v-icon>{{ getIcon(ranking) }}</v-icon></v-btn></td>
+                  <td :class="breakpointClass.header" class="text-center"><v-btn :href="getHref(ranking)" icon class="ranking-twitter-btn" :disabled="getDisabled(ranking)" ><v-icon>{{ getIcon(ranking) }}</v-icon></v-btn></td>
                 </tr>
                 <!-- 3位 -->
                 <tr
@@ -90,7 +90,7 @@
                   <td :class="breakpointClass.header" class="text-left ranking-name">{{ getUserName(ranking) }}</td>
                   <td :class="breakpointClass.header" class="text-left">{{ ranking.score === 0 ? "-" : ranking.score }}</td>
                   <td :class="breakpointClass.header" class="text-left">{{ ranking.clearTime | zeroPadAndFormat }}</td>
-                  <td :class="breakpointClass.header" class="text-center"><v-btn :href="getHref(ranking)" icon class="ranking-twitter-btn"><v-icon>{{ getIcon(ranking) }}</v-icon></v-btn></td>
+                  <td :class="breakpointClass.header" class="text-center"><v-btn :href="getHref(ranking)" icon class="ranking-twitter-btn" :disabled="getDisabled(ranking)"><v-icon>{{ getIcon(ranking) }}</v-icon></v-btn></td>
                 </tr>
                 <!-- 4位以下 -->
                 <tr
@@ -102,7 +102,7 @@
                   <td :class="breakpointClass.header" class="text-left ranking-name">{{ getUserName(ranking) }}</td>
                   <td :class="breakpointClass.header" class="text-left">{{ ranking.score === 0 ? "-" : ranking.score }}</td>
                   <td :class="breakpointClass.header" class="text-left">{{ ranking.clearTime | zeroPadAndFormat }}</td>
-                  <td :class="breakpointClass.header" class="text-center"><v-btn :href="getHref(ranking)" icon class="ranking-twitter-btn"><v-icon>{{ getIcon(ranking) }}</v-icon></v-btn></td>
+                  <td :class="breakpointClass.header" class="text-center"><v-btn :href="getHref(ranking)" icon class="ranking-twitter-btn" :disabled="getDisabled(ranking)"><v-icon>{{ getIcon(ranking) }}</v-icon></v-btn></td>
                 </tr>
               </template>
               <template v-else>
@@ -116,7 +116,7 @@
                   <td :class="breakpointClass.header" class="text-center">{{ battle.win }}</td>
                   <td :class="breakpointClass.header" class="text-center">{{ battle.lose }}</td>
                   <td :class="breakpointClass.header" class="text-center">{{ battle.draw }}</td>
-                  <td :class="breakpointClass.header" class="text-center"><v-btn :href="getHref(battle)" icon class="battle-twitter-btn"><v-icon>{{ getIcon(battle) }}</v-icon></v-btn></td>
+                  <td :class="breakpointClass.header" class="text-center"><v-btn :href="getHref(battle)" icon class="battle-twitter-btn" :disabled="getDisabled(battle)"><v-icon>{{ getIcon(battle) }}</v-icon></v-btn></td>
                 </tr>
               </template> 
             </tbody>
@@ -199,7 +199,17 @@ export default {
           return "mdi-twitter";
         }
       }
-      // help
+    },
+    getDisabled(value) {
+      // ユーザ情報のプライバシーチェックをし、trueであればTwitterアイコンのボタンを非活性にする
+      if (typeof value.user.privacy !== "undefined") {
+        if (value.user.privacy) {
+          // プライベートモード時はdisabled
+          return true;
+        } else {
+          return false;
+        }
+      }
     }
   },
   computed: {
