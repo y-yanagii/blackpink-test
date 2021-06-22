@@ -195,3 +195,29 @@ exports.roomsDeleteScheduledFunction = functions.region('asia-northeast1').pubsu
   });
   return null;
 });
+
+// トランザクション処理
+// rankingsコレクションにreference型のユーザ情報のフィールド追加
+exports.addReferenceUserField = functions.region('asia-northeast1').https.onRequest(async (req, res) => {
+  res.send('reference型のユーザ情報をrankingsコレクションに追加する関数を発動');
+
+  // ランキングコレクション取得
+  let rankingsSnapshots = await db.collection('rankings').get();
+
+  // batch処理
+  const batch = db.batch();
+  let i = 0;
+  // ランキングドキュメントリストをループ
+  rankingsSnapshots.docs.forEach(async (doc) => {
+    let userDocRef = await db.collection('users').where("twitterId", "==", doc.get("twitterId")).get();
+    let userRef = db.collection('users').doc(userDocRef.docs[0].ref.id);
+    console.log(userDocRef.docs[0].ref.id);
+    batch.update(doc.ref, { user: userRef });
+    i++;
+    if (i === rankingsSnapshots.docs.length) {
+      // 最後のアップデート終了後
+      // 変更をコミット
+      batch.commit();
+    }
+  });
+});
