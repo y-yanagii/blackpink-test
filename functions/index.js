@@ -195,3 +195,47 @@ exports.roomsDeleteScheduledFunction = functions.region('asia-northeast1').pubsu
   });
   return null;
 });
+
+// トランザクション処理
+// rankings, battlesにreference型のユーザ情報とtwitterIdフィールド追加
+exports.setReferenceUserAndTwitterId = functions.region('asia-northeast1').https.onRequest(async (req, res) => {
+  res.send('reference型のユーザ情報をrankingsとbattlesに追加する関数を発動');
+
+  // batch処理
+  let batch = db.batch();
+
+  let rankingsSnapshots = await db.collection('rankings').get();
+
+  // ランキングドキュメントリストをループ
+  rankingsSnapshots.docs.map(async (doc) => {
+    // const userSnapshot = await db.collection('users').where("twitterId", "==", doc.get("twitterId")).get();
+    // userSnapshot.docs.map((userDoc) => {
+      //   console.log(doc.ref.id);
+      //   batch.update(doc.ref, { user: userDoc });
+      //   batch.commit();
+      // });
+    const userDocRef = await db.collection('users').where("twitterId", "==", doc.get("twitterId")).get();
+    batch.update(doc.ref, { user: userDocRef.docs[0].ref });
+  });
+
+  // await rankingsSnapshots.get().then((docs) => {
+  //   batch = db.batch();
+  //   docs.forEach(doc => {
+  //     // ユーザ情報の取得のquery
+  //     const userDocSnapshot = db.collection('users').where("twitterId", "==", doc.get("twitterId"));
+  //     userDocSnapshot.get().then(querySnapshot => {
+  //       querySnapshot.forEach((userDoc) => {
+  //         // rankingsコレクションにreference型のユーザ情報フィールドを追加
+  //         const userRef = db.collection('users').doc(userDoc.ref.id);
+  //         // console.log(userDoc.ref.id);
+  //         // console.log(doc.ref);
+  //         // console.log(doc.ref.id);
+  //         batch.update(doc.ref, { user: userRef });
+  //       });
+  //     });
+  //   });
+  // });
+  // 変更をコミット
+  batch.commit();
+  return null;
+})
