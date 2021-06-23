@@ -96,6 +96,7 @@ export default {
       };
       this.pieces = [];
       this.getPieces;
+      this.setRandomPieces;
       // 新しいピースリストの非表示ピースのopacityを0に戻す
       document.getElementsByClassName('piece-none')[0].style.opacity = "";
 
@@ -106,7 +107,7 @@ export default {
           _this.$refs.time.timeStart(_this.timerObject);
         });
     },
-    pieceMove(piece) {
+    pieceMove(piece, randomCheck) {
       // ピースの移動
       // クリックしたピースとの上下左右の空きをチェック
       const leftPiece = this.pieces.find(p => p.x === piece.x - 1 && p.y === piece.y);
@@ -133,6 +134,7 @@ export default {
         displayNonePiece.y = choicePiece.y;
         displayNonePiece.serialNumber = choicePiece.serialNumber;
         displayNonePiece.gridArea = choicePiece.gridArea;
+        if (randomCheck) return;
       } else {
         return
       }
@@ -282,44 +284,91 @@ export default {
     }
   },
   computed: {
+    // getPieces() {
+    //   // 通し番号
+    //   let serialNumber = 0;
+    //   // ピース番号の配列
+    //   let pieceNumbers = this.getRandomNumbers;
+    //   // ランダム位置y
+    //   let randomYs = [0, 1, 2];
+    //   // y座標
+    //   for (let i = 0; i < this.yAxis; i++) {
+    //     // y座標をランダム抽出
+    //     const randomY = randomYs[Math.floor(Math.random() * randomYs.length)]
+    //     // ランダム位置x
+    //     let randomXs = [0, 1, 2];
+
+    //     // x座標
+    //     for (let j = 0; j < this.xAxis; j++) {
+    //       // x座標をランダム抽出
+    //       const randomX = randomXs[Math.floor(Math.random() * randomXs.length)]
+    //       let pieceInfo = {
+    //         x: randomX, // x座標
+    //         y: randomY, // y座標
+    //         serialNumber: randomX + (randomY * this.xAxis), // 通し番号
+    //         // serialNumber: pieceNumbers[serialNumber],
+    //         gridArea: "grid-area: " + (randomY + 1) + " / " + (randomX + 1) + " / span 1 / span 1;", // ピースのgrid位置
+    //         answer: pieceNumbers[serialNumber], // 答えの番号
+    //         class: pieceNumbers[serialNumber] === 8 ? "piece-" + pieceNumbers[serialNumber] + " piece-none" : "piece-" + pieceNumbers[serialNumber], // ピースの実体
+    //         displayFlag: pieceNumbers[serialNumber] === 8 ? true : false,
+    //       }
+
+    //       this.pieces.push(pieceInfo);
+    //       serialNumber++;
+    //       randomXs = randomXs.filter(x => x !== randomX); // 使用したランダムの座標を削除
+    //     }
+
+    //     randomYs = randomYs.filter(x => x !== randomY); // 使用したランダムの座標を削除
+    //   }
+
+    //   return this.pieces;
+    // },
     getPieces() {
       // 通し番号
       let serialNumber = 0;
-      // ピース番号の配列
-      let pieceNumbers = this.getRandomNumbers;
-      // ランダム位置y
-      let randomYs = [0, 1, 2];
+
       // y座標
       for (let i = 0; i < this.yAxis; i++) {
-        // y座標をランダム抽出
-        const randomY = randomYs[Math.floor(Math.random() * randomYs.length)]
-        // ランダム位置x
-        let randomXs = [0, 1, 2];
-
         // x座標
         for (let j = 0; j < this.xAxis; j++) {
-          // x座標をランダム抽出
-          const randomX = randomXs[Math.floor(Math.random() * randomXs.length)]
+          // pieceインスタンスの作成
           let pieceInfo = {
-            x: randomX, // x座標
-            y: randomY, // y座標
-            serialNumber: randomX + (randomY * this.xAxis), // 通し番号
-            // serialNumber: pieceNumbers[serialNumber],
-            gridArea: "grid-area: " + (randomY + 1) + " / " + (randomX + 1) + " / span 1 / span 1;", // ピースのgrid位置
-            answer: pieceNumbers[serialNumber], // 答えの番号
-            class: pieceNumbers[serialNumber] === 8 ? "piece-" + pieceNumbers[serialNumber] + " piece-none" : "piece-" + pieceNumbers[serialNumber], // ピースの実体
-            displayFlag: pieceNumbers[serialNumber] === 8 ? true : false,
+            x: j, // x座標
+            y: i, // y座標
+            serialNumber: serialNumber, // 通し番号
+            gridArea: "grid-area: " + (i + 1) + " / " + (j + 1) + " / span 1 / span 1;", // ピースのgrid位置
+            answer: serialNumber, // 答えの番号
+            class: serialNumber === 8 ? "piece-" + serialNumber + " piece-none" : "piece-" + serialNumber, // ピースの実体
+            displayFlag: serialNumber === 8 ? true : false,
           }
 
           this.pieces.push(pieceInfo);
           serialNumber++;
-          randomXs = randomXs.filter(x => x !== randomX); // 使用したランダムの座標を削除
         }
-
-        randomYs = randomYs.filter(x => x !== randomY); // 使用したランダムの座標を削除
       }
 
       return this.pieces;
+    },
+    setRandomPieces() {
+      // 100回ピース移動
+      for (let i=0;i<150;i++) {
+        // 空のピースを取得
+        let displayNonePiece = this.pieces.find(p => p.displayFlag);
+
+        // 空のピースを基準に上下左右のピースオブジェクトを配列で保持
+        let targetPieces = [];
+        targetPieces.push(this.pieces.find(p => p.x === displayNonePiece.x - 1 && p.y === displayNonePiece.y));
+        targetPieces.push(this.pieces.find(p => p.x === displayNonePiece.x + 1 && p.y === displayNonePiece.y));
+        targetPieces.push(this.pieces.find(p => p.x === displayNonePiece.x && p.y === displayNonePiece.y - 1));
+        targetPieces.push(this.pieces.find(p => p.x === displayNonePiece.x && p.y === displayNonePiece.y + 1));
+
+        // 上下左右のピースオブジェクト配列からランダムで１件取得（ピースが存在する）
+        targetPieces = targetPieces.filter(tp => tp !== undefined);
+        let targetPiece = targetPieces[Math.floor(Math.random() * targetPieces.length)];
+
+        // 取得したピースに対してpieceMoveメソッドで移動させる
+        this.pieceMove(targetPiece, true);
+      }
     },
     getRandomNumbers() {
       // ピースの一意な数値をシャッフルして返す
@@ -350,6 +399,8 @@ export default {
   created() {
     // piecesに初期値をセット
     this.pieces = this.getPieces;
+    // 初回ピースをランダムに配置（必ず正解できる形でランダムに配置する）
+    this.setRandomPieces;
     // rankingsコレクションの初期化
     this.$store.dispatch('rankings/init');
   },
