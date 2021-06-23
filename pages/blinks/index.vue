@@ -82,6 +82,7 @@ export default {
 .blink {
   margin: 2% 4%;
   text-align: left;
+  cursor: pointer;
 }
 
 .user-common {
