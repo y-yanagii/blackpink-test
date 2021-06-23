@@ -342,6 +342,7 @@ export default {
   },
   created() {
     this.$store.dispatch('users/init');
+    this.$store.dispatch('battles/init');
     this.$store.dispatch('rankings/init');
 
     // 選択したユーザ取得
@@ -349,6 +350,7 @@ export default {
     const _this = this;
     docUser.get().then(function(doc) {
       _this.showUser = doc.data();
+      _this.showUser.uid = doc.ref.id;
     });
   },
   components: {
