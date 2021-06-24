@@ -9,6 +9,9 @@ const waitingsRef = db.collection('waitings');
 const roomsRef = db.collection('rooms');
 const youtubesRef = db.collection('youtubes');
 
+// functions:config:set slack_service.adminurlにスラックのURLを設定
+const { IncomingWebhook } = require('@slack/webhook');
+
 // // Create and Deploy Your First Cloud Functions
 // // https://firebase.google.com/docs/functions/write-firebase-functions
 //
@@ -220,4 +223,34 @@ exports.addReferenceUserField = functions.region('asia-northeast1').https.onRequ
       batch.commit();
     }
   });
+});
+
+// ユーザ登録時、スラック通知
+exports.sendToSlack = functions.region('asia-northeast1').auth.user().onCreate(async (user) => {
+  console.log('ユーザ登録時のスラック通知開始');
+  const webhook = new IncomingWebhook(functions.config().slack_service.adminurl);
+
+  // 送信する文字列作成
+  const textArray = [
+    `ユーザ登録通知`,
+    `ユーザ名「${user.displayName}」さんがユーザ登録しました。`
+  ];
+
+  // slackAPIが受け取れるオブジェクト生成
+  const data = {
+    text: textArray.join('\n'),
+    username: 'Blink Games BOT',
+    icon_emoji: ':ghost:'
+  }
+
+  // slack通知
+  await webhook.send(data)
+  .then(() => {
+    console.log("ユーザ登録のSlack通知に成功");
+  }).catch(error => {
+    console.info(new Error('ユーザ登録の通知に失敗')); // Logging an Error object at the info level
+    console.error('ユーザ登録のスラック通知に失敗しました'); 
+  });
+
+  return null;
 });

@@ -101,3 +101,5 @@ serviceAccount.json
 # firebase関連（firestoreルール）
 .firebase/
 firestore.rules
+
+/functions/.runtimeconfig.json
