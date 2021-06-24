@@ -9,6 +9,8 @@ const waitingsRef = db.collection('waitings');
 const roomsRef = db.collection('rooms');
 const youtubesRef = db.collection('youtubes');
 
+const { IncomingWebhook } = require('@slack/webhook');
+
 // // Create and Deploy Your First Cloud Functions
 // // https://firebase.google.com/docs/functions/write-firebase-functions
 //
@@ -220,4 +222,13 @@ exports.addReferenceUserField = functions.region('asia-northeast1').https.onRequ
       batch.commit();
     }
   });
+});
+
+// ユーザ登録時、スラック通知
+exports.sendToSlack = functions.auth.user().onCreate(async (user) => {
+  console.log("fewfwefewfwfef");
+  await sendWebhookSlack.send({
+    text: '新たにユーザ登録:' + user
+  });
+  return null;
 });
