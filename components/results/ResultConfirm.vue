@@ -136,7 +136,7 @@ export default {
     }
     .confirm-dialog-icon {
       margin: auto 0 auto auto;
-      padding-right: 3%;
+      padding-right: 6%;
     }
   }
   .ansewerIncorrect-li-true {
