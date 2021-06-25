@@ -1,6 +1,5 @@
 import firebase, { db } from "~/plugins/firebase";
 import { firestoreAction } from 'vuexfire';
-import axios from 'axios';
 
 const usersRef = db.collection('users');
 
@@ -90,22 +89,15 @@ const actions = {
         // ドキュメントが取得できなかった場合
       }
     }).catch(error => {
-      // エラー情報をスラックに通知
+      // エラー情報を生成
       const arrayMessage = [
         `error location: users/get`,
         `errorCode: ${error.code}`,
         `errorMessage: ${error.message}`,
       ];
 
-      // slack APIが受け取れるオブジェクトを生成
-      const data = {
-        text: arrayMessage.join('\n'),
-        username: 'Blink Games BOT',
-        icon_emoji: ':ghost:',
-      };
-
-      // axiosでslack通知
-      axios.post('/services' + process.env.SLACK_ERROR_PATH, data);
+      // スラック通知呼び出し
+      context.dispatch('errors/sendSlackOfError', { arrayMessage: arrayMessage }, { root: true });
 
       // 500エラー
       $nuxt.error({statusCode: 500});
