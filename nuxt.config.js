@@ -76,10 +76,11 @@ export default {
   // 呼び出し側はapi以下の/v1/jp/itunes-music/hot-tracks/all/10/explicit.jsonを指定
   axios: {
     proxy: true,
-    prefix: '/search'
+    prefix: '/api'
   },
   proxy: {
-    '/search/': { target: process.env.ITUNES_APPLE_URL, }
+    '/search/': { target: process.env.ITUNES_APPLE_URL, },
+    '/services/': { target: process.env.SLACK_ERROR_URL },
   },
 
   // Vuetify module configuration: https://go.nuxtjs.dev/config-vuetify
