@@ -27,8 +27,19 @@ const actions = {
 
         // 第二引数のコールバック関数呼び出し（認証したユーザ情報を元に、スナックバー通知とステータス登録）
         afterAuthenticationFunc();
-      }).catch(function (error) {
-        console.log(error)
+      }).catch(error => {
+        // エラー情報を生成
+        const arrayMessage = [
+          `error location: twitter/loginTwitter`,
+          `errorCode: ${error.code}`,
+          `errorMessage: ${error.message}`,
+        ];
+  
+        // スラック通知呼び出し
+        context.dispatch('errors/sendSlackOfError', { arrayMessage: arrayMessage }, { root: true });
+  
+        // 500エラー
+        $nuxt.error({statusCode: 500});
       })
   },
   logoutTwitter(context, afterAuthenticationFunc) {
@@ -36,8 +47,19 @@ const actions = {
       .then(()=> {
         context.dispatch('localStorages/initializationLocalStorage', '', { root: true }); // twitterアクションからlocalStoragesアクションを呼ぶ
       })
-      .catch((error) => {
-        console.log(error);
+      .catch(error => {
+        // エラー情報を生成
+        const arrayMessage = [
+          `error location: twitter/logoutTwitter`,
+          `errorCode: ${error.code}`,
+          `errorMessage: ${error.message}`,
+        ];
+  
+        // スラック通知呼び出し
+        context.dispatch('errors/sendSlackOfError', { arrayMessage: arrayMessage }, { root: true });
+  
+        // 500エラー
+        $nuxt.error({statusCode: 500});
       })
   },
   updateTwitter(context) {

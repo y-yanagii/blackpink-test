@@ -54,7 +54,21 @@ const actions = {
       userIds: [payload.twitterId, "account"],
       version: 0,
       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
-    }, { merge: false });
+    }, { merge: false })
+    .catch(error => {
+      // エラー情報を生成
+      const arrayMessage = [
+        `error location: rooms/createCom`,
+        `errorCode: ${error.code}`,
+        `errorMessage: ${error.message}`,
+      ];
+
+      // スラック通知呼び出し
+      context.dispatch('errors/sendSlackOfError', { arrayMessage: arrayMessage }, { root: true });
+
+      // 500エラー
+      $nuxt.error({statusCode: 500});
+    });
   }),
 }
 

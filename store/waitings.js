@@ -22,7 +22,21 @@ const actions = {
       roomId: "",
       status: 0,
       updateAt: firebase.firestore.FieldValue.serverTimestamp(),
-    }, { merge: false });
+    }, { merge: false })
+    .catch(error => {
+      // エラー情報を生成
+      const arrayMessage = [
+        `error location: waitings/set`,
+        `errorCode: ${error.code}`,
+        `errorMessage: ${error.message}`,
+      ];
+
+      // スラック通知呼び出し
+      context.dispatch('errors/sendSlackOfError', { arrayMessage: arrayMessage }, { root: true });
+
+      // 500エラー
+      $nuxt.error({statusCode: 500});
+    });
   }),
   setCom: firestoreAction((context, uid) => {
     // マッチ済みに登録しCOMと対戦
@@ -31,6 +45,20 @@ const actions = {
       status: 1,
       updateAt: firebase.firestore.FieldValue.serverTimestamp(),
     }, { merge: false })
+    .catch(error => {
+      // エラー情報を生成
+      const arrayMessage = [
+        `error location: waitings/setCom`,
+        `errorCode: ${error.code}`,
+        `errorMessage: ${error.message}`,
+      ];
+
+      // スラック通知呼び出し
+      context.dispatch('errors/sendSlackOfError', { arrayMessage: arrayMessage }, { root: true });
+
+      // 500エラー
+      $nuxt.error({statusCode: 500});
+    })
   }),
 }
 

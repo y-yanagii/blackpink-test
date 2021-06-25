@@ -55,6 +55,19 @@ const actions = {
       }
 
       context.dispatch('setUser', userObject);
+    }).catch(error => {
+      // エラー情報を生成
+      const arrayMessage = [
+        `error location: users/set`,
+        `errorCode: ${error.code}`,
+        `errorMessage: ${error.message}`,
+      ];
+
+      // スラック通知呼び出し
+      context.dispatch('errors/sendSlackOfError', { arrayMessage: arrayMessage }, { root: true });
+
+      // 500エラー
+      $nuxt.error({statusCode: 500});
     })
   }),
   update: firestoreAction((context, userObject) => {
@@ -65,6 +78,19 @@ const actions = {
       photoURL: userObject.photoURL,
       privacy: userObject.privacy,
       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+    }).catch(error => {
+      // エラー情報を生成
+      const arrayMessage = [
+        `error location: users/update`,
+        `errorCode: ${error.code}`,
+        `errorMessage: ${error.message}`,
+      ];
+
+      // スラック通知呼び出し
+      context.dispatch('errors/sendSlackOfError', { arrayMessage: arrayMessage }, { root: true });
+
+      // 500エラー
+      $nuxt.error({statusCode: 500});
     });
 
     context.dispatch('setUser', userObject);
@@ -73,6 +99,19 @@ const actions = {
     usersRef.doc(userObject.id).update({
       name: userObject.name,
       photoURL: userObject.photoURL,
+    }).catch(error => {
+      // エラー情報を生成
+      const arrayMessage = [
+        `error location: users/updateTwitter`,
+        `errorCode: ${error.code}`,
+        `errorMessage: ${error.message}`,
+      ];
+
+      // スラック通知呼び出し
+      context.dispatch('errors/sendSlackOfError', { arrayMessage: arrayMessage }, { root: true });
+
+      // 500エラー
+      $nuxt.error({statusCode: 500});
     });
 
     context.commit('updateTwitterInfo', userObject);
@@ -88,7 +127,20 @@ const actions = {
       else {
         // ドキュメントが取得できなかった場合
       }
-    })
+    }).catch(error => {
+      // エラー情報を生成
+      const arrayMessage = [
+        `error location: users/get`,
+        `errorCode: ${error.code}`,
+        `errorMessage: ${error.message}`,
+      ];
+
+      // スラック通知呼び出し
+      context.dispatch('errors/sendSlackOfError', { arrayMessage: arrayMessage }, { root: true });
+
+      // 500エラー
+      $nuxt.error({statusCode: 500});
+    });
   }),
   setUser(context, userObject) {
     // storeのuserにユーザ情報保持

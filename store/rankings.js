@@ -38,6 +38,19 @@ const actions = {
       modeType: ranking.modeType,
       createdAt: firebase.firestore.FieldValue.serverTimestamp(),
       user: userDocSnapshot,
+    }).catch(error => {
+      // エラー情報を生成
+      const arrayMessage = [
+        `error location: rankings/add`,
+        `errorCode: ${error.code}`,
+        `errorMessage: ${error.message}`,
+      ];
+
+      // スラック通知呼び出し
+      context.dispatch('errors/sendSlackOfError', { arrayMessage: arrayMessage }, { root: true });
+
+      // 500エラー
+      $nuxt.error({statusCode: 500});
     })
   }),
 };
