@@ -1,23 +1,4 @@
-# blackpink-test
-
-## Build Setup
-
-```bash
-# install dependencies
-$ npm install
-
-# serve with hot reload at localhost:3000
-$ npm run dev
-
-# build for production and launch server
-$ npm run build
-$ npm run start
-
-# generate static project
-$ npm run generate
-```
-
-For detailed explanation on how things work, check out [Nuxt.js docs](https://nuxtjs.org).
+# BLINK GAMES
 
 # blackpink-test
 
@@ -47,8 +28,6 @@ BLACKPINK検定
 - 要検討事項
   - そのままの画像や写真は著作権上扱えないため、イラストや引用のルールの確認（Youtubeの埋め込み、インスタグラムのAPI等）
 
-## 画面遷移図
-https://xd.adobe.com/view/f9c40cc9-fcad-4578-865f-479c58e3eeed-ac97/
 
 ## ER図
 https://drive.google.com/file/d/1e1asawkrM5lH54t2S3pzwCEHZxEg3Yrn/view
