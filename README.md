@@ -1,7 +1,5 @@
 # BLINK GAMES
 
-# blackpink-test
-
 ## サービス名(仮)
 
 BLACKPINK検定
