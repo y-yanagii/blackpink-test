@@ -65,7 +65,8 @@ export default {
   computed: {
     snsTwitter() {
       // Twitterシェアの文言を設定
-      const rankStr = 20 >= this.res.card.rank ? this.res.card.rank + "位" : + "ランク外";
+      debugger
+      const rankStr = (20 >= this.res.card.rank) ? this.res.card.rank + "位" : "ランク外";
       const clearTime = this.$options.filters.zeroPadAndFormat(this.res.card.clearTime);
       const urlStr = "https://twitter.com/intent/tweet?url=https://blink-games.app%0a";
       const textStr = "&text=BLINK GAMES(" + this.res.modeValue + ") 結果は...%0a" + "RANK: " + rankStr + "%0a" + "SCORE: " + this.res.card.score + "%0a" + "CLEAR TIME: " + clearTime + "%0a" + this.res.card.message + "%0a%0a" + '&hashtags=BLINKGAMES%0a,BLACKPINK,ブラックピンク%0a,BLINK,ブリンク';
