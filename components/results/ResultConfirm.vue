@@ -114,6 +114,7 @@ export default {
     border-radius: 6px;
     width: 100%;
     height: 40px;
+    cursor: pointer;
     div {
       margin: auto 0;
       padding-left: 3%;
